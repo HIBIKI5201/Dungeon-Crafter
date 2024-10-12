@@ -55,7 +55,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.25
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dceb0e1db63ae0f4e86e97104a55b9b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _healthBarOffset: {x: 0, y: 0, z: 0}
 --- !u!1001 &3207008905949727169
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -131,22 +132,22 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: b783b57d623b5dc479ed533fc98b5824,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.24
+      value: 0.16
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b783b57d623b5dc479ed533fc98b5824,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.24
+      value: 0.16
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b783b57d623b5dc479ed533fc98b5824,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.24
+      value: 0.16
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b783b57d623b5dc479ed533fc98b5824,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.37
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b783b57d623b5dc479ed533fc98b5824,
         type: 3}

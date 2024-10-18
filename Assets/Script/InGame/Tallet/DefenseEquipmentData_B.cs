@@ -1,13 +1,15 @@
 using UnityEngine;
-
-public abstract class DefenseEquipmentData_B : ScriptableObject
+namespace DCFrameWork.DefenseEquipment
 {
-    public string EquipmentName;
-    //この施設がレベルアップ時にドロップする確率
-    public int DropChance;
+    public abstract class DefenseEquipmentData_B : ScriptableObject
+    {
+        public string EquipmentName;
+        //この施設がレベルアップ時にドロップする確率
+        public int DropChance;
 
-    public float Attack;
-    public float Rate;
-    public float Range;
-    public float Critical;
+        public float Attack;
+        public float Rate;
+        public float Range;
+        public float Critical;
+    }
 }

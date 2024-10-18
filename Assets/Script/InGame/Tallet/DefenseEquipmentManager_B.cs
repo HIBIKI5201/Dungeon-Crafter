@@ -3,54 +3,57 @@ using System.Linq;
 using UnityEngine;
 using DCFrameWork.Enemy;
 
-public abstract class DefenseEquipmentManager_B : MonoBehaviour
+namespace DCFrameWork.DefenseEquipment
 {
-    [SerializeField]
-    protected DefenseEquipmentData_B _data;
-
-    protected int Level;
-    protected List<EnemyManager_B> _enemyList;
-
-    private void Start()
+    public abstract class DefenseEquipmentManager_B : MonoBehaviour
     {
-        if (_data is null)
-            Debug.Log("データがありません");
-    }
+        [SerializeField]
+        protected DefenseEquipmentData_B _data;
 
-    protected virtual List<EnemyManager_B> TargetSelect()
-    {
-        return _enemyList.OrderBy(x => Vector3.Distance(transform.position, x.transform.position)).Take(1).ToList();
-    }
+        protected int Level;
+        protected List<EnemyManager_B> _enemyList;
 
-    protected abstract void Attack();
-
-    protected void TargetsAddDamage(List<EnemyManager_B> enemies)
-    {
-        foreach (var enemy in enemies)
+        private void Start()
         {
-            enemy.HitDamage(CalcDamage(_data.Attack));
+            if (_data is null)
+                Debug.Log("データがありません");
         }
-    }
 
-    private float CalcDamage(float baseDamage)
-    {
-        float totalDamage = baseDamage;
-        return totalDamage;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.TryGetComponent<EnemyManager_B>(out var enemyManager))
+        protected virtual List<EnemyManager_B> TargetSelect()
         {
-            _enemyList.Add(enemyManager);
+            return _enemyList.OrderBy(x => Vector3.Distance(transform.position, x.transform.position)).Take(1).ToList();
         }
-    }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.TryGetComponent<EnemyManager_B>(out var enemyManager))
+        protected abstract void Attack();
+
+        protected void TargetsAddDamage(List<EnemyManager_B> enemies)
         {
-            _enemyList.Remove(enemyManager);
+            foreach (var enemy in enemies)
+            {
+                enemy.HitDamage(CalcDamage(_data.Attack));
+            }
+        }
+
+        private float CalcDamage(float baseDamage)
+        {
+            float totalDamage = baseDamage;
+            return totalDamage;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.TryGetComponent<EnemyManager_B>(out var enemyManager))
+            {
+                _enemyList.Add(enemyManager);
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.TryGetComponent<EnemyManager_B>(out var enemyManager))
+            {
+                _enemyList.Remove(enemyManager);
+            }
         }
     }
 }

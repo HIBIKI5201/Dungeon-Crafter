@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using DCFrameWork.Enemy;
 
 public abstract class DefenseEquipmentManager_B : MonoBehaviour
 {

@@ -9,8 +9,25 @@ public abstract class UIManager_B : MonoBehaviour
     private void Start()
     {
         _document = GetComponent<UIDocument>();
-        _root = _document.rootVisualElement;
+        if (_document is null)
+        {
+            Debug.LogWarning("UIDocumentがアタッチされていません");
+            return;
+        }
+        _root = _document?.rootVisualElement;
+
+        LoadDocumentElement(_root);
     }
 
-    protected abstract void Init();
+    /// <summary>
+    /// 初期化
+    /// </summary>
+    public abstract void Init();
+
+    /// <summary>
+    /// UIDocumentの要素をロードするメソッド
+    /// Startで実行される
+    /// </summary>
+    /// <param name="root">Documentのroot要素</param>
+    protected abstract void LoadDocumentElement(VisualElement root);
 }

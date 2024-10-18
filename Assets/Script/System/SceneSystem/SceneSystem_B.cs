@@ -1,7 +1,5 @@
 using DCFrameWork.InputBuffer;
 using DCFrameWork.MainSystem;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -20,6 +18,8 @@ public abstract class SceneSystem_B : MonoBehaviour
         _input = FindAnyObjectByType<InputBuffer_B>();
         if (_input is null)
             Debug.LogWarning("InputBuffer‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
+
+        _UIManager.Init();
     }
 
     private void Update()

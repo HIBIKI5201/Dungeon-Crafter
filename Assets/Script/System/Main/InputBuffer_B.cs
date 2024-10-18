@@ -1,10 +1,13 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 
 
 namespace DCFrameWork.InputBuffer
 {
     [RequireComponent(typeof(PlayerInput))]
+    [RequireComponent(typeof(InputSystemUIInputModule))]
     public abstract class InputBuffer_B : MonoBehaviour
     {
         PlayerInput _playerInput;
@@ -13,14 +16,11 @@ namespace DCFrameWork.InputBuffer
         private void Start()
         {
             _playerInput = GetComponent<PlayerInput>();
+            _playerInput.notificationBehavior = PlayerNotifications.InvokeCSharpEvents;
+            _playerInput.uiInputModule = GetComponent<InputSystemUIInputModule>();
             _context = new();
-        }
 
-        private void Update()
-        {
-            _context.MoveInput = _playerInput.actions["Move"].ReadValue<Vector2>();
-            _context.CameraInput = _playerInput.actions["Look"].ReadValue<Vector2>();
-            _context.Comfirm = _playerInput.actions["Fire"].triggered;
+            _playerInput.onActionTriggered += OnAction;
         }
 
         private void LateUpdate()
@@ -29,6 +29,24 @@ namespace DCFrameWork.InputBuffer
         }
 
         public InputContext GetContext() => _context;
+
+        protected virtual void OnAction(InputAction.CallbackContext context)
+        {
+            switch (context.action.name)
+            {
+                case "Move":
+                    _context.MoveInput = context.ReadValue<Vector2>();
+                    break;
+
+                case "Look":
+                    _context.CameraInput = context.ReadValue<Vector2>();
+                    break;
+                
+                case "Fire":
+                    _context.Comfirm = true;
+                    break;
+            }
+        }
     }
 
     public struct InputContext

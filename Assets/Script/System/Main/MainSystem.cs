@@ -1,19 +1,23 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace DCFrameWork.MainSystem
 {
     public class MainSystem : MonoBehaviour
     {
         private static MainSystem _instance;
-
+        
         AudioManager _audioManager;
+        private UIManager_B _mainUIManager;
 
         private void Awake()
         {
             if (_instance == null)
             {
                 _instance = this;
+                Scene scene = SceneManager.CreateScene("SystemScene");
+                SceneManager.MoveGameObjectToScene(gameObject, scene);
             }
             else
             {
@@ -25,15 +29,15 @@ namespace DCFrameWork.MainSystem
         void Start()
         {
             (GameSaveData gameData, SettingSaveData settingSaveData) data = SaveDataManager.Load();
+            SaveDataManager.SaveData = data.gameData;
+            SaveDataManager.SettingSaveData = data.settingSaveData;
 
             _audioManager = GetComponentInChildren<AudioManager>();
             if (_audioManager is null)
                 Debug.LogWarning("AudioManager‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
-        }
-
-        protected void SceneSystemInit()
-        {
-
+            _mainUIManager = GetComponentInChildren<UIManager_B>();
+            if (_mainUIManager is null)
+                Debug.LogWarning("MainUIManager‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
         }
 
         public void LoadScene(SceneKind kind)
@@ -48,12 +52,6 @@ namespace DCFrameWork.MainSystem
             sceneSystem?.Init(this);
         }
 
-        public void SaveGameData() => SaveDataManager.Save();
-
-        public void SaveSettingData() => SaveDataManager.SettingSave();
-
-        public void PlaySoundEffect(int index) => _audioManager?.PlaySoundEffect(index);
-
-        public void PlayBGM(int index) => _audioManager.PlayBGM(index);
+        public void PlaySound(int index, SoundKind kind) => _audioManager?.PlaySound(index, kind);
     }
 }

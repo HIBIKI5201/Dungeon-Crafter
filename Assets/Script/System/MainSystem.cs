@@ -1,30 +1,19 @@
+using System.Collections;
 using UnityEngine;
 
 namespace DCFrameWork.MainSystem
 {
-    public abstract class MainSystem<T> : MonoBehaviour where T :MainSystem<T>
+    public class MainSystem : MonoBehaviour
     {
-        private static T _instance;
-
-        protected static T MyInstance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    Debug.LogError(typeof(T).Name + " is not initialized.");
-                }
-                return _instance;
-            }
-        }
+        private static MainSystem _instance;
 
         AudioManager _audioManager;
 
-        protected virtual void Awake()
+        private void Awake()
         {
             if (_instance == null)
             {
-                _instance = (T)this;
+                _instance = this;
             }
             else
             {
@@ -47,11 +36,20 @@ namespace DCFrameWork.MainSystem
 
         public void LoadScene(SceneKind kind)
         {
-
+            StartCoroutine(SceneLoading(kind));
         }
 
+        private IEnumerator SceneLoading(SceneKind kind)
+        {
+            yield return SceneChanger.LoadScene(kind);
+        }
+
+        public void SaveGameData() => SaveDataManager.Save();
+
+        public void SaveSettingData() => SaveDataManager.SettingSave();
+
         public void PlaySoundEffect(int index) => _audioManager?.PlaySoundEffect(index);
-        
+
         public void PlayBGM(int index) => _audioManager.PlayBGM(index);
     }
 }

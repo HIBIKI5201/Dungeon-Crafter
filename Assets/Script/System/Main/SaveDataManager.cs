@@ -4,8 +4,18 @@ namespace DCFrameWork.MainSystem
 {
     public class SaveDataManager : MonoBehaviour
     {
-        public static GameSaveData SaveData = null;
-        public static SettingSaveData SettingSaveData = null;
+        private static GameSaveData _saveData = null;
+        public static GameSaveData SaveData
+        {
+            get => _saveData;
+            set=> _saveData = value;
+        }
+        private static SettingSaveData _settingSaveData = null;
+        public static SettingSaveData SettingSaveData
+        {
+            get => _settingSaveData;
+            set => _settingSaveData = value;
+        }
 
         public static void Save()
         {

@@ -20,11 +20,6 @@ public abstract class UIManager_B : MonoBehaviour
     }
 
     /// <summary>
-    /// 初期化
-    /// </summary>
-    public abstract void Init();
-
-    /// <summary>
     /// UIDocumentの要素をロードするメソッド
     /// Startで実行される
     /// </summary>

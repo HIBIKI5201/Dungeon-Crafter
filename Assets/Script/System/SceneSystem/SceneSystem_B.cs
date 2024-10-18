@@ -6,8 +6,8 @@ using UnityEngine;
 public abstract class SceneSystem_B : MonoBehaviour
 {
     public MainSystem System;
-    protected UIManager_B _UIManager;
     protected InputBuffer_B _input;
+    protected UIManager_B _UIManager;
 
     public void Init(MainSystem system)
     {
@@ -18,8 +18,6 @@ public abstract class SceneSystem_B : MonoBehaviour
         _input = FindAnyObjectByType<InputBuffer_B>();
         if (_input is null)
             Debug.LogWarning("InputBuffer‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
-
-        _UIManager.Init();
     }
 
     private void Update()

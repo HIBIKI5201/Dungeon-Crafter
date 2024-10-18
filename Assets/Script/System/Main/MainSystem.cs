@@ -24,6 +24,8 @@ namespace DCFrameWork.MainSystem
 
         void Start()
         {
+            (GameSaveData gameData, SettingSaveData settingSaveData) data = SaveDataManager.Load();
+
             _audioManager = GetComponentInChildren<AudioManager>();
             if (_audioManager is null)
                 Debug.LogWarning("AudioManager‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
@@ -42,6 +44,8 @@ namespace DCFrameWork.MainSystem
         private IEnumerator SceneLoading(SceneKind kind)
         {
             yield return SceneChanger.LoadScene(kind);
+            SceneSystem_B sceneSystem = FindAnyObjectByType<SceneSystem_B>();
+            sceneSystem?.Init(this);
         }
 
         public void SaveGameData() => SaveDataManager.Save();

@@ -21,23 +21,18 @@ namespace DCFrameWork.MainSystem
 
         public static void Save()
         {
-            var gameSaveDataStr = JsonUtility.ToJson(SaveData);
-            PlayerPrefs.SetString("GameSaveData", Encryption(gameSaveDataStr));
+            PlayerPrefs.SetString("GameSaveData", Encryption(JsonUtility.ToJson(SaveData)));
         }
 
         public static void SettingSave()
         {
-            var settingSaveDataStr = JsonUtility.ToJson(SettingSaveData);
-            PlayerPrefs.SetString("SettingSaveData", Encryption(settingSaveDataStr));
+            PlayerPrefs.SetString("SettingSaveData", Encryption(JsonUtility.ToJson(SettingSaveData)));
         }
 
         public static (GameSaveData, SettingSaveData) Load()
         {
-            var gameSaveDataStr = PlayerPrefs.GetString("GemeSaveData");
-            var settingSaveDataStr = PlayerPrefs.GetString("SettintgSaveData");
-            GameSaveData gameSaveData = JsonUtility.FromJson<GameSaveData>(Encryption(gameSaveDataStr));
-            SettingSaveData settingSaveData = JsonUtility.FromJson<SettingSaveData>(Encryption(settingSaveDataStr));
-            return (gameSaveData, settingSaveData);
+            return (JsonUtility.FromJson<GameSaveData>(Encryption(PlayerPrefs.GetString("GemeSaveData"))),
+                JsonUtility.FromJson<SettingSaveData>(Encryption(PlayerPrefs.GetString("SettintgSaveData"))));
         }
         static string Encryption(string data)
         {
@@ -49,14 +44,14 @@ namespace DCFrameWork.MainSystem
     {
         public string SaveDate = "";
         public int PowerUpItemValue = 0;
-        public List<int> PowerUpDatas=new List<int>();
-        public int EventFlag=0;
+        public List<int> PowerUpDatas = new List<int>();
+        public int EventFlag = 0;
     }
     [System.Serializable]
     public class SettingSaveData
     {
-        public int MasterVolume=50;
-        public int SoundEffectVolume=50;
+        public int MasterVolume = 50;
+        public int SoundEffectVolume = 50;
         public int BGMVolume = 50;
     }
 }

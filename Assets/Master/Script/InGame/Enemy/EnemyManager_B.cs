@@ -29,6 +29,11 @@ namespace DCFrameWork.Enemy
         [SerializeField]
         protected float _dropGold;
 
+        [SerializeField]
+        protected float _levelRequirePoint;
+
+        private EnemyHealthBarManager _healthBarManager;
+
         private Dictionary<ConditionType, int> _conditionList = new();
 
         private NavMeshAgent _agent;
@@ -52,6 +57,7 @@ namespace DCFrameWork.Enemy
         public void HitDamage(float damage)
         {
             _currentHealth -= damage;
+            HealthBarUpdate();
             if (_currentHealth <= 0)
             {
                 DeathBehivour();
@@ -65,6 +71,7 @@ namespace DCFrameWork.Enemy
         public void HitHeal(float amount)
         {
             _currentHealth = Mathf.Min(_currentHealth + amount, _maxHealth);
+            HealthBarUpdate();
         }
 
         private void DeathBehivour()
@@ -101,6 +108,11 @@ namespace DCFrameWork.Enemy
         protected void GoToTargetPos(Vector3 pos)
         {
 
+        }
+
+        private void HealthBarUpdate()
+        {
+            _healthBarManager?.BarFillUpdate(_currentHealth / _maxHealth);
         }
     }
     public enum ConditionType

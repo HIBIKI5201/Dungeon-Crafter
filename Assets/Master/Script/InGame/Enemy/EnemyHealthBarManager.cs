@@ -10,7 +10,7 @@ public class EnemyHealthBarManager : MonoBehaviour
     [SerializeField]
     CapsuleCollider _targetCollider;
 
-    [SerializeField] int _radius ;
+    [SerializeField] int _radius = 1 ;
     private void Start()
     {
         _rectTransform = GetComponent<RectTransform>();

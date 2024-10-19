@@ -6,6 +6,9 @@ public class ClickToCreateElement : MonoBehaviour
     private VisualElement uiContainer;
     private VisualElement element;
 
+    public GameObject particle;
+    private ParticleSystem particleSystem;
+
     void Start()
     {
         var uiDocument = GetComponent<UIDocument>();
@@ -13,6 +16,8 @@ public class ClickToCreateElement : MonoBehaviour
         element = uiContainer.Q<VisualElement>("element");
 
         uiContainer.RegisterCallback<MouseDownEvent>(OnMouseDown);
+
+        particleSystem = particle.GetComponent<ParticleSystem>();
     }
 
     private void OnMouseDown(MouseDownEvent evt)
@@ -26,5 +31,8 @@ public class ClickToCreateElement : MonoBehaviour
 
         element.style.left = clickPosition.x - width / 2;
         element.style.top = clickPosition.y - height / 2;
+
+        particleSystem?.Clear();
+        particleSystem?.Play();
     }
 }

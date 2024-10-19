@@ -10,7 +10,7 @@ public class EnemyHealthBarManager : MonoBehaviour
     [SerializeField]
     CapsuleCollider _targetCollider;
 
-  
+    [SerializeField] int _radius ;
     private void Start()
     {
         _rectTransform = GetComponent<RectTransform>();
@@ -18,9 +18,9 @@ public class EnemyHealthBarManager : MonoBehaviour
 
     public void FollowTarget(Vector3 target)
     {
-        
-        target.y -= _targetCollider.height / 2;
-        Vector2 screenPos = Camera.main.WorldToScreenPoint(target);
+        Vector3 cameraPos = Camera.main.transform.position;
+        Vector3 towards = target  + new Vector3(target.x - cameraPos.x, 0 , target.z - cameraPos.z).normalized   * _radius;
+        Vector2 screenPos = Camera.main.WorldToScreenPoint(towards);
         transform.position = screenPos;
     }
 

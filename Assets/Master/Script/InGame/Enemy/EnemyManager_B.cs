@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace DCFrameWork.Enemy
 {
+    [RequireComponent(typeof(NavMeshAgent))]
     public abstract class EnemyManager_B : MonoBehaviour
     {
         [SerializeField]
@@ -27,11 +29,15 @@ namespace DCFrameWork.Enemy
         [SerializeField]
         protected float _dropGold;
 
-        private List<ConditionType> _conditionList = new();
+        private Dictionary<ConditionType, int> _conditionList = new();
 
+        private NavMeshAgent _agent;
         private void Start()
         {
             _currentHealth = _maxHealth;
+            _agent = GetComponent<NavMeshAgent>();
+
+            Start_S();
         }
 
         /// <summary>
@@ -68,15 +74,25 @@ namespace DCFrameWork.Enemy
 
         public void AddCondition(ConditionType type)
         {
-            if (!_conditionList.Contains(type))
-                _conditionList.Add(type);
+            if (_conditionList.TryGetValue(type, out var count))
+            {
+                _conditionList[type] = count + 1;
+            }
+            else
+            {
+                _conditionList.Add(type, 1);
+            }
         }
 
         public void RemoveCondition(ConditionType type)
         {
-            if (_conditionList.Contains(type))
-                _conditionList.Remove(type);
+            if (_conditionList.TryGetValue(type, out var count))
+            {
+                _conditionList[type] = Mathf.Max(0, count - 1);
+            }
         }
+
+        public int CountCondition(ConditionType type) => (_conditionList.TryGetValue(type, out int count)) ? count : 0;
 
         /// <summary>
         /// NavMeshè„ÇÃÉ|ÉWÉVÉáÉìÇ÷à⁄ìÆÇ∑ÇÈ

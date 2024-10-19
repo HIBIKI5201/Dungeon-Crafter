@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -18,28 +17,12 @@ public class ClickToCreateElement : MonoBehaviour
 
     private void OnMouseDown(MouseDownEvent evt)
     {
-        Vector2 clickPosition = evt.mousePosition;
-        float width = 1;
-        float height = 1;
-        if (element is null)
-        {
-            element = new VisualElement
-            {
-                style =
-                {
-                    width = width,
-                    height = height,
-                }
-            };
+        if (element is null) return;
 
-            uiContainer.Add(element);
-            element.style.position = Position.Absolute;
-        }
-        else
-        {
-            width = element.resolvedStyle.width;
-            height = element.resolvedStyle.height;
-        }
+        Vector2 clickPosition = evt.mousePosition;
+
+        float width = element.resolvedStyle.width;
+        float height = element.resolvedStyle.height;
 
         element.style.left = clickPosition.x - width / 2;
         element.style.top = clickPosition.y - height / 2;

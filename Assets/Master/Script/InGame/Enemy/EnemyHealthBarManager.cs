@@ -6,6 +6,11 @@ public class EnemyHealthBarManager : MonoBehaviour
     RectTransform _rectTransform;
     [SerializeField]
     Image _image;
+
+    [SerializeField]
+    CapsuleCollider _targetCollider;
+
+  
     private void Start()
     {
         _rectTransform = GetComponent<RectTransform>();
@@ -13,8 +18,10 @@ public class EnemyHealthBarManager : MonoBehaviour
 
     public void FollowTarget(Vector3 target)
     {
+        
+        target.y -= _targetCollider.height / 2;
         Vector2 screenPos = Camera.main.WorldToScreenPoint(target);
-        _rectTransform.position = screenPos + new Vector2(0, -200);
+        transform.position = screenPos;
     }
 
     public void BarFillUpdate(float value) => _image.fillAmount = value;

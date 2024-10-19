@@ -60,7 +60,7 @@ public class TextFileGeneratorWindow : EditorWindow
             // 成功メッセージを表示
             Debug.Log("テキストファイルが生成されました: " + newPath);
             fileName = newFileName; // 現在のファイル名を更新
-            newFileName = "";
+            newFileName = ""; // テキストフィールドをクリア
 
             // エディタに変更を通知し、プロジェクトをリフレッシュ
             AssetDatabase.Refresh();

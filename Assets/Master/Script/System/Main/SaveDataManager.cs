@@ -22,42 +22,41 @@ namespace DCFrameWork.MainSystem
         public static void Save()
         {
             var gameSaveDataStr = JsonUtility.ToJson(SaveData);
-            string encryptionData = new string(gameSaveDataStr.Select(x => (char)(x ^ _key)).ToArray());//ˆÃ†‰»
-            PlayerPrefs.SetString("GameSaveData", encryptionData);
+            PlayerPrefs.SetString("GameSaveData", Encryption(gameSaveDataStr));
         }
 
         public static void SettingSave()
         {
             var settingSaveDataStr = JsonUtility.ToJson(SettingSaveData);
-            Debug.Log(settingSaveDataStr);
-            string encryptionData = new string(settingSaveDataStr.Select(x => (char)(x ^ _key)).ToArray());
-            PlayerPrefs.SetString("SettingSaveData", encryptionData);
+            PlayerPrefs.SetString("SettingSaveData", Encryption(settingSaveDataStr));
         }
 
         public static (GameSaveData, SettingSaveData) Load()
         {
             var gameSaveDataStr = PlayerPrefs.GetString("GemeSaveData");
             var settingSaveDataStr = PlayerPrefs.GetString("SettintgSaveData");
-            string decryptGameData = new string(gameSaveDataStr.Select(x => (char)(x ^ _key)).ToArray());//•œ†
-            string decryptSettingData = new string(settingSaveDataStr.Select(x => (char)(x ^ _key)).ToArray());
-            GameSaveData gameSaveData = JsonUtility.FromJson<GameSaveData>(decryptGameData);
-            SettingSaveData settingSaveData = JsonUtility.FromJson<SettingSaveData>(decryptSettingData);
+            GameSaveData gameSaveData = JsonUtility.FromJson<GameSaveData>(Encryption(gameSaveDataStr));
+            SettingSaveData settingSaveData = JsonUtility.FromJson<SettingSaveData>(Encryption(settingSaveDataStr));
             return (gameSaveData, settingSaveData);
+        }
+        static string Encryption(string data)
+        {
+            return new string(data.Select(x => (char)(x ^ _key)).ToArray());
         }
     }
     [System.Serializable]
     public class GameSaveData
     {
-        public string SaveDate;
-        public int PowerUpItemValue;
-        public List<int> PowerUpDatas;
-        public int EventFlag;
+        public string SaveDate = "";
+        public int PowerUpItemValue = 0;
+        public List<int> PowerUpDatas=new List<int>();
+        public int EventFlag=0;
     }
     [System.Serializable]
     public class SettingSaveData
     {
-        public int MasterVolume;
-        public int SoundEffectVolume;
-        public int BGMVolume;
+        public int MasterVolume=50;
+        public int SoundEffectVolume=50;
+        public int BGMVolume = 50;
     }
 }

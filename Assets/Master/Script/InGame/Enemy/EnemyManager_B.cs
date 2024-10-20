@@ -5,29 +5,21 @@ using UnityEngine.AI;
 namespace DCFrameWork.Enemy
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public abstract class EnemyManager_B : MonoBehaviour
+    public abstract class EnemyManager_B<Data> : MonoBehaviour where Data : EnemyData_B
     {
         [SerializeField]
+        EnemyData_B _data;
+
+        #region 共通ステータス
         protected float _maxHealth;
         protected float _currentHealth;
-
-        [SerializeField]
         protected float _defense;
-
-        [SerializeField]
         protected float _dexterity;
-
-        [SerializeField]
         protected float _specialChance;
-
-        [SerializeField]
         protected float _plunder;
-
-        [SerializeField]
         protected float _dropEXP;
-
-        [SerializeField]
         protected float _dropGold;
+        #endregion
 
         [SerializeField]
         protected float _levelRequirePoint;
@@ -39,16 +31,41 @@ namespace DCFrameWork.Enemy
         private NavMeshAgent _agent;
         private void Start()
         {
+            if (_data is null)
+                Debug.Log("データがありません");
+            LoadCommonData();
+
             _currentHealth = _maxHealth;
             _agent = GetComponent<NavMeshAgent>();
 
-            Start_S();
+            Init_S();
         }
 
         /// <summary>
         /// サブクラスでのStartメソッド
         /// </summary>
-        protected virtual void Start_S() { }
+        protected virtual void Init_S() { }
+
+        private void LoadCommonData()
+        {
+            Data data = _data as Data;
+            _maxHealth = data.MaxHealth;
+            _currentHealth = data.CurrentHealth;
+            _defense = data.Defense;
+            _dexterity = data.Dexterity;
+            _specialChance = data.SpecialChance;
+            _plunder = data.Plunder;
+            _dropEXP = data.DropEXP;
+            _dropGold = data.DropGold;
+
+            LoadSpecificnData(data);
+        }
+
+        /// <summary>
+        /// 設定した型パラメータに対応した専用変数を代入してください
+        /// 共通ステータスしかない場合は引数に_を入れて空メソッドにしてください
+        /// </summary>
+        protected abstract void LoadSpecificnData(Data data);
 
         /// <summary>
         /// ダメージを受ける

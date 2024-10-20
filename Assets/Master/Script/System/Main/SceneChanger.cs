@@ -6,7 +6,7 @@ namespace DCFrameWork.MainSystem
 {
     public class SceneChanger : MonoBehaviour
     {
-        static Dictionary<SceneKind, string> _sceneNameDict = new()
+        private static Dictionary<SceneKind, string> _sceneNameDict = new()
         {
             {SceneKind.Home, "" },
             {SceneKind.Ingame_1, ""}

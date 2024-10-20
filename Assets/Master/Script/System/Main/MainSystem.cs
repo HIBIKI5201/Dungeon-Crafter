@@ -30,7 +30,7 @@ namespace DCFrameWork.MainSystem
             }
         }
 
-        void Start()
+        private void Start()
         {
             (GameSaveData gameData, SettingSaveData settingSaveData) data = SaveDataManager.Load();
             SaveDataManager.SaveData = data.gameData;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,7 +7,7 @@ namespace DCFrameWork.MainSystem
     public class SaveDataManager : MonoBehaviour
     {
         private static GameSaveData _saveData = null;
-        const byte _key = 173;
+        private const byte _key = 173;
         public static GameSaveData SaveData
         {
             get => _saveData;
@@ -21,6 +22,7 @@ namespace DCFrameWork.MainSystem
 
         public static void Save()
         {
+            SaveData.SaveDate = DateTime.Now.ToString("O");
             PlayerPrefs.SetString("GameSaveData", Encryption(JsonUtility.ToJson(SaveData)));
         }
 
@@ -34,10 +36,8 @@ namespace DCFrameWork.MainSystem
             return (JsonUtility.FromJson<GameSaveData>(Encryption(PlayerPrefs.GetString("GemeSaveData"))),
                 JsonUtility.FromJson<SettingSaveData>(Encryption(PlayerPrefs.GetString("SettintgSaveData"))));
         }
-        static string Encryption(string data)
-        {
-            return new string(data.Select(x => (char)(x ^ _key)).ToArray());
-        }
+        static string Encryption(string data)=>
+            new string(data.Select(x => (char)(x ^ _key)).ToArray());
     }
     [System.Serializable]
     public class GameSaveData

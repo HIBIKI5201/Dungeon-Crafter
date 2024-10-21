@@ -4,11 +4,13 @@
 
 10/20
 ポーズ用に時間停止機能を追加する必要がある
-・インターフェースでIPausable（Pause(), Resume())を追加し、ポーズ可能なオブジェクト（エネミーやタレット）に実装
-・MainSystemでIPausable、PausableWaitForSecondを実行するように
+・IPausableをオブジェクト（エネミーやタレット）に実装
+・MainSystemでPausableWaitForSecondを実行するように
 ・PausableWaitForSecondにポーズ停止処理を追加する
 
 
 完了済一覧
 ・MainSystemをサービスロケーターとして使用し、MainSystemのインスタンスを公開
 ・ポーズ用のIenumerator型メソッド、PausableWaitForSecondを制作
+・IPausableクラスを実装
+・MainSystemでIPausableを実行するように

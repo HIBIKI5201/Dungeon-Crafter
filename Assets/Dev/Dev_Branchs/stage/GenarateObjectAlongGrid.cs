@@ -1,39 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 public class GenarateObjectAlongGrid : MonoBehaviour
 {
     [SerializeField] GameObject _prefab;
-    private Camera mainCamera;
-    private Vector3 currentPosition = Vector3.zero;
+    [SerializeField] GameObject _clickPointPrefab;
+    [SerializeField] GameObject _clickGridPrefab;
+    NavMeshSurface _navMeshSurface;
+    private Camera _mainCamera;
+    private Vector3 _currentPosition = Vector3.zero;
     private float _prefabHeight;
 
     void Start()
     {
-        mainCamera = Camera.main;
+        _mainCamera = Camera.main;
         _prefabHeight = _prefab.GetComponent<BoxCollider>().size.y;
     }
 
     void Update()
     {
+        var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
+        var raycastHitList = Physics.RaycastAll(ray).ToList();
+        
+        if (raycastHitList.Any())
+        {
+            _currentPosition = raycastHitList.First().point;
+            _clickPointPrefab.transform.position = _currentPosition;
+            _currentPosition.y = _prefabHeight / 2;
+            _currentPosition.x = (int)(_currentPosition.x) + 0.5f * Mathf.Sign(_currentPosition.x);
+            _currentPosition.z = (int)(_currentPosition.z) + 0.5f * Mathf.Sign(_currentPosition.z);
+            _clickGridPrefab.transform.position = _currentPosition;
+        }
         if (Input.GetMouseButtonDown(0))
         {
-            var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-            var raycastHitList = Physics.RaycastAll(ray).ToList();
-            if (raycastHitList.Any())
-            {
-
-                var distance = Vector3.Distance(mainCamera.transform.position, raycastHitList.First().point);
-                var mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
-
-                currentPosition = mainCamera.ScreenToWorldPoint(mousePosition);
-                currentPosition.y = _prefabHeight / 2;
-                currentPosition.x = (int)(currentPosition.x);
-                currentPosition.x = (int)(currentPosition.z);
-                Instantiate(_prefab, currentPosition, Quaternion.identity);
-            }
+            Instantiate(_prefab, _currentPosition, Quaternion.identity);
+            _navMeshSurface.BuildNavMesh();
         }
     }
 }

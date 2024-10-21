@@ -27,7 +27,7 @@ namespace DCFrameWork.Enemy
 
         private EnemyHealthBarManager _healthBarManager;
 
-        private Dictionary<ConditionType, int> _conditionList = new();
+        private readonly Dictionary<ConditionType, int> _conditionList = new();
 
         private NavMeshAgent _agent;
         private void Start()
@@ -132,7 +132,7 @@ namespace DCFrameWork.Enemy
         /// <param name="pos">移動目標の座標</param>
         protected void GoToTargetPos(Vector3 pos)
         {
-
+            _agent.SetDestination(pos);
         }
 
         private void HealthBarUpdate()
@@ -140,8 +140,12 @@ namespace DCFrameWork.Enemy
             _healthBarManager?.BarFillUpdate(_currentHealth / _maxHealth);
         }
 
-        protected abstract void IPausable.Pause();
-        protected abstract void IPausable.Resume();
+        #region ポーズ処理
+        void IPausable.Pause() => Pause();
+        void IPausable.Resume() => Resume();
+        protected abstract void Pause();
+        protected abstract void Resume();
+        #endregion
     }
     public enum ConditionType
     {

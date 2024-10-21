@@ -70,24 +70,24 @@ namespace DCFrameWork.MainSystem
         #region ƒ|[ƒY
         public void Pause()
         {
-            _pausableList.ForEach(p => p.Pause());
+            _pausableList?.ForEach(p => p.Pause());
         }
 
         public void Resume()
         {
-            _pausableList.ForEach(p => p.Resume());
+            _pausableList?.ForEach(p => p.Resume());
         }
 
         public void AddPausableObject(IPausable obj)
         {
-            if (!_pausableList.Contains(obj))
+            if (!_pausableList?.Contains(obj) ?? false)
             {
                 _pausableList.Add(obj);
             }
         }
         public void RemovePausableObject(IPausable obj)
         {
-            if (_pausableList.Contains(obj))
+            if (_pausableList?.Contains(obj) ?? false)
             {
                 _pausableList.Remove(obj);
             }

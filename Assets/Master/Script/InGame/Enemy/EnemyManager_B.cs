@@ -39,14 +39,14 @@ namespace DCFrameWork.Enemy
             _currentHealth = _maxHealth;
             _agent = GetComponent<NavMeshAgent>();
 
-            MainSystem.MainSystem.mainSystem.AddPausableObject(this as IPausable);
+            GameBaseSystem.mainSystem.AddPausableObject(this as IPausable);
 
             Init_S();
         }
 
         private void OnDestroy()
         {
-            MainSystem.MainSystem.mainSystem.RemovePausableObject(this as IPausable);
+            GameBaseSystem.mainSystem.RemovePausableObject(this as IPausable);
         }
 
         /// <summary>

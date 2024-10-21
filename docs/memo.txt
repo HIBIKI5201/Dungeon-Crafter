@@ -1,9 +1,14 @@
-10/30
-MainSystemをサービスロケーターとして使用し、MainSystemのインスタンスを公開
-SceneSystemのインスタンスをシーンロード時に公開
+10/21
+・SceneSystemのインスタンスをシーンロード時に公開
 
-10/30
+
+10/20
 ポーズ用に時間停止機能を追加する必要がある
-  ポーズ用のIenumerator型メソッド、PausableWaitForSecondを制作
-  インターフェースでIPausable（Pause(), Resume())を追加し、ポーズ可能なオブジェクト（エネミーやタレット）に実装
-　MainSystemでIPausable、PausableWaitForSecondを実行するように
+・インターフェースでIPausable（Pause(), Resume())を追加し、ポーズ可能なオブジェクト（エネミーやタレット）に実装
+・MainSystemでIPausable、PausableWaitForSecondを実行するように
+・PausableWaitForSecondにポーズ停止処理を追加する
+
+
+完了済一覧
+・MainSystemをサービスロケーターとして使用し、MainSystemのインスタンスを公開
+・ポーズ用のIenumerator型メソッド、PausableWaitForSecondを制作

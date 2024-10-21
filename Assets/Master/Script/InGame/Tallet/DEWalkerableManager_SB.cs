@@ -1,7 +1,7 @@
 using DCFrameWork.DefenseEquipment;
 using DCFrameWork.Enemy;
 
-public abstract class DEWalkerableManager_SB : DefenseEquipmentData_B
+public abstract class DEWalkerableManager_SB<Data> : DefenseEquipmentManager_B<Data> where Data : DefenseEquipmentData_B
 {
     protected void TargetAddCondition(EnemyManager_B enemy, ConditionType type)
     {

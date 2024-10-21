@@ -1,8 +1,9 @@
+using DCFrameWork.MainSystem;
 using UnityEngine;
 
 namespace DCFrameWork.DefenseEquipment
 {
-    public abstract class DefenseEquipmentManager_B<Data> : MonoBehaviour where Data : DefenseEquipmentData_B
+    public abstract class DefenseEquipmentManager_B<Data> : MonoBehaviour where Data : DefenseEquipmentData_B, IPausable
     {
         [SerializeField]
         private DefenseEquipmentData_B _data;
@@ -21,6 +22,12 @@ namespace DCFrameWork.DefenseEquipment
             if (_data is null)
                 Debug.Log("ÉfÅ[É^Ç™Ç†ÇËÇ‹ÇπÇÒ");
             LoadCommonData();
+            MainSystem.MainSystem.mainSystem.AddPausableObject(this as IPausable);
+        }
+
+        private void OnDestroy()
+        {
+            MainSystem.MainSystem.mainSystem.RemovePausableObject(this as IPausable);
         }
 
         private void LoadCommonData()

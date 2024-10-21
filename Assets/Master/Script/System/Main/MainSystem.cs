@@ -1,4 +1,7 @@
+using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,10 +9,19 @@ namespace DCFrameWork.MainSystem
 {
     public class MainSystem : MonoBehaviour
     {
+        #region サービスロケーター
+        public static MainSystem mainSystem { get => _instance; }
+        public static SceneSystem_B sceneSystem { get; private set; }
+        #endregion
+
+        #region メインシステム コンポーネント
         private static MainSystem _instance;
-        
-        AudioManager _audioManager;
+
+        private AudioManager _audioManager;
         private UIManager_B _mainUIManager;
+        #endregion
+
+        private List<IPausable> _pausableList = new();
 
         private void Awake()
         {
@@ -26,7 +38,7 @@ namespace DCFrameWork.MainSystem
             }
         }
 
-        void Start()
+        private void Start()
         {
             (GameSaveData gameData, SettingSaveData settingSaveData) data = SaveDataManager.Load();
             SaveDataManager.SaveData = data.gameData;
@@ -48,10 +60,51 @@ namespace DCFrameWork.MainSystem
         private IEnumerator SceneLoading(SceneKind kind)
         {
             yield return SceneChanger.LoadScene(kind);
-            SceneSystem_B sceneSystem = FindAnyObjectByType<SceneSystem_B>();
-            sceneSystem?.Init(this);
+            SceneSystem_B system = FindAnyObjectByType<SceneSystem_B>();
+            sceneSystem = system;
+            system?.Init(this);
         }
 
         public void PlaySound(int index, SoundKind kind) => _audioManager?.PlaySound(index, kind);
+
+        #region ポーズ
+        public void Pause()
+        {
+            _pausableList.ForEach(p => p.Pause());
+        }
+
+        public void Resume()
+        {
+            _pausableList.ForEach(p => p.Resume());
+        }
+
+        public void AddPausableObject(IPausable obj)
+        {
+            if (!_pausableList.Contains(obj))
+            {
+                _pausableList.Add(obj);
+            }
+        }
+        public void RemovePausableObject(IPausable obj)
+        {
+            if (_pausableList.Contains(obj))
+            {
+                _pausableList.Remove(obj);
+            }
+        }
+        #endregion
+    }
+
+    public interface IPausable
+    {
+        /// <summary>
+        /// ポーズ時の処理を実装
+        /// </summary>
+        void Pause();
+
+        /// <summary>
+        /// ポーズ解除時の処理を実装
+        /// </summary>
+        void Resume();
     }
 }

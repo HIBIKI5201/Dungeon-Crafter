@@ -1,0 +1,10 @@
+UITKでのカーソルクリックパーティクル
+
+・カメラのCulling設定でUIレイヤーを除外する
+・サブカメラのCulling設定でUIレイヤー以外を除外する
+・パーティクルを制作し、レイヤーをUIにする
+・サブカメラにパーティクルを収める
+・RenderTextureを追加する
+・UITKのVisual ElementにRenderTextureをアサインする
+・サブカメラのOutputにRenderTextureをアサインする
+・Visual Elementをクリックした場所に移動させるスクリプトを制作する

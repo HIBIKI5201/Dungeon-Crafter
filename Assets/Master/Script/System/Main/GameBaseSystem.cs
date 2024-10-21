@@ -7,15 +7,15 @@ using UnityEngine.SceneManagement;
 
 namespace DCFrameWork.MainSystem
 {
-    public class MainSystem : MonoBehaviour
+    public class GameBaseSystem : MonoBehaviour
     {
         #region サービスロケーター
-        public static MainSystem mainSystem { get => _instance; }
+        public static GameBaseSystem mainSystem { get => _instance; }
         public static SceneSystem_B sceneSystem { get; private set; }
         #endregion
 
         #region メインシステム コンポーネント
-        private static MainSystem _instance;
+        private static GameBaseSystem _instance;
 
         private AudioManager _audioManager;
         private UIManager_B _mainUIManager;

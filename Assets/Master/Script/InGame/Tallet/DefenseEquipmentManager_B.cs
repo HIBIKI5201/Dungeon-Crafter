@@ -1,4 +1,5 @@
 using DCFrameWork.MainSystem;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace DCFrameWork.DefenseEquipment
@@ -58,7 +59,11 @@ namespace DCFrameWork.DefenseEquipment
         /// </summary>
         protected abstract void Think();
 
+        #region ƒ|[ƒYˆ—
+        void IPausable.Pause() => Pause();
+        void IPausable.Resume() => Resume();
         protected abstract void Pause();
         protected abstract void Resume();
+        #endregion
     }
 }

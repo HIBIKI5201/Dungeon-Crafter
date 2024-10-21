@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,7 +10,7 @@ namespace DCFrameWork.MainSystem
         public static SceneSystem_B sceneSystem { get; private set; }
 
         private static MainSystem _instance;
-        
+
         AudioManager _audioManager;
         private UIManager_B _mainUIManager;
 
@@ -58,20 +57,5 @@ namespace DCFrameWork.MainSystem
         }
 
         public void PlaySound(int index, SoundKind kind) => _audioManager?.PlaySound(index, kind);
-
-        #region フレームワーク
-        /// <summary>
-        /// 条件が揃った場合にコメントをデバッグログに出力する
-        /// </summary>
-        /// <param name="func">条件式</param>
-        /// <param name="comment">ログのコメント</param>
-        /// <returns>条件が揃っているか</returns>
-        public static bool NullChecker(Func<bool> func, string comment)
-        {
-            bool result = func();
-            if (result) Debug.Log(comment);
-            return result;
-        }
-        #endregion
     }
 }

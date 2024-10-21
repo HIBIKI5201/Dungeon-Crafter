@@ -1,5 +1,4 @@
 using DCFrameWork.MainSystem;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace DCFrameWork.DefenseEquipment
@@ -23,12 +22,12 @@ namespace DCFrameWork.DefenseEquipment
             if (_data is null)
                 Debug.Log("ÉfÅ[É^Ç™Ç†ÇËÇ‹ÇπÇÒ");
             LoadCommonData();
-            MainSystem.MainSystem.mainSystem.AddPausableObject(this as IPausable);
+            GameBaseSystem.mainSystem.AddPausableObject(this as IPausable);
         }
 
         private void OnDestroy()
         {
-            MainSystem.MainSystem.mainSystem.RemovePausableObject(this as IPausable);
+            GameBaseSystem.mainSystem.RemovePausableObject(this as IPausable);
         }
 
         private void LoadCommonData()

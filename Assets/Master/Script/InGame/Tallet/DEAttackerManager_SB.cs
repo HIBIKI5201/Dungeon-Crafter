@@ -4,14 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public abstract class DEAttackerManager_SB : DefenseEquipmentManager_B
+public abstract class DEAttackerManager_SB<Data> : DefenseEquipmentManager_B<Data> where Data : DefenseEquipmentData_B
 {
     protected List<EnemyManager_B> _enemyList;
 
-    protected virtual List<EnemyManager_B> TargetSelect()
-    {
-        return _enemyList.OrderBy(x => Vector3.Distance(transform.position, x.transform.position)).Take(1).ToList();
-    }
+    protected virtual List<EnemyManager_B> TargetSelect() =>
+        _enemyList.OrderBy(x => Vector3.Distance(transform.position, x.transform.position)).Take(1).ToList();
+    
 
     protected abstract void Attack();
 

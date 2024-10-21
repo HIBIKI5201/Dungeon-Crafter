@@ -2,7 +2,7 @@ using DCFrameWork.DefenseEquipment;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class DEEntityManager_SB : DefenseEquipmentData_B
+public abstract class DEEntityManager_SB<Data> : DefenseEquipmentManager_B<Data> where Data : DefenseEquipmentData_B
 {
     [SerializeField]
     GameObject _entityPrefab;

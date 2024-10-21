@@ -1,3 +1,4 @@
+using DCFrameWork.MainSystem;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -5,7 +6,7 @@ using UnityEngine.AI;
 namespace DCFrameWork.Enemy
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public abstract class EnemyManager_B<Data> : MonoBehaviour where Data : EnemyData_B
+    public abstract class EnemyManager_B<Data> : MonoBehaviour, IPausable where Data : EnemyData_B
     {
         [SerializeField]
         EnemyData_B _data;
@@ -38,7 +39,14 @@ namespace DCFrameWork.Enemy
             _currentHealth = _maxHealth;
             _agent = GetComponent<NavMeshAgent>();
 
+            MainSystem.MainSystem.mainSystem.AddPausableObject(this as IPausable);
+
             Init_S();
+        }
+
+        private void OnDestroy()
+        {
+            MainSystem.MainSystem.mainSystem.RemovePausableObject(this as IPausable);
         }
 
         /// <summary>
@@ -131,6 +139,9 @@ namespace DCFrameWork.Enemy
         {
             _healthBarManager?.BarFillUpdate(_currentHealth / _maxHealth);
         }
+
+        protected abstract void IPausable.Pause();
+        protected abstract void IPausable.Resume();
     }
     public enum ConditionType
     {

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DCFrameWork.DefenseEquipment
 {
-    public abstract class DefenseEquipmentManager_B<Data> : MonoBehaviour where Data : DefenseEquipmentData_B, IPausable
+    public abstract class DefenseEquipmentManager_B<Data> : MonoBehaviour, IPausable where Data : DefenseEquipmentData_B
     {
         [SerializeField]
         private DefenseEquipmentData_B _data;
@@ -57,5 +57,8 @@ namespace DCFrameWork.DefenseEquipment
         /// UpdateÇ≈é¿çsÇ≥ÇÍÇ‹Ç∑
         /// </summary>
         protected abstract void Think();
+
+        protected abstract void Pause();
+        protected abstract void Resume();
     }
 }

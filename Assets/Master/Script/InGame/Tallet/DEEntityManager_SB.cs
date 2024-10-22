@@ -8,13 +8,9 @@ public abstract class DEEntityManager_SB<Data> : DefenseEquipmentManager_B<Data>
     GameObject _entityPrefab;
 
     List<GameObject> _entityList = new List<GameObject>();
-
-    [SerializeField]
-    Transform _summonPos;
-
-    protected void Summon()
+    protected void Summon(Vector2 pos)
     {
         if (_entityPrefab is null) return;
-        _entityList.Add(Instantiate(_entityPrefab, _summonPos.position, Quaternion.identity));
+        _entityList.Add(Instantiate(_entityPrefab, pos, Quaternion.identity));
     }
 }

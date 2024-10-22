@@ -1,0 +1,4 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Dev/Dev_Branchs/interface/TitleUiButton.uss?fileID=7433441132597879392&amp;guid=78e483584f026bd48813314aceead6ec&amp;type=3#TitleUiButton" />
+    <engine:Button name="TitleUiButton" class="title-ui-button" />
+</engine:UXML>

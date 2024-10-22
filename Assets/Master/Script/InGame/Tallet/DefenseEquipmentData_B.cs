@@ -1,6 +1,7 @@
 using UnityEngine;
 namespace DCFrameWork.DefenseEquipment
 {
+    [CreateAssetMenu(menuName = "GameData/DefenseData/Base_Data", fileName = "DefebseEquipmentData")]
     public class DefenseEquipmentData_B : ScriptableObject
     {
         //î•ñ

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class EnemyData_B : ScriptableObject
+public class EnemyData_B : ScriptableObject
 {
     public float MaxHealth;
     public float CurrentHealth;

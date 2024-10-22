@@ -73,7 +73,7 @@ namespace DCFrameWork.Enemy
         /// 設定した型パラメータに対応した専用変数を代入してください
         /// 共通ステータスしかない場合は引数に_を入れて空メソッドにしてください
         /// </summary>
-        protected abstract void LoadSpecificnData(Data data);
+        protected virtual void LoadSpecificnData(Data data) { }
 
         /// <summary>
         /// ダメージを受ける

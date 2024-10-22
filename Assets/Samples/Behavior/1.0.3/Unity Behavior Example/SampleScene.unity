@@ -42,7 +42,8 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -281,7 +282,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 54a411b798a1fa24e9d3862f5264b270, type: 2}
+  - {fileID: 2100000, guid: e254e23c1b4c79b408325d2cff963332, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -338,15 +339,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Graph: {fileID: -7954291465794121920, guid: e434c75461c113f449ccd833b5f8b578, type: 2}
+  m_Graph: {fileID: -7954291465794121920, guid: e434c75461c113f449ccd833b5f8b578,
+    type: 2}
   m_BlackboardVariableOverridesList:
   - rid: 4217738984822932268
-  NetcodeRunOnlyOnOwner: 0
   references:
     version: 2
     RefIds:
     - rid: 4217738984822932268
-      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]',
+        ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
           m_Value0: 1
@@ -541,7 +543,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f9c7078a7b7e8de48ab04956ed55ff49, type: 2}
+  - {fileID: 2100000, guid: a3595665fdc535d46b08d9913445831a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -649,7 +651,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b24abc570c9fe184dbd764d5327866d2, type: 2}
+  - {fileID: 2100000, guid: c9f871b5c0c9b6c48bd582f2b1a59cb0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -759,7 +761,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d2bd6c7a15c3a124b907ca032df98bb8, type: 2}
+  - {fileID: 2100000, guid: 5f50e97a7bbddd846b79f8e3a58bc73b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -868,7 +870,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 23b6588c6dacf654cb70487c3a309205, type: 2}
+  - {fileID: 2100000, guid: 8df710412479c5843a9c6ad750bcf49f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

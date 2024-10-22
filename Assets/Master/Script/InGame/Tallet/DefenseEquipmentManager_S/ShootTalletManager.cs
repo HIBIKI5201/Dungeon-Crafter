@@ -6,14 +6,20 @@ using UnityEngine;
 
 public class ShootTalletManager : DEAttackerManager_SB<DefenseEquipmentData_B>
 {
+    float _timer = 0;
     protected override void Think() //UpDate ‚Æ“¯‹`
     {
         var interval = 1 / _rate * Time.deltaTime;
-        Attack();
+        _timer += interval;
+        if (_timer > 1)
+        {
+            Attack();
+            _timer = 0;
+        }
     }
     protected override void Attack()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("Attack");
     }
 
     protected override void LoadSpecificData(DefenseEquipmentData_B data)

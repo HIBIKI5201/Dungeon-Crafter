@@ -46,7 +46,7 @@ namespace DCFrameWork.DefenseEquipment
         /// 設定した型パラメータに対応した専用変数を代入してください
         /// </summary>
         /// <param name="data">設備データ</param>
-        protected abstract void LoadSpecificData(Data data);
+        protected virtual void LoadSpecificData(Data data) { }
 
         private void Update()
         {

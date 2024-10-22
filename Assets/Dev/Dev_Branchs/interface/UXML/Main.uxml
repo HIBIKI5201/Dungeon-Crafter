@@ -1,0 +1,8 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <engine:Template name="Button" src="project://database/Assets/Dev/Dev_Branchs/interface/Button.uxml?fileID=9197481963319205126&amp;guid=bbd2a15bb3c62604db4e3cc2ce5bdb93&amp;type=3#Button" />
+    <engine:VisualElement style="flex-grow: 1; width: 1014px; flex-direction: column; justify-content: space-evenly; align-items: center;">
+        <engine:Instance template="Button" />
+        <engine:Instance template="Button" />
+        <engine:Instance template="Button" />
+    </engine:VisualElement>
+</engine:UXML>

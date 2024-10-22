@@ -77,14 +77,14 @@ MonoBehaviour:
     m_Value1: 8698131712478596169
   m_Blackboard:
     m_Variables:
-    - rid: 1323378207237604076
-    - rid: 1323378207237604077
-    - rid: 1323378207237604078
+    - rid: 1323378207237604079
+    - rid: 1323378207237604080
+    - rid: 1323378207237604081
   m_SharedBlackboardVariableGuids: []
   references:
     version: 2
     RefIds:
-    - rid: 1323378207237604076
+    - rid: 1323378207237604079
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]',
         ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -93,7 +93,7 @@ MonoBehaviour:
           m_Value1: 0
         Name: Self
         m_Value: {fileID: 0}
-    - rid: 1323378207237604077
+    - rid: 1323378207237604080
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]',
         ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -102,7 +102,7 @@ MonoBehaviour:
           m_Value1: 11916315464332283951
         Name: Target
         m_Value: {fileID: 0}
-    - rid: 1323378207237604078
+    - rid: 1323378207237604081
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior,
         asm: Unity.Behavior}
       data:

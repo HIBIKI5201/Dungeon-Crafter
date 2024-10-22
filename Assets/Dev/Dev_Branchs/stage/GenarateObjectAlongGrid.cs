@@ -10,9 +10,11 @@ public class GenarateObjectAlongGrid : MonoBehaviour
     [SerializeField] GameObject _clickPointPrefab;
     [SerializeField] GameObject _clickGridPrefab;
     [SerializeField] NavMeshSurface _navMeshSurface;
+    [SerializeField] GameObject _walls;
     private Camera _mainCamera;
     private Vector3 _currentPosition = Vector3.zero;
     private float _prefabHeight;
+    bool _canSet = false;
 
     void Start()
     {
@@ -33,12 +35,29 @@ public class GenarateObjectAlongGrid : MonoBehaviour
             _currentPosition.x = (int)(_currentPosition.x + hit.normal.x / 2) + 0.5f * Mathf.Sign(_currentPosition.x);
             _currentPosition.z = (int)(_currentPosition.z + hit.normal.z / 2) + 0.5f * Mathf.Sign(_currentPosition.z);
             _clickGridPrefab.transform.position = _currentPosition;
+            Debug.DrawRay(_currentPosition , Vector3.down, Color.green, 1f);
+            if (_clickGridPrefab.transform.position.y > 2f || !Physics.Raycast(_currentPosition, Vector3.down, 1f, LayerMask.GetMask("Ground")))
+            {
+                Debug.Log("’u‚¯‚È‚¢");
+                Debug.Log(_clickGridPrefab.transform.position.y > 2f);
+                Debug.Log(!Physics.Raycast(_currentPosition, Vector3.down, 1f, LayerMask.GetMask("Ground")));
+                _canSet = false;
+                _clickGridPrefab.SetActive(false);
+            }
+            else
+            {
+                _canSet = true;
+                _clickGridPrefab.SetActive(true);
+            }
         }
         if (Input.GetMouseButtonDown(0))
         {
-            var obj = Instantiate(_prefab, _currentPosition, Quaternion.identity);
-            obj.transform.SetParent(_navMeshSurface.gameObject.transform);
-            _navMeshSurface.BuildNavMesh();
+            if (_canSet)
+            {
+                var obj = Instantiate(_prefab, _currentPosition, Quaternion.identity);
+                obj.transform.SetParent(_walls.transform);
+                _navMeshSurface.BuildNavMesh();
+            }
         }
     }
 }

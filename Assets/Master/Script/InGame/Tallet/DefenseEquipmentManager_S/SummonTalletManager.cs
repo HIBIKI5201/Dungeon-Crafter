@@ -5,23 +5,33 @@ using UnityEngine;
 
 public class SummonTalletManager : DEEntityManager_SB<DefenseEquipmentData_B>
 {
+    const float _interval = 1;
+    float _timer = 0;
+    bool _isPaused = false;
+    Vector2 _summonPosition;
     protected override void Think() //UpDate ‚Æ“¯‹`
     {
-        throw new System.NotImplementedException();
-    }
-    protected override void LoadSpecificData(DefenseEquipmentData_B data)
-    {
-        throw new System.NotImplementedException();
+        if (!_isPaused)
+        {
+            var summonRate = 1 / _rate * Time.deltaTime;
+            _timer += summonRate;
+            if (_timer > _interval)
+            {
+                Debug.Log("Summon" + _timer);
+                _timer = 0;
+                Summon(_summonPosition);
+            }
+        }
     }
 
     protected override void Pause()
     {
-        throw new System.NotImplementedException();
+        _isPaused = true;
     }
 
     protected override void Resume()
     {
-        throw new System.NotImplementedException();
+        _isPaused = false;
     }
 
 }

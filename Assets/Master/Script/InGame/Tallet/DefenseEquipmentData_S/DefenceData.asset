@@ -15,6 +15,6 @@ MonoBehaviour:
   EquipmentName: 
   DropChance: 0
   Attack: 0
-  Rate: 0
+  Rate: 2
   Range: 0
   Critical: 0

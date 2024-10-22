@@ -1,7 +1,7 @@
 using UnityEngine;
 namespace DCFrameWork.DefenseEquipment
 {
-    public abstract class DefenseEquipmentData_B : ScriptableObject
+    public class DefenseEquipmentData_B : ScriptableObject
     {
         //î•ñ
         public string EquipmentName;

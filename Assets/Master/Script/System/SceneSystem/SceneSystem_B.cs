@@ -5,6 +5,7 @@ using UnityEngine;
 
 public abstract class SceneSystem_B : MonoBehaviour
 {
+    [HideInInspector]
     public GameBaseSystem System;
     protected InputBuffer_B _input;
     protected UIManager_B _UIManager;

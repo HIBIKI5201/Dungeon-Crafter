@@ -1,3 +1,4 @@
+using DCFrameWork.InputBuffer;
 using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace DCFrameWork.MainSystem
     {
         #region サービスロケーター
         public static GameBaseSystem mainSystem { get => _instance; }
-        public static SceneSystem_B sceneSystem { get; private set; }
+        public static SceneSystem_B<InputBuffer_B, UIManager_B> sceneSystem { get; private set; }
         #endregion
 
         #region メインシステム コンポーネント
@@ -60,7 +61,7 @@ namespace DCFrameWork.MainSystem
         private IEnumerator SceneLoading(SceneKind kind)
         {
             yield return SceneChanger.LoadScene(kind);
-            SceneSystem_B system = FindAnyObjectByType<SceneSystem_B>();
+            SceneSystem_B<InputBuffer_B, UIManager_B> system = FindAnyObjectByType<SceneSystem_B<InputBuffer_B, UIManager_B>>();
             sceneSystem = system;
             system?.Init(this);
         }

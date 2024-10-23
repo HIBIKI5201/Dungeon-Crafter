@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ReinforcementTalletManager : DefenseEquipmentManager_B<DefenseEquipmentData_B>
+public class SlowTurretManager : DEWalkerableManager_SB<DefenseEquipmentData_B>
 {
-    protected override void Think() // UpDate ‚Æ“¯‹`
+    protected override void Think() //UpDate ‚Æ“¯‹`
     {
         throw new System.NotImplementedException();
     }

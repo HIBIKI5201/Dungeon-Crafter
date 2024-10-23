@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShootTalletManager : DEAttackerManager_SB<DefenseEquipmentData_B>
+public class ShootTurretManager : DEAttackerManager_SB<DefenseEquipmentData_B>
 {
     const float _interval = 1;
     float _timer = 0;

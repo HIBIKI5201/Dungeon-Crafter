@@ -3,17 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MeleeTalletManager : DEAttackerManager_SB<DefenseEquipmentData_B>
+public class ReinforcementTurretManager : DefenseEquipmentManager_B<DefenseEquipmentData_B>
 {
-    protected override void Think() //UpDate ‚Æ“¯‹`
+    protected override void Think() // UpDate ‚Æ“¯‹`
     {
         throw new System.NotImplementedException();
     }
-    protected override void Attack()
-    {
-        throw new System.NotImplementedException();
-    }
-
     protected override void LoadSpecificData(DefenseEquipmentData_B data)
     {
         throw new System.NotImplementedException();

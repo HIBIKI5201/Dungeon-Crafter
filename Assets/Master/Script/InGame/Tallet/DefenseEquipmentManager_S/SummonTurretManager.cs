@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SummonTalletManager : DEEntityManager_SB<DefenseEquipmentData_B>
+public class SummonTurretManager : DEEntityManager_SB<DefenseEquipmentData_B>
 {
     const float _interval = 1;
     float _timer = 0;

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeeknessTalletManager : DEWalkerableManager_SB<DefenseEquipmentData_B>
+public class TrapTurretManager : DEEntityManager_SB<DefenseEquipmentData_B>
 {
     protected override void Think() //UpDate ‚Æ“¯‹`
     {

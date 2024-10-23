@@ -93,6 +93,7 @@ MonoBehaviour:
   _image: {fileID: 6282133756545221367}
   _targetCollider: {fileID: 3153999600572148020, guid: 0912209ebe926a2468780516f4de55ac,
     type: 3}
+  _radius: 1
 --- !u!1 &8159382002968120357
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,3 +185,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _image: {fileID: 0}
   _targetCollider: {fileID: 0}
+  _radius: 1

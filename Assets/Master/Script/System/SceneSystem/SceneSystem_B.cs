@@ -3,23 +3,27 @@ using DCFrameWork.MainSystem;
 using UnityEngine;
 
 
-public abstract class SceneSystem_B : MonoBehaviour
+public abstract class SceneSystem_B<Input, UIManager> : MonoBehaviour where Input : InputBuffer_B where UIManager : UIManager_B
 {
     [HideInInspector]
     public GameBaseSystem System;
-    protected InputBuffer_B _input;
-    protected UIManager_B _UIManager;
+    protected Input _input;
+    protected UIManager _UIManager;
 
     public void Init(GameBaseSystem system)
     {
         System = system;
-        _UIManager = FindAnyObjectByType<UIManager_B>();
+        _UIManager = FindAnyObjectByType<UIManager>();
         if (_UIManager is null)
             Debug.LogWarning("UIManager‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
-        _input = FindAnyObjectByType<InputBuffer_B>();
+        _input = FindAnyObjectByType<Input>();
         if (_input is null)
             Debug.LogWarning("InputBuffer‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
+
+        Init_S();
     }
+
+    protected virtual void Init_S() { }
 
     private void Update()
     {

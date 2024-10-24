@@ -12,23 +12,27 @@ namespace DCFrameWork.InputBuffer
     {
         private PlayerInput _playerInput;
 
-        protected Action<InputAction.CallbackContext> _moveAction;
-        protected Action<InputAction.CallbackContext> _cameraAction;
-        protected Action<InputAction.CallbackContext> _comfirm;
-        protected Action<InputAction.CallbackContext> _pause;
+        protected Action<InputAction.CallbackContext> _moveAction = null;
+        protected Action<InputAction.CallbackContext> _cameraAction = null;
+        protected Action<InputAction.CallbackContext> _confirm = null;
+        protected Action<InputAction.CallbackContext> _pause = null;
 
-        private InputContext _currentContext = new();
+        protected InputContext _currentContext = new();
         private void Start()
         {
             _playerInput = GetComponent<PlayerInput>();
             _playerInput.notificationBehavior = PlayerNotifications.InvokeCSharpEvents;
+            _playerInput.camera = Camera.main;
             _playerInput.uiInputModule = GetComponent<InputSystemUIInputModule>();
 
-            InputActionMap map = _playerInput.currentActionMap;
-            map.FindAction("Move").performed += cbc => _moveAction?.Invoke(cbc);
-            map.FindAction("Look").performed += cbc => _cameraAction?.Invoke(cbc);
-            map.FindAction("Fire").performed += cbc => _comfirm?.Invoke(cbc);
+            SetAction();
+
+            _playerInput.onActionTriggered += cbc => { if (cbc.action.name is "Move") _moveAction?.Invoke(cbc); };
+            _playerInput.onActionTriggered += cbc => { if (cbc.action.name is "Look") _cameraAction?.Invoke(cbc); };
+            _playerInput.onActionTriggered += cbc => { if (cbc.action.name is "Fire") _confirm?.Invoke(cbc); };
         }
+
+        protected abstract void SetAction();
 
         private void LateUpdate()
         {
@@ -36,31 +40,13 @@ namespace DCFrameWork.InputBuffer
         }
 
         public InputContext GetContext() => _currentContext;
-
-        protected virtual void OnAction(InputAction.CallbackContext context)
-        {
-            switch (context.action.name)
-            {
-                case "Move":
-                    _currentContext.MoveInput = context.ReadValue<Vector2>();
-                    break;
-
-                case "Look":
-                    _currentContext.CameraInput = context.ReadValue<Vector2>();
-                    break;
-
-                case "Fire":
-                    _currentContext.Comfirm = true;
-                    break;
-            }
-        }
     }
 
     public struct InputContext
     {
         public Vector2 MoveInput;
         public Vector2 CameraInput;
-        public bool Comfirm;
+        public bool Confirm;
         public bool Pause;
     }
 }

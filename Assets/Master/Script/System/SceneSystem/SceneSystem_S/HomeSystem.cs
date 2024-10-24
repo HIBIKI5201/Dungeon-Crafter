@@ -1,7 +1,7 @@
 using DCFrameWork.InputBuffer;
 using UnityEngine;
 
-public class HomeSystem : SceneSystem_B<InputBuffer_B, UIManager_B>
+public class HomeSystem : SceneSystem_B<HomeInputBuffer, UIManager_B>
 {
     protected override void Init_S()
     {

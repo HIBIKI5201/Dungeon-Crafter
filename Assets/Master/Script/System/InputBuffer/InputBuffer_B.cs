@@ -10,40 +10,47 @@ namespace DCFrameWork.InputBuffer
     [RequireComponent(typeof(InputSystemUIInputModule))]
     public abstract class InputBuffer_B : MonoBehaviour
     {
-        PlayerInput _playerInput;
+        private PlayerInput _playerInput;
 
-        InputContext _context;
+        protected Action<InputAction.CallbackContext> _moveAction;
+        protected Action<InputAction.CallbackContext> _cameraAction;
+        protected Action<InputAction.CallbackContext> _comfirm;
+        protected Action<InputAction.CallbackContext> _pause;
+
+        private InputContext _currentContext = new();
         private void Start()
         {
             _playerInput = GetComponent<PlayerInput>();
             _playerInput.notificationBehavior = PlayerNotifications.InvokeCSharpEvents;
             _playerInput.uiInputModule = GetComponent<InputSystemUIInputModule>();
-            _context = new();
 
-            _playerInput.onActionTriggered += OnAction;
+            InputActionMap map = _playerInput.currentActionMap;
+            map.FindAction("Move").performed += cbc => _moveAction?.Invoke(cbc);
+            map.FindAction("Look").performed += cbc => _cameraAction?.Invoke(cbc);
+            map.FindAction("Fire").performed += cbc => _comfirm?.Invoke(cbc);
         }
 
         private void LateUpdate()
         {
-            _context.ContextReset();
+            _currentContext = new();
         }
 
-        public InputContext GetContext() => _context;
+        public InputContext GetContext() => _currentContext;
 
         protected virtual void OnAction(InputAction.CallbackContext context)
         {
             switch (context.action.name)
             {
                 case "Move":
-                    _context.MoveInput = context.ReadValue<Vector2>();
+                    _currentContext.MoveInput = context.ReadValue<Vector2>();
                     break;
 
                 case "Look":
-                    _context.CameraInput = context.ReadValue<Vector2>();
+                    _currentContext.CameraInput = context.ReadValue<Vector2>();
                     break;
-                
+
                 case "Fire":
-                    _context.Comfirm = true;
+                    _currentContext.Comfirm = true;
                     break;
             }
         }
@@ -55,13 +62,5 @@ namespace DCFrameWork.InputBuffer
         public Vector2 CameraInput;
         public bool Comfirm;
         public bool Pause;
-
-        public void ContextReset()
-        {
-            MoveInput = Vector2.zero;
-            CameraInput = Vector2.zero;
-            Comfirm = false;
-            Pause = false;
-        }
     }
 }

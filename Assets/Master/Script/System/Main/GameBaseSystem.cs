@@ -49,7 +49,7 @@ namespace DCFrameWork.MainSystem
 
             _audioManager = GetComponentInChildren<AudioManager>();
             (_audioManager is null).CheckLog("AudioManager‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
-            _mainUIManager = GetComponentInChildren<UIManager_B>();
+            _mainUIManager = FindAnyObjectByType<UIManager_B>();
             (_mainUIManager is null).CheckLog("MainUIManager‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
 
             SceneInit();

@@ -36,7 +36,7 @@ namespace DCFrameWork.MainSystem
             return (JsonUtility.FromJson<GameSaveData>(Encryption(PlayerPrefs.GetString("GemeSaveData"))),
                 JsonUtility.FromJson<SettingSaveData>(Encryption(PlayerPrefs.GetString("SettintgSaveData"))));
         }
-        static string Encryption(string data)=>
+        static string Encryption(string data) =>
             new string(data.Select(x => (char)(x ^ _key)).ToArray());
     }
     [System.Serializable]

@@ -1,8 +1,5 @@
-using DCFrameWork.InputBuffer;
-using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -30,7 +27,7 @@ namespace DCFrameWork.MainSystem
             {
                 _instance = this;
                 //DontDestroyOnLoad(_instance);
-                
+
                 Scene scene = SceneManager.CreateScene("SystemScene");
                 SceneManager.MoveGameObjectToScene(gameObject, scene);
             }

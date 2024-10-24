@@ -32,7 +32,7 @@ public abstract class SceneSystem_B<Input, UIManager> : MonoBehaviour where Inpu
 
     private void Update()
     {
-        Think(_input.GetContext());
+        Think(_input?.GetContext() ?? new());
     }
 
     /// <summary>

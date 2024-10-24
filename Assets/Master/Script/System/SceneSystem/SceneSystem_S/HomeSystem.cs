@@ -14,4 +14,12 @@ public class HomeSystem : SceneSystem_B<HomeInputBuffer, UIManager_B>
     {
         _cameraManager.CameraMove(input.MoveInput);
     }
+
+    private enum WindowKind
+    {
+        Title,
+        Story,
+        MainManu,
+        StageSelect,
+    }
 }

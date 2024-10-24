@@ -12,9 +12,8 @@ public class CameraManager : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
     }
 
-    private void Update()
+    public void CameraMove(Vector2 axis)
     {
-        Vector3 input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
-        _rigidbody.linearVelocity = input * _speed;
+        _rigidbody.linearVelocity = new Vector3(axis.x, 0, axis.y) * _speed;
     }
 }

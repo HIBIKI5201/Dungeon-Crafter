@@ -34,11 +34,6 @@ namespace DCFrameWork.InputBuffer
 
         protected abstract void SetAction();
 
-        private void LateUpdate()
-        {
-            _currentContext = new();
-        }
-
         public InputContext GetContext() => _currentContext;
     }
 

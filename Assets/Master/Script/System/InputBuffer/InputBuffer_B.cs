@@ -10,58 +10,38 @@ namespace DCFrameWork.InputBuffer
     [RequireComponent(typeof(InputSystemUIInputModule))]
     public abstract class InputBuffer_B : MonoBehaviour
     {
-        PlayerInput _playerInput;
+        private PlayerInput _playerInput;
 
-        InputContext _context;
+        protected Action<InputAction.CallbackContext> _moveAction = null;
+        protected Action<InputAction.CallbackContext> _cameraAction = null;
+        protected Action<InputAction.CallbackContext> _confirm = null;
+        protected Action<InputAction.CallbackContext> _pause = null;
+
+        protected InputContext _currentContext = new();
         private void Start()
         {
             _playerInput = GetComponent<PlayerInput>();
             _playerInput.notificationBehavior = PlayerNotifications.InvokeCSharpEvents;
+            _playerInput.camera = Camera.main;
             _playerInput.uiInputModule = GetComponent<InputSystemUIInputModule>();
-            _context = new();
 
-            _playerInput.onActionTriggered += OnAction;
+            SetAction();
+
+            _playerInput.onActionTriggered += cbc => { if (cbc.action.name is "Move") _moveAction?.Invoke(cbc); };
+            _playerInput.onActionTriggered += cbc => { if (cbc.action.name is "Look") _cameraAction?.Invoke(cbc); };
+            _playerInput.onActionTriggered += cbc => { if (cbc.action.name is "Fire") _confirm?.Invoke(cbc); };
         }
 
-        private void LateUpdate()
-        {
-            _context.ContextReset();
-        }
+        protected abstract void SetAction();
 
-        public InputContext GetContext() => _context;
-
-        protected virtual void OnAction(InputAction.CallbackContext context)
-        {
-            switch (context.action.name)
-            {
-                case "Move":
-                    _context.MoveInput = context.ReadValue<Vector2>();
-                    break;
-
-                case "Look":
-                    _context.CameraInput = context.ReadValue<Vector2>();
-                    break;
-                
-                case "Fire":
-                    _context.Comfirm = true;
-                    break;
-            }
-        }
+        public InputContext GetContext() => _currentContext;
     }
 
     public struct InputContext
     {
         public Vector2 MoveInput;
         public Vector2 CameraInput;
-        public bool Comfirm;
+        public bool Confirm;
         public bool Pause;
-
-        public void ContextReset()
-        {
-            MoveInput = Vector2.zero;
-            CameraInput = Vector2.zero;
-            Comfirm = false;
-            Pause = false;
-        }
     }
 }

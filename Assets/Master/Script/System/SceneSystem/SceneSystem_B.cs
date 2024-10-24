@@ -10,13 +10,18 @@ public abstract class SceneSystem_B<Input, UIManager> : MonoBehaviour where Inpu
     protected Input _input;
     protected UIManager _UIManager;
 
+    private void Start()
+    {
+        Init(null);
+    }
+
     public void Init(GameBaseSystem system)
     {
         System = system;
-        _UIManager = FindAnyObjectByType<UIManager>();
+        _UIManager = transform.GetComponentInChildren<UIManager>();
         if (_UIManager is null)
             Debug.LogWarning("UIManager‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
-        _input = FindAnyObjectByType<Input>();
+        _input = GetComponentInChildren<Input>();
         if (_input is null)
             Debug.LogWarning("InputBuffer‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
 

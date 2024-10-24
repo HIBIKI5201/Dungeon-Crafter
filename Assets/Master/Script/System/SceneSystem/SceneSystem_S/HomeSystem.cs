@@ -1,22 +1,25 @@
 using DCFrameWork.InputBuffer;
 
-public class HomeSystem : SceneSystem_B
+namespace DCFrameWork.SceneSystem
 {
-
-
-    protected override void Init_S()
+    public class HomeSystem : SceneSystem_B
     {
-    }
 
-    protected override void Think(InputContext input)
-    {
-    }
 
-    private enum WindowKind
-    {
-        Title,
-        Story,
-        MainManu,
-        StageSelect,
+        protected override void Init_S()
+        {
+        }
+
+        protected override void Think(InputContext input)
+        {
+        }
+
+        private enum WindowKind
+        {
+            Title,
+            Story,
+            MainManu,
+            StageSelect,
+        }
     }
 }

@@ -1,18 +1,21 @@
 using DCFrameWork.InputBuffer;
 using DCFrameWork.MainSystem;
 
-public class InGameSystem : SceneSystem_B
+namespace DCFrameWork.SceneSystem
 {
-    CameraManager _cameraManager;
-
-    protected override void Init_S()
+    public class InGameSystem : SceneSystem_B
     {
-        _cameraManager = FindAnyObjectByType<CameraManager>();
-        (_cameraManager is null).CheckLog("カメラマネージャーが見つかりません");
-    }
+        CameraManager _cameraManager;
 
-    protected override void Think(InputContext input)
-    {
-        _cameraManager?.CameraMove(input.MoveInput);
+        protected override void Init_S()
+        {
+            _cameraManager = FindAnyObjectByType<CameraManager>();
+            (_cameraManager is null).CheckLog("カメラマネージャーが見つかりません");
+        }
+
+        protected override void Think(InputContext input)
+        {
+            _cameraManager?.CameraMove(input.MoveInput);
+        }
     }
 }

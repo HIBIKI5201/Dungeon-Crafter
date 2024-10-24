@@ -1,16 +1,18 @@
 using UnityEngine;
-using DCFrameWork.InputBuffer;
 using UnityEngine.InputSystem;
 
-public class InGameInputBuffer : InputBuffer_B
+namespace DCFrameWork.SceneSystem
 {
-    protected override void SetAction()
+    public class InGameInputBuffer : InputBuffer_B
     {
-        _moveAction += OnMove;
-    }
+        protected override void SetAction()
+        {
+            _moveAction += OnMove;
+        }
 
-    private void OnMove(InputAction.CallbackContext context)
-    {
-        _currentContext.MoveInput = context.ReadValue<Vector2>();
+        private void OnMove(InputAction.CallbackContext context)
+        {
+            _currentContext.MoveInput = context.ReadValue<Vector2>();
+        }
     }
 }

@@ -10,11 +10,6 @@ public abstract class SceneSystem_B : MonoBehaviour
     protected InputBuffer_B _input;
     protected UIManager_B _UIManager;
 
-    private void Start()
-    {
-        Init(null);
-    }
-
     public void Init(GameBaseSystem system)
     {
         System = system;

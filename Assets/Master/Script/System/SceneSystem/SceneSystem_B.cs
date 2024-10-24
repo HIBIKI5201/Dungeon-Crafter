@@ -3,12 +3,12 @@ using DCFrameWork.MainSystem;
 using UnityEngine;
 
 
-public abstract class SceneSystem_B<Input, UIManager> : MonoBehaviour where Input : InputBuffer_B where UIManager : UIManager_B
+public abstract class SceneSystem_B : MonoBehaviour
 {
     [HideInInspector]
     public GameBaseSystem System;
-    protected Input _input;
-    protected UIManager _UIManager;
+    protected InputBuffer_B _input;
+    protected UIManager_B _UIManager;
 
     private void Start()
     {
@@ -18,10 +18,10 @@ public abstract class SceneSystem_B<Input, UIManager> : MonoBehaviour where Inpu
     public void Init(GameBaseSystem system)
     {
         System = system;
-        _UIManager = transform.GetComponentInChildren<UIManager>();
+        _UIManager = transform.GetComponentInChildren<UIManager_B>();
         if (_UIManager is null)
             Debug.LogWarning("UIManager‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
-        _input = GetComponentInChildren<Input>();
+        _input = GetComponentInChildren<InputBuffer_B>();
         if (_input is null)
             Debug.LogWarning("InputBuffer‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
 

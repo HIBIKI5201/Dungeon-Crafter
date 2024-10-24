@@ -1,8 +1,7 @@
 using DCFrameWork.InputBuffer;
 using DCFrameWork.MainSystem;
-using UnityEngine;
 
-public class InGameSystem : SceneSystem_B<InGameInputBuffer, UIManager_B>
+public class InGameSystem : SceneSystem_B
 {
     CameraManager _cameraManager;
 

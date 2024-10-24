@@ -12,7 +12,7 @@ namespace DCFrameWork.MainSystem
     {
         #region サービスロケーター
         public static GameBaseSystem mainSystem { get => _instance; }
-        public static SceneSystem_B<InputBuffer_B, UIManager_B> sceneSystem { get; private set; }
+        public static SceneSystem_B sceneSystem { get; private set; }
         #endregion
 
         #region メインシステム コンポーネント
@@ -52,8 +52,6 @@ namespace DCFrameWork.MainSystem
             _mainUIManager = GetComponentInChildren<UIManager_B>();
             (_mainUIManager is null).CheckLog("MainUIManagerが見つかりませんでした");
 
-
-
             SceneInit();
         }
 
@@ -70,7 +68,7 @@ namespace DCFrameWork.MainSystem
 
         private void SceneInit()
         {
-            SceneSystem_B<InputBuffer_B, UIManager_B> system = FindAnyObjectByType<SceneSystem_B<InputBuffer_B, UIManager_B>>();
+            SceneSystem_B system = FindAnyObjectByType<SceneSystem_B>();
             if ((system is null).CheckLog("シーンマネージャーが見つかりません")) return;
             sceneSystem = system;
             system?.Init(this);

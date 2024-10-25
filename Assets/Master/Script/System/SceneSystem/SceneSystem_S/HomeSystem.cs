@@ -1,5 +1,3 @@
-using DCFrameWork.InputBuffer;
-
 namespace DCFrameWork.SceneSystem
 {
     public class HomeSystem : SceneSystem_B

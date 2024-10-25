@@ -1,8 +1,5 @@
-using DCFrameWork.InputBuffer;
-using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,7 +9,7 @@ namespace DCFrameWork.MainSystem
     {
         #region サービスロケーター
         public static GameBaseSystem mainSystem { get => _instance; }
-        public static SceneSystem_B<InputBuffer_B, UIManager_B> sceneSystem { get; private set; }
+        public static SceneSystem_B sceneSystem { get; private set; }
         #endregion
 
         #region メインシステム コンポーネント
@@ -26,9 +23,11 @@ namespace DCFrameWork.MainSystem
 
         private void Awake()
         {
-            if (_instance == null)
+            if (!_instance)
             {
                 _instance = this;
+                //DontDestroyOnLoad(_instance);
+
                 Scene scene = SceneManager.CreateScene("SystemScene");
                 SceneManager.MoveGameObjectToScene(gameObject, scene);
             }
@@ -46,11 +45,11 @@ namespace DCFrameWork.MainSystem
             SaveDataManager.SettingSaveData = data.settingSaveData;
 
             _audioManager = GetComponentInChildren<AudioManager>();
-            if (_audioManager is null)
-                Debug.LogWarning("AudioManagerが見つかりませんでした");
-            _mainUIManager = GetComponentInChildren<UIManager_B>();
-            if (_mainUIManager is null)
-                Debug.LogWarning("MainUIManagerが見つかりませんでした");
+            (_audioManager is null).CheckLog("AudioManagerが見つかりませんでした");
+            _mainUIManager = FindAnyObjectByType<UIManager_B>();
+            (_mainUIManager is null).CheckLog("MainUIManagerが見つかりませんでした");
+
+            SceneInit();
         }
 
         public void LoadScene(SceneKind kind)
@@ -61,7 +60,13 @@ namespace DCFrameWork.MainSystem
         private IEnumerator SceneLoading(SceneKind kind)
         {
             yield return SceneChanger.LoadScene(kind);
-            SceneSystem_B<InputBuffer_B, UIManager_B> system = FindAnyObjectByType<SceneSystem_B<InputBuffer_B, UIManager_B>>();
+            SceneInit();
+        }
+
+        private void SceneInit()
+        {
+            SceneSystem_B system = FindAnyObjectByType<SceneSystem_B>();
+            if ((system is null).CheckLog("シーンマネージャーが見つかりません")) return;
             sceneSystem = system;
             system?.Init(this);
         }

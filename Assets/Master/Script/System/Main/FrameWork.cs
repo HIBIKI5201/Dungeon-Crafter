@@ -14,7 +14,7 @@ namespace DCFrameWork.MainSystem
         {
             if (func)
             {
-                Debug.Log(comment);
+                Debug.LogWarning(comment);
             }
             return func;
         }

@@ -8,7 +8,7 @@ public class SummonTurretManager : DEEntityManager_SB<DefenseEquipmentData_B>
     const float _interval = 1;
     float _timer = 0;
     bool _isPaused = false;
-    Vector2 _summonPosition;
+    Vector3 _summonPosition;
     protected override void Think() //UpDate ‚Æ“¯‹`
     {
         if (!_isPaused)

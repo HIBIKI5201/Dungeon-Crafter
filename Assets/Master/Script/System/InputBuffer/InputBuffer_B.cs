@@ -3,8 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 
-
-namespace DCFrameWork.InputBuffer
+namespace DCFrameWork.SceneSystem
 {
     [RequireComponent(typeof(PlayerInput))]
     [RequireComponent(typeof(InputSystemUIInputModule))]

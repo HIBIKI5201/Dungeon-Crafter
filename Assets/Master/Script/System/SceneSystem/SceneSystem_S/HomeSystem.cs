@@ -1,17 +1,25 @@
 using DCFrameWork.InputBuffer;
-using UnityEngine;
 
-public class HomeSystem : SceneSystem_B<HomeInputBuffer, UIManager_B>
+namespace DCFrameWork.SceneSystem
 {
-    CameraManager _cameraManager;
-
-    protected override void Init_S()
+    public class HomeSystem : SceneSystem_B
     {
-        _cameraManager = FindAnyObjectByType<CameraManager>();
-    }
 
-    protected override void Think(InputContext input)
-    {
-        _cameraManager.CameraMove(input.MoveInput);
+
+        protected override void Init_S()
+        {
+        }
+
+        protected override void Think(InputContext input)
+        {
+        }
+
+        private enum WindowKind
+        {
+            Title,
+            Story,
+            MainManu,
+            StageSelect,
+        }
     }
 }

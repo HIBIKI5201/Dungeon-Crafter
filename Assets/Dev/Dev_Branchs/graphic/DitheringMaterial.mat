@@ -56,8 +56,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _FadeOutDrection: 47
-    - _FadeOutEndDrection: 43.5
+    - _FadeOutDrection: 4.08
+    - _FadeOutEndDrection: 0
+    - _MinAlpha: 0.35
     - _QueueControl: 0
     - _QueueOffset: 0
     - _TileSpese: 1

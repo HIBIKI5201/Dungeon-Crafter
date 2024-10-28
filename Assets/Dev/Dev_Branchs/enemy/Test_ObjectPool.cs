@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -7,6 +9,14 @@ public class Test_ObjectPool : MonoBehaviour
 
     float time;
 
+    public Test_ObjectPool instance;
+
+
+    private void Awake()
+    {
+        instance = new Test_ObjectPool();
+
+    }
     private void Update()
     {
         if(time > 3)
@@ -17,5 +27,5 @@ public class Test_ObjectPool : MonoBehaviour
 
         time += Time.deltaTime;
     }
-
+    
 }

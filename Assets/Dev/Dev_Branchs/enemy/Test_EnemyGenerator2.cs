@@ -1,16 +1,28 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Test_EnemyGenerator2 : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    Test_EnemyGenerator gene;
+
+
+    private void Start()
     {
+        gene = GetComponent<Test_EnemyGenerator>();
+
+        StartCoroutine(Generate());
         
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator Generate()
     {
-        
+        while (true)
+        {
+            gene.objectPool.Get();
+            float waitTime = UnityEngine.Random.Range(1, 4);
+            yield return new WaitForSeconds(waitTime);
+        }
+
     }
 }

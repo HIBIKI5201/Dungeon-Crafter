@@ -6,7 +6,7 @@ using UnityEngine.Pool;
 
 public class Test_EnemyGenerator : MonoBehaviour
 {
-    ObjectPool<GameObject> objectPool;
+    public ObjectPool<GameObject> objectPool;
 
     [SerializeField]
     List<GameObject> _objects;
@@ -22,8 +22,11 @@ public class Test_EnemyGenerator : MonoBehaviour
 
     [SerializeField]
     private GameObject _heathBar;
+
+   
     private void Awake()
     {
+
         objectPool = new ObjectPool<GameObject>(() =>
         {
             float[] items = new float[_objects.Count];
@@ -90,6 +93,6 @@ public class Test_EnemyGenerator : MonoBehaviour
 
     }
 
-    
+ 
 
 }

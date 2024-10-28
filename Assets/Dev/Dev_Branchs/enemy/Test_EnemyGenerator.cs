@@ -6,28 +6,52 @@ using UnityEngine.Pool;
 public class Test_EnemyGenerator : MonoBehaviour
 {
     ObjectPool<GameObject> objectPool;
-    [SerializeField]List<GameObject> _objects;
+
+    [SerializeField]
+    List<GameObject> _objects;
+
+    [SerializeField]
+    private Transform _spawnPos;
+
+    [SerializeField]
+    private Transform _target;
+
+    [SerializeField]
+    private Canvas _canvas;
+
+    [SerializeField]
+    private GameObject _heathBar;
     private void Awake()
     {
-       
+        objectPool = new ObjectPool<GameObject>(() =>
+        {
+            float[] items = new float[_objects.Count];
+            items[0] = 20;
+            items[1] = 80;
+            var result = ChooseNum(items);
+            var spawnedEnemy = Instantiate(_objects[(int)result], _spawnPos.position, Quaternion.identity, transform);
+            var pooledSpawnedObj = spawnedEnemy.AddComponent<Test_ObjectPool>();
+            pooledSpawnedObj.objectPool = objectPool;
+            return spawnedEnemy;
+        },
+        target =>
+        {
+            target.gameObject.SetActive(true);
+        },
+        target =>
+        {
+            target.gameObject.SetActive(false);
+        },
+        target =>
+        {
+            Destroy(target);
+        },
+        true, 2, 100);
         
     }
 
-    private void Update()
-    {
-        RandomEnemy();
-    }
-
-    void RandomEnemy()
-    {
-        float[] items = new float[_objects.Count];
-        items[0] = 20;
-        items[1] = 80;
-
-        var result = ChooseEnemy(items);
-        Debug.Log(result);
-    }
-    float ChooseEnemy(float[] floats)
+    
+    float ChooseNum(float[] floats)
     {
         float total = 0;
 

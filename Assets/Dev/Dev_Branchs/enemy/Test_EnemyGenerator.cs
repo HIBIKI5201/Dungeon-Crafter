@@ -1,6 +1,7 @@
 using DCFrameWork.Enemy;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Pool;
 
 public class Test_EnemyGenerator : MonoBehaviour
@@ -30,6 +31,11 @@ public class Test_EnemyGenerator : MonoBehaviour
             items[1] = 80;
             var result = ChooseNum(items);
             var spawnedEnemy = Instantiate(_objects[(int)result], _spawnPos.position, Quaternion.identity, transform);
+            NavMeshAgent agent = spawnedEnemy.GetComponent<NavMeshAgent>();
+            if (agent.pathStatus != NavMeshPathStatus.PathInvalid)
+            {
+                agent.SetDestination(_target.position);
+            }
             var pooledSpawnedObj = spawnedEnemy.AddComponent<Test_ObjectPool>();
             pooledSpawnedObj.objectPool = objectPool;
             return spawnedEnemy;
@@ -46,11 +52,15 @@ public class Test_EnemyGenerator : MonoBehaviour
         {
             Destroy(target);
         },
-        true, 2, 100);
+        true, 10, 100);
+
+        Debug.Log("awake");
         
     }
 
     
+
+
     float ChooseNum(float[] floats)
     {
         float total = 0;

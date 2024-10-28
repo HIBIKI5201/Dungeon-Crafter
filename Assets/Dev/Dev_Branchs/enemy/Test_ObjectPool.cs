@@ -4,15 +4,18 @@ using UnityEngine.Pool;
 public class Test_ObjectPool : MonoBehaviour
 {
     public ObjectPool<GameObject> objectPool;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    float time;
+
+    private void Update()
     {
-        
+        if(time > 3)
+        {
+            time = 0;
+            objectPool.Release(gameObject);
+        }
+
+        time += Time.deltaTime;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

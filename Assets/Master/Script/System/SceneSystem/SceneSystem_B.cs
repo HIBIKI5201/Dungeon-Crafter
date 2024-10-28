@@ -5,14 +5,11 @@ namespace DCFrameWork.SceneSystem
 {
     public abstract class SceneSystem_B : MonoBehaviour
     {
-        [HideInInspector]
-        public GameBaseSystem System;
         protected InputBuffer_B _input;
         protected UIManager_B _UIManager;
 
-        public void Init(GameBaseSystem system)
+        public void Init()
         {
-            System = system;
             _UIManager = transform.GetComponentInChildren<UIManager_B>();
             if (_UIManager is null)
                 Debug.LogWarning("UIManager‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");

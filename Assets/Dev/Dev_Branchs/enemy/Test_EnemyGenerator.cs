@@ -1,4 +1,5 @@
 using DCFrameWork.Enemy;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -24,7 +25,7 @@ public class Test_EnemyGenerator : MonoBehaviour
     private GameObject _heathBar;
 
    
-    private void Awake()
+    private void Start()
     {
 
         objectPool = new ObjectPool<GameObject>(() =>
@@ -34,7 +35,7 @@ public class Test_EnemyGenerator : MonoBehaviour
             items[1] = 80;
             var result = ChooseNum(items);
             var spawnedEnemy = Instantiate(_objects[(int)result], _spawnPos.position, Quaternion.identity, transform);
-            NavMeshAgent agent = spawnedEnemy.GetComponent<NavMeshAgent>();
+            var agent = spawnedEnemy.GetComponent<NavMeshAgent>();
             if (agent.pathStatus != NavMeshPathStatus.PathInvalid)
             {
                 agent.SetDestination(_target.position);
@@ -46,6 +47,9 @@ public class Test_EnemyGenerator : MonoBehaviour
         target =>
         {
             target.gameObject.SetActive(true);
+            target.transform.position = _spawnPos.position;
+            var agent = target.GetComponent<NavMeshAgent>();
+            agent.SetDestination(_target.position);
         },
         target =>
         {
@@ -55,14 +59,10 @@ public class Test_EnemyGenerator : MonoBehaviour
         {
             Destroy(target);
         },
-        true, 10, 100);
+        true, 5, 1000);
 
-        Debug.Log("awake");
-        
+        StartCoroutine(Generate());
     }
-
-    
-
 
     float ChooseNum(float[] floats)
     {
@@ -86,13 +86,22 @@ public class Test_EnemyGenerator : MonoBehaviour
                 randomNum -= floats[i];
             }
 
-           
         }
 
         return floats.Length - 1;
 
     }
 
- 
+
+    IEnumerator Generate()
+    {
+        yield return null;
+        while (true)
+        {
+            objectPool.Get();
+            yield return new WaitForSeconds(0.8f);
+        }
+
+    }
 
 }

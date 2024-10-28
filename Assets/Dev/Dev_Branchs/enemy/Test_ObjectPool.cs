@@ -9,17 +9,10 @@ public class Test_ObjectPool : MonoBehaviour
 
     float time;
 
-    public Test_ObjectPool instance;
-
-
-    private void Awake()
-    {
-        instance = new Test_ObjectPool();
-
-    }
+ 
     private void Update()
     {
-        if(time > 3)
+        if(time > 5)
         {
             time = 0;
             objectPool.Release(gameObject);

@@ -1,12 +1,13 @@
 using DCFrameWork.MainSystem;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace DCFrameWork.Enemy
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public abstract class EnemyManager_B<Data> : MonoBehaviour, IPausable where Data : EnemyData_B
+    public abstract class EnemyManager_B<Data> : MonoBehaviour, Fightable, IPausable where Data : EnemyData_B
     {
         [SerializeField]
         EnemyData_B _data;
@@ -69,17 +70,14 @@ namespace DCFrameWork.Enemy
             LoadSpecificnData(data);
         }
 
-        /// <summary>
-        /// 設定した型パラメータに対応した専用変数を代入してください
-        /// 共通ステータスしかない場合は引数に_を入れて空メソッドにしてください
-        /// </summary>
-        protected virtual void LoadSpecificnData(Data data) { }
 
         /// <summary>
-        /// ダメージを受ける
+        /// 設定した型パラメータに対応した専用変数を代入してください
         /// </summary>
-        /// <param name="damage">ダメージ量</param>
-        public void HitDamage(float damage)
+        /// <param name="data">型パラメータのデータ</param>
+        protected virtual void LoadSpecificnData(Data data) { }
+
+        void Fightable.HitDamage(float damage)
         {
             _currentHealth -= damage;
             HealthBarUpdate();
@@ -89,17 +87,13 @@ namespace DCFrameWork.Enemy
             }
         }
 
-        /// <summary>
-        /// 回復を受ける
-        /// </summary>
-        /// <param name="amount">回復量</param>
-        public void HitHeal(float amount)
+        void Fightable.HitHeal(float heal)
         {
-            _currentHealth = Mathf.Min(_currentHealth + amount, _maxHealth);
+            _currentHealth = Mathf.Min(_currentHealth + heal, _maxHealth);
             HealthBarUpdate();
         }
 
-        private void DeathBehivour()
+        protected virtual void DeathBehivour()
         {
             Destroy(gameObject);
         }
@@ -151,5 +145,20 @@ namespace DCFrameWork.Enemy
     {
         slow,
         weakness,
+    }
+
+    public interface Fightable
+    {
+        /// <summary>
+        /// ダメージを受ける
+        /// </summary>
+        /// <param name="damage">ダメージ量</param>
+        void HitDamage(float damage);
+
+        /// <summary>
+        /// 回復を受ける
+        /// </summary>
+        /// <param name="amount">回復量</param>
+        void HitHeal(float heal);
     }
 }

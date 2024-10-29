@@ -7,7 +7,7 @@ using UnityEngine.AI;
 namespace DCFrameWork.Enemy
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public abstract class EnemyManager_B<Data> : MonoBehaviour, Fightable, IPausable where Data : EnemyData_B
+    public abstract class EnemyManager_B<Data> : MonoBehaviour, IFightable, IPausable where Data : EnemyData_B
     {
         [SerializeField]
         EnemyData_B _data;
@@ -77,7 +77,7 @@ namespace DCFrameWork.Enemy
         /// <param name="data">型パラメータのデータ</param>
         protected virtual void LoadSpecificnData(Data data) { }
 
-        void Fightable.HitDamage(float damage)
+        void IFightable.HitDamage(float damage)
         {
             _currentHealth -= damage;
             HealthBarUpdate();
@@ -87,7 +87,7 @@ namespace DCFrameWork.Enemy
             }
         }
 
-        void Fightable.HitHeal(float heal)
+        void IFightable.HitHeal(float heal)
         {
             _currentHealth = Mathf.Min(_currentHealth + heal, _maxHealth);
             HealthBarUpdate();
@@ -147,7 +147,7 @@ namespace DCFrameWork.Enemy
         weakness,
     }
 
-    public interface Fightable
+    public interface IFightable
     {
         /// <summary>
         /// ダメージを受ける

@@ -32,9 +32,10 @@ public class GenarateObjectAlongGrid : MonoBehaviour
     {
         var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
         var raycastHitList = Physics.RaycastAll(ray, float.PositiveInfinity, LayerMask.GetMask("Ground")).ToList();
+        var beforeCurrentPos = _currentPosition;
         if (raycastHitList.Any())
         {
-            var hit = raycastHitList.OrderByDescending(x => x.collider.gameObject.transform.position.y).FirstOrDefault();
+            var hit = raycastHitList.Where(x => x.collider.gameObject != _clickGridPrefab).OrderByDescending(x => x.collider.gameObject.transform.position.y).FirstOrDefault();
             _currentPosition = hit.point;
             _clickPointPrefab.transform.position = _currentPosition;
             _currentPosition.y = (int)(_currentPosition.y + hit.normal.y / 2) + 0.5f;
@@ -44,9 +45,6 @@ public class GenarateObjectAlongGrid : MonoBehaviour
             Debug.DrawRay(_currentPosition, Vector3.down, Color.green, 1f);
             if (_clickGridPrefab.transform.position.y > 2f || !Physics.Raycast(_currentPosition, Vector3.down, 1f, LayerMask.GetMask("Ground")))
             {
-                //Debug.Log("’u‚¯‚È‚¢");
-                //Debug.Log(_clickGridPrefab.transform.position.y > 2f);
-                //Debug.Log(!Physics.Raycast(_currentPosition, Vector3.down, 1f, LayerMask.GetMask("Ground")));
                 _canSet = false;
                 _clickGridPrefab.SetActive(false);
             }
@@ -56,60 +54,32 @@ public class GenarateObjectAlongGrid : MonoBehaviour
                 _clickGridPrefab.SetActive(true);
             }
         }
+        NavMesh.CalculatePath(_startPos.position, _targetPos.position, NavMesh.AllAreas, _path);
+        for (int i = 0; i < _path.corners.Length - 1; i++)
+        {
+            Debug.DrawLine(_path.corners[i], _path.corners[i + 1], Color.red);
+            if(Physics.Raycast(_path.corners[i], _path.corners[i + 1] - _path.corners[i], out RaycastHit hit, Vector3.Distance(_path.corners[i], _path.corners[i + 1]), LayerMask.GetMask("Ground")))
+            {
+                _clickGridPrefab.GetComponent<MeshRenderer>().material.color = Color.red;
+                _canSet = false;
+                break;
+            }
+            else
+            {
+                _clickGridPrefab.GetComponent<MeshRenderer>().material.color = Color.blue;
+            }
+            if (hit.collider != null)
+                Debug.Log(hit.collider.gameObject.name);
+        }
+        if (beforeCurrentPos != _currentPosition && _currentPosition.y < 1)
+            _navMeshSurface.BuildNavMesh();
         if (Input.GetMouseButtonDown(0))
         {
             if (_canSet)
             {
-                StartCoroutine(Set());
+                var obj = Instantiate(_prefab, _currentPosition, Quaternion.identity);
+                obj.transform.SetParent(_walls.transform);
             }
         }
-        for (int i = 0; i < _path.corners.Length - 1; i++)
-        {
-            Debug.DrawLine(_path.corners[i], _path.corners[i + 1], Color.red);
-        }
-        
-    }
-    IEnumerator Set()
-    {
-        var obj = Instantiate(_prefab, _currentPosition, Quaternion.identity);
-        obj.transform.SetParent(_walls.transform);
-        if (!NavMesh.CalculatePath(_startPos.position, _targetPos.position, NavMesh.AllAreas, _path))
-            goto Destroy;
-        yield return new WaitForEndOfFrame();
-        Debug.Log(_path.corners.Length - 1);
-        //_navMeshSurface.BuildNavMesh();
-        Debug.Log(_path.corners.Length - 1);
-        Vector3 pathLast = _path.corners[_path.corners.Length - 1];
-        pathLast.y = 0f;
-        Vector3 targetPos = _targetPos.transform.position;
-        targetPos.y = 0f;
-        if (Vector3.Distance(pathLast, targetPos) > 0.1f)
-        //if(_path.status != NavMeshPathStatus.PathComplete)
-        {
-            goto Destroy;
-        }
-        else
-        {
-            Debug.Log($"‹——£{Vector3.Distance(pathLast, targetPos)}");
-        }
-        Debug.Log(_path.corners.Length);
-        for (int i = 0; i < _path.corners.Length; i++)
-        {
-            Debug.Log(_path.corners[i]);
-        }
-        goto endif;
-
-    Destroy:
-        StartCoroutine(DontSet());
-        Destroy(obj);
-        //obj.SetActive(false);
-    //_navMeshSurface.BuildNavMesh();
-    endif:;
-    }
-    IEnumerator DontSet()
-    {
-        _clickGridPrefab.GetComponent<MeshRenderer>().material.color = Color.red;
-        yield return new WaitForSeconds(1);
-        _clickGridPrefab.GetComponent<MeshRenderer>().material.color = Color.blue;
     }
 }

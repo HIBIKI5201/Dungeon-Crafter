@@ -1,3 +1,5 @@
+#define DEBUGGING_TRAP_TURR_MAN
+#undef DEBUGGING_TRAP_TURR_MAN
 using DCFrameWork.DefenseEquipment;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,25 +9,48 @@ public class TrapTurretManager : DEEntityManager_SB<DefenseEquipmentData_B>
 {
     [SerializeField] float _minRange = 1;
     [SerializeField] Vector3 _boxCastSize = new Vector3(1, 1, 1);
-    [SerializeField] LayerMask _ground;
+    [SerializeField] LayerMask _groundLayer;
+    Vector3 _position;
     protected override void Think() //UpDate ‚Æ“¯‹`
     {
-        Vector3 pos = SummonPosition();
+        _position = SummonPosition();
         int count = 0;
-        while (!Check(pos) || count <= 10)
+        while (!Check(_position) && count <= 10)
         {
-            Debug.Log(pos);
-            pos = SummonPosition();
+            _position = SummonPosition();
             count++;
-
         }
-        count = 0;
-        Summon(pos);
+        Debug.Log(_position);
+        Summon(_position);
     }
     bool Check(Vector3 pos)
     {
         Physics.BoxCast(pos, _boxCastSize, Vector3.down, out RaycastHit hit);
-        return hit.collider.gameObject.layer == _ground;
+        if (hit.collider == null)
+        {
+#if DEBUGGING_TRAP_TURR_MAN
+            Debug.Log("collider is null");
+#endif
+            return false;
+        }
+        if (hit.collider.gameObject == null)
+        {
+#if DEBUGGING_TRAP_TURR_MAN
+            Debug.Log("gameObject is null");
+#endif
+        }
+        Debug.Log(hit.collider.gameObject.layer == _groundLayer);
+        return hit.collider.gameObject.layer == _groundLayer;
+    }
+
+    private void OnDrawGizmos()
+    {
+#if DEBUGGIN_TRUP_TURR_MAN
+        Debug.Log("ƒMƒYƒ‚‚ð•\Ž¦‚µ‚Ä‚¢‚Ü‚·");
+#endif
+        Gizmos.color = Check(_position) ? Color.red : Color.green;
+        Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, _boxCastSize);
+        Gizmos.DrawCube(SummonPosition(), new Vector3(1, 1, 1));
     }
 
     Vector3 SummonPosition()

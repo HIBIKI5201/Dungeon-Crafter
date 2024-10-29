@@ -3484,8 +3484,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1148024648}
-  - component: {fileID: 1148024649}
   - component: {fileID: 1148024650}
+  - component: {fileID: 1148024651}
   m_Layer: 0
   m_Name: Enemies
   m_TagString: Untagged
@@ -3508,25 +3508,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1148024649
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1148024647}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a60d3713b0c1ad46a7109decd8d3e27, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _enemyPrefab: {fileID: 7990310466857601233, guid: 0912209ebe926a2468780516f4de55ac,
-    type: 3}
-  _spawnPos: {fileID: 972463079}
-  _target: {fileID: 1939187523}
-  _canvas: {fileID: 1749202731}
-  _heathBar: {fileID: 6218801146707754616, guid: a3d6ce18078983a49a949e9f607d794c,
-    type: 3}
 --- !u!114 &1148024650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3546,6 +3527,18 @@ MonoBehaviour:
   _target: {fileID: 1939187523}
   _canvas: {fileID: 0}
   _heathBar: {fileID: 0}
+--- !u!114 &1148024651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1148024647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa0b25d120e5364cb2c135b286c5a1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1209193232
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,12 +1,13 @@
 using DCFrameWork.MainSystem;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace DCFrameWork.Enemy
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public abstract class EnemyManager_B<Data> : MonoBehaviour, IPausable where Data : EnemyData_B
+    public abstract class EnemyManager_B<Data> : MonoBehaviour, IFightable, IConditionable, IPausable where Data : EnemyData_B
     {
         [SerializeField]
         EnemyData_B _data;
@@ -27,9 +28,15 @@ namespace DCFrameWork.Enemy
 
         private EnemyHealthBarManager _healthBarManager;
 
-        private readonly Dictionary<ConditionType, int> _conditionList = new();
+        private Dictionary<ConditionType, int> _conditionList = new();
+        public Dictionary<ConditionType, int> ConditionList
+        {
+            get => _conditionList;
+            set => _conditionList = value;
+        }
 
         private NavMeshAgent _agent;
+
         private void Start()
         {
             if (_data is null)
@@ -39,7 +46,8 @@ namespace DCFrameWork.Enemy
             _currentHealth = _maxHealth;
             _agent = GetComponent<NavMeshAgent>();
 
-            GameBaseSystem.mainSystem.AddPausableObject(this as IPausable);
+            IPausable pausable = this as IPausable;
+            GameBaseSystem.mainSystem?.AddPausableObject(this);
 
             Init_S();
         }
@@ -69,59 +77,32 @@ namespace DCFrameWork.Enemy
             LoadSpecificnData(data);
         }
 
-        /// <summary>
-        /// 設定した型パラメータに対応した専用変数を代入してください
-        /// 共通ステータスしかない場合は引数に_を入れて空メソッドにしてください
-        /// </summary>
-        protected virtual void LoadSpecificnData(Data data) { }
 
         /// <summary>
-        /// ダメージを受ける
+        /// 設定した型パラメータに対応した専用変数を代入してください
         /// </summary>
-        /// <param name="damage">ダメージ量</param>
-        public void HitDamage(float damage)
+        /// <param name="data">型パラメータのデータ</param>
+        protected virtual void LoadSpecificnData(Data data) { }
+
+        void IFightable.HitDamage(float damage)
         {
             _currentHealth -= damage;
             HealthBarUpdate();
             if (_currentHealth <= 0)
             {
-                DeathBehivour();
+                DeathBehaviour();
             }
         }
 
-        /// <summary>
-        /// 回復を受ける
-        /// </summary>
-        /// <param name="amount">回復量</param>
-        public void HitHeal(float amount)
+        void IFightable.HitHeal(float heal)
         {
-            _currentHealth = Mathf.Min(_currentHealth + amount, _maxHealth);
+            _currentHealth = Mathf.Min(_currentHealth + heal, _maxHealth);
             HealthBarUpdate();
         }
 
-        private void DeathBehivour()
+        protected virtual void DeathBehaviour()
         {
             Destroy(gameObject);
-        }
-
-        public void AddCondition(ConditionType type)
-        {
-            if (_conditionList.TryGetValue(type, out var count))
-            {
-                _conditionList[type] = count + 1;
-            }
-            else
-            {
-                _conditionList.Add(type, 1);
-            }
-        }
-
-        public void RemoveCondition(ConditionType type)
-        {
-            if (_conditionList.TryGetValue(type, out var count))
-            {
-                _conditionList[type] = Mathf.Max(0, count - 1);
-            }
         }
 
         public int CountCondition(ConditionType type) => (_conditionList.TryGetValue(type, out int count)) ? count : 0;
@@ -151,5 +132,45 @@ namespace DCFrameWork.Enemy
     {
         slow,
         weakness,
+    }
+
+    public interface IFightable
+    {
+        /// <summary>
+        /// ダメージを受ける
+        /// </summary>
+        /// <param name="damage">ダメージ量</param>
+        void HitDamage(float damage);
+
+        /// <summary>
+        /// 回復を受ける
+        /// </summary>
+        /// <param name="amount">回復量</param>
+        void HitHeal(float heal);
+    }
+
+    public interface IConditionable
+    {
+        Dictionary<ConditionType, int> ConditionList { get; set; }
+
+        void AddCondition(ConditionType type)
+        {
+            ConditionList[type] = ConditionList.TryGetValue(type, out var count) ? count + 1 : 1;
+        }
+
+        void RemoveCondition(ConditionType type)
+        {
+            if (ConditionList.TryGetValue(type, out var count))
+            {
+                if (count > 1)
+                {
+                    ConditionList[type] = count - 1;
+                }
+                else
+                {
+                    ConditionList.Remove(type);
+                }
+            }
+        }
     }
 }

@@ -16,5 +16,5 @@ MonoBehaviour:
   DropChance: 0
   Attack: 0
   Rate: 2
-  Range: 0
+  Range: 3
   Critical: 0

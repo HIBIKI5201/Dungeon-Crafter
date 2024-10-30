@@ -6,35 +6,35 @@ using UnityEngine;
 
 public abstract class DEAttackerManager_SB<Data> : DefenseEquipmentManager_B<Data> where Data : DefenseEquipmentData_B
 {
-    protected List<EnemyManager_B<EnemyData_B>> _enemyList;
+    protected List<GameObject> _enemyList;
 
-    protected virtual List<EnemyManager_B<EnemyData_B>> TargetSelect() =>
-        _enemyList.OrderBy(x => Vector3.Distance(transform.position, x.transform.position)).Take(1).ToList();
+    protected virtual List<GameObject> TargetSelect()
+    {
+        return _enemyList.OrderBy(x => Vector3.Distance(transform.position, x.transform.position)).Take(1).ToList();
+    }
     
 
     protected abstract void Attack();
 
-    protected void TargetsAddDamage(List<EnemyManager_B<EnemyData_B>> enemies, float damage)
+    protected void TargetsAddDamage(List<GameObject> enemies, float damage)
     {
         foreach (var enemy in enemies)
         {
-            enemy.HitDamage(damage);
+            if (enemy.TryGetComponent(out IFightable component))
+                component.HitDamage(damage);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<EnemyManager_B<EnemyData_B>>(out var enemyManager))
+        if (other.TryGetComponent<IFightable>(out _))
         {
-            _enemyList.Add(enemyManager);
+            _enemyList.Add(other.gameObject);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.TryGetComponent<EnemyManager_B<EnemyData_B>>(out var enemyManager))
-        {
-            _enemyList.Remove(enemyManager);
-        }
+        _enemyList.Remove(other.gameObject);
     }
 }

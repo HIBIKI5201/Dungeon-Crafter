@@ -7,7 +7,7 @@ using UnityEngine.AI;
 namespace DCFrameWork.Enemy
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public abstract class EnemyManager_B<Data> : MonoBehaviour, IFightable, IPausable where Data : EnemyData_B
+    public abstract class EnemyManager_B<Data> : MonoBehaviour, IFightable, IConditionable, IPausable where Data : EnemyData_B
     {
         [SerializeField]
         EnemyData_B _data;
@@ -28,9 +28,15 @@ namespace DCFrameWork.Enemy
 
         private EnemyHealthBarManager _healthBarManager;
 
-        private readonly Dictionary<ConditionType, int> _conditionList = new();
+        private Dictionary<ConditionType, int> _conditionList = new();
+        public Dictionary<ConditionType, int> ConditionList
+        {
+            get => _conditionList;
+            set => _conditionList = value;
+        }
 
         private NavMeshAgent _agent;
+
         private void Start()
         {
             if (_data is null)
@@ -98,26 +104,6 @@ namespace DCFrameWork.Enemy
             Destroy(gameObject);
         }
 
-        public void AddCondition(ConditionType type)
-        {
-            if (_conditionList.TryGetValue(type, out var count))
-            {
-                _conditionList[type] = count + 1;
-            }
-            else
-            {
-                _conditionList.Add(type, 1);
-            }
-        }
-
-        public void RemoveCondition(ConditionType type)
-        {
-            if (_conditionList.TryGetValue(type, out var count))
-            {
-                _conditionList[type] = Mathf.Max(0, count - 1);
-            }
-        }
-
         public int CountCondition(ConditionType type) => (_conditionList.TryGetValue(type, out int count)) ? count : 0;
 
         /// <summary>
@@ -160,5 +146,30 @@ namespace DCFrameWork.Enemy
         /// </summary>
         /// <param name="amount">‰ñ•œ—Ê</param>
         void HitHeal(float heal);
+    }
+
+    public interface IConditionable
+    {
+        Dictionary<ConditionType, int> ConditionList { get; set; }
+
+        void AddCondition(ConditionType type)
+        {
+            if (ConditionList.TryGetValue(type, out var count))
+            {
+                ConditionList[type] = count + 1;
+            }
+            else
+            {
+                ConditionList.Add(type, 1);
+            }
+        }
+
+        public void RemoveCondition(ConditionType type)
+        {
+            if (ConditionList.TryGetValue(type, out var count))
+            {
+                ConditionList[type] = Mathf.Max(0, count - 1);
+            }
+        }
     }
 }

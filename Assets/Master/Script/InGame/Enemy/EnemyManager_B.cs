@@ -46,7 +46,8 @@ namespace DCFrameWork.Enemy
             _currentHealth = _maxHealth;
             _agent = GetComponent<NavMeshAgent>();
 
-            GameBaseSystem.mainSystem.AddPausableObject(this as IPausable);
+            IPausable pausable = this as IPausable;
+            GameBaseSystem.mainSystem.AddPausableObject(this);
 
             Init_S();
         }

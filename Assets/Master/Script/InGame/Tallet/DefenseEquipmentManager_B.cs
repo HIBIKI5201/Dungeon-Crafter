@@ -23,12 +23,12 @@ namespace DCFrameWork.DefenseEquipment
             if (_data is null)
                 Debug.Log("ÉfÅ[É^Ç™Ç†ÇËÇ‹ÇπÇÒ");
             LoadCommonData(Level);
-            GameBaseSystem.mainSystem.AddPausableObject(this as IPausable);
+            GameBaseSystem.mainSystem?.AddPausableObject(this as IPausable);
         }
 
         private void OnDestroy()
         {
-            GameBaseSystem.mainSystem.RemovePausableObject(this as IPausable);
+            GameBaseSystem.mainSystem?.RemovePausableObject(this as IPausable);
         }
 
         private void LoadCommonData(int level)

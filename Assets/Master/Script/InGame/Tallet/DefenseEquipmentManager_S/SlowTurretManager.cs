@@ -9,7 +9,6 @@ public class SlowTurretManager : DEWalkerableManager_SB<DefenseEquipmentData_B>
     const float _interval = 1;
     float _timer = 0;
     bool _isPaused = false;
-    [SerializeField] string _enemyTag;
     protected override void Think() //UpDate ‚Æ“¯‹`
     {
 
@@ -17,22 +16,22 @@ public class SlowTurretManager : DEWalkerableManager_SB<DefenseEquipmentData_B>
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!_isPaused) 
+        if (!_isPaused)
         {
-            if (other.gameObject.tag == _enemyTag)
+            if (other.TryGetComponent(out IConditionable component))
             {
-                TargetAddCondition(other.gameObject.GetComponent<EnemyManager_B<EnemyData_B>>(), ConditionType.slow);
+                TargetAddCondition(component, ConditionType.slow);
             }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (!_isPaused) 
+        if (!_isPaused)
         {
-            if (other.gameObject.tag == _enemyTag)
+            if (other.TryGetComponent(out IConditionable component))
             {
-                TargetRemoveCondition(other.gameObject.GetComponent<EnemyManager_B<EnemyData_B>>(), ConditionType.slow);
+                TargetRemoveCondition(component, ConditionType.slow);
             }
         }
     }

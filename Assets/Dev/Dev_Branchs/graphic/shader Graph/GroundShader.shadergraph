@@ -380,6 +380,7 @@
     "m_OutputNode": {
         "m_Id": ""
     },
+    "m_SubDatas": [],
     "m_ActiveTargets": [
         {
             "m_Id": "076262640a124d6e81b1354c8e917000"
@@ -396,7 +397,7 @@
         "m_Id": "92eed949c06b4398832aa5ec3e351969"
     },
     "m_AllowMaterialOverride": true,
-    "m_SurfaceType": 1,
+    "m_SurfaceType": 0,
     "m_ZTestMode": 4,
     "m_ZWriteControl": 0,
     "m_AlphaMode": 0,
@@ -404,6 +405,7 @@
     "m_AlphaClip": false,
     "m_CastShadows": true,
     "m_ReceiveShadows": true,
+    "m_DisableTint": false,
     "m_AdditionalMotionVectorMode": 0,
     "m_AlembicMotionVectors": false,
     "m_SupportsLODCrossFade": false,
@@ -961,10 +963,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1635.0,
-            "y": 168.99996948242188,
+            "x": -1763.0,
+            "y": 197.99996948242188,
             "width": 130.0,
-            "height": 117.99990844726563
+            "height": 118.00003051757813
         }
     },
     "m_Slots": [
@@ -1030,10 +1032,10 @@
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.GroupData",
     "m_ObjectId": "5fe8d4791d78407abc882d65a7ce5fb8",
-    "m_Title": "スケールをXZ平面の二次元ベクトルに変換",
+    "m_Title": "",
     "m_Position": {
-        "x": -2126.58447265625,
-        "y": 107.68014526367188
+        "x": -2274.0,
+        "y": 136.99993896484376
     }
 }
 
@@ -1313,10 +1315,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -2121.000244140625,
-            "y": 184.00001525878907,
+            "x": -2249.0,
+            "y": 212.9999542236328,
             "width": 153.0,
-            "height": 173.00001525878907
+            "height": 172.99998474121095
         }
     },
     "m_Slots": [
@@ -1751,9 +1753,9 @@
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.GroupData",
     "m_ObjectId": "a3d37a3744994ac89571f68044049dc9",
-    "m_Title": "中心をとる",
+    "m_Title": "center",
     "m_Position": {
-        "x": -1381.0,
+        "x": -1611.9998779296875,
         "y": -11.0
     }
 }
@@ -1819,7 +1821,7 @@
     "m_StageCapability": 3,
     "m_BareResource": false,
     "m_Texture": {
-        "m_SerializedTexture": "{\"texture\":{\"instanceID\":0}}",
+        "m_SerializedTexture": "",
         "m_Guid": ""
     },
     "m_DefaultType": 0
@@ -2415,10 +2417,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1828.0,
-            "y": 168.99996948242188,
+            "x": -1956.0,
+            "y": 197.99996948242188,
             "width": 128.0,
-            "height": 100.99993896484375
+            "height": 101.0
         }
     },
     "m_Slots": [
@@ -2623,10 +2625,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1948.0,
-            "y": 172.99998474121095,
+            "x": -2076.0,
+            "y": 202.0,
             "width": 120.0,
-            "height": 148.99989318847657
+            "height": 148.99996948242188
         }
     },
     "m_Slots": [

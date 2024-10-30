@@ -7,7 +7,7 @@ namespace DCFrameWork.DefenseEquipment
     {
         public string Name;
         public string Explanation;
-
+        public int DropChance;
         public List<DefenseEquipmentData_B> DataLevelList;
     }
 }

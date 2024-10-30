@@ -47,7 +47,7 @@ namespace DCFrameWork.Enemy
             _agent = GetComponent<NavMeshAgent>();
 
             IPausable pausable = this as IPausable;
-            GameBaseSystem.mainSystem.AddPausableObject(this);
+            GameBaseSystem.mainSystem?.AddPausableObject(this);
 
             Init_S();
         }

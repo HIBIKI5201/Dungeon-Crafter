@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace DCFrameWork.DefenseEquipment
 {
+[CreateAssetMenu(menuName = "GameData/DefenseData/TurretDataBase", fileName = "DefebseEquipmentDataBase")]
     public class DefenseEquipmentDataBase : ScriptableObject
     {
         public string Name;

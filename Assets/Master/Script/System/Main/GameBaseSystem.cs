@@ -27,7 +27,6 @@ namespace DCFrameWork.MainSystem
             if (!_instance)
             {
                 _instance = this;
-                //DontDestroyOnLoad(_instance);
 
                 Scene scene = SceneManager.CreateScene("SystemScene");
                 SceneManager.MoveGameObjectToScene(gameObject, scene);
@@ -87,17 +86,14 @@ namespace DCFrameWork.MainSystem
 
         public void AddPausableObject(IPausable obj)
         {
-            if (!_pausableList?.Contains(obj) ?? false)
+            if (!_pausableList.Contains(obj))
             {
                 _pausableList.Add(obj);
             }
         }
         public void RemovePausableObject(IPausable obj)
         {
-            if (_pausableList?.Contains(obj) ?? false)
-            {
-                _pausableList.Remove(obj);
-            }
+            _pausableList.Remove(obj);
         }
         #endregion
     }

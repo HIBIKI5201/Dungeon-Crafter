@@ -1,107 +1,114 @@
-using DCFrameWork.Enemy;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Pool;
+using System.Linq;
+using Unity.VisualScripting;
 
-public class Test_EnemyGenerator : MonoBehaviour
+
+namespace DCFrameWork.Enemy
 {
-    public ObjectPool<GameObject> objectPool;
-
-    [SerializeField]
-    List<GameObject> _objects;
-
-    [SerializeField]
-    private Transform _spawnPos;
-
-    [SerializeField]
-    private Transform _target;
-
-    [SerializeField]
-    private Canvas _canvas;
-
-    [SerializeField]
-    private GameObject _heathBar;
-
-   
-    private void Start()
+    public class Test_EnemyGenerator : MonoBehaviour
     {
+        public ObjectPool<GameObject> objectPool;
 
-        objectPool = new ObjectPool<GameObject>(() =>
-        {
-            float[] items = new float[_objects.Count];
-            items[0] = 20;
-            items[1] = 80;
-            var result = ChooseNum(items);
-            var spawnedEnemy = Instantiate(_objects[(int)result], _spawnPos.position, Quaternion.identity, transform);
-            var agent = spawnedEnemy.GetComponent<NavMeshAgent>();
-            if (agent.pathStatus != NavMeshPathStatus.PathInvalid)
-            {
-                agent.SetDestination(_target.position);
-            }
-            var pooledSpawnedObj = spawnedEnemy.AddComponent<Test_ObjectPool>();
-            pooledSpawnedObj.objectPool = objectPool;
-            return spawnedEnemy;
-        },
-        target =>
-        {
-            target.gameObject.SetActive(true);
-            target.transform.position = _spawnPos.position;
-            var agent = target.GetComponent<NavMeshAgent>();
-            agent.SetDestination(_target.position);
-        },
-        target =>
-        {
-            target.gameObject.SetActive(false);
-        },
-        target =>
-        {
-            Destroy(target);
-        },
-        true, 5, 1000);
+        [SerializeField]
+        List<GameObject> _objects;
 
-        StartCoroutine(Generate());
-    }
+        [SerializeField]
+        private Transform _spawnPos;
 
-    float ChooseNum(float[] floats)
-    {
-        float total = 0;
+        [SerializeField]
+        private Transform _target;
 
-        foreach (var item in floats)
+        [SerializeField]
+        private Canvas _canvas;
+
+        [SerializeField]
+        private GameObject _heathBar;
+
+
+        private void Start()
         {
-            total += item;
+            ObjectPooling();
+           
         }
 
-        var randomNum = Random.value * total;
 
-        for (int i = 0; i < floats.Length; i++)
+        void ObjectPooling()
         {
-            if (randomNum < floats[i])
+            objectPool = new ObjectPool<GameObject>(() =>
             {
-                return i;
+                float[] items = new float[_objects.Count];
+                items[0] = 20;
+                items[1] = 80;
+                int result = (int)ChooseNum(items);
+                var spawnedEnemy = Instantiate(_objects[result], _spawnPos.position, Quaternion.identity, transform);
+                var agent = spawnedEnemy.GetComponent<NavMeshAgent>();
+                if (agent.pathStatus != NavMeshPathStatus.PathInvalid)
+                {
+                    agent.SetDestination(_target.position);
+                }
+                var pooledSpawnedObj = spawnedEnemy.AddComponent<Test_ObjectPool>();
+                pooledSpawnedObj.objectPool = objectPool;
+                return spawnedEnemy;
+            },
+           target =>
+           {
+               target.gameObject.SetActive(true);
+               target.transform.position = _spawnPos.position;
+               var agent = target.GetComponent<NavMeshAgent>();
+               agent.SetDestination(_target.position);
+           },
+           target =>
+           {
+               target.gameObject.SetActive(false);
+           },
+           target =>
+           {
+               Destroy(target);
+           },
+           true, 10, 1000);
+
+            StartCoroutine(Generate());
+        }
+
+
+        float ChooseNum(float[] floats)
+        {
+            float total = floats.Sum();
+
+            var randomNum = Random.value * total;
+
+            for (int i = 0; i < floats.Length; i++)
+            {
+                if (randomNum < floats[i])
+                {
+                    return i;
+                }
+                else
+                {
+                    randomNum -= floats[i];
+                }
+
             }
-            else
+
+            return floats.Length - 1;
+
+        }
+
+
+        IEnumerator Generate()
+        {
+            yield return null;
+            while (true)
             {
-                randomNum -= floats[i];
+                objectPool.Get();
+                yield return new WaitForSeconds(0.8f);
             }
 
         }
 
-        return floats.Length - 1;
-
     }
-
-
-    IEnumerator Generate()
-    {
-        yield return null;
-        while (true)
-        {
-            objectPool.Get();
-            yield return new WaitForSeconds(0.8f);
-        }
-
-    }
-
 }

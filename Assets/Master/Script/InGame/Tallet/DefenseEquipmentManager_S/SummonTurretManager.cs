@@ -8,7 +8,7 @@ public class SummonTurretManager : DEEntityManager_SB<DefenseEquipmentData_B>
     const float _interval = 1;
     float _timer = 0;
     bool _isPaused = false;
-    Vector3 _summonPosition;
+    [SerializeField] Transform _summonPosition;
     protected override void Think() //UpDate ‚Æ“¯‹`
     {
         if (!_isPaused)
@@ -17,9 +17,8 @@ public class SummonTurretManager : DEEntityManager_SB<DefenseEquipmentData_B>
             _timer += summonRate;
             if (_timer > _interval)
             {
-                Debug.Log("Summon" + _timer);
                 _timer = 0;
-                Summon(_summonPosition);
+                Summon(_summonPosition.position);
             }
         }
     }

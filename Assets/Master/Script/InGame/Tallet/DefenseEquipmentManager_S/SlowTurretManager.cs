@@ -1,13 +1,40 @@
 using DCFrameWork.DefenseEquipment;
+using DCFrameWork.Enemy;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SlowTurretManager : DEWalkerableManager_SB<DefenseEquipmentData_B>
 {
+    const float _interval = 1;
+    float _timer = 0;
+    bool _isPaused = false;
+    [SerializeField] string _enemyTag;
     protected override void Think() //UpDate ‚Æ“¯‹`
     {
-        throw new System.NotImplementedException();
+
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!_isPaused) 
+        {
+            if (other.gameObject.tag == _enemyTag)
+            {
+                TargetAddCondition(other.gameObject.GetComponent<EnemyManager_B<EnemyData_B>>(), ConditionType.slow);
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (!_isPaused) 
+        {
+            if (other.gameObject.tag == _enemyTag)
+            {
+                TargetRemoveCondition(other.gameObject.GetComponent<EnemyManager_B<EnemyData_B>>(), ConditionType.slow);
+            }
+        }
     }
     protected override void LoadSpecificData(DefenseEquipmentData_B data)
     {
@@ -16,12 +43,12 @@ public class SlowTurretManager : DEWalkerableManager_SB<DefenseEquipmentData_B>
 
     protected override void Pause()
     {
-        throw new System.NotImplementedException();
+        _isPaused = true;
     }
 
     protected override void Resume()
     {
-        throw new System.NotImplementedException();
+        _isPaused = false;
     }
 
 }

@@ -8,6 +8,7 @@ public class Test_EnemyManager : MonoBehaviour
     EnemyHealthBarManager healthBarManager;
     [SerializeField]
     Vector3 healthBarOffset = new Vector3(0, 1, 0);
+    public EnemyData_B _enemyData_B ;
 
     private void Start()
     {

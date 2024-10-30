@@ -1,15 +1,14 @@
-using DCFrameWork.DefenseEquipment;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DCFrameWork
+namespace DCFrameWork.DefenseEquipment
 {
-    [CreateAssetMenu(menuName = "GameData/DefenseData/TurretDataBase", fileName = "DefebseEquipmentDataBase")]
+[CreateAssetMenu(menuName = "GameData/DefenseData/TurretDataBase", fileName = "DefebseEquipmentDataBase")]
     public class DefenseEquipmentDataBase : ScriptableObject
     {
-        public string EquipmentName;
+        public string Name;
+        public string Explanation;
         public int DropChance;
-
         public List<DefenseEquipmentData_B> DataLevelList;
     }
 }

@@ -28,7 +28,7 @@ namespace DCFrameWork.Enemy
         [SerializeField]
         private GameObject _heathBar;
 
-
+        Dictionary<GameObject,GameObject> _objectsDict = new();
         private void Start()
         {
             ObjectPooling();
@@ -38,6 +38,7 @@ namespace DCFrameWork.Enemy
 
         void ObjectPooling()
         {
+            
             objectPool = new ObjectPool<GameObject>(() =>
             {
                 float[] items = new float[_objects.Count];
@@ -52,22 +53,31 @@ namespace DCFrameWork.Enemy
                 }
                 var pooledSpawnedObj = spawnedEnemy.AddComponent<Test_ObjectPool>();
                 pooledSpawnedObj.objectPool = objectPool;
+                GameObject healthBar = Instantiate(_heathBar, _canvas.transform);
+                _objectsDict.Add(spawnedEnemy, healthBar);
                 return spawnedEnemy;
             },
            target =>
            {
-               target.gameObject.SetActive(true);
+               target.SetActive(true);
+               _objectsDict[target].SetActive(true);
                target.transform.position = _spawnPos.position;
                var agent = target.GetComponent<NavMeshAgent>();
-               agent.SetDestination(_target.position);
+               if (agent.pathStatus != NavMeshPathStatus.PathInvalid)
+               {
+                   agent.SetDestination(_target.position);
+               }
            },
            target =>
            {
-               target.gameObject.SetActive(false);
+               target.SetActive(false);
+               _objectsDict[target].SetActive(false);
            },
            target =>
            {
                Destroy(target);
+               Destroy(_objectsDict[target]);
+               _objectsDict.Remove(target);
            },
            true, 10, 1000);
 

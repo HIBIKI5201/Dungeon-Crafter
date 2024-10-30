@@ -87,6 +87,7 @@ namespace DCFrameWork.MainSystem
 
         public void AddPausableObject(IPausable obj)
         {
+            if ((obj is null).CheckLog("Ipausable‚Ínull")) return;
             if (!_pausableList?.Contains(obj) ?? false)
             {
                 _pausableList.Add(obj);

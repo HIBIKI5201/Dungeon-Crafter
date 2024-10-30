@@ -46,7 +46,8 @@ namespace DCFrameWork.Enemy
             _currentHealth = _maxHealth;
             _agent = GetComponent<NavMeshAgent>();
 
-            GameBaseSystem.mainSystem.AddPausableObject(this as IPausable);
+            IPausable pausable = this as IPausable;
+            GameBaseSystem.mainSystem?.AddPausableObject(this);
 
             Init_S();
         }
@@ -89,7 +90,7 @@ namespace DCFrameWork.Enemy
             HealthBarUpdate();
             if (_currentHealth <= 0)
             {
-                DeathBehivour();
+                DeathBehaviour();
             }
         }
 
@@ -99,7 +100,7 @@ namespace DCFrameWork.Enemy
             HealthBarUpdate();
         }
 
-        protected virtual void DeathBehivour()
+        protected virtual void DeathBehaviour()
         {
             Destroy(gameObject);
         }
@@ -154,21 +155,21 @@ namespace DCFrameWork.Enemy
 
         void AddCondition(ConditionType type)
         {
-            if (ConditionList.TryGetValue(type, out var count))
-            {
-                ConditionList[type] = count + 1;
-            }
-            else
-            {
-                ConditionList.Add(type, 1);
-            }
+            ConditionList[type] = ConditionList.TryGetValue(type, out var count) ? count + 1 : 1;
         }
 
-        public void RemoveCondition(ConditionType type)
+        void RemoveCondition(ConditionType type)
         {
             if (ConditionList.TryGetValue(type, out var count))
             {
-                ConditionList[type] = Mathf.Max(0, count - 1);
+                if (count > 1)
+                {
+                    ConditionList[type] = count - 1;
+                }
+                else
+                {
+                    ConditionList.Remove(type);
+                }
             }
         }
     }

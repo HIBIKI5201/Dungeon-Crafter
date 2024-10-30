@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8090698119137097613}
   - component: {fileID: 3557142542435686237}
   - component: {fileID: -5643101641745585010}
-  - component: {fileID: -7543399622217265269}
+  - component: {fileID: 4382053058388294486}
   m_Layer: 0
   m_Name: Enemy 2
   m_TagString: Untagged
@@ -156,7 +156,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &-7543399622217265269
+--- !u!114 &4382053058388294486
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -165,10 +165,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7990310466857601233}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1b8cdc0930663d4e8d062f05bd447d0, type: 3}
+  m_Script: {fileID: 11500000, guid: 6da802706ab41ee4585277f92b02186e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBarOffset: {x: 0, y: 1, z: 0}
+  _data: {fileID: 11400000, guid: c88c7011bf42ac34db4fb49ed833382d, type: 2}
+  _levelRequirePoint: 0
 --- !u!1001 &3207008905949727169
 PrefabInstance:
   m_ObjectHideFlags: 0

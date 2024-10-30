@@ -8,8 +8,10 @@ public abstract class DEAttackerManager_SB<Data> : DefenseEquipmentManager_B<Dat
 {
     protected List<GameObject> _enemyList;
 
-    protected virtual List<GameObject> TargetSelect() =>
-        _enemyList.OrderBy(x => Vector3.Distance(transform.position, x.transform.position)).Take(1).ToList();
+    protected virtual List<GameObject> TargetSelect()
+    {
+        return _enemyList.OrderBy(x => Vector3.Distance(transform.position, x.transform.position)).Take(1).ToList();
+    }
     
 
     protected abstract void Attack();
@@ -33,9 +35,6 @@ public abstract class DEAttackerManager_SB<Data> : DefenseEquipmentManager_B<Dat
 
     private void OnTriggerExit(Collider other)
     {
-        if (_enemyList.Contains(other.gameObject))
-        {
-            _enemyList.Remove(other.gameObject);
-        }
+        _enemyList.Remove(other.gameObject);
     }
 }

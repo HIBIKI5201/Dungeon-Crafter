@@ -26,7 +26,8 @@ public class ShootTurretManager : DEAttackerManager_SB<DefenseEquipmentData_B>
     protected override void Attack()
     {
         Debug.Log("Attack");
-        TargetsAddDamage(TargetSelect(), _attack);
+        var criticalPoint = Random.Range(0, 100);
+        TargetsAddDamage(TargetSelect(), criticalPoint > _critical ? _attack * 3 : _attack);
     }
 
     protected override void Pause()
@@ -37,18 +38,5 @@ public class ShootTurretManager : DEAttackerManager_SB<DefenseEquipmentData_B>
     protected override void Resume()
     {
         _isPaused = false;
-    }
-    public class Bullet : MonoBehaviour, IPausable
-    {
-        bool _isPause = false;
-        public void Pause()
-        {
-            _isPause = true;
-        }
-
-        public void Resume()
-        {
-            _isPause = false;
-        }
     }
 }

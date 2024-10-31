@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -7,14 +8,11 @@ namespace DCFrameWork
     {
         [SerializeField] EquipmentCard[] card;
         EquipmentCardInventory _equipmentList;
-        ListView list;
-        protected override void LoadDocumentElement(VisualElement root)
+        protected override async void LoadDocumentElement(VisualElement root)
         {
             _equipmentList = root.Q<EquipmentCardInventory>("EquipmentInventory");
-            Debug.Log(_equipmentList.ListView is null);
-            Debug.Log(_equipmentList.ListView.itemsSource is null);
+            await _equipmentList.InitializeTask;
             _equipmentList.ListView.itemsSource = card;
-            Debug.Log(list.itemsSource);
         }
     }
 }

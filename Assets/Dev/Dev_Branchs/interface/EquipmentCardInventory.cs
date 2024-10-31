@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -8,12 +9,17 @@ namespace DCFrameWork
     [UxmlElement]
     public partial class EquipmentCardInventory : VisualElement
     {
+        public Task InitializeTask { get; private set; }
+
+        private const string _windowClose = "equipment-inventory_close";
+        private const string _windowOpen = "equipment-inventory_open";
+
         private VisualElement _equipment;
         private VisualElement _equipmentButton;
         private ListView _listView;
         public ListView ListView { get => _listView; }
-        public EquipmentCardInventory() => Initialize();
-        private async void Initialize()
+        public EquipmentCardInventory() => InitializeTask = Initialize();
+        private async Task Initialize()
         {
             AsyncOperationHandle<VisualTreeAsset> handle = Addressables.LoadAssetAsync<VisualTreeAsset>("UXML/EquipmentInventory.uxml");
             await handle.Task;
@@ -29,20 +35,19 @@ namespace DCFrameWork
                 hierarchy.Add(container);
                 _equipment = container.Q<VisualElement>("EquipsInventory");
                 _equipmentButton = container.Q<VisualElement>("EquipmentTextBox");
-                _listView = container.Q<ListView>("EquipmentCardList");
-                Debug.Log(ListView is null);
-                _equipment.AddToClassList("equipment-inventory_close");
+                _listView = container.Q<ListView>("EquipmentListView");
+                _equipment.AddToClassList(_windowClose);
                 _equipmentButton.RegisterCallback<ClickEvent>(x =>
                 {
-                    if (!_equipment.ClassListContains("equipment-inventory_close")) return;
-                    _equipment.RemoveFromClassList("equipment-inventory_close");
-                    _equipment.AddToClassList("equipment-inventory_open");
+                    if (!_equipment.ClassListContains(_windowClose)) return;
+                    _equipment.RemoveFromClassList(_windowClose);
+                    _equipment.AddToClassList(_windowOpen);
                 });
                 _equipment.RegisterCallback<MouseLeaveEvent>(x =>
                 {
-                    if (!_equipment.ClassListContains("equipment-inventory_open")) return;
-                    _equipment.RemoveFromClassList("equipment-inventory_open");
-                    _equipment.AddToClassList("equipment-inventory_close");
+                    if (!_equipment.ClassListContains(_windowOpen)) return;
+                    _equipment.RemoveFromClassList(_windowOpen);
+                    _equipment.AddToClassList(_windowClose);
                 });
                 Debug.Log("ウィンドウは正常にロード完了");
             }

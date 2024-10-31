@@ -1,6 +1,5 @@
 using System;
-using Unity.VisualScripting;
-using UnityEditor;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -9,6 +8,8 @@ using UnityEngine.UIElements;
 [UxmlElement]
 public partial class BasicInformation : VisualElement
 {
+    public Task InitializeTask { get; private set; }
+
     Button _menu;
     VisualElement _waveGuege;
     VisualElement _expGuege;
@@ -21,14 +22,14 @@ public partial class BasicInformation : VisualElement
     public Action MenuButton { set => _menu.clicked += value; }
     public float WaveGuege { set => _waveGuege.style.width = Length.Percent(value * 100); }
     public float EXPGuege { set => _expGuege.style.width = Length.Percent(value * 100); }
-    public string WaveText {set=>_waveText.text = value; }
+    public string WaveText { set => _waveText.text = value; }
     public string EXPText { set => _expText.text = value; }
     public string GoldText { set => _goldText.text = value; }
     public string LevelText { set => _levelText.text = value; }
     public string KillEnemyCountText { set => _killEnemyCountText.text = value; }
     public string EquipmentText { set => _equipmentText.text = value; }
-    public BasicInformation() => Initialize();
-    private async void Initialize()
+    public BasicInformation() => InitializeTask = Initialize();
+    private async Task Initialize()
     {
         AsyncOperationHandle<VisualTreeAsset> handle = Addressables.LoadAssetAsync<VisualTreeAsset>("UXML/BasicInformation.uxml");
         await handle.Task;

@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -9,6 +10,8 @@ namespace DCFrameWork
     [UxmlElement]
     public partial class EquipmentSettingUI : VisualElement
     {
+        public Task InitializeTask { get; private set; }
+
         Button _powerUpButton;
         Button _removalButton;
         Label _equipmentName;
@@ -25,8 +28,8 @@ namespace DCFrameWork
         public string PowerText { set => _powerText.text = value; }
         public string FastText { set => _fastText.text = value; }
         public string RangeText { set => _rangeText.text = value; }
-        public EquipmentSettingUI() => Initialize();
-        private async void Initialize()
+        public EquipmentSettingUI() => InitializeTask = Initialize();
+        private async Task Initialize()
         {
             AsyncOperationHandle<VisualTreeAsset> handle = Addressables.LoadAssetAsync<VisualTreeAsset>("UXML/DefenceEquipmentSetting.uxml");
             await handle.Task;

@@ -1,4 +1,5 @@
 using DCFrameWork.MainSystem;
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
@@ -36,6 +37,8 @@ namespace DCFrameWork.Enemy
         }
 
         private NavMeshAgent _agent;
+
+        public Action deathAction;
 
         private void Start()
         {
@@ -102,7 +105,7 @@ namespace DCFrameWork.Enemy
 
         protected virtual void DeathBehaviour()
         {
-            Destroy(gameObject);
+            deathAction?.Invoke();
         }
 
         public int CountCondition(ConditionType type) => (_conditionList.TryGetValue(type, out int count)) ? count : 0;

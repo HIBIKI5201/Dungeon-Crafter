@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using DCFrameWork.Enemy;
 
 public class EnemyHealthBarManager : MonoBehaviour
 {
@@ -8,18 +9,20 @@ public class EnemyHealthBarManager : MonoBehaviour
     Image _image;
     [SerializeField] int _radius = 1 ;
     [SerializeField] Vector3 _healthBarOffset = new Vector3 (0,1,0) ;
-    [SerializeField] 
-    CapsuleCollider _targetCollider;
+    Test_EnemyGenerator _enemyGenerator;
     private void Start()
     {
         _rectTransform = GetComponent<RectTransform>();
-        _targetCollider = GetComponent<CapsuleCollider>();
+        _enemyGenerator = new Test_EnemyGenerator();
     }
 
     private void Update()
     {
-        FollowTarget(transform.position + _healthBarOffset);
+       
+       FollowTarget(transform.position + _healthBarOffset);
+        
     }
+
 
     public void FollowTarget(Vector3 target)
     {

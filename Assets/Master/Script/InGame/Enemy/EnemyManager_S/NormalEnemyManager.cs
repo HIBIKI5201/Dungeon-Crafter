@@ -1,4 +1,5 @@
 using DCFrameWork.Enemy;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,10 +7,6 @@ using UnityEngine.Pool;
 
 public class NormalEnemyManager : EnemyManager_B<EnemyData_B>
 {
-
-    public ObjectPool<GameObject> objectPool;
-
-
     protected override void Init_S()
     {
         
@@ -25,10 +22,7 @@ public class NormalEnemyManager : EnemyManager_B<EnemyData_B>
 
     }
 
-    protected override void DeathBehaviour()
-    {
-        objectPool.Release(gameObject);
-    }
+   
 
     protected override void Pause()
     {

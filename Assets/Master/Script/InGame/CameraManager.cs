@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent (typeof(Rigidbody))]
 public class CameraManager : MonoBehaviour
 {
     private Rigidbody _rigidbody;
@@ -10,6 +11,7 @@ public class CameraManager : MonoBehaviour
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _rigidbody.useGravity = false;
     }
 
     public void CameraMove(Vector2 axis)

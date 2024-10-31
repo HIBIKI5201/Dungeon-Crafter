@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class SlowTurretManager : DEWalkerableManager_SB<DefenseEquipmentData_B>
 {
-    const float _interval = 1;
-    float _timer = 0;
     bool _isPaused = false;
     protected override void Think() //UpDate ‚Æ“¯‹`
     {

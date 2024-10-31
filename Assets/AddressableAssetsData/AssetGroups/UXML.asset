@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: UXML
+  m_EditorClassIdentifier: 
+  m_GroupName: UXML
+  m_GUID: e01249afd00568043ab398a3bb4ebede
+  m_SerializeEntries:
+  - m_GUID: b015c437802aecf4497de2ff24ef128e
+    m_Address: uxml/BasicInformation.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 76d8c4c6fd6d13d4cbe587daf06341b4, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 68f6fe54724ba7e4094dd10aac73959b, type: 2}
+    - {fileID: 11400000, guid: 4b6f7a9af6c9f504d9abb15bed835e4e, type: 2}

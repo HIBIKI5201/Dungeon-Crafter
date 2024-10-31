@@ -1,6 +1,9 @@
 using System;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UIElements;
 
 [UxmlElement]
@@ -26,19 +29,40 @@ public partial class BasicInformation : VisualElement
     public string EquipmentText { set => _equipmentText.text = value; }
     public BasicInformation()
     {
-        VisualTreeAsset treeAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Dev/Dev_Branchs/interface/UXML/Ingame/BasicInformation.uxml");
-        var container = treeAsset.Instantiate();
-        container.style.width = Length.Percent(100);
-        container.style.height = Length.Percent(100);
-        hierarchy.Add(container);
-        _menu = container.Q<Button>("MenuButton");
-        _waveGuege = container.Q<VisualElement>("WaveGuege");
-        _expGuege = container.Q<VisualElement>("EXPGuege");
-        _waveText = container.Q<Label>("WaveText");
-        _expText = container.Q<Label>("EXPText");
-        _goldText = container.Q<Label>("GoldText");
-        _levelText = container.Q<Label>("LevelText");
-        _killEnemyCountText = container.Q<Label>("KillEnemyCountText");
-        _equipmentText = container.Q<Label>("EquipmentText");
+        Initialize();
+    }
+    private async void Initialize()
+    {
+        AsyncOperationHandle<VisualTreeAsset> handle = Addressables.LoadAssetAsync<VisualTreeAsset>("uxml/BasicInformation.uxml");
+        await handle.Task;
+
+        if (handle.Status == AsyncOperationStatus.Succeeded && handle.Result != null)
+        {
+            var treeAsset = handle.Result;
+            var container = treeAsset.Instantiate();
+            container.style.width = Length.Percent(100);
+            container.style.height = Length.Percent(100);
+            hierarchy.Add(container);
+
+            // UI要素の取得
+            _menu = container.Q<Button>("MenuButton");
+            _waveGuege = container.Q<VisualElement>("WaveGuege");
+            _expGuege = container.Q<VisualElement>("EXPGuege");
+            _waveText = container.Q<Label>("WaveText");
+            _expText = container.Q<Label>("EXPText");
+            _goldText = container.Q<Label>("GoldText");
+            _levelText = container.Q<Label>("LevelText");
+            _killEnemyCountText = container.Q<Label>("KillEnemyCountText");
+            _equipmentText = container.Q<Label>("EquipmentText");
+
+            Debug.Log("ウィンドウは正常にロード完了");
+        }
+        else
+        {
+            Debug.LogError("Failed to load UXML file from Addressables: uxml/BasicInformation.uxml");
+        }
+
+        // メモリの解放
+        Addressables.Release(handle);
     }
 }

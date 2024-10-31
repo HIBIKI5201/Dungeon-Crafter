@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3805964961770200010}
   - component: {fileID: 9180567848195535163}
   - component: {fileID: 900677552998971448}
-  - component: {fileID: -547341297494988611}
+  - component: {fileID: 5042764053351098761}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -78,7 +78,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &-547341297494988611
+--- !u!114 &5042764053351098761
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -90,10 +90,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d862cccab199c2459ddd0d03bfe668f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _image: {fileID: 6282133756545221367}
-  _targetCollider: {fileID: 3153999600572148020, guid: 0912209ebe926a2468780516f4de55ac,
-    type: 3}
+  _image: {fileID: 900677552998971448}
   _radius: 1
+  _healthBarOffset: {x: 0, y: 1, z: 0}
+  _targetCollider: {fileID: 0}
 --- !u!1 &8159382002968120357
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,5 +184,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _image: {fileID: 0}
-  _targetCollider: {fileID: 0}
   _radius: 1
+  _healthBarOffset: {x: 0, y: 1, z: 0}
+  _targetCollider: {fileID: 0}

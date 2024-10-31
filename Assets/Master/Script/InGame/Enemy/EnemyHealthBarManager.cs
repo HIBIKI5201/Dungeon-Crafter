@@ -6,14 +6,19 @@ public class EnemyHealthBarManager : MonoBehaviour
     RectTransform _rectTransform;
     [SerializeField]
     Image _image;
-
-    [SerializeField]
-    CapsuleCollider _targetCollider;
-
     [SerializeField] int _radius = 1 ;
+    [SerializeField] Vector3 _healthBarOffset = new Vector3 (0,1,0) ;
+    [SerializeField] 
+    CapsuleCollider _targetCollider;
     private void Start()
     {
         _rectTransform = GetComponent<RectTransform>();
+        _targetCollider = GetComponent<CapsuleCollider>();
+    }
+
+    private void Update()
+    {
+        FollowTarget(transform.position + _healthBarOffset);
     }
 
     public void FollowTarget(Vector3 target)

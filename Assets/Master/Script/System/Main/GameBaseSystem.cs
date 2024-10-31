@@ -69,7 +69,7 @@ namespace DCFrameWork.MainSystem
             SceneSystem_B system = FindAnyObjectByType<SceneSystem_B>();
             if ((system is null).CheckLog("シーンマネージャーが見つかりません")) return;
             sceneSystem = system;
-            system?.Init(this);
+            system?.Init();
         }
 
         public void PlaySound(int index, SoundKind kind) => _audioManager?.PlaySound(index, kind);
@@ -87,6 +87,7 @@ namespace DCFrameWork.MainSystem
 
         public void AddPausableObject(IPausable obj)
         {
+            if ((obj is null).CheckLog("Ipausableはnull")) return;
             if (!_pausableList?.Contains(obj) ?? false)
             {
                 _pausableList.Add(obj);

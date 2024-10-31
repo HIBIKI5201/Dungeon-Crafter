@@ -31,15 +31,19 @@ namespace DCFrameWork.Enemy
         private EnemyHealthBarManager _healthBarManager;
 
         private Dictionary<ConditionType, int> _conditionList = new();
-        public Dictionary<ConditionType, int> ConditionList
+        Dictionary<ConditionType, int> IConditionable.ConditionList
         {
             get => _conditionList;
             set => _conditionList = value;
         }
+        public int CountCondition(ConditionType type) => (_conditionList.TryGetValue(type, out int count)) ? count : 0;
+
+
+        private Action _deathAction;
+        Action IFightable.DeathAction { get => _deathAction; set => _deathAction = value; }
 
         private NavMeshAgent _agent;
 
-        public Action deathAction;
 
         private void Start()
         {
@@ -106,10 +110,8 @@ namespace DCFrameWork.Enemy
 
         protected virtual void DeathBehaviour()
         {
-            deathAction?.Invoke();
+            _deathAction?.Invoke();
         }
-
-        public int CountCondition(ConditionType type) => (_conditionList.TryGetValue(type, out int count)) ? count : 0;
 
         /// <summary>
         /// NavMesh上のポジションへ移動する
@@ -140,6 +142,8 @@ namespace DCFrameWork.Enemy
 
     public interface IFightable
     {
+        Action DeathAction { get; set; }
+
         /// <summary>
         /// ダメージを受ける
         /// </summary>

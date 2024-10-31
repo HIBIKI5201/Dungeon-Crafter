@@ -60,8 +60,8 @@ namespace DCFrameWork.Enemy
                target.SetActive(true);
                _objectsDict[target].SetActive(true);
                target.transform.position = _spawnPos.position;
-               var manager = GetComponent<EnemyManager_B<EnemyData_B>>();
-               manager.deathAction = () => objectPool.Release(target);
+               var manager = GetComponent<IFightable>();
+               manager.DeathAction = () => objectPool.Release(target);
                var agent = target.GetComponent<NavMeshAgent>();
                if (agent.pathStatus != NavMeshPathStatus.PathInvalid)
                {

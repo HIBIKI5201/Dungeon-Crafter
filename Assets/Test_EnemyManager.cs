@@ -4,8 +4,6 @@ public class Test_EnemyManager : MonoBehaviour
 {
     private float maxHealth = 300;
     private float currentHealth;
-
-    EnemyHealthBarManager healthBarManager;
     [SerializeField]
     Vector3 healthBarOffset = new Vector3(0, 1, 0);
     public EnemyData_B _enemyData_B ;
@@ -17,15 +15,15 @@ public class Test_EnemyManager : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    private void Update()
-    {
-        healthBarManager?.FollowTarget(transform.position + healthBarOffset);
-    }
+    //private void Update()
+    //{
+    //    healthBarManager?.FollowTarget(transform.position + healthBarOffset);
+    //}
 
-    public void Init(EnemyHealthBarManager healthBar)
-    {
-        healthBarManager = healthBar;
-    }
+    //public void Init(EnemyHealthBarManager healthBar)
+    //{
+    //    healthBarManager = healthBar;
+    //}
 
     /// <summary>
     /// キャラクターにダメージを与える
@@ -34,7 +32,7 @@ public class Test_EnemyManager : MonoBehaviour
     public void AddDamage(float damage)
     {
         currentHealth -= damage;
-        healthBarManager?.BarFillUpdate(currentHealth / maxHealth);
+        //healthBarManager?.BarFillUpdate(currentHealth / maxHealth);
 
         if (currentHealth <= 0)
         {

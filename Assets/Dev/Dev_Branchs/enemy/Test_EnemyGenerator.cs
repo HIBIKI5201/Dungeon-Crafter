@@ -5,6 +5,7 @@ using UnityEngine.AI;
 using UnityEngine.Pool;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEngine.InputSystem.XR.Haptics;
 
 
 namespace DCFrameWork.Enemy
@@ -28,14 +29,11 @@ namespace DCFrameWork.Enemy
         [SerializeField]
         private GameObject _heathBar;
 
-        Dictionary<GameObject,GameObject> _objectsDict = new();
+        public Dictionary<GameObject,GameObject> _objectsDict = new();
         private void Start()
         {
-            ObjectPooling();
-           
+            ObjectPooling();        
         }
-
-
         void ObjectPooling()
         {
             
@@ -62,11 +60,14 @@ namespace DCFrameWork.Enemy
                target.SetActive(true);
                _objectsDict[target].SetActive(true);
                target.transform.position = _spawnPos.position;
+               var manager = GetComponent<EnemyManager_B<EnemyData_B>>();
+               manager.deathAction = () => objectPool.Release(target);
                var agent = target.GetComponent<NavMeshAgent>();
                if (agent.pathStatus != NavMeshPathStatus.PathInvalid)
                {
                    agent.SetDestination(_target.position);
                }
+
            },
            target =>
            {

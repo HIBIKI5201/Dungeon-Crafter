@@ -5,7 +5,7 @@ public class EnemyManager : MonoBehaviour
     private float _maxHealth = 300;
     private float _currentHealth;
 
-    EnemyHealthBarManager _healthBarManager;
+   // EnemyHealthBarManager _healthBarManager;
     [SerializeField]
     Vector3 _healthBarOffset = new Vector3(0, 1, 0);
 
@@ -18,13 +18,13 @@ public class EnemyManager : MonoBehaviour
 
     private void Update()
     {
-        _healthBarManager?.FollowTarget(transform.position + _healthBarOffset);
+        //_healthBarManager?.FollowTarget(transform.position + _healthBarOffset);
     }
 
-    public void Init(EnemyHealthBarManager healthBar)
-    {
-        _healthBarManager = healthBar;
-    }
+   // public void Init(EnemyHealthBarManager healthBar)
+    //{
+       // _healthBarManager = healthBar;
+   // }
 
     /// <summary>
     /// キャラクターにダメージを与える
@@ -33,7 +33,7 @@ public class EnemyManager : MonoBehaviour
     public void AddDamage(float damage)
     {
         _currentHealth -= damage;
-        _healthBarManager?.BarFillUpdate(_currentHealth / _maxHealth);
+        //_healthBarManager?.BarFillUpdate(_currentHealth / _maxHealth);
 
         if (_currentHealth <= 0)
         {
@@ -44,6 +44,6 @@ public class EnemyManager : MonoBehaviour
     private void DeathBehaviour()
     {
         Destroy(gameObject);
-        Destroy(_healthBarManager.gameObject);
+        //Destroy(_healthBarManager.gameObject);
     }
 }

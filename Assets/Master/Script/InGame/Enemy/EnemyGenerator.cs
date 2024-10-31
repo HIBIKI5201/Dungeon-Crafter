@@ -29,8 +29,8 @@ public class EnemyGenerator : MonoBehaviour
             NavMeshAgent agent = enemy.GetComponent<NavMeshAgent>();
             agent.SetDestination(_target.position);
             GameObject healthBar = Instantiate(_heathBar, _canvas.transform);
-            EnemyHealthBarManager healthBarManager = healthBar.GetComponent<EnemyHealthBarManager>();
-            enemy.GetComponent<EnemyManager>().Init(healthBarManager);
+            //EnemyHealthBarManager healthBarManager = healthBar.GetComponent<EnemyHealthBarManager>();
+            //enemy.GetComponent<EnemyManager>().Init(healthBarManager);
             float waitTime = UnityEngine.Random.Range(1, 4);
             yield return new WaitForSeconds(waitTime);
         }

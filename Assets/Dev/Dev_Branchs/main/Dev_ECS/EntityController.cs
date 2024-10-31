@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 namespace DCFrameWork
 {
-    [RequireComponent (typeof(NavMeshAgent), typeof(Rigidbody))]
+    [RequireComponent(typeof(NavMeshAgent), typeof(Rigidbody))]
     public class EntityController : MonoBehaviour
     {
         [SerializeField]
@@ -13,10 +13,9 @@ namespace DCFrameWork
         [SerializeField]
         float _moveSpeed;
         Rigidbody _rigidbody;
-
         void Start()
         {
-            _rigidbody = GetComponent<Rigidbody> ();
+            _rigidbody = GetComponent<Rigidbody>();
             _agent = GetComponent<NavMeshAgent>();
             _agent.updatePosition = false;
             _agent.SetDestination(target);
@@ -32,9 +31,11 @@ namespace DCFrameWork
 
         private void ManualMove()
         {
-            Vector3 direction = (_agent.steeringTarget - transform.position).normalized; // 進む方向を計算
-            _rigidbody.linearVelocity = direction * _moveSpeed; // 移動
-            Debug.Log($"move\ndirection is {direction}\nvelocity is {_rigidbody.linearVelocity}");
+            //経路が計算されているかを確認
+            if (_agent.pathPending) return;
+
+            // 位置の更新
+            transform.position += transform.forward * Time.deltaTime;
         }
     }
 }

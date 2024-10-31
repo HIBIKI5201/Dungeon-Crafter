@@ -7,7 +7,8 @@ using UnityEngine.AI;
 
 namespace DCFrameWork.Enemy
 {
-    [RequireComponent(typeof(NavMeshAgent))]
+    [RequireComponent(typeof(NavMeshAgent),typeof(Rigidbody))]
+    
     public abstract class EnemyManager_B<Data> : MonoBehaviour, IFightable, IConditionable, IPausable where Data : EnemyData_B
     {
         [SerializeField]

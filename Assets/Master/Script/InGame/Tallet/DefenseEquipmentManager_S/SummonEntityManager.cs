@@ -15,9 +15,10 @@ namespace DCFrameWork
         float _timer;
         List<GameObject> _enemyList = new();
         [SerializeField] float _attackValue = 1;
+        NavMeshAgent _agent;
         void Start()
         {
-
+            _agent = GetComponent<NavMeshAgent>();
         }
 
         void Update()
@@ -30,8 +31,10 @@ namespace DCFrameWork
                 {
                     if (_enemyList.Count != 0)
                     {
-                        TargetsAddDamage(TargetSelect(), _attackValue);
-                        TargetAddCondition(TargetSelect(), ConditionType.slow);
+                        var targetSelect = TargetSelect();
+                        _agent.destination = targetSelect[0].transform.position;
+                        TargetsAddDamage(targetSelect, _attackValue);
+                        TargetAddCondition(targetSelect, ConditionType.slow);
                     }
                     _timer = 0;
                 }

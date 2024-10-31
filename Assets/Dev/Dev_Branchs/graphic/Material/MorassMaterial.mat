@@ -55,15 +55,19 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Confluency: 1
+    - _Density: 1
     - _Float: 4.32
     - _Float_1: 9.19
+    - _Minuteness: 2.98
+    - _NormalScale: 0.91
     - _QueueControl: 0
     - _QueueOffset: -8
     - _TileScale: 0.31
     - _TimeScale: 0.79
     - _TimeSpeed: 3
     - _confluency: 1
-    - _minuteness: 1
+    - _minuteness: 4.45
     m_Colors:
     - _Color: {r: 0.43396226, g: 0.35654277, b: 0.23949796, a: 1}
   m_BuildTextureStacks: []

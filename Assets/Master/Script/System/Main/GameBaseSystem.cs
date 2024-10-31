@@ -49,7 +49,7 @@ namespace DCFrameWork.MainSystem
             _mainUIManager = FindAnyObjectByType<UIManager_B>();
             (_mainUIManager is null).CheckLog("MainUIManagerが見つかりませんでした");
 
-            SceneInit();
+            SceneInitialize();
         }
 
         public void LoadScene(SceneKind kind)
@@ -60,15 +60,15 @@ namespace DCFrameWork.MainSystem
         private IEnumerator SceneLoading(SceneKind kind)
         {
             yield return SceneChanger.LoadScene(kind);
-            SceneInit();
+            SceneInitialize();
         }
 
-        private void SceneInit()
+        private void SceneInitialize()
         {
             SceneSystem_B system = FindAnyObjectByType<SceneSystem_B>();
             if ((system is null).CheckLog("シーンマネージャーが見つかりません")) return;
             sceneSystem = system;
-            system?.Init();
+            system?.Initialize();
         }
 
         public void PlaySound(int index, SoundKind kind) => _audioManager?.PlaySound(index, kind);

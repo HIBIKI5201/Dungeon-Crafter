@@ -32,11 +32,8 @@ namespace DCFrameWork.Enemy
         public Dictionary<GameObject,GameObject> _objectsDict = new();
         private void Start()
         {
-            ObjectPooling();
-           
+            ObjectPooling();        
         }
-
-
         void ObjectPooling()
         {
             

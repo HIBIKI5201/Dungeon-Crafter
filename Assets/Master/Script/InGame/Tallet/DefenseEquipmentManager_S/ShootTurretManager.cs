@@ -23,10 +23,18 @@ public class ShootTurretManager : DEAttackerManager_SB<DefenseEquipmentData_B>
             }
         }
     }
+    protected override void LoadSpecificData(DefenseEquipmentData_B data)
+    {
+        var coll = GetComponent<SphereCollider>();
+        coll.radius = _range;
+    }
     protected override void Attack()
     {
+        Debug.Log("Attack Now");
         var criticalPoint = Random.Range(0, 100);
-        TargetsAddDamage(TargetSelect(), criticalPoint > _critical ? _attack * 3 : _attack);
+        var targetSelect = TargetSelect();
+        Debug.Log(targetSelect);
+        TargetsAddDamage(targetSelect, criticalPoint <= _critical ? _attack * 3 : _attack);
     }
 
     protected override void Pause()

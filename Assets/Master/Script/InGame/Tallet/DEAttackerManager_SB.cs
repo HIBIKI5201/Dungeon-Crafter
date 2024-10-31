@@ -6,13 +6,13 @@ using UnityEngine;
 
 public abstract class DEAttackerManager_SB<Data> : DefenseEquipmentManager_B<Data> where Data : DefenseEquipmentData_B
 {
-    protected List<GameObject> _enemyList;
+    protected List<GameObject> _enemyList = new();
 
     protected virtual List<GameObject> TargetSelect()
     {
         return _enemyList.OrderBy(x => Vector3.Distance(transform.position, x.transform.position)).Take(1).ToList();
     }
-    
+
 
     protected abstract void Attack();
 
@@ -27,8 +27,10 @@ public abstract class DEAttackerManager_SB<Data> : DefenseEquipmentManager_B<Dat
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log(other.gameObject.name);
         if (other.TryGetComponent<IFightable>(out _))
         {
+            Debug.Log("enter the" + other.gameObject.name);
             _enemyList.Add(other.gameObject);
         }
     }

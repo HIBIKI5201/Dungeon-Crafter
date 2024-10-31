@@ -9,7 +9,7 @@ namespace DCFrameWork.DefenseEquipment
         private DefenseEquipmentDataBase _data;
 
         [Range(1, 5f)]
-        protected int Level;
+        protected int Level = 1;
 
         #region 共通ステータス
         protected float _attack;
@@ -33,6 +33,7 @@ namespace DCFrameWork.DefenseEquipment
 
         private void LoadCommonData(int level)
         {
+            if (_data.DataLevelList.Count < level) return;
             Data data = _data.DataLevelList[level - 1] as Data;
 
             _attack = data.Attack;

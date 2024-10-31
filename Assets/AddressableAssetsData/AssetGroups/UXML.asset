@@ -16,9 +16,10 @@ MonoBehaviour:
   m_GUID: e01249afd00568043ab398a3bb4ebede
   m_SerializeEntries:
   - m_GUID: b015c437802aecf4497de2ff24ef128e
-    m_Address: uxml/BasicInformation.uxml
+    m_Address: UXML/BasicInformation.uxml
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - UXML
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 76d8c4c6fd6d13d4cbe587daf06341b4, type: 2}

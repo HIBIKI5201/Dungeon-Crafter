@@ -27,13 +27,10 @@ public partial class BasicInformation : VisualElement
     public string LevelText { set => _levelText.text = value; }
     public string KillEnemyCountText { set => _killEnemyCountText.text = value; }
     public string EquipmentText { set => _equipmentText.text = value; }
-    public BasicInformation()
-    {
-        Initialize();
-    }
+    public BasicInformation() => Initialize();
     private async void Initialize()
     {
-        AsyncOperationHandle<VisualTreeAsset> handle = Addressables.LoadAssetAsync<VisualTreeAsset>("uxml/BasicInformation.uxml");
+        AsyncOperationHandle<VisualTreeAsset> handle = Addressables.LoadAssetAsync<VisualTreeAsset>("UXML/BasicInformation.uxml");
         await handle.Task;
 
         if (handle.Status == AsyncOperationStatus.Succeeded && handle.Result != null)
@@ -59,7 +56,7 @@ public partial class BasicInformation : VisualElement
         }
         else
         {
-            Debug.LogError("Failed to load UXML file from Addressables: uxml/BasicInformation.uxml");
+            Debug.LogError("Failed to load UXML file from Addressables: UXML/BasicInformation.uxml");
         }
 
         // ÉÅÉÇÉäÇÃâï˙

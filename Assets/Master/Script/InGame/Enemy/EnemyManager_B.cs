@@ -9,7 +9,7 @@ namespace DCFrameWork.Enemy
 {
     [RequireComponent(typeof(NavMeshAgent),typeof(Rigidbody))]
     
-    public abstract class EnemyManager_B<Data> : MonoBehaviour, IFightable, IConditionable, IPausable where Data : EnemyData_B
+    public abstract class EnemyManager_B<Data> : MonoBehaviour, IEnemy, IPausable where Data : EnemyData_B
     {
         [SerializeField]
         EnemyData_B _data;
@@ -38,7 +38,6 @@ namespace DCFrameWork.Enemy
         }
         public int CountCondition(ConditionType type) => (_conditionList.TryGetValue(type, out int count)) ? count : 0;
 
-
         private Action _deathAction;
         Action IFightable.DeathAction { get => _deathAction; set => _deathAction = value; }
 
@@ -54,7 +53,6 @@ namespace DCFrameWork.Enemy
             _currentHealth = _maxHealth;
             _agent = GetComponent<NavMeshAgent>();
 
-            IPausable pausable = this as IPausable;
             GameBaseSystem.mainSystem?.AddPausableObject(this);
 
             Init_S();
@@ -62,7 +60,7 @@ namespace DCFrameWork.Enemy
 
         private void OnDestroy()
         {
-            GameBaseSystem.mainSystem.RemovePausableObject(this as IPausable);
+            GameBaseSystem.mainSystem.RemovePausableObject(this);
         }
 
         /// <summary>
@@ -139,6 +137,8 @@ namespace DCFrameWork.Enemy
         slow,
         weakness,
     }
+
+    public interface IEnemy : IFightable, IConditionable { }
 
     public interface IFightable
     {

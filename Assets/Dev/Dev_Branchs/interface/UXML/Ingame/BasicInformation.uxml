@@ -10,13 +10,13 @@
             <engine:Label text="EXP&#10;" name="EXPText" style="position: absolute; width: 100%; height: 100%; font-size: 60%; -unity-text-align: middle-center; -unity-font-style: bold;" />
         </engine:VisualElement>
     </engine:VisualElement>
-    <engine:VisualElement style="flex-grow: 1; position: absolute; height: 30%; width: 20%; top: auto; left: auto; right: 0; background-color: rgb(148, 148, 148); justify-content: space-between; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-bottom-left-radius: 1px;">
-        <engine:Button text="メニュー" name="MenuButton" class="menu-button" />
+    <engine:VisualElement style="flex-grow: 1; position: absolute; height: 266px; width: 20%; top: auto; left: auto; right: 0; background-color: rgb(148, 148, 148); justify-content: space-between; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-left-radius: 1px; border-top-right-radius: 1px; border-bottom-right-radius: 1px; border-bottom-left-radius: 1px;">
+        <engine:Button text="メニュー" name="MenuButton" class="menu-button" style="font-size: 35px;" />
         <engine:VisualElement name="VisualElement" style="flex-grow: 1; justify-content: space-around; align-items: flex-start; align-self: flex-start; left: 0; width: 100%; margin-right: auto; margin-left: 5%;">
-            <engine:Label text="Label" name="GoldText" style="font-size: 40%; -unity-font-style: bold;" />
-            <engine:Label text="Label" name="LevelText" style="font-size: 40%; -unity-font-style: bold;" />
-            <engine:Label text="Label" name="KillEnemyCountText" style="font-size: 40%; -unity-font-style: bold;" />
-            <engine:Label text="Label" name="EquipmentText" style="font-size: 40%; -unity-font-style: bold;" />
+            <engine:Label text="Label" name="GoldText" style="font-size: 35%; -unity-font-style: bold;" />
+            <engine:Label text="Label" name="LevelText" style="font-size: 35%; -unity-font-style: bold;" />
+            <engine:Label text="Label" name="KillEnemyCountText" style="font-size: 35%; -unity-font-style: bold;" />
+            <engine:Label text="Label" name="EquipmentText" style="font-size: 35%; -unity-font-style: bold;" />
         </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>

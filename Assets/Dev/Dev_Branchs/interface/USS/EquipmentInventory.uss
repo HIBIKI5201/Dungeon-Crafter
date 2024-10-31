@@ -1,0 +1,43 @@
+.equipment-inventory_open {
+    height: 25%;
+    position: absolute;
+    width: 100%;
+    justify-content: flex-start;
+    align-content: auto;
+    flex-direction: column;
+    align-items: auto;
+    bottom: 0;
+    background-color: rgb(183, 183, 183);
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    transition-timing-function: ease-in-out-cubic;
+    transition-duration: 0.2s;
+}
+
+.equipment-inventory_close {
+    height: 25%;
+    position: absolute;
+    width: 100%;
+    justify-content: flex-start;
+    align-content: auto;
+    flex-direction: column;
+    align-items: auto;
+    bottom: -25%;
+    background-color: rgb(183, 183, 183);
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+    transition-timing-function: ease-in-out-cubic;
+    transition-duration: 0.2s;
+}

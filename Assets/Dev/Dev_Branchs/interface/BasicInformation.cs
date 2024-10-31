@@ -39,6 +39,10 @@ public partial class BasicInformation : VisualElement
             var container = treeAsset.Instantiate();
             container.style.width = Length.Percent(100);
             container.style.height = Length.Percent(100);
+            this.RegisterCallback<KeyDownEvent>(e => e.StopImmediatePropagation());
+            pickingMode = PickingMode.Ignore;
+            container.RegisterCallback<KeyDownEvent>(e => e.StopImmediatePropagation());
+            container.pickingMode = PickingMode.Ignore;
             hierarchy.Add(container);
 
             // UI—v‘f‚ÌŽæ“¾

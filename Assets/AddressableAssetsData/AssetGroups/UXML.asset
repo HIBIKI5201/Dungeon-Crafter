@@ -15,6 +15,18 @@ MonoBehaviour:
   m_GroupName: UXML
   m_GUID: e01249afd00568043ab398a3bb4ebede
   m_SerializeEntries:
+  - m_GUID: 21db3fa15e6bfad4281ae5e3440045ac
+    m_Address: UXML/EquipmentInventory.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UXML
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3f683a95e716fb24bb5da6b5695e6b7e
+    m_Address: UXML/DefenceEquipmentSetting.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UXML
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b015c437802aecf4497de2ff24ef128e
     m_Address: UXML/BasicInformation.uxml
     m_ReadOnly: 0

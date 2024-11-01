@@ -5,7 +5,7 @@ namespace DCFrameWork.Enemy
     {
         EnemyHealthBarManager _enemyHealthBarManager;
         public Vector3 healthBarOffset = new Vector3(0,1,0);   
-        protected override void Init_S()
+        protected override void Start_S()
         {
            
         }

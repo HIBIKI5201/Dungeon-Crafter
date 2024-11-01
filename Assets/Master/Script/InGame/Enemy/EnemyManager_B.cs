@@ -49,24 +49,37 @@ namespace DCFrameWork.Enemy
             if (_data is null)
                 Debug.Log("データがありません");
             LoadCommonData();
-
-            _currentHealth = _maxHealth;
             _agent = GetComponent<NavMeshAgent>();
-
             GameBaseSystem.mainSystem?.AddPausableObject(this);
 
-            Init_S();
-        }
-
-        private void OnDestroy()
-        {
-            GameBaseSystem.mainSystem.RemovePausableObject(this);
+            Start_S();
         }
 
         /// <summary>
         /// サブクラスでのStartメソッド
         /// </summary>
-        protected virtual void Init_S() { }
+        protected virtual void Start_S() { }
+
+        private void OnEnable()
+        {
+            GameBaseSystem.mainSystem?.RemovePausableObject(this);            
+        }
+
+        /// <summary>
+        /// 外部からの初期化処理
+        /// ステータスの初期化などを行う
+        /// </summary>
+        public void Initialize()
+        {
+            _currentHealth = _maxHealth;
+
+            Initialize_S();
+        }
+
+        /// <summary>
+        /// サブクラス内の初期化処理
+        /// </summary>
+        protected virtual void Initialize_S() { }
 
         private void LoadCommonData()
         {

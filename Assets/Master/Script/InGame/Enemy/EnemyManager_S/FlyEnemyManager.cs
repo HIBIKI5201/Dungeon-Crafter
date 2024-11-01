@@ -4,7 +4,7 @@ namespace DCFrameWork.Enemy
     public class FlyEnemyManager : EnemyManager_B<EnemyData_B>
     {
   
-        protected override void Init_S()
+        protected override void Start_S()
         {
            
         }

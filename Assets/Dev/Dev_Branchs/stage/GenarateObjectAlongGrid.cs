@@ -15,6 +15,7 @@ public class GenarateObjectAlongGrid : MonoBehaviour
     [SerializeField] GameObject _walls;
     [SerializeField] Transform _startPos;
     [SerializeField] Transform _targetPos;
+    [SerializeField] StageManager _stageManager;
     private NavMeshPath _path;
     private Camera _mainCamera;
     private Vector3 _currentPosition = Vector3.zero;
@@ -43,6 +44,7 @@ public class GenarateObjectAlongGrid : MonoBehaviour
             _currentPosition.x = (int)((_currentPosition.x + hit.normal.x / 2) / 5) * 5 + 2.5f * Mathf.Sign(_currentPosition.x);
             _currentPosition.z = (int)((_currentPosition.z + hit.normal.z / 2) / 5) * 5 + 2.5f * Mathf.Sign(_currentPosition.z);
             _clickGridPrefab.transform.position = _currentPosition;
+            _stageManager.CheckStage(_currentPosition);
             Debug.DrawRay(_currentPosition, Vector3.down, Color.green, 1f);
             if (_clickGridPrefab.transform.position.y > 8f || !Physics.Raycast(_currentPosition, Vector3.down, 5f, LayerMask.GetMask("Ground")))
             {

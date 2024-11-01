@@ -55,7 +55,7 @@ public class GenarateObjectAlongGrid : MonoBehaviour
                 _canSet = true;
                 _clickGridPrefab.SetActive(true);
             }
-            if(_stageManager.CheckStage(_currentPosition))
+            if (_stageManager.CheckStage(_currentPosition) && _currentPosition != _startPos.position && _currentPosition != _targetPos.position)
             {
                 _clickGridPrefab.GetComponent<MeshRenderer>().material.color = Color.blue;
             }

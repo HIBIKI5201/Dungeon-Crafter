@@ -4914,7 +4914,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 29.7, z: -1.5}
+  m_LocalPosition: {x: 0, y: 90.74, z: -1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5014,7 +5014,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &331638698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5028,7 +5028,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tallet: {fileID: 0}
-  _navMeshSurface: {fileID: 469991453}
+  _navMeshSurface: {fileID: 0}
 --- !u!4 &331638699
 Transform:
   m_ObjectHideFlags: 0
@@ -15479,10 +15479,11 @@ MonoBehaviour:
   _prefab: {fileID: 3923921449293535806, guid: 587a7ac46c6ef654292713c44b49d468, type: 3}
   _clickPointPrefab: {fileID: 698337756}
   _clickGridPrefab: {fileID: 1167231034}
-  _navMeshSurface: {fileID: 469991453}
+  _navMeshSurface: {fileID: 0}
   _walls: {fileID: 1321348066}
   _startPos: {fileID: 972463079}
   _targetPos: {fileID: 1939187523}
+  _stageManager: {fileID: 1475286353}
 --- !u!4 &1047094346
 Transform:
   m_ObjectHideFlags: 0
@@ -16764,7 +16765,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a60d3713b0c1ad46a7109decd8d3e27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyPrefab: {fileID: 7990310466857601233, guid: 0912209ebe926a2468780516f4de55ac,
+  _enemyPrefab: {fileID: 7990310466857601233, guid: 0636ff518dd68804392288aa38342f26,
     type: 3}
   _spawnPos: {fileID: 972463079}
   _target: {fileID: 1939187523}
@@ -21659,6 +21660,7 @@ MonoBehaviour:
   _airPrefab: {fileID: 1167124475316771349, guid: 767ebdda71c6140488197492ab357949,
     type: 3}
   _floorPrefab: {fileID: 304421655}
+  _gridSize: 5
 --- !u!4 &1475286354
 Transform:
   m_ObjectHideFlags: 0
@@ -22807,7 +22809,7 @@ Transform:
   m_GameObject: {fileID: 1578796991}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 23.7, z: 0}
+  m_LocalPosition: {x: 0, y: 84.74, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -24612,7 +24614,7 @@ PrefabInstance:
     - target: {fileID: 8348769818262055759, guid: 587a7ac46c6ef654292713c44b49d468,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -42.5
+      value: -47.5
       objectReference: {fileID: 0}
     - target: {fileID: 8348769818262055759, guid: 587a7ac46c6ef654292713c44b49d468,
         type: 3}
@@ -25477,7 +25479,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!223 &1749202731
 Canvas:
@@ -26426,7 +26428,7 @@ Transform:
   m_GameObject: {fileID: 1831706628}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 29.7, z: -1.5}
+  m_LocalPosition: {x: 0, y: 90.74, z: -1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

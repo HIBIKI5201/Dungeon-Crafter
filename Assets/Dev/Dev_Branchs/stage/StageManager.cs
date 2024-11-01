@@ -39,33 +39,17 @@ public class StageManager : MonoBehaviour
                         _map[j, i] = 0;
                         _noWall++;
                     }
-                    Debug.Log($"{vector3}:{_map[j, i]}:({j},{i})={(hit.collider != null ? hit.collider.gameObject.name : null)}");
-                    Debug.DrawRay(vector3, Vector3.down * 5, Color.blue, 10);
+                    //Debug.Log($"{vector3}:{_map[j, i]}:({j},{i})={(hit.collider != null ? hit.collider.gameObject.name : null)}");
+                    //Debug.DrawRay(vector3, Vector3.down * 5, Color.blue, 10);
                 }
             }
-            Debug.Log($"_nowall = {_noWall}");
-            //for(int i = 0; i < _sizeZ; ++i)
-            //{
-            //    string s = "";
-            //    for(int j  = 0; j < _sizeX; ++j)
-            //    {
-            //        s += _subMap[j, i];
-            //    }
-            //    Debug.Log(s);
-            //}
-            //_startX = (int)((_tagetPos.position.x - _floorPrefab.transform.position.x + _floorPrefab.transform.localScale.x / 2 - _gridSize / 2) / _gridSize);
-            //_startZ = (int)((_tagetPos.position.z - _floorPrefab.transform.position.z + _floorPrefab.transform.localScale.z / 2 - _gridSize / 2) / _gridSize);
         }
-        //Instantiate(_airPrefab, _tagetPos.position, Quaternion.identity);
-        //FillAir();
     }
-    //H
-    // Update is called once per frame
     void Update()
     {
 
     }
-    public void CheckStage(Vector3 currentPosition)
+    public bool CheckStage(Vector3 currentPosition)
     {
         //i = (グリッドの各マスの中心座標のx,z -(_floorPrefab.transform.position.z - _floorPrefab.transform.localScale.z / 2 + _gridSize / 2))/_gridSize
         int currentX;
@@ -74,16 +58,20 @@ public class StageManager : MonoBehaviour
         currentX = (int)((currentPosition.x - _floorPrefab.transform.position.x + _floorPrefab.transform.localScale.x / 2 - _gridSize / 2) / _gridSize);
         currentZ = (int)((currentPosition.z - _floorPrefab.transform.position.z + _floorPrefab.transform.localScale.z / 2 - _gridSize / 2) / _gridSize);
         //Debug.Log($"{currentX},{currentZ}");
-        int[,] subMap = new int[_sizeX,_sizeZ];
+        int[,] subMap = new int[_sizeX, _sizeZ];
         for (int i = 0; i < _sizeZ; i++)
         {
             string s = "";
             for (int j = 0; j < _sizeX; j++)
             {
-                subMap[j,i] = _map[j,i];
+                subMap[j, i] = _map[j, i];
                 s += subMap[j, i];
             }
-            Debug.Log(s);
+            //Debug.Log(s);
+        }
+        if (subMap[currentX, currentZ] == 1)
+        {
+            return true;
         }
         subMap[currentX, currentZ] = 1;
         Queue<int> queue = new Queue<int>();
@@ -95,7 +83,7 @@ public class StageManager : MonoBehaviour
             count++;
             int x = queue.Dequeue();
             int z = queue.Dequeue();
-            Debug.Log($"{x},{z}");
+            //Debug.Log($"{x},{z}");
             if (subMap[x + 1, z] == 0)
             {
                 subMap[x + 1, z] = 1;
@@ -121,37 +109,20 @@ public class StageManager : MonoBehaviour
                 queue.Enqueue(z - 1);
             }
         }
-        Debug.Log($"{count},{_noWall}");
+        //Debug.Log($"{count},{_noWall}");
+        return count == _noWall;
     }
-    void FillAir()
+    public void SetObject(Vector3 currentPosition)
     {
-        float time = Time.time;
-        Queue<Vector3> airPos = new Queue<Vector3>();
-        airPos.Enqueue(_tagetPos.position);
-        while (airPos.Count > 0)
+        int currentX;
+        int currentZ;
+        //(-42.5-2.5 + 47.5 - 2.5)/5
+        currentX = (int)((currentPosition.x - _floorPrefab.transform.position.x + _floorPrefab.transform.localScale.x / 2 - _gridSize / 2) / _gridSize);
+        currentZ = (int)((currentPosition.z - _floorPrefab.transform.position.z + _floorPrefab.transform.localScale.z / 2 - _gridSize / 2) / _gridSize);
+        if (_map[currentX, currentZ] == 0)
         {
-            Debug.Log("実行中");
-            Vector3 pos = airPos.Dequeue();
-            if (!Physics.Raycast(pos, Vector3.right, 1))
-            {
-                airPos.Enqueue(pos + Vector3.right);
-                Instantiate(_airPrefab, pos + Vector3.right, Quaternion.identity);
-            }
-            if (!Physics.Raycast(pos, Vector3.left, 1))
-            {
-                airPos.Enqueue(pos + Vector3.left);
-                Instantiate(_airPrefab, pos + Vector3.left, Quaternion.identity);
-            }
-            if (!Physics.Raycast(pos, Vector3.forward, 1))
-            {
-                airPos.Enqueue(pos + Vector3.forward);
-                Instantiate(_airPrefab, pos + Vector3.forward, Quaternion.identity);
-            }
-            if (!Physics.Raycast(pos, Vector3.back, 1))
-            {
-                airPos.Enqueue(pos + Vector3.back);
-                Instantiate(_airPrefab, pos + Vector3.back, Quaternion.identity);
-            }
+            _noWall--;
         }
+        _map[currentX, currentZ] = 1;
     }
 }

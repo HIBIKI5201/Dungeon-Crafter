@@ -1,4 +1,5 @@
 using DCFrameWork.MainSystem;
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
@@ -6,7 +7,8 @@ using UnityEngine.AI;
 
 namespace DCFrameWork.Enemy
 {
-    [RequireComponent(typeof(NavMeshAgent))]
+    [RequireComponent(typeof(NavMeshAgent),typeof(Rigidbody))]
+    
     public abstract class EnemyManager_B<Data> : MonoBehaviour, IFightable, IConditionable, IPausable where Data : EnemyData_B
     {
         [SerializeField]
@@ -29,13 +31,19 @@ namespace DCFrameWork.Enemy
         private EnemyHealthBarManager _healthBarManager;
 
         private Dictionary<ConditionType, int> _conditionList = new();
-        public Dictionary<ConditionType, int> ConditionList
+        Dictionary<ConditionType, int> IConditionable.ConditionList
         {
             get => _conditionList;
             set => _conditionList = value;
         }
+        public int CountCondition(ConditionType type) => (_conditionList.TryGetValue(type, out int count)) ? count : 0;
+
+
+        private Action _deathAction;
+        Action IFightable.DeathAction { get => _deathAction; set => _deathAction = value; }
 
         private NavMeshAgent _agent;
+
 
         private void Start()
         {
@@ -102,10 +110,8 @@ namespace DCFrameWork.Enemy
 
         protected virtual void DeathBehaviour()
         {
-            Destroy(gameObject);
+            _deathAction?.Invoke();
         }
-
-        public int CountCondition(ConditionType type) => (_conditionList.TryGetValue(type, out int count)) ? count : 0;
 
         /// <summary>
         /// NavMesh上のポジションへ移動する
@@ -136,6 +142,8 @@ namespace DCFrameWork.Enemy
 
     public interface IFightable
     {
+        Action DeathAction { get; set; }
+
         /// <summary>
         /// ダメージを受ける
         /// </summary>

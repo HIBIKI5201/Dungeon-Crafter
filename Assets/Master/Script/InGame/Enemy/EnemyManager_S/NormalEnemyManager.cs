@@ -1,15 +1,17 @@
+using UnityEngine;
+
 namespace DCFrameWork.Enemy
 {
     public class NormalEnemyManager : EnemyManager_B<EnemyData_B>
     {
+        
+       
 
-     
-
-        protected override void Init_S()
+        protected override void DeathBehaviour()
         {
-
+            base.DeathBehaviour();
+            Debug.Log("shinu");
         }
-
 
 
         protected override void LoadSpecificnData(EnemyData_B data)

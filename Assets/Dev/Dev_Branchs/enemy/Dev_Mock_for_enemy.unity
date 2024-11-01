@@ -1064,8 +1064,8 @@ GameObject:
   - component: {fileID: 136836438}
   - component: {fileID: 136836437}
   - component: {fileID: 136836436}
-  - component: {fileID: 136836435}
   - component: {fileID: 136836434}
+  - component: {fileID: 136836440}
   m_Layer: 7
   m_Name: Tarret1 (5)
   m_TagString: Untagged
@@ -1195,18 +1195,6 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &136836435
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 136836432}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edb4e73f343a9724dac1a21b045af64d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &136836436
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1302,6 +1290,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 136836432}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &136836440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136836432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c2170a3a31622e4690648b005192a9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &157559461
 GameObject:
   m_ObjectHideFlags: 0
@@ -1531,8 +1531,8 @@ GameObject:
   - component: {fileID: 223523208}
   - component: {fileID: 223523207}
   - component: {fileID: 223523206}
-  - component: {fileID: 223523205}
   - component: {fileID: 223523204}
+  - component: {fileID: 223523210}
   m_Layer: 7
   m_Name: Tarret1 (4)
   m_TagString: Untagged
@@ -1662,18 +1662,6 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &223523205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 223523202}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edb4e73f343a9724dac1a21b045af64d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &223523206
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1769,6 +1757,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 223523202}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &223523210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 223523202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c2170a3a31622e4690648b005192a9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &225687514
 GameObject:
   m_ObjectHideFlags: 0
@@ -2322,15 +2322,15 @@ GameObject:
   - component: {fileID: 278150274}
   - component: {fileID: 278150273}
   - component: {fileID: 278150277}
-  - component: {fileID: 278150276}
   - component: {fileID: 278150278}
+  - component: {fileID: 278150279}
   m_Layer: 7
   m_Name: Tarret1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &278150272
 Transform:
   m_ObjectHideFlags: 0
@@ -2420,18 +2420,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 278150271}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &278150276
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 278150271}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edb4e73f343a9724dac1a21b045af64d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &278150277
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2560,6 +2548,18 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &278150279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278150271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c2170a3a31622e4690648b005192a9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &281634509
 GameObject:
   m_ObjectHideFlags: 0
@@ -5194,8 +5194,8 @@ GameObject:
   - component: {fileID: 509730234}
   - component: {fileID: 509730233}
   - component: {fileID: 509730232}
-  - component: {fileID: 509730231}
   - component: {fileID: 509730230}
+  - component: {fileID: 509730236}
   m_Layer: 7
   m_Name: Tarret1 (2)
   m_TagString: Untagged
@@ -5325,18 +5325,6 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &509730231
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 509730228}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edb4e73f343a9724dac1a21b045af64d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &509730232
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5432,6 +5420,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 509730228}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &509730236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 509730228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c2170a3a31622e4690648b005192a9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &532923693
 GameObject:
   m_ObjectHideFlags: 0
@@ -5445,8 +5445,8 @@ GameObject:
   - component: {fileID: 532923699}
   - component: {fileID: 532923698}
   - component: {fileID: 532923697}
-  - component: {fileID: 532923696}
   - component: {fileID: 532923695}
+  - component: {fileID: 532923701}
   m_Layer: 7
   m_Name: Tarret1 (6)
   m_TagString: Untagged
@@ -5576,18 +5576,6 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &532923696
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 532923693}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edb4e73f343a9724dac1a21b045af64d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &532923697
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5683,6 +5671,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 532923693}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &532923701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 532923693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c2170a3a31622e4690648b005192a9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &549127243
 GameObject:
   m_ObjectHideFlags: 3
@@ -8113,8 +8113,8 @@ GameObject:
   - component: {fileID: 902017215}
   - component: {fileID: 902017214}
   - component: {fileID: 902017213}
-  - component: {fileID: 902017212}
   - component: {fileID: 902017211}
+  - component: {fileID: 902017217}
   m_Layer: 7
   m_Name: Tarret1 (9)
   m_TagString: Untagged
@@ -8244,18 +8244,6 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &902017212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 902017209}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edb4e73f343a9724dac1a21b045af64d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &902017213
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -8351,6 +8339,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 902017209}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &902017217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902017209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c2170a3a31622e4690648b005192a9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &912916295
 GameObject:
   m_ObjectHideFlags: 0
@@ -11455,8 +11455,8 @@ GameObject:
   - component: {fileID: 1203514991}
   - component: {fileID: 1203514990}
   - component: {fileID: 1203514989}
-  - component: {fileID: 1203514988}
   - component: {fileID: 1203514987}
+  - component: {fileID: 1203514993}
   m_Layer: 7
   m_Name: Tarret1 (3)
   m_TagString: Untagged
@@ -11586,18 +11586,6 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &1203514988
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1203514985}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edb4e73f343a9724dac1a21b045af64d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &1203514989
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -11693,6 +11681,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1203514985}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1203514993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1203514985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c2170a3a31622e4690648b005192a9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1209193232
 GameObject:
   m_ObjectHideFlags: 0
@@ -14883,8 +14883,8 @@ GameObject:
   - component: {fileID: 1667843812}
   - component: {fileID: 1667843811}
   - component: {fileID: 1667843810}
-  - component: {fileID: 1667843809}
   - component: {fileID: 1667843808}
+  - component: {fileID: 1667843814}
   m_Layer: 7
   m_Name: Tarret1 (8)
   m_TagString: Untagged
@@ -15014,18 +15014,6 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &1667843809
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1667843806}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edb4e73f343a9724dac1a21b045af64d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &1667843810
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -15121,6 +15109,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1667843806}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1667843814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1667843806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c2170a3a31622e4690648b005192a9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1675938254
 GameObject:
   m_ObjectHideFlags: 0
@@ -15689,7 +15689,7 @@ Canvas:
   m_GameObject: {fileID: 1749202730}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 2
+  m_RenderMode: 0
   m_Camera: {fileID: 330585545}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -15732,17 +15732,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
+  m_ReferenceResolution: {x: 1920, y: 1080}
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!224 &1749202734
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15750,18 +15750,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1749202730}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1064085094}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 960, y: 540}
-  m_SizeDelta: {x: 1920, y: 1080}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
 --- !u!1 &1772829214
 GameObject:
   m_ObjectHideFlags: 0
@@ -16992,8 +16992,8 @@ GameObject:
   - component: {fileID: 1915642634}
   - component: {fileID: 1915642633}
   - component: {fileID: 1915642632}
-  - component: {fileID: 1915642631}
   - component: {fileID: 1915642630}
+  - component: {fileID: 1915642636}
   m_Layer: 7
   m_Name: Tarret1 (7)
   m_TagString: Untagged
@@ -17123,18 +17123,6 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &1915642631
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1915642628}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edb4e73f343a9724dac1a21b045af64d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &1915642632
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -17230,6 +17218,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1915642628}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1915642636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915642628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c2170a3a31622e4690648b005192a9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1939187522
 GameObject:
   m_ObjectHideFlags: 0

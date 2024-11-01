@@ -4,9 +4,6 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Pool;
 using System.Linq;
-using UnityEngine.UI;
-using UnityEditor.Overlays;
-
 
 
 namespace DCFrameWork.Enemy
@@ -31,6 +28,11 @@ namespace DCFrameWork.Enemy
         private GameObject _heathBar;
 
         public Dictionary<GameObject,GameObject> _objectsDict = new() ;
+
+        [SerializeField]
+        public int _defaultNums;
+        [SerializeField]
+        public int _maxNums;
         private void Start()
         {
             ObjectPooling();        
@@ -76,7 +78,7 @@ namespace DCFrameWork.Enemy
                {
                    agent.SetDestination(_target.position);
                }
-
+               manager.Initialize();
            },
            target =>
            {
@@ -89,7 +91,7 @@ namespace DCFrameWork.Enemy
                Destroy(_objectsDict[target]);
                _objectsDict.Remove(target);
            },
-           true, 10, 10);
+           true, _defaultNums, _maxNums);
 
             StartCoroutine(Generate());
         }

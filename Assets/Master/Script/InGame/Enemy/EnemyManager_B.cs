@@ -51,8 +51,8 @@ namespace DCFrameWork.Enemy
             LoadCommonData();
             _agent = GetComponent<NavMeshAgent>();
             GameBaseSystem.mainSystem?.AddPausableObject(this);
-
             Start_S();
+            Initialize();
         }
 
         /// <summary>
@@ -65,11 +65,14 @@ namespace DCFrameWork.Enemy
             GameBaseSystem.mainSystem?.RemovePausableObject(this);            
         }
 
+        void IEnemy.Initialize()=> Initialize();
+       
+
         /// <summary>
         /// 外部からの初期化処理
         /// ステータスの初期化などを行う
         /// </summary>
-        public void Initialize()
+        private void Initialize()
         {
             _currentHealth = _maxHealth;
 
@@ -151,7 +154,11 @@ namespace DCFrameWork.Enemy
         weakness,
     }
 
-    public interface IEnemy : IFightable, IConditionable { }
+    public interface IEnemy : IFightable, IConditionable 
+    {
+        void Initialize();
+        
+    }
 
     public interface IFightable
     {

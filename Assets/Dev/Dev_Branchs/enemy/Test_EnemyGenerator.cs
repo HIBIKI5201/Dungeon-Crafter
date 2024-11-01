@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Pool;
 using System.Linq;
-using Unity.VisualScripting;
-using UnityEngine.InputSystem.XR.Haptics;
+using UnityEngine.UI;
+using UnityEditor.Overlays;
+
 
 
 namespace DCFrameWork.Enemy
@@ -34,6 +35,15 @@ namespace DCFrameWork.Enemy
         {
             ObjectPooling();        
         }
+
+        private void LateUpdate()
+        {
+            foreach (var obj in _objectsDict.Keys)
+            {
+                FollowTarget(obj, _objectsDict[obj]);
+            }
+            
+        }
         void ObjectPooling()
         {
             
@@ -51,6 +61,7 @@ namespace DCFrameWork.Enemy
                 }
                 GameObject healthBar = Instantiate(_heathBar, _canvas.transform);
                 _objectsDict.Add(spawnedEnemy, healthBar);
+                healthBar.transform.SetParent(_canvas.transform);
                 return spawnedEnemy;
             },
            target =>
@@ -78,11 +89,10 @@ namespace DCFrameWork.Enemy
                Destroy(_objectsDict[target]);
                _objectsDict.Remove(target);
            },
-           true, 10, 1000);
+           true, 10, 10);
 
             StartCoroutine(Generate());
         }
-
 
         float ChooseNum(float[] floats)
         {
@@ -107,6 +117,17 @@ namespace DCFrameWork.Enemy
 
         }
 
+        public void FollowTarget(GameObject target ,GameObject hpBar)
+        {
+            
+            Vector3 cameraPos = Camera.main.transform.position;
+            Vector3 towards = target.transform.position + new Vector3(target.transform.position.x - cameraPos.x, 0, target.transform.position.z - cameraPos.z).normalized ;
+            Vector2 screenPos = Camera.main.WorldToScreenPoint(towards);
+            hpBar.transform.position = screenPos;
+        }
+
+
+       
 
         IEnumerator Generate()
         {

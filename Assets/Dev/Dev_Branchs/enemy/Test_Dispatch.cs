@@ -1,19 +1,16 @@
+using DCFrameWork.Enemy;
 using UnityEngine;
 
 namespace DCFrameWork
 {
     public class Test_Dispatch : MonoBehaviour
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
-        {
-        
-        }
+        [SerializeField]
+        Test_EnemyGenerator _enemyGene;
 
-        // Update is called once per frame
-        void Update()
-        {
-        
-        }
+        [SerializeField]
+        EnemyHealthBarManager _enemyHealthBarMana;
+
+    
     }
 }

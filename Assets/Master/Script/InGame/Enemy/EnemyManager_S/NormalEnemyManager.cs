@@ -10,9 +10,6 @@ namespace DCFrameWork.Enemy
            
         }
 
-        
-
-
         private void Update()
         {
             _enemyHealthBarManager?.FollowTarget(transform.position + healthBarOffset);

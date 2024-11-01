@@ -29,7 +29,7 @@ namespace DCFrameWork.Enemy
         [SerializeField]
         private GameObject _heathBar;
 
-        public Dictionary<GameObject,GameObject> _objectsDict = new();
+        public Dictionary<GameObject,GameObject> _objectsDict = new() ;
         private void Start()
         {
             ObjectPooling();        
@@ -49,8 +49,6 @@ namespace DCFrameWork.Enemy
                 {
                     agent.SetDestination(_target.position);
                 }
-                var pooledSpawnedObj = spawnedEnemy.AddComponent<Test_ObjectPool>();
-                pooledSpawnedObj.objectPool = objectPool;
                 GameObject healthBar = Instantiate(_heathBar, _canvas.transform);
                 _objectsDict.Add(spawnedEnemy, healthBar);
                 return spawnedEnemy;
@@ -60,7 +58,7 @@ namespace DCFrameWork.Enemy
                target.SetActive(true);
                _objectsDict[target].SetActive(true);
                target.transform.position = _spawnPos.position;
-               var manager = GetComponent<IEnemy>();
+               var manager = target.GetComponent<IEnemy>();
                manager.DeathAction = () => objectPool.Release(target);
                var agent = target.GetComponent<NavMeshAgent>();
                if (agent.pathStatus != NavMeshPathStatus.PathInvalid)

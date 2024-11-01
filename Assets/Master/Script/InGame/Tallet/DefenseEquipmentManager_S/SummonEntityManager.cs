@@ -16,6 +16,14 @@ namespace DCFrameWork
         List<GameObject> _enemyList = new();
         [SerializeField] float _attackValue = 1;
         NavMeshAgent _agent;
+        [SerializeField] EntityType _entityType;
+        enum EntityType
+        {
+            attack,
+            slow,
+            attackandslow,
+        }
+
         void Start()
         {
             _agent = GetComponent<NavMeshAgent>();
@@ -33,10 +41,21 @@ namespace DCFrameWork
                     {
                         var targetSelect = TargetSelect();
                         _agent.destination = targetSelect[0].transform.position;
-                        TargetsAddDamage(targetSelect, _attackValue);
-                        TargetAddCondition(targetSelect, ConditionType.slow);
+                        switch (_entityType)
+                        {
+                            case EntityType.attack:
+                                TargetsAddDamage(targetSelect, _attackValue);
+                                break;
+                            case EntityType.slow:
+                                TargetAddCondition(targetSelect, ConditionType.slow);
+                                break;
+                            case EntityType.attackandslow:
+                                TargetsAddDamage(targetSelect, _attackValue);
+                                TargetAddCondition(targetSelect, ConditionType.slow);
+                                break;
+                        }
+                        _timer = 0;
                     }
-                    _timer = 0;
                 }
             }
         }

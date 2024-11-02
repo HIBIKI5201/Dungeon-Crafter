@@ -30,7 +30,6 @@ public class ShootTurretManager : DEAttackerManager_SB<DefenseEquipmentData_B>
     }
     protected override void Attack()
     {
-        Debug.Log("Attack Now");
         var criticalPoint = Random.Range(0, 100);
         var targetSelect = TargetSelect();
         Debug.Log(targetSelect);

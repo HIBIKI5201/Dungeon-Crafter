@@ -65,7 +65,6 @@ namespace DCFrameWork
             {
                 if (other.TryGetComponent<IFightable>(out _))
                 {
-                    Debug.Log(other.gameObject.name);
                     _enemyList.Add(other.gameObject);
                 }
             }
@@ -88,7 +87,6 @@ namespace DCFrameWork
 
         void TargetsAddDamage(List<GameObject> enemies, float damage)
         {
-            Debug.Log("Attack Now");
             foreach (var enemy in enemies)
             {
                 if (enemy.TryGetComponent(out IFightable component))
@@ -98,7 +96,6 @@ namespace DCFrameWork
 
         void TargetAddCondition(List<GameObject> enemies, ConditionType type)
         {
-            Debug.Log("Add Condition");
             foreach (var enemy in enemies)
             {
                 if (enemy.TryGetComponent(out IConditionable component))

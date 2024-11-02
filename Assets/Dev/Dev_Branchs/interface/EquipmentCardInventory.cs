@@ -16,6 +16,7 @@ namespace DCFrameWork
 
         private VisualElement _equipment;
         private VisualElement _equipmentButton;
+        private VisualElement _backGround;
         private ListView _listView;
         public ListView ListView { get => _listView; }
         public EquipmentCardInventory() => InitializeTask = Initialize();
@@ -30,12 +31,11 @@ namespace DCFrameWork
                 var container = treeAsset.Instantiate();
                 container.style.width = Length.Percent(100);
                 container.style.height = Length.Percent(100);
-                container.RegisterCallback<KeyDownEvent>(e => e.StopImmediatePropagation());
-                container.pickingMode = PickingMode.Ignore;
                 hierarchy.Add(container);
                 _equipment = container.Q<VisualElement>("EquipsInventory");
                 _equipmentButton = container.Q<VisualElement>("EquipmentTextBox");
                 _listView = container.Q<ListView>("EquipmentListView");
+                _backGround = container.Q<VisualElement>("Backgound");
                 _equipment.AddToClassList(_windowClose);
                 _equipmentButton.RegisterCallback<ClickEvent>(x =>
                 {
@@ -43,7 +43,7 @@ namespace DCFrameWork
                     _equipment.RemoveFromClassList(_windowClose);
                     _equipment.AddToClassList(_windowOpen);
                 });
-                _equipment.RegisterCallback<MouseLeaveEvent>(x =>
+                _backGround.RegisterCallback<ClickEvent>(x =>
                 {
                     if (!_equipment.ClassListContains(_windowOpen)) return;
                     _equipment.RemoveFromClassList(_windowOpen);

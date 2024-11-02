@@ -30,7 +30,6 @@ public abstract class DEAttackerManager_SB<Data> : DefenseEquipmentManager_B<Dat
         Debug.Log(other.gameObject.name);
         if (other.TryGetComponent<IFightable>(out _))
         {
-            Debug.Log("enter the" + other.gameObject.name);
             _enemyList.Add(other.gameObject);
         }
     }

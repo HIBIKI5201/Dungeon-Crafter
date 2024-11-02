@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GroundTriplanarMaterial
+  m_Name: GroundMaterial
   m_Shader: {fileID: -6465566751694194690, guid: 5d141382a2696754d909e35d6dda3dcf,
     type: 3}
   m_Parent: {fileID: 0}

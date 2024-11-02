@@ -1,29 +1,24 @@
 using UnityEngine;
+
 namespace DCFrameWork.Enemy
 {
     public class NormalEnemyManager : EnemyManager_B<EnemyData_B>
     {
-        EnemyHealthBarManager _enemyHealthBarManager;
-        public Vector3 healthBarOffset = new Vector3(0,1,0);   
-        protected override void Init_S()
-        {
-           
-        }
-
         
+       
 
-
-        private void Update()
+        protected override void DeathBehaviour()
         {
-            _enemyHealthBarManager?.FollowTarget(transform.position + healthBarOffset);
+            base.DeathBehaviour();
+            Debug.Log("shinu");
         }
+
 
         protected override void LoadSpecificnData(EnemyData_B data)
         {
+            
 
         }
-
-
 
         protected override void Pause()
         {

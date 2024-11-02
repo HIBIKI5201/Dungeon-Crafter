@@ -6,10 +6,10 @@ namespace DCFrameWork.DefenseEquipment
     public abstract class DefenseEquipmentManager_B<Data> : MonoBehaviour, IPausable where Data : DefenseEquipmentData_B
     {
         [SerializeField]
-        private DefenseEquipmentDataBase _data;
+        private DefenseEquipmentDataBase _dataBase;
 
         [Range(1, 5f)]
-        protected int Level;
+        protected int Level = 1;
 
         #region 共通ステータス
         protected float _attack;
@@ -20,7 +20,7 @@ namespace DCFrameWork.DefenseEquipment
 
         private void Start()
         {
-            if (_data is null)
+            if (_dataBase is null)
                 Debug.Log("データがありません");
             LoadCommonData(Level);
             GameBaseSystem.mainSystem?.AddPausableObject(this);
@@ -33,7 +33,8 @@ namespace DCFrameWork.DefenseEquipment
 
         private void LoadCommonData(int level)
         {
-            Data data = _data.DataLevelList[level - 1] as Data;
+            if (_dataBase.DataLevelList.Count < level) return;
+            Data data = _dataBase.DataLevelList[level - 1] as Data;
 
             _attack = data.Attack;
             _rate = data.Rate;

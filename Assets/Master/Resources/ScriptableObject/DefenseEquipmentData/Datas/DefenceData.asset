@@ -12,9 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37d0b8bd3101a9944935a3c121904ad6, type: 3}
   m_Name: DefenceData
   m_EditorClassIdentifier: 
-  EquipmentName: 
-  DropChance: 0
-  Attack: 0
+  Attack: 1
   Rate: 2
   Range: 3
-  Critical: 0
+  Critical: 30

@@ -1,5 +1,5 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <engine:VisualElement data-source="project://database/Assets/Dev/Dev_Branchs/interface/Test2.asset?fileID=11400000&amp;guid=f411c664c91e9f345a47a8e9ac30c38b&amp;type=2#Test2" name="EquipmentCard" style="width: 10%; height: 20%; -unity-text-outline-color: rgba(0, 0, 0, 0); color: rgb(0, 0, 0); background-color: rgb(99, 99, 99); justify-content: space-evenly;">
+    <engine:VisualElement name="EquipmentCard" data-source="project://database/Assets/Dev/Dev_Branchs/interface/Test2.asset?fileID=11400000&amp;guid=f411c664c91e9f345a47a8e9ac30c38b&amp;type=2#Test2" style="width: 10%; height: 20%; -unity-text-outline-color: rgba(0, 0, 0, 0); color: rgb(0, 0, 0); background-color: rgb(99, 99, 99); justify-content: space-evenly; position: absolute; top: 50%; left: 50%;">
         <engine:VisualElement name="Icon" style="width: 60%; height: 53%; align-self: center; background-color: rgb(58, 58, 58); justify-content: space-around; align-items: center; align-content: center; position: relative; top: 0;">
             <Bindings>
                 <engine:DataBinding property="style.backgroundImage" data-source-path="EquipmentIcon" binding-mode="ToTarget" />
@@ -10,5 +10,12 @@
                 <engine:DataBinding property="text" data-source-path="EquipmentName" binding-mode="ToTarget" />
             </Bindings>
         </engine:Label>
+        <engine:VisualElement name="LevelBackGround" data-source="project://database/Assets/Dev/Dev_Branchs/interface/Test.asset?fileID=11400000&amp;guid=11267e05ee5a282439d5b471a6ec2aab&amp;type=2#Test" style="position: absolute; width: 33%; height: 30%; left: 80%; top: -10%; background-color: rgb(255, 255, 255); border-top-left-radius: 30px; border-top-right-radius: 30px; border-bottom-right-radius: 30px; border-bottom-left-radius: 30px; align-items: center; flex-direction: column; justify-content: center; font-size: 31px; -unity-font-style: bold;">
+            <engine:Label text="1">
+                <Bindings>
+                    <engine:DataBinding property="text" data-source-path="EquipmentLevel" binding-mode="ToTarget" />
+                </Bindings>
+            </engine:Label>
+        </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>

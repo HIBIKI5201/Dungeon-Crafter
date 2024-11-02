@@ -41,3 +41,59 @@
     transition-timing-function: ease-in-out-cubic;
     transition-duration: 0.2s;
 }
+
+.door-button {
+    width: 10%;
+    height: 90%;
+    background-color: rgb(94, 94, 94);
+    top: 5%;
+    bottom: auto;
+    left: 15%;
+    align-self: center;
+    align-content: auto;
+    justify-content: space-around;
+    align-items: center;
+    position: absolute;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out-cubic;
+}
+
+.door-button:hover {
+    scale: 1.05 1.05;
+    transition-timing-function: ease-in-out-cubic;
+    transition-duration: 0.2s;
+}
+
+.door-button:active {
+    scale: 0.95 0.95;
+    transition-timing-function: ease-in-out-cubic;
+    transition-duration: 0.2s;
+}
+
+.wall-button {
+    width: 10%;
+    height: 90%;
+    background-color: rgb(94, 94, 94);
+    top: 5%;
+    bottom: auto;
+    left: 2%;
+    align-self: center;
+    align-content: auto;
+    justify-content: space-around;
+    align-items: center;
+    position: absolute;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out-cubic;
+}
+
+.wall-button:hover {
+    scale: 1.05 1.05;
+    transition-timing-function: ease-in-out-cubic;
+    transition-duration: 0.2s;
+}
+
+.wall-button:active {
+    scale: 0.95 0.95;
+    transition-timing-function: ease-in-out-cubic;
+    transition-duration: 0.2s;
+}

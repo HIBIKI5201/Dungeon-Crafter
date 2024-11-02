@@ -15,3 +15,4 @@ MonoBehaviour:
   EquipmentIcon: {fileID: 1169890249420208065, guid: 804a53278a35c0149ab81a2e1981da1d,
     type: 3}
   EquipmentName: bouer
+  EquipmentLevel: 2

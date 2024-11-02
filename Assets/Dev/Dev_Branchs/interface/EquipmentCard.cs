@@ -2,10 +2,18 @@ using UnityEngine;
 
 namespace DCFrameWork
 {
-    [CreateAssetMenu(fileName = "NewData", menuName = "ScriptableObject/EquipmentCard")]
-    public class EquipmentCard : ScriptableObject
+    public class EquipmentCard : MonoBehaviour
     {
-        public Texture2D EquipmentIcon;
-        public string EquipmentName;
+        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        void Start()
+        {
+        
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+        
+        }
     }
 }

@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EquipmentIcon: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
   EquipmentName: "\u307C\u3046\u3048\u3044"
+  EquipmentLevel: 0

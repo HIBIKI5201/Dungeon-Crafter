@@ -276,7 +276,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: c88c7011bf42ac34db4fb49ed833382d, type: 2}
   _levelRequirePoint: 0
-  healthBarOffset: {x: 0, y: 1, z: 0}
 --- !u!195 &889532240
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -885,7 +884,7 @@ PrefabInstance:
     - target: {fileID: 5538623378778849523, guid: 6800c4699d42ad74e94044a5319af440,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.75
+      value: 0.29
       objectReference: {fileID: 0}
     - target: {fileID: 5538623378778849523, guid: 6800c4699d42ad74e94044a5319af440,
         type: 3}

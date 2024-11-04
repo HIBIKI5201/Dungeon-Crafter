@@ -35,10 +35,7 @@ public class SlowTurretManager : DEWalkerableManager_SB<DefenseEquipmentData_B>
     }
     protected override void LoadSpecificData(DefenseEquipmentData_B data)
     {
-        var size = transform.localScale;
-        size.x = _range;
-        size.z = _range;
-        transform.localScale = size;
+
     }
     protected override void Pause()
     {

@@ -1,0 +1,25 @@
+.equipment-card {
+    width: 10%;
+    height: 20%;
+    -unity-text-outline-color: rgba(0, 0, 0, 0);
+    color: rgb(0, 0, 0);
+    background-color: rgb(99, 99, 99);
+    justify-content: space-evenly;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transition-timing-function: ease-in-out-cubic;
+    transition-duration: 0.2s;
+}
+
+.equipment-card:hover {
+    scale: 1.05 1.05;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out-cubic;
+}
+
+.equipment-card:active {
+    scale: 0.95 0.95;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out-cubic;
+}

@@ -67,7 +67,7 @@ namespace DCFrameWork.MainSystem
             SceneSystem_B system = FindAnyObjectByType<SceneSystem_B>();
             if ((system is null).CheckLog("シーンマネージャーが見つかりません")) return;
             sceneSystem = system;
-            system?.Init();
+            system?.Initialize();
         }
 
         public void PlaySound(int index, SoundKind kind) => _audioManager?.PlaySound(index, kind);

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 namespace DCFrameWork.MainSystem
 {
     public class AudioManager : MonoBehaviour
@@ -11,6 +12,13 @@ namespace DCFrameWork.MainSystem
         private AudioSource _BGMSource;
         [SerializeField]
         private AudioSource _voiceSource;
+
+        [Space]
+
+        [SerializeField]
+        AudioMixer _mixer;
+
+        [Space]
 
         [SerializeField]
         List<AudioData> _inGameSoundEffectList = new();

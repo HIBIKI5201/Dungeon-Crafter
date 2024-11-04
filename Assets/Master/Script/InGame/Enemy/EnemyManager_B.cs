@@ -9,7 +9,7 @@ namespace DCFrameWork.Enemy
 {
     [RequireComponent(typeof(NavMeshAgent),typeof(Rigidbody))]
     
-    public abstract class EnemyManager_B<Data> : MonoBehaviour, IFightable, IConditionable, IPausable where Data : EnemyData_B
+    public abstract class EnemyManager_B<Data> : MonoBehaviour, IEnemy, IPausable where Data : EnemyData_B
     {
         [SerializeField]
         EnemyData_B _data;
@@ -38,7 +38,6 @@ namespace DCFrameWork.Enemy
         }
         public int CountCondition(ConditionType type) => (_conditionList.TryGetValue(type, out int count)) ? count : 0;
 
-
         private Action _deathAction;
         Action IFightable.DeathAction { get => _deathAction; set => _deathAction = value; }
 
@@ -50,25 +49,40 @@ namespace DCFrameWork.Enemy
             if (_data is null)
                 Debug.Log("データがありません");
             LoadCommonData();
-
-            _currentHealth = _maxHealth;
             _agent = GetComponent<NavMeshAgent>();
-
-            IPausable pausable = this as IPausable;
             GameBaseSystem.mainSystem?.AddPausableObject(this);
-
-            Init_S();
-        }
-
-        private void OnDestroy()
-        {
-            GameBaseSystem.mainSystem.RemovePausableObject(this as IPausable);
+            Start_S();
+            Initialize();
         }
 
         /// <summary>
         /// サブクラスでのStartメソッド
         /// </summary>
-        protected virtual void Init_S() { }
+        protected virtual void Start_S() { }
+
+        private void OnEnable()
+        {
+            GameBaseSystem.mainSystem?.RemovePausableObject(this);            
+        }
+
+        void IEnemy.Initialize()=> Initialize();
+       
+
+        /// <summary>
+        /// 外部からの初期化処理
+        /// ステータスの初期化などを行う
+        /// </summary>
+        private void Initialize()
+        {
+            _currentHealth = _maxHealth;
+
+            Initialize_S();
+        }
+
+        /// <summary>
+        /// サブクラス内の初期化処理
+        /// </summary>
+        protected virtual void Initialize_S() { }
 
         private void LoadCommonData()
         {
@@ -138,6 +152,12 @@ namespace DCFrameWork.Enemy
     {
         slow,
         weakness,
+    }
+
+    public interface IEnemy : IFightable, IConditionable 
+    {
+        void Initialize();
+        
     }
 
     public interface IFightable

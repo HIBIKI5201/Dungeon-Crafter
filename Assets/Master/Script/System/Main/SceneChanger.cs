@@ -4,12 +4,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 namespace DCFrameWork.MainSystem
 {
-    public class SceneChanger : MonoBehaviour
+    public class SceneChanger
     {
         private static Dictionary<SceneKind, string> _sceneNameDict = new()
         {
             {SceneKind.Home, "" },
-            {SceneKind.Ingame_1, ""}
+            { SceneKind.Story, ""},
+            {SceneKind.Ingame_1, ""},
         };
 
         private static string _currentSceneName;
@@ -29,6 +30,7 @@ namespace DCFrameWork.MainSystem
     public enum SceneKind
     {
         Home,
+        Story,
         Ingame_1,
     }
 }

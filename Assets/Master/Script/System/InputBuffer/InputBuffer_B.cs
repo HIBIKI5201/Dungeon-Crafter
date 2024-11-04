@@ -39,7 +39,8 @@ namespace DCFrameWork.SceneSystem
     public struct InputContext
     {
         public Vector2 MoveInput;
-        public Vector2 CameraInput;
+        public Vector2 CameraMoveInput;
+        public int RotateInput;
         public bool Confirm;
         public bool Pause;
     }

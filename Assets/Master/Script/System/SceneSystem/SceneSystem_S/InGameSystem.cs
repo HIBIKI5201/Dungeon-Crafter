@@ -14,7 +14,7 @@ namespace DCFrameWork.SceneSystem
 
         protected override void Think(InputContext input)
         {
-            _cameraManager?.CameraMove(input.MoveInput);
+            _cameraManager?.CameraMove(input.MoveInput, (byte)input.RotateInput);
         }
     }
 }

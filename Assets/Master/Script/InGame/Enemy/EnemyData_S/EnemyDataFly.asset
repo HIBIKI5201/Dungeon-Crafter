@@ -9,10 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40478fa587365244da4a99f9af7f1ac2, type: 3}
-  m_Name: DefebseEquipmentDataBase
+  m_Script: {fileID: 11500000, guid: a34e79b4860e091428e50ea98cb556d1, type: 3}
+  m_Name: EnemyDataFly
   m_EditorClassIdentifier: 
-  EquipmentName: 
-  DropChance: 0
-  dataList:
-  - {fileID: 11400000, guid: 9dac64c79e2548b43a20878ffd3629bf, type: 2}
+  MaxHealth: 0
+  CurrentHealth: 0
+  Defense: 0
+  Dexterity: 0
+  SpecialChance: 0
+  Plunder: 0
+  DropEXP: 0
+  DropGold: 0

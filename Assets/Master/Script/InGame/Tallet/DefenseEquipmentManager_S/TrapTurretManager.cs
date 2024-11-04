@@ -13,15 +13,17 @@ public class TrapTurretManager : DEEntityManager_SB<DefenseEquipmentData_B>
     Vector3 _position;
     protected override void Think() //UpDate ‚Æ“¯‹`
     {
-        _position = SummonPosition();
+        var summonPos = SummonPosition();
+        _position = summonPos;
         int count = 0;
-        while (!Check(_position) && count <= 10)
+        while (!Check(summonPos) && count <= 10)
         {
-            _position = SummonPosition();
+            summonPos = SummonPosition();
+            _position = summonPos;
             count++;
         }
-        Debug.Log(_position);
-        Summon(_position);
+        Debug.Log(summonPos);
+        Summon(summonPos);
     }
     bool Check(Vector3 pos)
     {
@@ -50,7 +52,7 @@ public class TrapTurretManager : DEEntityManager_SB<DefenseEquipmentData_B>
 #endif
         Gizmos.color = Check(_position) ? Color.red : Color.green;
         Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, _boxCastSize);
-        Gizmos.DrawCube(SummonPosition(), new Vector3(1, 1, 1));
+        Gizmos.DrawCube(_position, new Vector3(1, 1, 1));
     }
 
     Vector3 SummonPosition()

@@ -1,4 +1,5 @@
 using DCFrameWork.MainSystem;
+using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
@@ -6,8 +7,9 @@ using UnityEngine.AI;
 
 namespace DCFrameWork.Enemy
 {
-    [RequireComponent(typeof(NavMeshAgent))]
-    public abstract class EnemyManager_B<Data> : MonoBehaviour, IFightable, IConditionable, IPausable where Data : EnemyData_B
+    [RequireComponent(typeof(NavMeshAgent),typeof(Rigidbody))]
+    
+    public abstract class EnemyManager_B<Data> : MonoBehaviour, IEnemy, IPausable where Data : EnemyData_B
     {
         [SerializeField]
         EnemyData_B _data;
@@ -29,37 +31,58 @@ namespace DCFrameWork.Enemy
         private EnemyHealthBarManager _healthBarManager;
 
         private Dictionary<ConditionType, int> _conditionList = new();
-        public Dictionary<ConditionType, int> ConditionList
+        Dictionary<ConditionType, int> IConditionable.ConditionList
         {
             get => _conditionList;
             set => _conditionList = value;
         }
+        public int CountCondition(ConditionType type) => (_conditionList.TryGetValue(type, out int count)) ? count : 0;
+
+        private Action _deathAction;
+        Action IFightable.DeathAction { get => _deathAction; set => _deathAction = value; }
 
         private NavMeshAgent _agent;
+
 
         private void Start()
         {
             if (_data is null)
                 Debug.Log("データがありません");
             LoadCommonData();
-
-            _currentHealth = _maxHealth;
             _agent = GetComponent<NavMeshAgent>();
-
-            GameBaseSystem.mainSystem.AddPausableObject(this as IPausable);
-
-            Init_S();
-        }
-
-        private void OnDestroy()
-        {
-            GameBaseSystem.mainSystem.RemovePausableObject(this as IPausable);
+            GameBaseSystem.mainSystem?.AddPausableObject(this);
+            Start_S();
+            Initialize();
         }
 
         /// <summary>
         /// サブクラスでのStartメソッド
         /// </summary>
-        protected virtual void Init_S() { }
+        protected virtual void Start_S() { }
+
+        private void OnEnable()
+        {
+            GameBaseSystem.mainSystem?.RemovePausableObject(this);            
+        }
+
+        void IEnemy.Initialize()=> Initialize();
+       
+
+        /// <summary>
+        /// 外部からの初期化処理
+        /// ステータスの初期化などを行う
+        /// </summary>
+        private void Initialize()
+        {
+            _currentHealth = _maxHealth;
+
+            Initialize_S();
+        }
+
+        /// <summary>
+        /// サブクラス内の初期化処理
+        /// </summary>
+        protected virtual void Initialize_S() { }
 
         private void LoadCommonData()
         {
@@ -89,7 +112,7 @@ namespace DCFrameWork.Enemy
             HealthBarUpdate();
             if (_currentHealth <= 0)
             {
-                DeathBehivour();
+                DeathBehaviour();
             }
         }
 
@@ -99,12 +122,10 @@ namespace DCFrameWork.Enemy
             HealthBarUpdate();
         }
 
-        protected virtual void DeathBehivour()
+        protected virtual void DeathBehaviour()
         {
-            Destroy(gameObject);
+            _deathAction?.Invoke();
         }
-
-        public int CountCondition(ConditionType type) => (_conditionList.TryGetValue(type, out int count)) ? count : 0;
 
         /// <summary>
         /// NavMesh上のポジションへ移動する
@@ -133,8 +154,16 @@ namespace DCFrameWork.Enemy
         weakness,
     }
 
+    public interface IEnemy : IFightable, IConditionable 
+    {
+        void Initialize();
+        
+    }
+
     public interface IFightable
     {
+        Action DeathAction { get; set; }
+
         /// <summary>
         /// ダメージを受ける
         /// </summary>
@@ -154,21 +183,21 @@ namespace DCFrameWork.Enemy
 
         void AddCondition(ConditionType type)
         {
-            if (ConditionList.TryGetValue(type, out var count))
-            {
-                ConditionList[type] = count + 1;
-            }
-            else
-            {
-                ConditionList.Add(type, 1);
-            }
+            ConditionList[type] = ConditionList.TryGetValue(type, out var count) ? count + 1 : 1;
         }
 
-        public void RemoveCondition(ConditionType type)
+        void RemoveCondition(ConditionType type)
         {
             if (ConditionList.TryGetValue(type, out var count))
             {
-                ConditionList[type] = Mathf.Max(0, count - 1);
+                if (count > 1)
+                {
+                    ConditionList[type] = count - 1;
+                }
+                else
+                {
+                    ConditionList.Remove(type);
+                }
             }
         }
     }

@@ -27,6 +27,7 @@ namespace DCFrameWork.MainSystem
             if (!_instance)
             {
                 _instance = this;
+                //DontDestroyOnLoad(_instance);
 
                 Scene scene = SceneManager.CreateScene("SystemScene");
                 SceneManager.MoveGameObjectToScene(gameObject, scene);
@@ -49,7 +50,7 @@ namespace DCFrameWork.MainSystem
             _mainUIManager = FindAnyObjectByType<UIManager_B>();
             (_mainUIManager is null).CheckLog("MainUIManagerが見つかりませんでした");
 
-            SceneInitialize();
+            SceneInit();
         }
 
         public void LoadScene(SceneKind kind)
@@ -60,15 +61,15 @@ namespace DCFrameWork.MainSystem
         private IEnumerator SceneLoading(SceneKind kind)
         {
             yield return SceneChanger.LoadScene(kind);
-            SceneInitialize();
+            SceneInit();
         }
 
-        private void SceneInitialize()
+        private void SceneInit()
         {
             SceneSystem_B system = FindAnyObjectByType<SceneSystem_B>();
             if ((system is null).CheckLog("シーンマネージャーが見つかりません")) return;
             sceneSystem = system;
-            system?.Initialize();
+            system?.Init();
         }
 
         public void PlaySound(int index, SoundKind kind) => _audioManager?.PlaySound(index, kind);
@@ -86,14 +87,18 @@ namespace DCFrameWork.MainSystem
 
         public void AddPausableObject(IPausable obj)
         {
-            if (!_pausableList.Contains(obj))
+            if ((obj is null).CheckLog("Ipausableはnull")) return;
+            if (!_pausableList?.Contains(obj) ?? false)
             {
                 _pausableList.Add(obj);
             }
         }
         public void RemovePausableObject(IPausable obj)
         {
-            _pausableList.Remove(obj);
+            if (_pausableList?.Contains(obj) ?? false)
+            {
+                _pausableList.Remove(obj);
+            }
         }
         #endregion
     }

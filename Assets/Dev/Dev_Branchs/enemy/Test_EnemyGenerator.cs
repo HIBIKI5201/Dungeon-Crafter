@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Pool;
 using System.Linq;
-using Unity.VisualScripting;
 
 
 namespace DCFrameWork.Enemy
@@ -28,16 +27,28 @@ namespace DCFrameWork.Enemy
         [SerializeField]
         private GameObject _heathBar;
 
+        public Dictionary<GameObject,GameObject> _objectsDict = new() ;
 
+        [SerializeField]
+        public int _defaultNums;
+        [SerializeField]
+        public int _maxNums;
         private void Start()
         {
-            ObjectPooling();
-           
+            ObjectPooling();        
         }
 
-
+        private void LateUpdate()
+        {
+            foreach (var obj in _objectsDict.Keys)
+            {
+                FollowTarget(obj, _objectsDict[obj]);
+            }
+            
+        }
         void ObjectPooling()
         {
+            
             objectPool = new ObjectPool<GameObject>(() =>
             {
                 float[] items = new float[_objects.Count];
@@ -50,30 +61,40 @@ namespace DCFrameWork.Enemy
                 {
                     agent.SetDestination(_target.position);
                 }
-                var pooledSpawnedObj = spawnedEnemy.AddComponent<Test_ObjectPool>();
-                pooledSpawnedObj.objectPool = objectPool;
+                GameObject healthBar = Instantiate(_heathBar, _canvas.transform);
+                _objectsDict.Add(spawnedEnemy, healthBar);
+                healthBar.transform.SetParent(_canvas.transform);
                 return spawnedEnemy;
             },
            target =>
            {
-               target.gameObject.SetActive(true);
+               target.SetActive(true);
+               _objectsDict[target].SetActive(true);
                target.transform.position = _spawnPos.position;
+               var manager = target.GetComponent<IEnemy>();
+               manager.DeathAction = () => objectPool.Release(target);
                var agent = target.GetComponent<NavMeshAgent>();
-               agent.SetDestination(_target.position);
+               if (agent.pathStatus != NavMeshPathStatus.PathInvalid)
+               {
+                   agent.SetDestination(_target.position);
+               }
+               manager.Initialize();
            },
            target =>
            {
-               target.gameObject.SetActive(false);
+               target.SetActive(false);
+               _objectsDict[target].SetActive(false);
            },
            target =>
            {
                Destroy(target);
+               Destroy(_objectsDict[target]);
+               _objectsDict.Remove(target);
            },
-           true, 10, 1000);
+           true, _defaultNums, _maxNums);
 
             StartCoroutine(Generate());
         }
-
 
         float ChooseNum(float[] floats)
         {
@@ -98,6 +119,17 @@ namespace DCFrameWork.Enemy
 
         }
 
+        public void FollowTarget(GameObject target ,GameObject hpBar)
+        {
+            
+            Vector3 cameraPos = Camera.main.transform.position;
+            Vector3 towards = target.transform.position + new Vector3(target.transform.position.x - cameraPos.x, 0, target.transform.position.z - cameraPos.z).normalized ;
+            Vector2 screenPos = Camera.main.WorldToScreenPoint(towards);
+            hpBar.transform.position = screenPos;
+        }
+
+
+       
 
         IEnumerator Generate()
         {

@@ -1,8 +1,0 @@
-<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/Dev/Dev_Branchs/interface/Button.uss?fileID=7433441132597879392&amp;guid=ca3a52a2b97bd7843918fd65a5692980&amp;type=3#Button" />
-    <engine:VisualElement name="HomeUIButton" class="button">
-        <engine:VisualElement name="Text" class="text">
-            <engine:Label name="ButtonName" style="height: 180px; color: rgb(255, 255, 255); font-size: 150px; -unity-text-align: upper-center;" />
-        </engine:VisualElement>
-    </engine:VisualElement>
-</engine:UXML>

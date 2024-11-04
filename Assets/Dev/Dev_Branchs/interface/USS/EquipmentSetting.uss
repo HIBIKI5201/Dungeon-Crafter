@@ -1,0 +1,49 @@
+.power-up-button {
+    align-self: center;
+    width: 90%;
+    -unity-font-style: bold;
+    font-size: 25px;
+    margin-bottom: 6px;
+    transition-timing-function: ease-in-out-cubic;
+    transition-duration: 0.1s;
+    scale: 1 1;
+}
+
+.power-up-button:hover {
+    align-self: center;
+    width: 90%;
+    -unity-font-style: bold;
+    font-size: 25px;
+    margin-bottom: 6px;
+    transition-timing-function: ease-in-out-cubic;
+    transition-duration: 0.1s;
+    scale: 1.05 1.05;
+}
+
+.removal-button {
+    align-self: center;
+    width: 90%;
+    margin-bottom: 15px;
+    font-size: 25px;
+    -unity-font-style: bold;
+    transition-timing-function: ease-in-out-cubic;
+    transition-duration: 0.1s;
+}
+
+.removal-button:hover {
+    scale: 1.05 1.05;
+    transition-timing-function: ease-in-out-cubic;
+    transition-duration: 0.1s;
+}
+
+.power-up-button:active {
+    scale: 0.95 0.95;
+    transition-timing-function: ease-in-out-cubic;
+    transition-duration: 0.1s;
+}
+
+.removal-button:active {
+    scale: 0.95 0.95;
+    transition-duration: 0.1s;
+    transition-timing-function: ease-in-out-cubic;
+}

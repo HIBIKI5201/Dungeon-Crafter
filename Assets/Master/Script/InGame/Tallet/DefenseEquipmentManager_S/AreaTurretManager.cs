@@ -2,6 +2,7 @@ using DCFrameWork.DefenseEquipment;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DCFrameWork.Enemy;
 
 public class AreaTurretManager : DEAttackerManager_SB<DefenseEquipmentData_B>
 {

@@ -4,20 +4,30 @@ using System.Linq;
 using UnityEngine;
 namespace DCFrameWork.MainSystem
 {
-    public class SaveDataManager : MonoBehaviour
+    public class SaveDataManager
     {
-        private static GameSaveData _saveData = null;
         private const byte _key = 173;
+        private static GameSaveData _saveData = null;
+        public static Action<GameSaveData> OnSaveDataChanged;
         public static GameSaveData SaveData
         {
             get => _saveData;
-            set => _saveData = value;
+            set
+            {
+                _saveData = value;
+                OnSaveDataChanged?.Invoke(value);
+            }
         }
         private static SettingSaveData _settingSaveData = null;
+        public static Action<SettingSaveData> OnSettingSaveDataChanged;
         public static SettingSaveData SettingSaveData
         {
             get => _settingSaveData;
-            set => _settingSaveData = value;
+            set
+            {
+                _settingSaveData = value;
+                OnSettingSaveDataChanged?.Invoke(value);
+            }
         }
 
         public static void Save()

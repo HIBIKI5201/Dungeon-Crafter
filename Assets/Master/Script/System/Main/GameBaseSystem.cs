@@ -41,9 +41,7 @@ namespace DCFrameWork.MainSystem
 
         private void Start()
         {
-            (GameSaveData gameData, SettingSaveData settingSaveData) data = SaveDataManager.Load();
-            SaveDataManager.SaveData = data.gameData;
-            SaveDataManager.SettingSaveData = data.settingSaveData;
+            SaveDataManager.Load();
 
             _audioManager = GetComponentInChildren<AudioManager>();
             (_audioManager is null).CheckLog("AudioManager‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");

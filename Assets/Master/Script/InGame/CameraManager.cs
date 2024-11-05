@@ -16,9 +16,10 @@ public class CameraManager : MonoBehaviour
         _rigidbody.useGravity = false;
     }
 
-    public void CameraMove(Vector2 axis, byte rotate)
+    public void CameraMove(Vector2 direction, float rotate)
     {
-        _rigidbody.linearVelocity = new Vector3(axis.x, 0, axis.y) * _linearSpeed;
+        _rigidbody.linearVelocity = Quaternion.AngleAxis(transform.eulerAngles.y, Vector3.up) * new Vector3(direction.x, 0, direction.y) * _linearSpeed;
         _rigidbody.angularVelocity = Vector3.up * rotate * _angularSpeed;
+        Debug.Log(rotate * _angularSpeed);
     }
 }

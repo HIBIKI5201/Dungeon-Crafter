@@ -45,7 +45,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -259,9 +259,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_BindingMode: 1
   m_FollowOffset: {x: 0, y: 20, z: -20}
-  m_XDamping: 1
-  m_YDamping: 1
-  m_ZDamping: 1
+  m_XDamping: 0
+  m_YDamping: 0
+  m_ZDamping: 0
   m_AngularDampingMode: 0
   m_PitchDamping: 0
   m_YawDamping: 0
@@ -386,7 +386,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2d7512a023aae74c93160df72975d05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 5
+  _linearSpeed: 5
+  _angularSpeed: 0.6
 --- !u!54 &4669570076699981647
 Rigidbody:
   m_ObjectHideFlags: 0

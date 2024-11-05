@@ -8,7 +8,6 @@ namespace DCFrameWork
     {
         [SerializeField] EquipmentCardData[] testcard;
         EquipmentCardInventory _equipmentList;
-
         protected override async void LoadDocumentElement(VisualElement root)
         {
             _equipmentList = root.Q<EquipmentCardInventory>("EquipmentInventory");

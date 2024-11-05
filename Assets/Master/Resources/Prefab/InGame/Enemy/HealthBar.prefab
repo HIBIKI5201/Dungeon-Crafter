@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3805964961770200010}
   - component: {fileID: 9180567848195535163}
   - component: {fileID: 900677552998971448}
-  - component: {fileID: 5042764053351098761}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -60,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4566037, g: 0.4566037, b: 0.4566037, a: 1}
+  m_Color: {r: 0.5, g: 0.46462265, b: 0.46462265, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -78,22 +77,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5042764053351098761
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6218801146707754616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d862cccab199c2459ddd0d03bfe668f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _image: {fileID: 900677552998971448}
-  _radius: 1
-  _healthBarOffset: {x: 0, y: 1, z: 0}
-  _targetCollider: {fileID: 0}
 --- !u!1 &8159382002968120357
 GameObject:
   m_ObjectHideFlags: 0
@@ -183,7 +166,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d862cccab199c2459ddd0d03bfe668f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _image: {fileID: 0}
-  _radius: 1
-  _healthBarOffset: {x: 0, y: 1, z: 0}
-  _targetCollider: {fileID: 0}
+  _image: {fileID: 6282133756545221367}

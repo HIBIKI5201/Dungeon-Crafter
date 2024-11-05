@@ -45,14 +45,22 @@ namespace DCFrameWork.Enemy
 
         private NavMeshAgent _agent;
 
+       
+         private Transform _target;
 
-        private void Start()
+        
+
+        public void StartByPool(EnemyHealthBarManager enemyHealthBarManager)
         {
+            _healthBarManager = enemyHealthBarManager;
             if (_data is null)
-                Debug.Log("データがありません");
+            Debug.Log("データがありません");
             LoadCommonData();
+            _target = GameObject.Find("TargetPos").GetComponent<Transform>();
             _agent = GetComponent<NavMeshAgent>();
+            GoToTargetPos(_target.position);
             GameBaseSystem.mainSystem?.AddPausableObject(this);
+            HealthBarUpdate();
             Start_S();
             Initialize();
         }
@@ -68,7 +76,7 @@ namespace DCFrameWork.Enemy
         }
 
         void IEnemy.Initialize()=> Initialize();
-       
+        void IEnemy.StartByPool(EnemyHealthBarManager enemyHealthBarManager)=> StartByPool(enemyHealthBarManager);   
 
         /// <summary>
         /// 外部からの初期化処理
@@ -78,7 +86,7 @@ namespace DCFrameWork.Enemy
         {
             _currentHealth = _maxHealth;
             HealthBarUpdate();
-
+            GoToTargetPos(_target.position);
             Initialize_S();
         }
 
@@ -120,12 +128,25 @@ namespace DCFrameWork.Enemy
         /// <param name="pos">移動目標の座標</param>
         protected void GoToTargetPos(Vector3 pos)
         {
-            _agent.SetDestination(pos);
+            if (_agent.pathStatus != NavMeshPathStatus.PathInvalid)
+            {
+                _agent.SetDestination(pos);
+            }
         }
 
-        private void HealthBarUpdate()
+        public void HealthBarUpdate()
         {
             _healthBarManager?.BarFillUpdate(_currentHealth / _maxHealth);
+        }
+
+     
+        /// <summary>
+        /// スピードを変える
+        /// </summary>
+        /// <param name="speed">スピード</param>
+        private void ChangeSpeed(float speed)
+        {
+            _agent.speed = speed;
         }
 
         #region ポーズ処理
@@ -144,6 +165,7 @@ namespace DCFrameWork.Enemy
     public interface IEnemy : IFightable, IConditionable 
     {
         void Initialize();
+        void StartByPool(EnemyHealthBarManager enemyHealthBarManager);
         
     }
 
@@ -151,6 +173,7 @@ namespace DCFrameWork.Enemy
     {
         Action DeathAction { get; set; }
 
+        void HealthBarUpdate();
         float MaxHealth { get; protected set; }
         float CurrentHealth { get; protected set; }
 
@@ -161,6 +184,7 @@ namespace DCFrameWork.Enemy
         void HitDamage(float damage)
         {
             CurrentHealth -= damage;
+            HealthBarUpdate();
 
             if (CurrentHealth <= 0)
             {
@@ -175,6 +199,7 @@ namespace DCFrameWork.Enemy
         void HitHeal(float heal)
         {
             CurrentHealth = Mathf.Min(CurrentHealth + heal, MaxHealth);
+            HealthBarUpdate();
         }
     }
 

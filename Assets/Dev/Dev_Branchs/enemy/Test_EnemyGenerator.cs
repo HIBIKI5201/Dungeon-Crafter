@@ -20,9 +20,6 @@ namespace DCFrameWork.Enemy
         private Transform _spawnPos;
 
         [SerializeField]
-        private Transform _target;
-
-        [SerializeField]
         private Canvas _canvas;
 
         [SerializeField]
@@ -35,8 +32,6 @@ namespace DCFrameWork.Enemy
         [SerializeField]
         public int _maxNums;
 
-        float _currentHealth = default(float);
-        float _maxHealth = default(float);
         private void Start()
         {
             ObjectPooling();        
@@ -47,20 +42,11 @@ namespace DCFrameWork.Enemy
             foreach (var obj in _objectsDict.Keys)
             {
                 FollowTarget(obj, _objectsDict[obj]);
-                HealthBarUpdate(obj);
             }
-           
-            
+        
         }
 
-        private void HealthBarUpdate(GameObject obj)
-        {
-            
-            var healthBarMana = _objectsDict[obj].GetComponentInChildren<EnemyHealthBarManager>();
-            _currentHealth = obj.GetComponent<IFightable>().CurrentHealth;
-            _maxHealth = obj.GetComponent<IFightable>().MaxHealth;
-            healthBarMana.BarFillUpdate(_currentHealth / _maxHealth);
-        }
+       
 
 
         void ObjectPooling()
@@ -73,30 +59,21 @@ namespace DCFrameWork.Enemy
                 items[1] = 80;
                 int result = (int)ChooseNum(items);
                 var spawnedEnemy = Instantiate(_objects[result], _spawnPos.position, Quaternion.identity, transform);
-                var agent = spawnedEnemy.GetComponent<NavMeshAgent>();
-                if (agent.pathStatus != NavMeshPathStatus.PathInvalid)
-                {
-                    agent.SetDestination(_target.position);
-                }
-                GameObject healthBar = Instantiate(_healthBar, _canvas.transform);
+                var healthBar = Instantiate(_healthBar, _canvas.transform);
                 _objectsDict.Add(spawnedEnemy, healthBar);
                 healthBar.transform.SetParent(_canvas.transform);
+                var enemy = spawnedEnemy.GetComponent<IEnemy>();
+                enemy.StartByPool(healthBar.GetComponentInChildren<EnemyHealthBarManager>());
                 return spawnedEnemy;
             },
            target =>
            {
                target.SetActive(true);
                _objectsDict[target].SetActive(true);
-               target.transform.position = _spawnPos.position;
                var manager = target.GetComponent<IEnemy>();
                manager.DeathAction = () => objectPool.Release(target);
-               var agent = target.GetComponent<NavMeshAgent>();
-               if (agent.pathStatus != NavMeshPathStatus.PathInvalid)
-               {
-                   agent.SetDestination(_target.position);
-               }
+               target.transform.position = _spawnPos.position;
                manager.Initialize();
-               _currentHealth = _maxHealth;
            },
            target =>
            {

@@ -40,7 +40,7 @@ namespace DCFrameWork
                     if (_enemyList.Count != 0)
                     {
                         var targetSelect = TargetSelect();
-                        _agent.destination = targetSelect[0].transform.position;
+                        _agent.SetDestination(targetSelect[0].transform.position);
                         switch (_entityType)
                         {
                             case EntityType.attack:

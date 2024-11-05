@@ -19,6 +19,9 @@ namespace DCFrameWork.Enemy
         private Transform _spawnPos;
 
         [SerializeField]
+        private Transform _targetPos;
+
+        [SerializeField]
         private Canvas _canvas;
 
         [SerializeField]
@@ -27,12 +30,12 @@ namespace DCFrameWork.Enemy
         public Dictionary<GameObject,GameObject> _objectsDict = new() ;
 
         [SerializeField]
-        public int _defaultNums;
+        public int _defaultNum = 1;
         [SerializeField]
-        public int _maxNums;
+        public int _maxNum = 100 ;
 
         [SerializeField]
-        public float _spawnInterval;
+        public float _spawnInterval = 3f;
 
         private void Start()
         {
@@ -47,10 +50,6 @@ namespace DCFrameWork.Enemy
             }
         
         }
-
-       
-
-
         void ObjectPooling()
         {
             
@@ -65,7 +64,7 @@ namespace DCFrameWork.Enemy
                 _objectsDict.Add(spawnedEnemy, healthBar);
                 healthBar.transform.SetParent(_canvas.transform);
                 var enemy = spawnedEnemy.GetComponent<IEnemy>();
-                enemy.StartByPool(healthBar.GetComponentInChildren<EnemyHealthBarManager>());
+                enemy.StartByPool(healthBar.GetComponentInChildren<EnemyHealthBarManager>(),_targetPos.position);
                 return spawnedEnemy;
             },
            target =>
@@ -73,10 +72,9 @@ namespace DCFrameWork.Enemy
                target.SetActive(true);
                _objectsDict[target].SetActive(true);
                var manager = target.GetComponent<IEnemy>();
-               manager.DeathAction = null;
                manager.DeathAction = () => objectPool.Release(target);
                target.transform.position = _spawnPos.position;
-               manager.Initialize();
+               manager.Initialize(_targetPos.position);
            },
            target =>
            {
@@ -89,7 +87,7 @@ namespace DCFrameWork.Enemy
                Destroy(_objectsDict[target]);
                _objectsDict.Remove(target);
            },
-           true, _defaultNums, _maxNums);
+           true, _defaultNum, _maxNum);
 
             StartCoroutine(Generate());
         }
@@ -125,13 +123,8 @@ namespace DCFrameWork.Enemy
             Vector2 screenPos = Camera.main.WorldToScreenPoint(towards);
             hpBar.transform.position = screenPos;
         }
-
-
-       
-
         IEnumerator Generate()
         {
-            //objectPool.CountActive<_maxNums
             yield return null;
             while (true)    
             {

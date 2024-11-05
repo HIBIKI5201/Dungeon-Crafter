@@ -52,19 +52,18 @@ namespace DCFrameWork.Enemy
         private bool _isDead;
         bool IFightable.IsDead { get => _isDead; set => _isDead = value; }
 
-        public void StartByPool(EnemyHealthBarManager enemyHealthBarManager)
+        public void StartByPool(EnemyHealthBarManager enemyHealthBarManager,Vector3 transform)
         {
             _healthBarManager = enemyHealthBarManager;
             if (_data is null)
             Debug.Log("データがありません");
             LoadCommonData();
-            _target = GameObject.Find("TargetPos").GetComponent<Transform>();
             _agent = GetComponent<NavMeshAgent>();
-            GoToTargetPos(_target.position);
+            GoToTargetPos(transform);
             GameBaseSystem.mainSystem?.AddPausableObject(this);
             HealthBarUpdate();
             Start_S();
-            Initialize();
+            Initialize(transform);
         }
 
         /// <summary>
@@ -77,19 +76,19 @@ namespace DCFrameWork.Enemy
             GameBaseSystem.mainSystem?.RemovePausableObject(this);            
         }
 
-        void IEnemy.Initialize()=> Initialize();
-        void IEnemy.StartByPool(EnemyHealthBarManager enemyHealthBarManager)=> StartByPool(enemyHealthBarManager);   
+        void IEnemy.Initialize(Vector3 transform)=> Initialize(transform);
+        void IEnemy.StartByPool(EnemyHealthBarManager enemyHealthBarManager,Vector3 transform)=> StartByPool(enemyHealthBarManager,transform);   
 
         /// <summary>
         /// 外部からの初期化処理
         /// ステータスの初期化などを行う
         /// </summary>
-        private void Initialize()
+        private void Initialize(Vector3 transform)
         {
             _currentHealth = _maxHealth;
             _isDead = false;
             HealthBarUpdate();
-            GoToTargetPos(_target.position);
+            GoToTargetPos(transform);
             Initialize_S();
         }
 
@@ -122,6 +121,7 @@ namespace DCFrameWork.Enemy
 
         protected virtual void DeathBehaviour()
         {
+            _deathAction = null;
             _deathAction?.Invoke();
         }
 
@@ -167,8 +167,8 @@ namespace DCFrameWork.Enemy
 
     public interface IEnemy : IFightable, IConditionable 
     {
-        void Initialize();
-        void StartByPool(EnemyHealthBarManager enemyHealthBarManager);
+        void Initialize(Vector3 transform);
+        void StartByPool(EnemyHealthBarManager enemyHealthBarManager,Vector3 transform);
         
     }
 

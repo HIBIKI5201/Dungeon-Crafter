@@ -15,8 +15,10 @@ namespace DCFrameWork.Enemy
         EnemyData_B _data;
 
         #region 共通ステータス
-        protected float _maxHealth;
-        protected float _currentHealth;
+        private float _maxHealth;
+        float IFightable.MaxHealth { get => _maxHealth; set => _maxHealth = value; }
+        private float _currentHealth;
+        float IFightable.CurrentHealth { get => _currentHealth; set { _currentHealth = value; HealthBarUpdate(); } }
         protected float _defense;
         protected float _dexterity;
         protected float _specialChance;
@@ -75,6 +77,7 @@ namespace DCFrameWork.Enemy
         private void Initialize()
         {
             _currentHealth = _maxHealth;
+            HealthBarUpdate();
 
             Initialize_S();
         }
@@ -105,22 +108,6 @@ namespace DCFrameWork.Enemy
         /// </summary>
         /// <param name="data">型パラメータのデータ</param>
         protected virtual void LoadSpecificnData(Data data) { }
-
-        void IFightable.HitDamage(float damage)
-        {
-            _currentHealth -= damage;
-            HealthBarUpdate();
-            if (_currentHealth <= 0)
-            {
-                DeathBehaviour();
-            }
-        }
-
-        void IFightable.HitHeal(float heal)
-        {
-            _currentHealth = Mathf.Min(_currentHealth + heal, _maxHealth);
-            HealthBarUpdate();
-        }
 
         protected virtual void DeathBehaviour()
         {
@@ -164,22 +151,36 @@ namespace DCFrameWork.Enemy
     {
         Action DeathAction { get; set; }
 
+        float MaxHealth { get; protected set; }
+        float CurrentHealth { get; protected set; }
+
         /// <summary>
         /// ダメージを受ける
         /// </summary>
         /// <param name="damage">ダメージ量</param>
-        void HitDamage(float damage);
+        void HitDamage(float damage)
+        {
+            CurrentHealth -= damage;
+
+            if (CurrentHealth <= 0)
+            {
+                DeathAction?.Invoke();
+            }
+        }
 
         /// <summary>
         /// 回復を受ける
         /// </summary>
         /// <param name="amount">回復量</param>
-        void HitHeal(float heal);
+        void HitHeal(float heal)
+        {
+            CurrentHealth = Mathf.Min(CurrentHealth + heal, MaxHealth);
+        }
     }
 
     public interface IConditionable
     {
-        Dictionary<ConditionType, int> ConditionList { get; set; }
+        Dictionary<ConditionType, int> ConditionList { get; protected set; }
 
         void AddCondition(ConditionType type)
         {

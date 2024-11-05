@@ -8,7 +8,7 @@ namespace DCFrameWork.SceneSystem
         protected InputBuffer_B _input;
         protected UIManager_B _UIManager;
 
-        public void Init()
+        public void Initialize()
         {
             _UIManager = transform.GetComponentInChildren<UIManager_B>();
             if (_UIManager is null)
@@ -17,10 +17,10 @@ namespace DCFrameWork.SceneSystem
             if (_input is null)
                 Debug.LogWarning("InputBuffer‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
 
-            Init_S();
+            Initialize_S();
         }
 
-        protected virtual void Init_S() { }
+        protected virtual void Initialize_S() { }
 
         private void Update()
         {

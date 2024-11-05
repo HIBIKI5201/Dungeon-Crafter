@@ -4,7 +4,7 @@ namespace DCFrameWork.SceneSystem
     {
 
 
-        protected override void Init_S()
+        protected override void Initialize_S()
         {
         }
 

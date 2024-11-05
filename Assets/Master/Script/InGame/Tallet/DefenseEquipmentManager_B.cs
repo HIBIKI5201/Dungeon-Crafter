@@ -14,7 +14,6 @@ namespace DCFrameWork.DefenseEquipment
         #region 共通ステータス
         protected float _attack;
         protected float _rate;
-        protected float _range;
         protected float _critical;
         #endregion
 
@@ -38,7 +37,6 @@ namespace DCFrameWork.DefenseEquipment
 
             _attack = data.Attack;
             _rate = data.Rate;
-            _range = data.Range;
             _critical = data.Critical;
 
             LoadSpecificData(data);

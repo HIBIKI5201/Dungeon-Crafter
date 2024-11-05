@@ -7,7 +7,6 @@ namespace DCFrameWork.DefenseEquipment
     {
         public float Attack;
         public float Rate;
-        public float Range;
         public float Critical;
     }
 }

@@ -1,12 +1,15 @@
 #define DEBUGGING_TRAP_TURR_MAN
 #undef DEBUGGING_TRAP_TURR_MAN
+using DCFrameWork;
 using DCFrameWork.DefenseEquipment;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrapTurretManager : DEEntityManager_SB<DefenseEquipmentData_B>
+public class TrapTurretManager : DEEntityManager_SB<AttackebleData>
 {
+    private float _range;
+
     [SerializeField] float _minRange = 1;
     [SerializeField] Vector3 _boxCastSize = new Vector3(1, 1, 1);
     [SerializeField] LayerMask _groundLayer;
@@ -64,9 +67,9 @@ public class TrapTurretManager : DEEntityManager_SB<DefenseEquipmentData_B>
         float randomPosZ = r * Mathf.Sin(radian);
         return transform.position + new Vector3(randomPosX, 0, randomPosZ);
     }
-    protected override void LoadSpecificData(DefenseEquipmentData_B data)
+    protected override void LoadSpecificData(AttackebleData data)
     {
-        throw new System.NotImplementedException();
+        _range = data.Range;
     }
 
     protected override void Pause()

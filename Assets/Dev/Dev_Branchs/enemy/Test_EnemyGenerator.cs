@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Pool;
 using System.Linq;
+using DCFrameWork.MainSystem;
 
 
 namespace DCFrameWork.Enemy
@@ -25,7 +26,7 @@ namespace DCFrameWork.Enemy
         private Canvas _canvas;
 
         [SerializeField]
-        private GameObject _heathBar;
+        private GameObject _healthBar;
 
         public Dictionary<GameObject,GameObject> _objectsDict = new() ;
 
@@ -33,19 +34,35 @@ namespace DCFrameWork.Enemy
         public int _defaultNums;
         [SerializeField]
         public int _maxNums;
+
+        float _currentHealth = default(float);
+        float _maxHealth = default(float);
         private void Start()
         {
             ObjectPooling();        
         }
 
-        private void LateUpdate()
+        private void Update()
         {
             foreach (var obj in _objectsDict.Keys)
             {
                 FollowTarget(obj, _objectsDict[obj]);
+                HealthBarUpdate(obj);
             }
+           
             
         }
+
+        private void HealthBarUpdate(GameObject obj)
+        {
+            
+            var healthBarMana = _objectsDict[obj].GetComponentInChildren<EnemyHealthBarManager>();
+            _currentHealth = obj.GetComponent<IFightable>().CurrentHealth;
+            _maxHealth = obj.GetComponent<IFightable>().MaxHealth;
+            healthBarMana.BarFillUpdate(_currentHealth / _maxHealth);
+        }
+
+
         void ObjectPooling()
         {
             
@@ -61,7 +78,7 @@ namespace DCFrameWork.Enemy
                 {
                     agent.SetDestination(_target.position);
                 }
-                GameObject healthBar = Instantiate(_heathBar, _canvas.transform);
+                GameObject healthBar = Instantiate(_healthBar, _canvas.transform);
                 _objectsDict.Add(spawnedEnemy, healthBar);
                 healthBar.transform.SetParent(_canvas.transform);
                 return spawnedEnemy;
@@ -79,6 +96,7 @@ namespace DCFrameWork.Enemy
                    agent.SetDestination(_target.position);
                }
                manager.Initialize();
+               _currentHealth = _maxHealth;
            },
            target =>
            {
@@ -134,7 +152,7 @@ namespace DCFrameWork.Enemy
         IEnumerator Generate()
         {
             yield return null;
-            while (true)
+            while (objectPool.CountActive < _maxNums)    
             {
                 objectPool.Get();
                 yield return new WaitForSeconds(0.8f);

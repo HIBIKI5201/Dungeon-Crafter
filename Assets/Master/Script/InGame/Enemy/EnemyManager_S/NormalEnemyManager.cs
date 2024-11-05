@@ -1,16 +1,18 @@
+
+
 using UnityEngine;
+using UnityEngine.Pool;
 
 namespace DCFrameWork.Enemy
 {
     public class NormalEnemyManager : EnemyManager_B<EnemyData_B>
     {
         
-       
 
         protected override void DeathBehaviour()
         {
             base.DeathBehaviour();
-            Debug.Log("shinu");
+           
         }
 
 

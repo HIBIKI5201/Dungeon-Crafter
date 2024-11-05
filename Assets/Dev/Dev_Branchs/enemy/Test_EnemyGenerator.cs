@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.Pool;
 using System.Linq;
 using DCFrameWork.MainSystem;
@@ -31,6 +30,9 @@ namespace DCFrameWork.Enemy
         public int _defaultNums;
         [SerializeField]
         public int _maxNums;
+
+        [SerializeField]
+        public float _spawnInterval;
 
         private void Start()
         {
@@ -71,6 +73,7 @@ namespace DCFrameWork.Enemy
                target.SetActive(true);
                _objectsDict[target].SetActive(true);
                var manager = target.GetComponent<IEnemy>();
+               manager.DeathAction = null;
                manager.DeathAction = () => objectPool.Release(target);
                target.transform.position = _spawnPos.position;
                manager.Initialize();
@@ -128,11 +131,12 @@ namespace DCFrameWork.Enemy
 
         IEnumerator Generate()
         {
+            //objectPool.CountActive<_maxNums
             yield return null;
-            while (objectPool.CountActive < _maxNums)    
+            while (true)    
             {
                 objectPool.Get();
-                yield return new WaitForSeconds(0.8f);
+                yield return new WaitForSeconds(_spawnInterval);
             }
 
         }

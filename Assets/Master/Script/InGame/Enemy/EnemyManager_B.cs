@@ -2,6 +2,7 @@ using DCFrameWork.MainSystem;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -48,7 +49,8 @@ namespace DCFrameWork.Enemy
        
          private Transform _target;
 
-        
+        private bool _isDead;
+        bool IFightable.IsDead { get => _isDead; set => _isDead = value; }
 
         public void StartByPool(EnemyHealthBarManager enemyHealthBarManager)
         {
@@ -85,6 +87,7 @@ namespace DCFrameWork.Enemy
         private void Initialize()
         {
             _currentHealth = _maxHealth;
+            _isDead = false;
             HealthBarUpdate();
             GoToTargetPos(_target.position);
             Initialize_S();
@@ -177,6 +180,8 @@ namespace DCFrameWork.Enemy
         float MaxHealth { get; protected set; }
         float CurrentHealth { get; protected set; }
 
+        bool IsDead { get; protected set; }
+
         /// <summary>
         /// É_ÉÅÅ[ÉWÇéÛÇØÇÈ
         /// </summary>
@@ -186,9 +191,10 @@ namespace DCFrameWork.Enemy
             CurrentHealth -= damage;
             HealthBarUpdate();
 
-            if (CurrentHealth <= 0)
+            if (CurrentHealth <= 0 && IsDead == false)
             {
                 DeathAction?.Invoke();
+                IsDead = true;
             }
         }
 

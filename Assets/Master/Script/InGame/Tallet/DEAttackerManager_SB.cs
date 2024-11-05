@@ -26,7 +26,6 @@ namespace DCFrameWork.Enemy
 
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log(other.gameObject.name);
             if (other.TryGetComponent<IFightable>(out var component))
             {
                 _enemyList.Add((other.gameObject, component));

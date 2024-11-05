@@ -35,6 +35,15 @@ public class ShootTurretManager : DEAttackerManager_SB<DefenseEquipmentData_B>
         TargetsAddDamage(targetSelect, criticalPoint <= _critical ? _attack * 3 : _attack);
     }
 
+    void RangeUp()
+    {
+        var coll = GetComponent<SphereCollider>();
+        var syli = transform.GetChild(0);
+        var size = new Vector3(coll.radius * 2,0, coll.radius * 2);
+        syli.transform.localScale = size;
+
+    }
+
     protected override void Pause()
     {
         _isPaused = true;

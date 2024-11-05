@@ -1,3 +1,4 @@
+using DCFrameWork;
 using DCFrameWork.DefenseEquipment;
 using DCFrameWork.Enemy;
 using DCFrameWork.MainSystem;
@@ -5,8 +6,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShootTurretManager : DEAttackerManager_SB<DefenseEquipmentData_B>
+public class ShootTurretManager : DEAttackerManager_SB<AttackebleData>
 {
+    private float _range;
+
     const float _interval = 1;
     float _timer = 0;
     bool _isPaused = false;
@@ -23,9 +26,9 @@ public class ShootTurretManager : DEAttackerManager_SB<DefenseEquipmentData_B>
             }
         }
     }
-    protected override void LoadSpecificData(DefenseEquipmentData_B data)
+    protected override void LoadSpecificData(AttackebleData data)
     {
-
+        _range = data.Range;
     }
     protected override void Attack()
     {

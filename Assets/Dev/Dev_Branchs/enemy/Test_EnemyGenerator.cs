@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.Pool;
 using System.Linq;
 using DCFrameWork.MainSystem;
@@ -20,7 +19,7 @@ namespace DCFrameWork.Enemy
         private Transform _spawnPos;
 
         [SerializeField]
-        private Transform _target;
+        private Transform _targetPos;
 
         [SerializeField]
         private Canvas _canvas;
@@ -31,12 +30,13 @@ namespace DCFrameWork.Enemy
         public Dictionary<GameObject,GameObject> _objectsDict = new() ;
 
         [SerializeField]
-        public int _defaultNums;
+        public int _defaultValue = 1;
         [SerializeField]
-        public int _maxNums;
+        public int _maxValue = 100 ;
 
-        float _currentHealth = default(float);
-        float _maxHealth = default(float);
+        [SerializeField]
+        public float _spawnInterval = 3f;
+
         private void Start()
         {
             ObjectPooling();        
@@ -47,22 +47,9 @@ namespace DCFrameWork.Enemy
             foreach (var obj in _objectsDict.Keys)
             {
                 FollowTarget(obj, _objectsDict[obj]);
-                HealthBarUpdate(obj);
             }
-           
-            
+        
         }
-
-        private void HealthBarUpdate(GameObject obj)
-        {
-            
-            var healthBarMana = _objectsDict[obj].GetComponentInChildren<EnemyHealthBarManager>();
-            _currentHealth = obj.GetComponent<IFightable>().CurrentHealth;
-            _maxHealth = obj.GetComponent<IFightable>().MaxHealth;
-            healthBarMana.BarFillUpdate(_currentHealth / _maxHealth);
-        }
-
-
         void ObjectPooling()
         {
             
@@ -73,30 +60,21 @@ namespace DCFrameWork.Enemy
                 items[1] = 80;
                 int result = (int)ChooseNum(items);
                 var spawnedEnemy = Instantiate(_objects[result], _spawnPos.position, Quaternion.identity, transform);
-                var agent = spawnedEnemy.GetComponent<NavMeshAgent>();
-                if (agent.pathStatus != NavMeshPathStatus.PathInvalid)
-                {
-                    agent.SetDestination(_target.position);
-                }
-                GameObject healthBar = Instantiate(_healthBar, _canvas.transform);
+                var healthBar = Instantiate(_healthBar, _canvas.transform);
                 _objectsDict.Add(spawnedEnemy, healthBar);
                 healthBar.transform.SetParent(_canvas.transform);
+                var enemy = spawnedEnemy.GetComponent<IEnemy>();
+                enemy.StartByPool(healthBar.GetComponentInChildren<EnemyHealthBarManager>(),_targetPos.position);
                 return spawnedEnemy;
             },
            target =>
            {
                target.SetActive(true);
                _objectsDict[target].SetActive(true);
-               target.transform.position = _spawnPos.position;
                var manager = target.GetComponent<IEnemy>();
                manager.DeathAction = () => objectPool.Release(target);
-               var agent = target.GetComponent<NavMeshAgent>();
-               if (agent.pathStatus != NavMeshPathStatus.PathInvalid)
-               {
-                   agent.SetDestination(_target.position);
-               }
-               manager.Initialize();
-               _currentHealth = _maxHealth;
+               target.transform.position = _spawnPos.position;
+               manager.Initialize(_targetPos.position);
            },
            target =>
            {
@@ -109,7 +87,7 @@ namespace DCFrameWork.Enemy
                Destroy(_objectsDict[target]);
                _objectsDict.Remove(target);
            },
-           true, _defaultNums, _maxNums);
+           true, _defaultValue, _maxValue);
 
             StartCoroutine(Generate());
         }
@@ -145,17 +123,13 @@ namespace DCFrameWork.Enemy
             Vector2 screenPos = Camera.main.WorldToScreenPoint(towards);
             hpBar.transform.position = screenPos;
         }
-
-
-       
-
         IEnumerator Generate()
         {
             yield return null;
-            while (objectPool.CountActive < _maxNums)    
+            while (true)    
             {
                 objectPool.Get();
-                yield return new WaitForSeconds(0.8f);
+                yield return new WaitForSeconds(_spawnInterval);
             }
 
         }

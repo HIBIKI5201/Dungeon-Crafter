@@ -76,6 +76,7 @@ namespace DCFrameWork.Enemy
         /// </summary>
         private void Initialize(Vector3 targetPos)
         {
+            _agent.speed = _dexterity;
             _currentHealth = _maxHealth;
             HealthBarUpdate();
             GoToTargetPos(targetPos);

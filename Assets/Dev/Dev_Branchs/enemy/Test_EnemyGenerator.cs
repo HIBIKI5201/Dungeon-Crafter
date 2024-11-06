@@ -30,9 +30,9 @@ namespace DCFrameWork.Enemy
         public Dictionary<GameObject,GameObject> _objectsDict = new() ;
 
         [SerializeField]
-        public int _defaultNum = 1;
+        public int _defaultValue = 1;
         [SerializeField]
-        public int _maxNum = 100 ;
+        public int _maxValue = 100 ;
 
         [SerializeField]
         public float _spawnInterval = 3f;
@@ -87,7 +87,7 @@ namespace DCFrameWork.Enemy
                Destroy(_objectsDict[target]);
                _objectsDict.Remove(target);
            },
-           true, _defaultNum, _maxNum);
+           true, _defaultValue, _maxValue);
 
             StartCoroutine(Generate());
         }

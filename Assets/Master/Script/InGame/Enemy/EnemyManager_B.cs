@@ -1,15 +1,13 @@
 using DCFrameWork.MainSystem;
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace DCFrameWork.Enemy
 {
-    [RequireComponent(typeof(NavMeshAgent),typeof(Rigidbody))]
-    
+    [RequireComponent(typeof(NavMeshAgent), typeof(Rigidbody))]
+
     public abstract class EnemyManager_B<Data> : MonoBehaviour, IEnemy, IPausable where Data : EnemyData_B
     {
         [SerializeField]
@@ -45,18 +43,11 @@ namespace DCFrameWork.Enemy
         Action IFightable.DeathAction { get => _deathAction; set => _deathAction = value; }
 
         private NavMeshAgent _agent;
-
-       
-         private Transform _target;
-
-        private bool _isDead;
-        bool IFightable.IsDead { get => _isDead; set => _isDead = value; }
-
-        public void StartByPool(EnemyHealthBarManager enemyHealthBarManager,Vector3 transform)
+        public void StartByPool(EnemyHealthBarManager enemyHealthBarManager, Vector3 transform)
         {
             _healthBarManager = enemyHealthBarManager;
             if (_data is null)
-            Debug.Log("データがありません");
+                Debug.Log("データがありません");
             LoadCommonData();
             _agent = GetComponent<NavMeshAgent>();
             GoToTargetPos(transform);
@@ -73,22 +64,21 @@ namespace DCFrameWork.Enemy
 
         private void OnEnable()
         {
-            GameBaseSystem.mainSystem?.RemovePausableObject(this);            
+            GameBaseSystem.mainSystem?.RemovePausableObject(this);
         }
 
-        void IEnemy.Initialize(Vector3 transform)=> Initialize(transform);
-        void IEnemy.StartByPool(EnemyHealthBarManager enemyHealthBarManager,Vector3 transform)=> StartByPool(enemyHealthBarManager,transform);   
+        void IEnemy.Initialize(Vector3 transform) => Initialize(transform);
+        void IEnemy.StartByPool(EnemyHealthBarManager enemyHealthBarManager, Vector3 transform) => StartByPool(enemyHealthBarManager, transform);
 
         /// <summary>
         /// 外部からの初期化処理
         /// ステータスの初期化などを行う
         /// </summary>
-        private void Initialize(Vector3 transform)
+        private void Initialize(Vector3 pos)
         {
             _currentHealth = _maxHealth;
-            _isDead = false;
             HealthBarUpdate();
-            GoToTargetPos(transform);
+            GoToTargetPos(pos);
             Initialize_S();
         }
 
@@ -142,7 +132,7 @@ namespace DCFrameWork.Enemy
             _healthBarManager?.BarFillUpdate(_currentHealth / _maxHealth);
         }
 
-     
+
         /// <summary>
         /// スピードを変える
         /// </summary>
@@ -165,11 +155,11 @@ namespace DCFrameWork.Enemy
         weakness,
     }
 
-    public interface IEnemy : IFightable, IConditionable 
+    public interface IEnemy : IFightable, IConditionable
     {
-        void Initialize(Vector3 transform);
-        void StartByPool(EnemyHealthBarManager enemyHealthBarManager,Vector3 transform);
-        
+        void Initialize(Vector3 pos);
+        void StartByPool(EnemyHealthBarManager enemyHealthBarManager, Vector3 transform);
+
     }
 
     public interface IFightable
@@ -180,32 +170,42 @@ namespace DCFrameWork.Enemy
         float MaxHealth { get; protected set; }
         float CurrentHealth { get; protected set; }
 
-        bool IsDead { get; protected set; }
 
         /// <summary>
         /// ダメージを受ける
         /// </summary>
         /// <param name="damage">ダメージ量</param>
-        void HitDamage(float damage)
+        bool HitDamage(float damage)
         {
+            if (CurrentHealth <= 0)
+            {
+                return false;
+            }
+
             CurrentHealth -= damage;
             HealthBarUpdate();
 
-            if (CurrentHealth <= 0 && IsDead == false)
+            if (CurrentHealth <= 0)
             {
                 DeathAction?.Invoke();
-                IsDead = true;
+                return false;
             }
+            return true;
         }
 
         /// <summary>
         /// 回復を受ける
         /// </summary>
         /// <param name="amount">回復量</param>
-        void HitHeal(float heal)
+        bool  HitHeal(float heal)
         {
+            if (CurrentHealth == MaxHealth)
+            {
+                return false ;
+            }
             CurrentHealth = Mathf.Min(CurrentHealth + heal, MaxHealth);
             HealthBarUpdate();
+            return true;
         }
     }
 

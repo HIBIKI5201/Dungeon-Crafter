@@ -718,11 +718,12 @@ MonoBehaviour:
   - {fileID: 7990310466857601233, guid: 837ec1f55b14f894e8397ccb545f2850, type: 3}
   - {fileID: 7990310466857601233, guid: 837ec1f55b14f894e8397ccb545f2850, type: 3}
   _spawnPos: {fileID: 594767645}
+  _targetPos: {fileID: 1299293379}
   _canvas: {fileID: 518106097}
   _healthBar: {fileID: 6218801146707754616, guid: a3d6ce18078983a49a949e9f607d794c,
     type: 3}
-  _defaultNums: 1
-  _maxNums: 100
+  _defaultNum: 1
+  _maxNum: 100
   _spawnInterval: 3
 --- !u!4 &752006870
 Transform:

@@ -43,18 +43,18 @@ namespace DCFrameWork.Enemy
         Action IFightable.DeathAction { get => _deathAction; set => _deathAction = value; }
 
         private NavMeshAgent _agent;
-        public void StartByPool(EnemyHealthBarManager enemyHealthBarManager, Vector3 transform)
+        public void StartByPool(EnemyHealthBarManager enemyHealthBarManager, Vector3 targetPos)
         {
             _healthBarManager = enemyHealthBarManager;
             if (_data is null)
                 Debug.Log("データがありません");
             LoadCommonData();
             _agent = GetComponent<NavMeshAgent>();
-            GoToTargetPos(transform);
+            GoToTargetPos(targetPos);
             GameBaseSystem.mainSystem?.AddPausableObject(this);
             HealthBarUpdate();
             Start_S();
-            Initialize(transform);
+            Initialize(targetPos);
         }
 
         /// <summary>
@@ -67,18 +67,18 @@ namespace DCFrameWork.Enemy
             GameBaseSystem.mainSystem?.RemovePausableObject(this);
         }
 
-        void IEnemy.Initialize(Vector3 transform) => Initialize(transform);
-        void IEnemy.StartByPool(EnemyHealthBarManager enemyHealthBarManager, Vector3 transform) => StartByPool(enemyHealthBarManager, transform);
+        void IEnemy.Initialize(Vector3 targetPos) => Initialize(targetPos);
+        void IEnemy.StartByPool(EnemyHealthBarManager enemyHealthBarManager, Vector3 targetPos) => StartByPool(enemyHealthBarManager, targetPos);
 
         /// <summary>
         /// 外部からの初期化処理
         /// ステータスの初期化などを行う
         /// </summary>
-        private void Initialize(Vector3 pos)
+        private void Initialize(Vector3 targetPos)
         {
             _currentHealth = _maxHealth;
             HealthBarUpdate();
-            GoToTargetPos(pos);
+            GoToTargetPos(targetPos);
             Initialize_S();
         }
 
@@ -111,19 +111,19 @@ namespace DCFrameWork.Enemy
 
         protected virtual void DeathBehaviour()
         {
-            _deathAction = null;
             _deathAction?.Invoke();
+            _deathAction = null;
         }
 
         /// <summary>
         /// NavMesh上のポジションへ移動する
         /// </summary>
-        /// <param name="pos">移動目標の座標</param>
-        protected void GoToTargetPos(Vector3 pos)
+        /// <param name="targetPos">移動目標の座標</param>
+        protected void GoToTargetPos(Vector3 targetPos)
         {
             if (_agent.pathStatus != NavMeshPathStatus.PathInvalid)
             {
-                _agent.SetDestination(pos);
+                _agent.SetDestination(targetPos);
             }
         }
 
@@ -157,8 +157,8 @@ namespace DCFrameWork.Enemy
 
     public interface IEnemy : IFightable, IConditionable
     {
-        void Initialize(Vector3 pos);
-        void StartByPool(EnemyHealthBarManager enemyHealthBarManager, Vector3 transform);
+        void Initialize(Vector3 targetPos);
+        void StartByPool(EnemyHealthBarManager enemyHealthBarManager, Vector3 targetPos);
 
     }
 

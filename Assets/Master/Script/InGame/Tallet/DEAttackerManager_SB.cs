@@ -20,7 +20,10 @@ namespace DCFrameWork.Enemy
         {
             foreach (var enemy in enemies)
             {
-                enemy.HitDamage(damage);
+                if (!enemy.HitDamage(damage))
+                {
+                    _enemyList.Remove(_enemyList.Where(e => e.Interface == enemy).FirstOrDefault());
+                }
             }
         }
 

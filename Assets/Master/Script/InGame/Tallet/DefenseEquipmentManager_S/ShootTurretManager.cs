@@ -29,20 +29,23 @@ public class ShootTurretManager : DEAttackerManager_SB<AttackebleData>
     protected override void LoadSpecificData(AttackebleData data)
     {
         _range = data.Range;
+        RangeUp(_range);
     }
     protected override void Attack()
     {
+        Debug.Log("Attack is Now");
         var criticalPoint = Random.Range(0, 100);
         var targetSelect = TargetSelect();
-        Debug.Log(targetSelect);
+        Debug.Log(targetSelect.Count);
         TargetsAddDamage(targetSelect, criticalPoint <= _critical ? _attack * 3 : _attack);
     }
 
-    void RangeUp()
+    void RangeUp(float range)
     {
         var coll = GetComponent<SphereCollider>();
+        coll.radius = range;
         var syli = transform.GetChild(0);
-        var size = new Vector3(coll.radius * 2,0, coll.radius * 2);
+        var size = new Vector3(coll.radius * 2, syli.transform.localScale.y, coll.radius * 2);
         syli.transform.localScale = size;
 
     }

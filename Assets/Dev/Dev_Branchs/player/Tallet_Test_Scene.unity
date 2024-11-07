@@ -672,6 +672,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SummonTurret
       objectReference: {fileID: 0}
+    - target: {fileID: 2243737733087321343, guid: b0717e201ffe59841864ab6c70f15911,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5780168820854503164, guid: b0717e201ffe59841864ab6c70f15911,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -740,6 +745,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SummonEntity
       objectReference: {fileID: 0}
+    - target: {fileID: 1776559538082072826, guid: 85a08520a8d9f9d4dacc5f07745923d8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5205879485373727363, guid: 85a08520a8d9f9d4dacc5f07745923d8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -803,6 +813,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 776908792253764087, guid: 022a7869d00083b4586bf6fdf5f0ae30,
+        type: 3}
+      propertyPath: _dataBase
+      value: 
+      objectReference: {fileID: 11400000, guid: c274824e63b70424d9afd001f6f40105,
+        type: 2}
     - target: {fileID: 2710484828236544335, guid: 022a7869d00083b4586bf6fdf5f0ae30,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -875,6 +891,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SlowTurret
+      objectReference: {fileID: 0}
+    - target: {fileID: 1580030669442090805, guid: 6800c4699d42ad74e94044a5319af440,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5538623378778849523, guid: 6800c4699d42ad74e94044a5319af440,
         type: 3}

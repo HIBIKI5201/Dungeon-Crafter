@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class GenarateObjectAlongGrid : MonoBehaviour
 {
@@ -11,6 +13,10 @@ public class GenarateObjectAlongGrid : MonoBehaviour
     [SerializeField] GameObject _clickGridPrefab;
     [SerializeField] NavMeshSurface _navMeshSurface;
     [SerializeField] GameObject _walls;
+    [SerializeField] Transform _startPos;
+    [SerializeField] Transform _targetPos;
+    [SerializeField] StageManager _stageManager;
+    private NavMeshPath _path;
     private Camera _mainCamera;
     private Vector3 _currentPosition = Vector3.zero;
     private float _prefabHeight;
@@ -18,6 +24,7 @@ public class GenarateObjectAlongGrid : MonoBehaviour
 
     void Start()
     {
+        _path = new NavMeshPath();
         _mainCamera = Camera.main;
         _prefabHeight = _prefab.GetComponent<BoxCollider>().size.y;
     }
@@ -26,21 +33,20 @@ public class GenarateObjectAlongGrid : MonoBehaviour
     {
         var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
         var raycastHitList = Physics.RaycastAll(ray, float.PositiveInfinity, LayerMask.GetMask("Ground")).ToList();
+        var beforeCurrentPos = _currentPosition;
         if (raycastHitList.Any())
         {
-            var hit = raycastHitList.OrderByDescending(x => x.collider.gameObject.transform.position.y).FirstOrDefault();
+            var hit = raycastHitList.Where(x => x.collider.gameObject != _clickGridPrefab).OrderByDescending(x => x.collider.gameObject.transform.position.y).FirstOrDefault();
             _currentPosition = hit.point;
             _clickPointPrefab.transform.position = _currentPosition;
-            _currentPosition.y = (int)(_currentPosition.y + hit.normal.y / 2) + 0.5f;
-            _currentPosition.x = (int)(_currentPosition.x + hit.normal.x / 2) + 0.5f * Mathf.Sign(_currentPosition.x);
-            _currentPosition.z = (int)(_currentPosition.z + hit.normal.z / 2) + 0.5f * Mathf.Sign(_currentPosition.z);
+            //グリッドの計算式
+            _currentPosition.y = (int)((_currentPosition.y + hit.normal.y / 2) / 5) * 5 + 2.5f;
+            _currentPosition.x = (int)((_currentPosition.x + hit.normal.x / 2) / 5) * 5 + 2.5f * Mathf.Sign(_currentPosition.x);
+            _currentPosition.z = (int)((_currentPosition.z + hit.normal.z / 2) / 5) * 5 + 2.5f * Mathf.Sign(_currentPosition.z);
             _clickGridPrefab.transform.position = _currentPosition;
-            Debug.DrawRay(_currentPosition , Vector3.down, Color.green, 1f);
-            if (_clickGridPrefab.transform.position.y > 2f || !Physics.Raycast(_currentPosition, Vector3.down, 1f, LayerMask.GetMask("Ground")))
+            //Debug.DrawRay(_currentPosition, Vector3.down, Color.green, 1f);
+            if (_clickGridPrefab.transform.position.y > 8f || !Physics.Raycast(_currentPosition, Vector3.down, 5f, LayerMask.GetMask("Ground")))
             {
-                Debug.Log("置けない");
-                Debug.Log(_clickGridPrefab.transform.position.y > 2f);
-                Debug.Log(!Physics.Raycast(_currentPosition, Vector3.down, 1f, LayerMask.GetMask("Ground")));
                 _canSet = false;
                 _clickGridPrefab.SetActive(false);
             }
@@ -49,14 +55,23 @@ public class GenarateObjectAlongGrid : MonoBehaviour
                 _canSet = true;
                 _clickGridPrefab.SetActive(true);
             }
+            if (_stageManager.CheckStage(_currentPosition) && _currentPosition != _startPos.position && _currentPosition != _targetPos.position)
+            {
+                _clickGridPrefab.GetComponent<MeshRenderer>().material.color = Color.blue;
+            }
+            else
+            {
+                _clickGridPrefab.GetComponent<MeshRenderer>().material.color = Color.red;
+                _canSet = false;
+            }
         }
         if (Input.GetMouseButtonDown(0))
         {
             if (_canSet)
             {
+                _stageManager.SetObject(_currentPosition);
                 var obj = Instantiate(_prefab, _currentPosition, Quaternion.identity);
                 obj.transform.SetParent(_walls.transform);
-                _navMeshSurface.BuildNavMesh();
             }
         }
     }

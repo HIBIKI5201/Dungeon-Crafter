@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,20 +35,24 @@ public class StageManager : MonoBehaviour
     int _noWall;
     int _startX = 1;
     int _startZ = 1;
+    //計算に関するコメントアウトのメモが噓をついている可能性があります。鵜吞みにしないように。発見したら教えてください。
     void Start()
     {
         //_navMeshSurface.BuildNavMesh();
         _mainCamera = Camera.main;
         //_prefabHeight = _setPrefab.GetComponent<BoxCollider>().size.y;
+        //何マスx何マスかを調べる
         _sizeX = (int)(_floorPrefab.transform.localScale.x / _gridSize);
         _sizeZ = (int)(_floorPrefab.transform.localScale.z / _gridSize);
         _map = new int[_sizeX, _sizeZ];
+        //デフォルトで配置するオブジェクトをセットしてる。後から消すかも？
         _setPrefab = _obstaclePrefabList[0].PutObstaclePrefab;
         _tentativePrefab = _obstaclePrefabList[0].VisualGuide;
         LoadStage();
+        //ステージのグリッド座標に壁があるかしらべて2次元配列に格納
         void LoadStage()
         {
-            //(localScale/2-trans.pos + _gridsize/2) + _gridsize * i(0<=i<=sizeXZ) = �O���b�h�̊e�}�X�̒��S���W��x,z
+            //(localScale/2-trans.pos + _gridsize/2) + _gridsize * i(0<=i<=sizeXZ) = グリッドの各マスの中心座標のx,z
             for (int i = 0; i < _sizeZ; i++)
             {
                 for (int j = 0; j < _sizeX; j++)
@@ -63,6 +67,7 @@ public class StageManager : MonoBehaviour
                     else
                     {
                         _map[j, i] = 0;
+                        //壁のない場所を数える
                         _noWall++;
                     }
                     //Debug.Log($"{vector3}:{_map[j, i]}:({j},{i})={(hit.collider != null ? hit.collider.gameObject.name : null)}");
@@ -74,20 +79,24 @@ public class StageManager : MonoBehaviour
     void Update()
     {
         var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
-        var raycastHitList = Physics.RaycastAll(ray, float.PositiveInfinity, LayerMask.GetMask("Ground")).ToList();
+        var raycastHitList = Physics.RaycastAll(ray, float.PositiveInfinity).ToList();
         var beforeCurrentPos = _currentPosition;
         if (raycastHitList.Any())
         {
-            var hit = raycastHitList.Where(x => x.collider.gameObject != _tentativePrefab).OrderByDescending(x => x.collider.gameObject.transform.position.y).FirstOrDefault();
+            //置く場所を視覚的にサポートするオブジェクトとはレイキャストが当たってないことにする
+            raycastHitList.Remove(raycastHitList.Where(x => x.collider.gameObject == _tentativePrefab).FirstOrDefault());
+            var hit = raycastHitList.OrderByDescending(x => x.collider.gameObject.transform.position.y).FirstOrDefault();
             _currentPosition = hit.point;
-            //Debug.Log(hit.collider.gameObject.name);
+            Debug.Log($"{hit.collider.gameObject.name}:{hit.collider.gameObject.layer}:{ LayerMask.NameToLayer("Ground")}");
             //_clickPointPrefab.transform.position = _currentPosition;
-            //�O���b�h�̌v�Z��
+            //グリッドの計算式
             _currentPosition.y = (int)((_currentPosition.y + hit.normal.y / 2) / 5) * 5 + 2.5f;
             _currentPosition.x = (int)((_currentPosition.x + hit.normal.x / 2) / 5) * 5 + 2.5f * Mathf.Sign(_currentPosition.x);
             _currentPosition.z = (int)((_currentPosition.z + hit.normal.z / 2) / 5) * 5 + 2.5f * Mathf.Sign(_currentPosition.z);
+            //マウスと重なっているグリッドの中心座標に視覚的にサポートするオブジェクトをセット
             _tentativePrefab.transform.position = _currentPosition;
             //Debug.DrawRay(_currentPosition, Vector3.down, Color.green, 1f);
+            //ステージの範囲外に出てたら見えなくする
             if (_tentativePrefab.transform.position.y > 8f || !Physics.Raycast(_currentPosition, Vector3.down, 5f, LayerMask.GetMask("Ground")))
             {
                 _canSet = false;
@@ -98,7 +107,8 @@ public class StageManager : MonoBehaviour
                 _canSet = true;
                 _tentativePrefab.SetActive(true);
             }
-            if (CheckStage(_currentPosition) && _currentPosition != _spawnPos.position && _currentPosition != _targetPos.position)
+            //置けるかどうかの判定
+            if (CheckStage(_currentPosition) && _currentPosition != _spawnPos.position && _currentPosition != _targetPos.position && hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
             {
                 _tentativePrefab.GetComponent<MeshRenderer>().material.color = Color.white;
             }
@@ -108,6 +118,7 @@ public class StageManager : MonoBehaviour
                 _canSet = false;
             }
         }
+        //オブジェクトを置く処理
         if (Input.GetMouseButtonDown(0))
         {
             if (_canSet)
@@ -118,7 +129,7 @@ public class StageManager : MonoBehaviour
     }
     public bool CheckStage(Vector3 currentPosition)
     {
-        //i = (�O���b�h�̊e�}�X�̒��S���W��x,z -(_floorPrefab.transform.position.z - _floorPrefab.transform.localScale.z / 2 + _gridSize / 2))/_gridSize
+        //i = (グリッドの各マスの中心座標のx,z -(_floorPrefab.transform.position.z - _floorPrefab.transform.localScale.z / 2 + _gridSize / 2))/_gridSize
         int currentX;
         int currentZ;
         //(-42.5-2.5 + 47.5 - 2.5)/5
@@ -185,16 +196,20 @@ public class StageManager : MonoBehaviour
         int currentX;
         int currentZ;
         //(-42.5-2.5 + 47.5 - 2.5)/5
+        //オブジェクトを置こうとしている座標がグリッド座標のどこかを調べる
         currentX = (int)((currentPosition.x - _floorCenter.x + _floorPrefab.transform.localScale.x / 2 - _gridSize / 2) / _gridSize);
         currentZ = (int)((currentPosition.z - _floorCenter.z + _floorPrefab.transform.localScale.z / 2 - _gridSize / 2) / _gridSize);
+        //マップ情報の更新
         if (_map[currentX, currentZ] == 0)
         {
             _noWall--;
         }
         _map[currentX, currentZ] = 1;
+        //生成
         var obj = Instantiate(_setPrefab, _currentPosition, Quaternion.identity);
         obj.transform.SetParent(_wallsParent.transform);
     }
+    //設置するオブジェクトの変更
     public void ChangeObstaclePrefab(string name)
     {
         ObstaclePrefabs p = _obstaclePrefabList.Find(x => x.Name == name);

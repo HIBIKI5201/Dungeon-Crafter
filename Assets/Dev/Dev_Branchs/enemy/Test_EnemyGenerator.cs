@@ -26,7 +26,7 @@ namespace DCFrameWork.Enemy
         [SerializeField]
         private GameObject _healthBar;
 
-        private Dictionary<GameObject, GameObject> _objectsDict = new();
+        private readonly Dictionary<GameObject, GameObject> _objectsDict = new();
 
         [SerializeField]
         private int _defaultValue = 1;

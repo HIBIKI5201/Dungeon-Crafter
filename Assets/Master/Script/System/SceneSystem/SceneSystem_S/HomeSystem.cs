@@ -11,13 +11,13 @@ namespace DCFrameWork.SceneSystem
         protected override void Think(InputContext input)
         {
         }
+    }
 
-        private enum WindowKind
-        {
-            Title,
-            Story,
-            MainManu,
-            StageSelect,
-        }
+    public enum HomeWindowState
+    {
+        Title,
+        Story,
+        MainMenu,
+        StageSelect,
     }
 }

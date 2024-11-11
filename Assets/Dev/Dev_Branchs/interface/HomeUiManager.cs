@@ -1,72 +1,60 @@
-using System.Collections;
-using System.Collections.Generic;
+using DCFrameWork.SceneSystem;
+using System;
 using UnityEngine;
 
-public class HomeUIManager : MonoBehaviour
+namespace DCFrameWork.UI
 {
-    HomeUIState _homeUIState = HomeUIState.Title;
-    private void Awake()
+    public class HomeUIManager : MonoBehaviour
     {
-    }
-    private void LateUpdate()
-    {
-
-    }
-    public HomeUIState State
-    {
-        get { return _homeUIState;}
-        set
+        HomeWindowState _homeUIState = HomeWindowState.Title;
+        public HomeWindowState State
         {
-            if(_homeUIState != value)
+            get { return _homeUIState; }
+            set
             {
-                _homeUIState=value;
-                OnStateChenge();
+                if (_homeUIState != value)
+                {
+                    _homeUIState = value;
+                    OnStateChenge();
+                }
             }
         }
-    }
-    void OnStateChenge()
-    {
-        switch (_homeUIState)
+
+        void OnStateChenge()
         {
-            case HomeUIState.Title:
-                OnTitle();
-                break;
-            case HomeUIState.Scenario:
-                OnScenario();
-                break;
-            case HomeUIState.MainMenu:
-                OnMainMenu();
-                break;
+            Action action = _homeUIState switch
+            {
+                HomeWindowState.Title => OnTitle,
+                HomeWindowState.Story => OnStory,
+                HomeWindowState.MainMenu => OnMainMenu,
+                _ => null
+            };
+            action?.Invoke();
+        }
+        void OnTitle()
+        {
+
+        }
+        void OnStory()
+        {
+
+        }
+        void OnMainMenu()
+        {
+
         }
     }
-    void OnTitle()
+
+    class TitleElement
     {
 
     }
-    void OnScenario()
+    class ScenarioElement
     {
 
     }
-    void OnMainMenu()
+    class MainManuElement
     {
 
     }
-}
-public enum HomeUIState
-{
-    Title,
-    Scenario,
-    MainMenu,
-}
-class TitleElement
-{
-
-}
-class ScenarioElement
-{
-
-}
-class MainManuElement
-{
-
 }

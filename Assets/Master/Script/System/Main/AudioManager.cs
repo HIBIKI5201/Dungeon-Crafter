@@ -16,18 +16,18 @@ namespace DCFrameWork.MainSystem
         [Space]
 
         [SerializeField]
-        AudioMixer _mixer;
+        private AudioMixer _mixer;
 
         [Space]
 
         [SerializeField]
-        List<AudioData> _inGameSoundEffectList = new();
+        private AudioDataBase _inGameSoundEffectData;
         [SerializeField]
-        List<AudioData> _outGameSoundEffectList = new();
+        private AudioDataBase _outGameSoundEffectData;
         [SerializeField]
-        List<AudioData> _BGMList = new();
+        private AudioDataBase _BGMData;
         [SerializeField]
-        List<AudioData> _voiceList = new();
+        private AudioDataBase _voiceData;
 
         private void Start()
         {
@@ -40,16 +40,16 @@ namespace DCFrameWork.MainSystem
             switch (Kind)
             {
                 case SoundKind.InGame:
-                    PlaySoundEffect(GetAudioData(_inGameSoundEffectList, index));
+                    PlaySoundEffect(GetAudioData(_inGameSoundEffectData.audioDatas, index));
                     break;
                 case SoundKind.OutGame:
-                    PlaySoundEffect(GetAudioData(_outGameSoundEffectList, index));
+                    PlaySoundEffect(GetAudioData(_outGameSoundEffectData.audioDatas, index));
                     break;
                 case SoundKind.BGM:
-                    PlayBGM(GetAudioData(_BGMList, index));
+                    PlayBGM(GetAudioData(_BGMData.audioDatas, index));
                     break;
                     case SoundKind.Voice:
-                    PlayVoiceSound(GetAudioData(_voiceList, index));
+                    PlayVoiceSound(GetAudioData(_voiceData.audioDatas, index));
                     break;
             }
         }
@@ -98,5 +98,11 @@ namespace DCFrameWork.MainSystem
         public AudioClip AudioClip;
         [Range(0, 1)]
         public float AudioVolume;
+    }
+
+    [CreateAssetMenu(fileName = "AudioDataBase", menuName = "GameData/AudioDataBase")]
+    public class AudioDataBase : ScriptableObject
+    {
+        public List<AudioData> audioDatas = new();
     }
 }

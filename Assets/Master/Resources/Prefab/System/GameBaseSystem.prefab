@@ -51,10 +51,12 @@ MonoBehaviour:
   _BGMSource: {fileID: 2912800631463366377}
   _voiceSource: {fileID: 6013796756928647341}
   _mixer: {fileID: 24100000, guid: 2da6ab52d66bcaf41b3cabd48b06c91d, type: 2}
-  _inGameSoundEffectList: []
-  _outGameSoundEffectList: []
-  _BGMList: []
-  _voiceList: []
+  _inGameSoundEffectData: {fileID: 11400000, guid: 009b4910d78970c4ea3699af379bc658,
+    type: 2}
+  _outGameSoundEffectData: {fileID: 11400000, guid: 65b4404d1b62b844eab72bada962e294,
+    type: 2}
+  _BGMData: {fileID: 11400000, guid: 10c97874f9c30ce4392358ccdf91a942, type: 2}
+  _voiceData: {fileID: 11400000, guid: f30750fc11700ad4b9c40e7aad8a24ed, type: 2}
 --- !u!82 &4824524854244025928
 AudioSource:
   m_ObjectHideFlags: 0

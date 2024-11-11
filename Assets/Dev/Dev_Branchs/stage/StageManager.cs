@@ -12,7 +12,7 @@ public class StageManager : MonoBehaviour
     [SerializeField] GameObject _floorPrefab;
     [SerializeField] Vector3 _floorCenter;
     [SerializeField] float _gridSize = 5f;
-    [SerializeField] List<ObstaclePrefabs> _obstaclePrefabList;    
+    [SerializeField] List<ObstaclePrefabs> _obstaclePrefabList;
     //[SerializeField] GameObject _clickPointPrefab;//Debug;
     [SerializeField] NavMeshSurface _navMeshSurface;
     [SerializeField] GameObject _wallsParent;
@@ -79,7 +79,7 @@ public class StageManager : MonoBehaviour
     void Update()
     {
         var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
-        var raycastHitList = Physics.RaycastAll(ray, float.PositiveInfinity).ToList();
+        var raycastHitList = Physics.RaycastAll(ray, float.PositiveInfinity).Where(x => !x.collider.isTrigger).ToList();
         var beforeCurrentPos = _currentPosition;
         if (raycastHitList.Any())
         {
@@ -87,7 +87,7 @@ public class StageManager : MonoBehaviour
             raycastHitList.Remove(raycastHitList.Where(x => x.collider.gameObject == _tentativePrefab).FirstOrDefault());
             var hit = raycastHitList.OrderByDescending(x => x.collider.gameObject.transform.position.y).FirstOrDefault();
             _currentPosition = hit.point;
-            Debug.Log($"{hit.collider.gameObject.name}:{hit.collider.gameObject.layer}:{ LayerMask.NameToLayer("Ground")}");
+            //Debug.Log($"{hit.collider.gameObject.name}:{hit.collider.gameObject.layer}:{LayerMask.NameToLayer("Ground")}");
             //_clickPointPrefab.transform.position = _currentPosition;
             //グリッドの計算式
             _currentPosition.y = (int)((_currentPosition.y + hit.normal.y / 2) / 5) * 5 + 2.5f;
@@ -152,6 +152,10 @@ public class StageManager : MonoBehaviour
         {
             return true;
         }
+        else if (subMap[currentX, currentZ] == 2)
+        {
+            return false;
+        }
         subMap[currentX, currentZ] = 1;
         Queue<int> queue = new Queue<int>();
         queue.Enqueue(_startX);
@@ -204,7 +208,7 @@ public class StageManager : MonoBehaviour
         {
             _noWall--;
         }
-        _map[currentX, currentZ] = 1;
+        _map[currentX, currentZ] = 2;
         //生成
         var obj = Instantiate(_setPrefab, _currentPosition, Quaternion.identity);
         obj.transform.SetParent(_wallsParent.transform);

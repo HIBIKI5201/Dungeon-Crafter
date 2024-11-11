@@ -10,7 +10,7 @@ namespace DCFrameWork.Enemy
 {
     public class EnemyGenerator : MonoBehaviour
     {
-        public ObjectPool<GameObject> objectPool;
+        public ObjectPool<IEnemy> objectPool;
 
         [SerializeField]
         List<EnemyGenerateData> _objects = new();
@@ -27,8 +27,6 @@ namespace DCFrameWork.Enemy
         [SerializeField]
         private GameObject _healthBar;
 
-        private readonly Dictionary<GameObject, GameObject> _objectsDict = new();
-
         [SerializeField]
         private int _defaultValue = 1;
         [SerializeField]
@@ -40,54 +38,36 @@ namespace DCFrameWork.Enemy
         private void Start()
         {
             ObjectPooling();
+            StartCoroutine(Generate());
         }
 
-        private void Update()
-        {
-            foreach (var obj in _objectsDict.Keys)
-            {
-                FollowTarget(obj, _objectsDict[obj]);
-            }
-
-        }
-        void ObjectPooling()
+        private void ObjectPooling()
         {
 
-            objectPool = new ObjectPool<GameObject>(
+            objectPool = new ObjectPool<IEnemy>(
             () =>
             {
                 int resultIndex = ChooseNum(_objects.Select(o => o.SpawnChance));
                 var spawnedEnemy = Instantiate(_objects[resultIndex].EnemyPrefab, _spawnPos.position, Quaternion.identity, transform);
                 var healthBar = Instantiate(_healthBar, _canvas.transform);
-                _objectsDict.Add(spawnedEnemy, healthBar);
                 healthBar.transform.SetParent(_canvas.transform);
                 var enemy = spawnedEnemy.GetComponent<IEnemy>();
-                enemy.StartByPool(healthBar.GetComponentInChildren<EnemyHealthBarManager>(), _targetPos.position);
-                return spawnedEnemy;
+                enemy.StartByPool(healthBar.GetComponent<EnemyHealthBarManager>(), _targetPos.position);
+                return enemy;
             },
            target =>
            {
-               target.SetActive(true);
-               _objectsDict[target].SetActive(true);
-               var manager = target.GetComponent<IEnemy>();
-               manager.DeathAction = () => objectPool.Release(target);
-               target.transform.position = _spawnPos.position;
-               manager.Initialize(_targetPos.position);
+               target.Initialize(_spawnPos.position, _targetPos.position, () => objectPool.Release(target));
            },
            target =>
            {
-               target.SetActive(false);
-               _objectsDict[target].SetActive(false);
+               target.DeathBehaviour();
            },
            target =>
            {
-               Destroy(target);
-               Destroy(_objectsDict[target]);
-               _objectsDict.Remove(target);
+               target.Destroy();
            },
            true, _defaultValue, _maxValue);
-
-            StartCoroutine(Generate());
         }
 
         int ChooseNum(IEnumerable<int> chances)
@@ -109,18 +89,10 @@ namespace DCFrameWork.Enemy
 
             }
 
-            return chances.ElementAt(0);
+            return 0;
 
         }
 
-        public void FollowTarget(GameObject target, GameObject hpBar)
-        {
-
-            Vector3 cameraPos = Camera.main.transform.position;
-            Vector3 towards = target.transform.position + new Vector3(target.transform.position.x - cameraPos.x, 0, target.transform.position.z - cameraPos.z).normalized;
-            Vector2 screenPos = Camera.main.WorldToScreenPoint(towards);
-            hpBar.transform.position = screenPos;
-        }
         IEnumerator Generate()
         {
             yield return null;

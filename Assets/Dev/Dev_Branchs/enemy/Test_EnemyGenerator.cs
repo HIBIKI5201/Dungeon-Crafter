@@ -71,9 +71,7 @@ namespace DCFrameWork.Enemy
                target.SetActive(true);
                _objectsDict[target].SetActive(true);
                var manager = target.GetComponent<IEnemy>();
-               manager.DeathAction = () => objectPool.Release(target);
-               target.transform.position = _spawnPos.position;
-               manager.Initialize(_targetPos.position);
+               manager.Initialize(_spawnPos.position, _targetPos.position, () => objectPool.Release(target));
            },
            target =>
            {

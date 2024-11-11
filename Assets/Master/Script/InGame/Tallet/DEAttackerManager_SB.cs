@@ -13,6 +13,8 @@ namespace DCFrameWork.Enemy
             _enemyList = new();
         }
 
+        protected virtual void Start_S() { }
+
         protected virtual List<IFightable> TargetSelect()
         {
             return _enemyList.OrderBy(x => Vector3.Distance(transform.position, x.Obj.transform.position)).Select(x => x.Interface).Take(1).ToList();

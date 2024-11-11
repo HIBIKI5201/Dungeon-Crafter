@@ -6,8 +6,13 @@ public class ShootTurretManager : DEAttackerManager_SB<AttackebleData>
 {
     private float _range;
 
-    float _timer = Time.time;
+    float _timer = 0;
     bool _isPaused = false;
+
+    protected override void Start_S()
+    {
+        _timer = Time.time;
+    }
     protected override void Think() //UpDate ‚Æ“¯‹`
     {
         if (_isPaused)

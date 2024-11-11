@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5538623378778849523}
   - component: {fileID: 3164764395189442060}
   - component: {fileID: 8040340683945688197}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SlowTurret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79,7 +79,7 @@ GameObject:
   - component: {fileID: 5296540141286215595}
   - component: {fileID: 4811650385534102666}
   - component: {fileID: 925518976545101756}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TurretVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}

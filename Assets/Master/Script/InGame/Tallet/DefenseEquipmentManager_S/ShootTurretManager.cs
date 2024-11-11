@@ -6,19 +6,17 @@ public class ShootTurretManager : DEAttackerManager_SB<AttackebleData>
 {
     private float _range;
 
-    float _timer = 0;
+    float _timer = Time.time;
     bool _isPaused = false;
     protected override void Think() //UpDate ‚Æ“¯‹`
     {
-        if (!_isPaused)
+        if (_isPaused)
+            _timer += Time.deltaTime;
+
+        if (Time.time > 1 / _rate + _timer && _enemyList.Count > 0)
         {
-            var attackRate = 1 / base._rate * Time.deltaTime;
-            _timer += attackRate;
-            if (_timer > _rate)
-            {
-                Attack();
-                _timer = 0;
-            }
+            Attack();
+            _timer = Time.time;
         }
     }
     protected override void LoadSpecificData(AttackebleData data)

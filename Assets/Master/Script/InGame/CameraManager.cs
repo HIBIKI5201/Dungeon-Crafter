@@ -6,7 +6,9 @@ public class CameraManager : MonoBehaviour
     private Rigidbody _rigidbody;
 
     [SerializeField]
-    private float _speed = 1;
+    private float _linearSpeed = 1;
+    [SerializeField]
+    private float _angularSpeed = 1;
 
     private void Start()
     {
@@ -14,8 +16,10 @@ public class CameraManager : MonoBehaviour
         _rigidbody.useGravity = false;
     }
 
-    public void CameraMove(Vector2 axis)
+    public void CameraMove(Vector2 direction, float rotate)
     {
-        _rigidbody.linearVelocity = new Vector3(axis.x, 0, axis.y) * _speed;
+        _rigidbody.linearVelocity = Quaternion.AngleAxis(transform.eulerAngles.y, Vector3.up) * new Vector3(direction.x, 0, direction.y) * _linearSpeed;
+        _rigidbody.angularVelocity = Vector3.up * rotate * _angularSpeed;
+        Debug.Log(rotate * _angularSpeed);
     }
 }

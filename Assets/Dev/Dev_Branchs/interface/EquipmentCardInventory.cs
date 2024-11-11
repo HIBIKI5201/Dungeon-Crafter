@@ -67,7 +67,7 @@ namespace DCFrameWork
                 _doorGold = container.Q<Label>("DoorGold");
                 _wallText = container.Q<Label>("WallText");
                 _wallGold = container.Q<Label>("WallGold");
-                _listView = container.Q<ListView>("EquipmentListView");
+                _listView = container.Q<ListView>("EquipmentCardList");
                 _equipment.AddToClassList(_windowClose);
                 _equipmentButton.RegisterCallback<ClickEvent>(x =>
                 {

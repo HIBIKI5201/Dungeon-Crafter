@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -6,7 +7,7 @@ public abstract class UIManager_B : MonoBehaviour
     protected UIDocument _document;
     protected VisualElement _root;
 
-    private void Start()
+    public async Task Initialize()
     {
         _document = GetComponent<UIDocument>();
         if (_document is null)
@@ -16,7 +17,7 @@ public abstract class UIManager_B : MonoBehaviour
         }
         _root = _document?.rootVisualElement;
 
-        LoadDocumentElement(_root);
+        await LoadDocumentElement(_root);
     }
 
     /// <summary>
@@ -24,5 +25,5 @@ public abstract class UIManager_B : MonoBehaviour
     /// StartÇ≈é¿çsÇ≥ÇÍÇÈ
     /// </summary>
     /// <param name="root">DocumentÇÃrootóvëf</param>
-    protected abstract void LoadDocumentElement(VisualElement root);
+    protected abstract Task LoadDocumentElement(VisualElement root);
 }

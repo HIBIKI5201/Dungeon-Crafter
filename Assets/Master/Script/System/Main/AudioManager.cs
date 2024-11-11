@@ -49,7 +49,7 @@ namespace DCFrameWork.MainSystem
                     PlayBGM(GetAudioData(_BGMList, index));
                     break;
                     case SoundKind.Voice:
-                    PlayBGM(GetAudioData(_voiceList, index));
+                    PlayVoiceSound(GetAudioData(_voiceList, index));
                     break;
             }
         }

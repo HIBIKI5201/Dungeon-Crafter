@@ -1,19 +1,18 @@
+using System;
 using UnityEngine;
 
 namespace DCFrameWork
 {
     public class LevelManager : MonoBehaviour
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
-        {
-        
-        }
+        public Action OnLevelChanged;
+        public Action OnExperianceGained;
+        private float _experiancePoint = 0;
+        private float _nextLevelRequireExperiancePoint = 100;
 
-        // Update is called once per frame
-        void Update()
+        public void Initialize()
         {
-        
+            
         }
     }
 }

@@ -5,14 +5,28 @@ namespace DCFrameWork
 {
     public class LevelManager : MonoBehaviour
     {
-        public Action OnLevelChanged;
-        public Action OnExperianceGained;
+        private int _level;
+        public int Level { get => _level; }
+        public Action<int> OnLevelChanged;
+        public Action<float> OnExperianceGained;
         private float _experiancePoint = 0;
         private float _nextLevelRequireExperiancePoint = 100;
 
         public void Initialize()
         {
             
+        }
+
+        public void AddExperiancePoint(float point)
+        {
+            _experiancePoint += point;
+            if (_nextLevelRequireExperiancePoint < _experiancePoint)
+            {
+                _experiancePoint -= _nextLevelRequireExperiancePoint;
+                _level = _level + 1;
+                OnLevelChanged?.Invoke(_level);
+            }
+            OnExperianceGained?.Invoke(_experiancePoint);
         }
     }
 }

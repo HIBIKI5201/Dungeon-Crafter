@@ -1,25 +1,20 @@
 using DCFrameWork;
-using DCFrameWork.DefenseEquipment;
 using DCFrameWork.Enemy;
-using DCFrameWork.MainSystem;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ShootTurretManager : DEAttackerManager_SB<AttackebleData>
 {
     private float _range;
 
-    const float _interval = 1;
     float _timer = 0;
     bool _isPaused = false;
     protected override void Think() //UpDate ‚Æ“¯‹`
     {
         if (!_isPaused)
         {
-            var attackRate = 1 / _rate * Time.deltaTime;
+            var attackRate = 1 / base._rate * Time.deltaTime;
             _timer += attackRate;
-            if (_timer > _interval)
+            if (_timer > _rate)
             {
                 Attack();
                 _timer = 0;
@@ -29,7 +24,7 @@ public class ShootTurretManager : DEAttackerManager_SB<AttackebleData>
     protected override void LoadSpecificData(AttackebleData data)
     {
         _range = data.Range;
-        RangeUp(_range);
+        RangeSet(_range);
     }
     protected override void Attack()
     {
@@ -40,7 +35,7 @@ public class ShootTurretManager : DEAttackerManager_SB<AttackebleData>
         TargetsAddDamage(targetSelect, criticalPoint <= _critical ? _attack * 3 : _attack);
     }
 
-    void RangeUp(float range)
+    void RangeSet(float range)
     {
         var coll = GetComponent<SphereCollider>();
         coll.radius = range;

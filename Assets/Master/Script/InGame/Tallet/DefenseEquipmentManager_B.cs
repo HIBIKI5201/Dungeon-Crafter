@@ -34,6 +34,7 @@ namespace DCFrameWork.DefenseEquipment
         {
             if (_dataBase.DataLevelList.Count < level) return;
             Data data = _dataBase.DataLevelList[level - 1] as Data;
+            if ((data is null).CheckLog($"{gameObject.name}のデータがキャストできません")) return;
 
             _attack = data.Attack;
             _rate = data.Rate;

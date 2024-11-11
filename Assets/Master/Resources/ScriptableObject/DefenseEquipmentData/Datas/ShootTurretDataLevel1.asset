@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72693d83c78b97c468b889e7e5db6cec, type: 3}
   m_Name: ShootTurretDataLevel1
   m_EditorClassIdentifier: 
-  Attack: 10
+  Attack: 2
   Rate: 2
   Critical: 30
-  Range: 2
+  Range: 4

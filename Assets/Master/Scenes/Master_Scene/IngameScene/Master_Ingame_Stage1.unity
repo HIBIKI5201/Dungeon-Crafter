@@ -713,6 +713,7 @@ GameObject:
   m_Component:
   - component: {fileID: 752006870}
   - component: {fileID: 752006869}
+  - component: {fileID: 752006871}
   m_Layer: 0
   m_Name: EnemyGenerator
   m_TagString: Untagged
@@ -757,8 +758,32 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 594767645}
+  - {fileID: 1299293379}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &752006871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752006868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a60d3713b0c1ad46a7109decd8d3e27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _objects:
+  - {fileID: 7990310466857601233, guid: 837ec1f55b14f894e8397ccb545f2850, type: 3}
+  - {fileID: 7990310466857601233, guid: 837ec1f55b14f894e8397ccb545f2850, type: 3}
+  _spawnPos: {fileID: 594767645}
+  _targetPos: {fileID: 1299293379}
+  _canvas: {fileID: 518106097}
+  _healthBar: {fileID: 6218801146707754616, guid: a3d6ce18078983a49a949e9f607d794c,
+    type: 3}
+  _defaultValue: 1
+  _maxValue: 100
+  _spawnInterval: 3
 --- !u!4 &805714164 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2710484828236544335, guid: 022a7869d00083b4586bf6fdf5f0ae30,
@@ -976,7 +1001,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 752006870}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1343595071 stripped
 Transform:
@@ -1430,4 +1455,3 @@ SceneRoots:
   - {fileID: 543450652152966045}
   - {fileID: 752006870}
   - {fileID: 934495271}
-  - {fileID: 1299293379}

@@ -9,7 +9,7 @@ namespace DCFrameWork.DefenseEquipment
         private DefenseEquipmentDataBase _dataBase;
 
         [Range(1, 5f)]
-        protected int Level = 1;
+        protected int _level = 1;
 
         #region 共通ステータス
         protected float _attack;
@@ -21,9 +21,13 @@ namespace DCFrameWork.DefenseEquipment
         {
             if (_dataBase is null)
                 Debug.Log("データがありません");
-            LoadCommonData(Level);
+            _level = 1;
+            LoadCommonData(_level);
             GameBaseSystem.mainSystem?.AddPausableObject(this);
+            Start_SB();
         }
+
+        protected virtual void Start_SB() { }
 
         private void OnDestroy()
         {

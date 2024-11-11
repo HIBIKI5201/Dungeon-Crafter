@@ -8,6 +8,11 @@ namespace DCFrameWork.Enemy
     {
         protected List<(GameObject Obj, IFightable Interface)> _enemyList = new();
 
+        protected override void Start_SB()
+        {
+            _enemyList = new();
+        }
+
         protected virtual List<IFightable> TargetSelect()
         {
             return _enemyList.OrderBy(x => Vector3.Distance(transform.position, x.Obj.transform.position)).Select(x => x.Interface).Take(1).ToList();

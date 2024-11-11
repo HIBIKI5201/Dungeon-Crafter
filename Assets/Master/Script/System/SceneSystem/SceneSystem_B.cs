@@ -1,4 +1,4 @@
-using DCFrameWork.MainSystem;
+using DCFrameWork.UI;
 using UnityEngine;
 
 namespace DCFrameWork.SceneSystem

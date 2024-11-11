@@ -1,59 +1,61 @@
-using DCFrameWork;
 using DCFrameWork.Enemy;
 using UnityEngine;
 
-public class ShootTurretManager : DEAttackerManager_SB<AttackebleData>
+namespace DCFrameWork.DefenseEquipment
 {
-    private float _range;
-
-    float _timer = 0;
-    bool _isPaused = false;
-
-    protected override void Start_S()
+    public class ShootTurretManager : DEAttackerManager_SB<AttackebleData>
     {
-        _timer = Time.time;
-    }
-    protected override void Think() //UpDate ‚Æ“¯‹`
-    {
-        if (_isPaused)
-            _timer += Time.deltaTime;
+        private float _range;
 
-        if (Time.time > 1 / _rate + _timer && _enemyList.Count > 0)
+        float _timer = 0;
+        bool _isPaused = false;
+
+        protected override void Start_S()
         {
-            Attack();
             _timer = Time.time;
         }
-    }
-    protected override void LoadSpecificData(AttackebleData data)
-    {
-        _range = data.Range;
-        RangeSet(_range);
-    }
-    protected override void Attack()
-    {
-        var criticalPoint = Random.Range(0, 100);
-        var targetSelect = TargetSelect();
-        Debug.Log(targetSelect.Count);
-        TargetsAddDamage(targetSelect, criticalPoint <= _critical ? _attack * 3 : _attack);
-    }
+        protected override void Think() //UpDate ‚Æ“¯‹`
+        {
+            if (_isPaused)
+                _timer += Time.deltaTime;
 
-    void RangeSet(float range)
-    {
-        var coll = GetComponent<SphereCollider>();
-        coll.radius = range;
-        var syli = transform.GetChild(0);
-        var size = new Vector3(coll.radius * 2, syli.transform.localScale.y, coll.radius * 2);
-        syli.transform.localScale = size;
+            if (Time.time > 1 / _rate + _timer && _enemyList.Count > 0)
+            {
+                Attack();
+                _timer = Time.time;
+            }
+        }
+        protected override void LoadSpecificData(AttackebleData data)
+        {
+            _range = data.Range;
+            RangeSet(_range);
+        }
+        protected override void Attack()
+        {
+            var criticalPoint = Random.Range(0, 100);
+            var targetSelect = TargetSelect();
+            Debug.Log(targetSelect.Count);
+            TargetsAddDamage(targetSelect, criticalPoint <= _critical ? _attack * 3 : _attack);
+        }
 
-    }
+        void RangeSet(float range)
+        {
+            var coll = GetComponent<SphereCollider>();
+            coll.radius = range;
+            var syli = transform.GetChild(0);
+            var size = new Vector3(coll.radius * 2, syli.transform.localScale.y, coll.radius * 2);
+            syli.transform.localScale = size;
 
-    protected override void Pause()
-    {
-        _isPaused = true;
-    }
+        }
 
-    protected override void Resume()
-    {
-        _isPaused = false;
+        protected override void Pause()
+        {
+            _isPaused = true;
+        }
+
+        protected override void Resume()
+        {
+            _isPaused = false;
+        }
     }
 }

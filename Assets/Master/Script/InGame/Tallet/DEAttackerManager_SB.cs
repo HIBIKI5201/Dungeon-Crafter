@@ -1,8 +1,8 @@
-using DCFrameWork.DefenseEquipment;
+using DCFrameWork.Enemy;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-namespace DCFrameWork.Enemy
+namespace DCFrameWork.DefenseEquipment
 {
     public abstract class DEAttackerManager_SB<Data> : DefenseEquipmentManager_B<Data> where Data : DefenseEquipmentData_B
     {

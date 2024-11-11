@@ -1,36 +1,36 @@
-using DCFrameWork.DefenseEquipment;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class SummonTurretManager : DEEntityManager_SB<DefenseEquipmentData_B>
+namespace DCFrameWork.DefenseEquipment
 {
-    const float _interval = 1;
-    float _timer = 0;
-    bool _isPaused = false;
-    [SerializeField] Transform _summonPosition;
-    protected override void Think() //UpDate ‚Æ“¯‹`
+    public class SummonTurretManager : DEEntityManager_SB<DefenseEquipmentData_B>
     {
-        if (!_isPaused)
+        const float _interval = 1;
+        float _timer = 0;
+        bool _isPaused = false;
+        [SerializeField] Transform _summonPosition;
+        protected override void Think() //UpDate ‚Æ“¯‹`
         {
-            var summonRate = 1 / _rate * Time.deltaTime;
-            _timer += summonRate;
-            if (_timer > _interval)
+            if (!_isPaused)
             {
-                _timer = 0;
-                Summon(_summonPosition.position);
+                var summonRate = 1 / _rate * Time.deltaTime;
+                _timer += summonRate;
+                if (_timer > _interval)
+                {
+                    _timer = 0;
+                    Summon(_summonPosition.position);
+                }
             }
         }
-    }
 
-    protected override void Pause()
-    {
-        _isPaused = true;
-    }
+        protected override void Pause()
+        {
+            _isPaused = true;
+        }
 
-    protected override void Resume()
-    {
-        _isPaused = false;
-    }
+        protected override void Resume()
+        {
+            _isPaused = false;
+        }
 
+    }
 }

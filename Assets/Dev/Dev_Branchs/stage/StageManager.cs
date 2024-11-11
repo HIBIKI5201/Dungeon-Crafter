@@ -108,7 +108,7 @@ public class StageManager : MonoBehaviour
                 _tentativePrefab.SetActive(true);
             }
             //置けるかどうかの判定
-            if (CheckStage(_currentPosition) && _currentPosition != _spawnPos.position && _currentPosition != _targetPos.position && hit.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+            if (CheckStage(_currentPosition) && _currentPosition != _spawnPos.position && _currentPosition != _targetPos.position)
             {
                 _tentativePrefab.GetComponent<MeshRenderer>().material.color = Color.white;
             }

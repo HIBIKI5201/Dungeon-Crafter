@@ -32,11 +32,7 @@ namespace DCFrameWork.Enemy
         private EnemyHealthBarManager _healthBarManager;
 
         private Dictionary<ConditionType, int> _conditionList = new();
-        Dictionary<ConditionType, int> IConditionable.ConditionList
-        {
-            get => _conditionList;
-            set => _conditionList = value;
-        }
+        Dictionary<ConditionType, int> IConditionable.ConditionList { get => _conditionList; set => _conditionList = value; }
         public int CountCondition(ConditionType type) => (_conditionList.TryGetValue(type, out int count)) ? count : 0;
 
         private Action _deathAction;
@@ -135,6 +131,17 @@ namespace DCFrameWork.Enemy
             Destroy(_healthBarManager.gameObject);
         }
 
+        void IConditionable.ChangeCondition(ConditionType type)
+        {
+            switch (type)
+            {
+                case ConditionType.slow:
+                    float newSpeed = _dexterity * (1 - (CountCondition(ConditionType.slow) * 0.5f));
+                    ChangeSpeed(newSpeed);
+                    break;
+            }
+        }
+
         /// <summary>
         /// NavMeshè„ÇÃÉ|ÉWÉVÉáÉìÇ÷à⁄ìÆÇ∑ÇÈ
         /// </summary>
@@ -231,6 +238,7 @@ namespace DCFrameWork.Enemy
         void AddCondition(ConditionType type)
         {
             ConditionList[type] = ConditionList.TryGetValue(type, out var count) ? count + 1 : 1;
+            ChangeCondition(type);
         }
 
         void RemoveCondition(ConditionType type)
@@ -245,7 +253,10 @@ namespace DCFrameWork.Enemy
                 {
                     ConditionList.Remove(type);
                 }
+                ChangeCondition(type);
             }
         }
+
+        void ChangeCondition(ConditionType type);
     }
 }

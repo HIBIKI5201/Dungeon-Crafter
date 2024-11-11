@@ -560,6 +560,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 934495271}
     m_Modifications:
+    - target: {fileID: 465244125926194461, guid: 022a7869d00083b4586bf6fdf5f0ae30,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2710484828236544335, guid: 022a7869d00083b4586bf6fdf5f0ae30,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -610,10 +615,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4624475791337522764, guid: 022a7869d00083b4586bf6fdf5f0ae30,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9031967255871615067, guid: 022a7869d00083b4586bf6fdf5f0ae30,
         type: 3}
       propertyPath: m_Name
       value: ShootTurret
+      objectReference: {fileID: 0}
+    - target: {fileID: 9031967255871615067, guid: 022a7869d00083b4586bf6fdf5f0ae30,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -36,6 +36,8 @@ namespace DCFrameWork.DefenseEquipment
 
         private void LoadCommonData(int level)
         {
+            if ((_dataBase is null).CheckLog($"{gameObject.name}にデータがありません")) return;
+
             if (_dataBase.DataLevelList.Count < level) return;
             Data data = _dataBase.DataLevelList[level - 1] as Data;
             if ((data is null).CheckLog($"{gameObject.name}のデータがキャストできません")) return;

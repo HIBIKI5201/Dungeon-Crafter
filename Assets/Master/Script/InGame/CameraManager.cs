@@ -20,6 +20,5 @@ public class CameraManager : MonoBehaviour
     {
         _rigidbody.linearVelocity = Quaternion.AngleAxis(transform.eulerAngles.y, Vector3.up) * new Vector3(direction.x, 0, direction.y) * _linearSpeed;
         _rigidbody.angularVelocity = Vector3.up * rotate * _angularSpeed;
-        Debug.Log(rotate * _angularSpeed);
     }
 }

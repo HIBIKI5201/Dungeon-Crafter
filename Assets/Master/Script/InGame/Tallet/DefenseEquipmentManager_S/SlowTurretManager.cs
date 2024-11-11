@@ -1,7 +1,5 @@
 using DCFrameWork.DefenseEquipment;
 using DCFrameWork.Enemy;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SlowTurretManager : DEWalkerableManager_SB<DefenseEquipmentData_B>

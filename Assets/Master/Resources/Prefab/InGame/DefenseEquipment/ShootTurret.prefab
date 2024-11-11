@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7301324929607650774}
   - component: {fileID: 4565232491109846214}
   - component: {fileID: 3180881718653563454}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RangeObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 776908792253764087}
   - component: {fileID: 7005922117509253869}
   - component: {fileID: 6278087115978438176}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ShootTurret
   m_TagString: Untagged
   m_Icon: {fileID: 0}

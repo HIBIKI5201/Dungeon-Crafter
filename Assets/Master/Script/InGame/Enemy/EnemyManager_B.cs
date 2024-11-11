@@ -50,7 +50,6 @@ namespace DCFrameWork.Enemy
                 Debug.Log("ÉfÅ[É^Ç™Ç†ÇËÇ‹ÇπÇÒ");
             LoadCommonData();
             _agent = GetComponent<NavMeshAgent>();
-            GoToTargetPos(targetPos);
             GameBaseSystem.mainSystem?.AddPausableObject(this);
             HealthBarUpdate();
             Start_S();

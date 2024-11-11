@@ -15,7 +15,7 @@ MonoBehaviour:
   MaxHealth: 15
   CurrentHealth: 10
   Defense: 0
-  Dexterity: 0
+  Dexterity: 3
   SpecialChance: 0
   Plunder: 0
   DropEXP: 0

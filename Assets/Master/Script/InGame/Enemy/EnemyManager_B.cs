@@ -11,19 +11,14 @@ namespace DCFrameWork.Enemy
     public abstract class EnemyManager_B<Data> : MonoBehaviour, IEnemy, IPausable where Data : EnemyData_B
     {
         [SerializeField]
-        EnemyData_B _data;
+        private EnemyData_B _data;
+        protected EnemyData_B EnemyData { get => _data; }
 
         #region 共通ステータス
         private float _maxHealth;
         float IFightable.MaxHealth { get => _maxHealth; set => _maxHealth = value; }
         private float _currentHealth;
         float IFightable.CurrentHealth { get => _currentHealth; set { _currentHealth = value; HealthBarUpdate(); } }
-        protected float _defense;
-        protected float _dexterity;
-        protected float _specialChance;
-        protected float _plunder;
-        protected float _dropEXP;
-        protected float _dropGold;
         #endregion
 
         [SerializeField]
@@ -75,7 +70,7 @@ namespace DCFrameWork.Enemy
         /// </summary>
         private void Initialize(Vector3 targetPos)
         {
-            _agent.speed = _dexterity;
+            _agent.speed = EnemyData.Dexterity;
             _currentHealth = _maxHealth;
             HealthBarUpdate();
             GoToTargetPos(targetPos);
@@ -92,12 +87,6 @@ namespace DCFrameWork.Enemy
             Data data = _data as Data;
             _maxHealth = data.MaxHealth;
             _currentHealth = data.CurrentHealth;
-            _defense = data.Defense;
-            _dexterity = data.Dexterity;
-            _specialChance = data.SpecialChance;
-            _plunder = data.Plunder;
-            _dropEXP = data.DropEXP;
-            _dropGold = data.DropGold;
 
             LoadSpecificnData(data);
         }

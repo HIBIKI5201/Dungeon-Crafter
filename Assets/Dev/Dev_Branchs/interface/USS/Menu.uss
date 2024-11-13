@@ -1,0 +1,67 @@
+.stage-select-button {
+    width: 32%;
+    height: 10%;
+    -unity-text-align: middle-center;
+    -unity-font-style: bold;
+    font-size: 43px;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out-cubic;
+}
+
+.stage-select-button:hover {
+    scale: 1.05 1.05;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out-cubic;
+}
+
+.stage-select-button:active {
+    scale: 0.95 0.95;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out-cubic;
+}
+
+.defence-equipment-button {
+    width: 32%;
+    height: 10%;
+    -unity-font-style: bold;
+    font-size: 41px;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out-cubic;
+}
+
+.defence-equipment-button:hover {
+    scale: 1.05 1.05;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out-cubic;
+}
+
+.defence-equipment-button:active {
+    scale: 0.95 0.95;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out-cubic;
+}
+
+.title-button {
+    width: 32%;
+    height: 10%;
+    -unity-font-style: bold;
+    font-size: 38px;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out-cubic;
+}
+
+.title-button:hover {
+    scale: 1.05 1.05;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out-cubic;
+}
+
+.title-button:active {
+    scale: 0.95 0.95;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out-cubic;
+}
+
+.font-style {
+    -unity-font-definition: url("project://database/Library/unity%20default%20resources?fileID=10102&guid=0000000000000000e000000000000000&type=0#LegacyRuntime");
+}

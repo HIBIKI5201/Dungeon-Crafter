@@ -1,0 +1,20 @@
+.return-button {
+    width: 31%;
+    height: 18%;
+    font-size: 67px;
+    -unity-font-style: bold;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out-cubic;
+}
+
+.return-button:hover {
+    scale: 1.05 1.05;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out-cubic;
+}
+
+.return-button:active {
+    scale: 0.95 0.95;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out-cubic;
+}

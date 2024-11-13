@@ -14,9 +14,13 @@ namespace DCFrameWork
         
         //const
         private const string _windowClose = "equipment-inventory_close";
-        
-        //private
         private const string _windowOpen = "equipment-inventory_open";
+        private const string _equipmentingButtonElementNotActive = "equipmenting-button-element-not-active";
+        private const string _equipmentingButtonElementActive = "equipmenting-button-element-active";
+        private const string _equipmentTextBoxNotActive = "equipment-text-box-not-active";
+        private const string _equipmentTextBoxActive = "equipment-text-box-active";
+
+        //private
         private VisualElement _equipment;
         private VisualElement _equipmentButton;
         private VisualElement _backGround;
@@ -24,6 +28,9 @@ namespace DCFrameWork
         private VisualElement _wallButton;
         private VisualElement _doorIcon;
         private VisualElement _wallIcon;
+        private VisualElement _equipmentingButtonElement;
+        private VisualElement _cancel;
+        private VisualElement _anotherEquipment;
         private Label _doorText;
         private Label _doorGold;
         private Label _wallGold;
@@ -60,7 +67,7 @@ namespace DCFrameWork
                 _doorGold = container.Q<Label>("DoorGold");
                 _wallText = container.Q<Label>("WallText");
                 _wallGold = container.Q<Label>("WallGold");
-                _listView = container.Q<ListView>("EquipmentListView");
+                _listView = container.Q<ListView>("EquipmentCardList");
                 _equipment.AddToClassList(_windowClose);
                 _equipmentButton.RegisterCallback<ClickEvent>(x =>
                 {
@@ -82,6 +89,14 @@ namespace DCFrameWork
             }
 
             Addressables.Release(handle);
+        }
+        void Equipmenting()
+        {
+
+        }
+        void UnEquipmenting()
+        {
+
         }
     }
 }

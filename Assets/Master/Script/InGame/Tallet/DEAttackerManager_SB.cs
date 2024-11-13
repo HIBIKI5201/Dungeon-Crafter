@@ -1,41 +1,51 @@
-using DCFrameWork.DefenseEquipment;
 using DCFrameWork.Enemy;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
-public abstract class DEAttackerManager_SB<Data> : DefenseEquipmentManager_B<Data> where Data : DefenseEquipmentData_B
+namespace DCFrameWork.DefenseEquipment
 {
-    protected List<GameObject> _enemyList = new();
-
-    protected virtual List<GameObject> TargetSelect()
+    public abstract class DEAttackerManager_SB<Data> : DefenseEquipmentManager_B<Data> where Data : DefenseEquipmentData_B
     {
-        return _enemyList.OrderBy(x => Vector3.Distance(transform.position, x.transform.position)).Take(1).ToList();
-    }
+        protected List<(GameObject Obj, IFightable Interface)> _enemyList = new();
 
-
-    protected abstract void Attack();
-
-    protected void TargetsAddDamage(List<GameObject> enemies, float damage)
-    {
-        foreach (var enemy in enemies)
+        protected override void Start_SB()
         {
-            if (enemy.TryGetComponent(out IFightable component))
-                component.HitDamage(damage);
+            _enemyList = new();
         }
-    }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log(other.gameObject.name);
-        if (other.TryGetComponent<IFightable>(out _))
+        protected virtual void Start_S() { }
+
+        protected virtual List<IFightable> TargetSelect()
         {
-            _enemyList.Add(other.gameObject);
+            return _enemyList.OrderBy(x => Vector3.Distance(transform.position, x.Obj.transform.position)).Select(x => x.Interface).Take(1).ToList();
         }
-    }
 
-    private void OnTriggerExit(Collider other)
-    {
-        _enemyList.Remove(other.gameObject);
+
+        protected abstract void Attack();
+
+        protected void TargetsAddDamage(List<IFightable> enemies, float damage)
+        {
+            foreach (var enemy in enemies)
+            {
+                if (!enemy.HitDamage(damage))
+                {
+                    _enemyList.Remove(_enemyList.Where(e => e.Interface == enemy).FirstOrDefault());
+                }
+            }
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.TryGetComponent<IFightable>(out var component))
+            {
+                _enemyList.Add((other.gameObject, component));
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            var result = _enemyList.Find(e => e.Obj == other.gameObject);
+            _enemyList.Remove(result);
+        }
     }
 }

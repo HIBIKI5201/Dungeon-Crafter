@@ -9,12 +9,11 @@ namespace DCFrameWork.DefenseEquipment
         private DefenseEquipmentDataBase _dataBase;
 
         [Range(1, 5f)]
-        protected int Level = 1;
+        protected int _level = 1;
 
         #region 共通ステータス
         protected float _attack;
         protected float _rate;
-        protected float _range;
         protected float _critical;
         #endregion
 
@@ -22,9 +21,13 @@ namespace DCFrameWork.DefenseEquipment
         {
             if (_dataBase is null)
                 Debug.Log("データがありません");
-            LoadCommonData(Level);
+            _level = 1;
+            LoadCommonData(_level);
             GameBaseSystem.mainSystem?.AddPausableObject(this);
+            Start_SB();
         }
+
+        protected virtual void Start_SB() { }
 
         private void OnDestroy()
         {
@@ -33,12 +36,14 @@ namespace DCFrameWork.DefenseEquipment
 
         private void LoadCommonData(int level)
         {
+            if ((_dataBase is null).CheckLog($"{gameObject.name}にデータがありません")) return;
+
             if (_dataBase.DataLevelList.Count < level) return;
             Data data = _dataBase.DataLevelList[level - 1] as Data;
+            if ((data is null).CheckLog($"{gameObject.name}のデータがキャストできません")) return;
 
             _attack = data.Attack;
             _rate = data.Rate;
-            _range = data.Range;
             _critical = data.Critical;
 
             LoadSpecificData(data);

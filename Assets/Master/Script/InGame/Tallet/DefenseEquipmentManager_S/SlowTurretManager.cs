@@ -1,52 +1,50 @@
-using DCFrameWork.DefenseEquipment;
 using DCFrameWork.Enemy;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class SlowTurretManager : DEWalkerableManager_SB<DefenseEquipmentData_B>
+namespace DCFrameWork.DefenseEquipment
 {
-    bool _isPaused = false;
-    protected override void Think() //UpDate ‚Æ“¯‹`
+    public class SlowTurretManager : DEWalkerableManager_SB<DefenseEquipmentData_B>
     {
-
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (!_isPaused)
+        bool _isPaused = false;
+        protected override void Think() //UpDate ‚Æ“¯‹`
         {
-            if (other.TryGetComponent(out IConditionable component))
+
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (!_isPaused)
             {
-                TargetAddCondition(component, ConditionType.slow);
+                if (other.TryGetComponent(out IConditionable component))
+                {
+                    TargetAddCondition(component, ConditionType.slow);
+                }
             }
         }
-    }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (!_isPaused)
+        private void OnTriggerExit(Collider other)
         {
-            if (other.TryGetComponent(out IConditionable component))
+            if (!_isPaused)
             {
-                TargetRemoveCondition(component, ConditionType.slow);
+                if (other.TryGetComponent(out IConditionable component))
+                {
+                    TargetRemoveCondition(component, ConditionType.slow);
+                }
             }
         }
-    }
-    protected override void LoadSpecificData(DefenseEquipmentData_B data)
-    {
-        var coll = GetComponent<SphereCollider>();
-        coll.radius = _range;
-    }
+        protected override void LoadSpecificData(DefenseEquipmentData_B data)
+        {
 
-    protected override void Pause()
-    {
-        _isPaused = true;
-    }
+        }
+        protected override void Pause()
+        {
+            _isPaused = true;
+        }
 
-    protected override void Resume()
-    {
-        _isPaused = false;
-    }
+        protected override void Resume()
+        {
+            _isPaused = false;
+        }
 
+    }
 }

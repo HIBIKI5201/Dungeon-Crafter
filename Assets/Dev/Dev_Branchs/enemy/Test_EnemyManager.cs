@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using DCFrameWork.Enemy;
 public class Test_EnemyManager : MonoBehaviour
 {
     private float maxHealth = 300;

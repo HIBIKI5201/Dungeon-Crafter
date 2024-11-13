@@ -1,19 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Pool;
-using System.Linq;
-using DCFrameWork.MainSystem;
 
 
 namespace DCFrameWork.Enemy
 {
     public class Test_EnemyGenerator : MonoBehaviour
     {
-        public ObjectPool<GameObject> objectPool;
+        private ObjectPool<GameObject> objectPool;
 
         [SerializeField]
-        List<GameObject> _objects;
+        private List<GameObject> _objects;
 
         [SerializeField]
         private Transform _spawnPos;
@@ -27,19 +26,19 @@ namespace DCFrameWork.Enemy
         [SerializeField]
         private GameObject _healthBar;
 
-        public Dictionary<GameObject,GameObject> _objectsDict = new() ;
+        private readonly Dictionary<GameObject, GameObject> _objectsDict = new();
 
         [SerializeField]
-        public int _defaultValue = 1;
+        private int _defaultValue = 1;
         [SerializeField]
-        public int _maxValue = 100 ;
+        private int _maxValue = 100;
 
         [SerializeField]
-        public float _spawnInterval = 3f;
+        private float _spawnInterval = 3f;
 
         private void Start()
         {
-            ObjectPooling();        
+            ObjectPooling();
         }
 
         private void Update()
@@ -48,11 +47,11 @@ namespace DCFrameWork.Enemy
             {
                 FollowTarget(obj, _objectsDict[obj]);
             }
-        
+
         }
         void ObjectPooling()
         {
-            
+
             objectPool = new ObjectPool<GameObject>(() =>
             {
                 float[] items = new float[_objects.Count];
@@ -64,7 +63,7 @@ namespace DCFrameWork.Enemy
                 _objectsDict.Add(spawnedEnemy, healthBar);
                 healthBar.transform.SetParent(_canvas.transform);
                 var enemy = spawnedEnemy.GetComponent<IEnemy>();
-                enemy.StartByPool(healthBar.GetComponentInChildren<EnemyHealthBarManager>(),_targetPos.position);
+                enemy.StartByPool(healthBar.GetComponentInChildren<EnemyHealthBarManager>(), _targetPos.position);
                 return spawnedEnemy;
             },
            target =>
@@ -72,9 +71,7 @@ namespace DCFrameWork.Enemy
                target.SetActive(true);
                _objectsDict[target].SetActive(true);
                var manager = target.GetComponent<IEnemy>();
-               manager.DeathAction = () => objectPool.Release(target);
-               target.transform.position = _spawnPos.position;
-               manager.Initialize(_targetPos.position);
+               manager.Initialize(_spawnPos.position, _targetPos.position, () => objectPool.Release(target));
            },
            target =>
            {
@@ -115,18 +112,18 @@ namespace DCFrameWork.Enemy
 
         }
 
-        public void FollowTarget(GameObject target ,GameObject hpBar)
+        public void FollowTarget(GameObject target, GameObject hpBar)
         {
-            
+
             Vector3 cameraPos = Camera.main.transform.position;
-            Vector3 towards = target.transform.position + new Vector3(target.transform.position.x - cameraPos.x, 0, target.transform.position.z - cameraPos.z).normalized ;
+            Vector3 towards = target.transform.position + new Vector3(target.transform.position.x - cameraPos.x, 0, target.transform.position.z - cameraPos.z).normalized;
             Vector2 screenPos = Camera.main.WorldToScreenPoint(towards);
             hpBar.transform.position = screenPos;
         }
         IEnumerator Generate()
         {
             yield return null;
-            while (true)    
+            while (true)
             {
                 objectPool.Get();
                 yield return new WaitForSeconds(_spawnInterval);

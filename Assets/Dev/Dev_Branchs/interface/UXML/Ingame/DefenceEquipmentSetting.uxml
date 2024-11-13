@@ -9,7 +9,7 @@
             <engine:Label text="Label" name="FastText" style="font-size: 30%; -unity-font-style: bold;" />
             <engine:Label text="Label" name="RangeText" style="font-size: 30%; -unity-font-style: bold;" />
         </engine:VisualElement>
-        <engine:Button text="強化" name="PowerUpButton" enabled="true" class="power-up-button" />
+        <engine:Button text="強化" name="PowerUpButton" enabled="true" selectable="false" focusable="true" class="power-up-button" style="font-size: 25%;" />
         <engine:Button text="撤去" name="RemovalButton" class="removal-button" />
     </engine:VisualElement>
 </engine:UXML>

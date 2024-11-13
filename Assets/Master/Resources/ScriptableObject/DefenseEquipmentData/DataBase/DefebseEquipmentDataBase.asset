@@ -17,3 +17,4 @@ MonoBehaviour:
   DropChance: 0
   DataLevelList:
   - {fileID: 11400000, guid: 9dac64c79e2548b43a20878ffd3629bf, type: 2}
+  - {fileID: 11400000, guid: 579fab6872cd07549b88003421e19c65, type: 2}

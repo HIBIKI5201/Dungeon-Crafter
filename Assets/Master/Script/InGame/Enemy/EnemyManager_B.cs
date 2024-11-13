@@ -95,7 +95,6 @@ namespace DCFrameWork.Enemy
             Data data = _data as Data;
             _enemyData = data;
             _maxHealth = data.MaxHealth;
-            _currentHealth = data.CurrentHealth;
 
             LoadSpecificnData(data);
         }

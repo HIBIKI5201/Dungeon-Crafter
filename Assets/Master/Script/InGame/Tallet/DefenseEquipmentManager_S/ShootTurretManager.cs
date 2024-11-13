@@ -19,7 +19,7 @@ namespace DCFrameWork.DefenseEquipment
             if (_isPaused)
                 _timer += Time.deltaTime;
 
-            if (Time.time > 1 / _rate + _timer && _enemyList.Count > 0)
+            if (Time.time > 1 / DefenseEquipmentData.Rate + _timer && _enemyList.Count > 0)
             {
                 Attack();
                 _timer = Time.time;
@@ -35,7 +35,7 @@ namespace DCFrameWork.DefenseEquipment
             var criticalPoint = Random.Range(0, 100);
             var targetSelect = TargetSelect();
             Debug.Log(targetSelect.Count);
-            TargetsAddDamage(targetSelect, criticalPoint <= _critical ? _attack * 3 : _attack);
+            TargetsAddDamage(targetSelect, criticalPoint <= DefenseEquipmentData.Critical ? DefenseEquipmentData.Attack * 3 : DefenseEquipmentData.Attack);
         }
 
         void RangeSet(float range)

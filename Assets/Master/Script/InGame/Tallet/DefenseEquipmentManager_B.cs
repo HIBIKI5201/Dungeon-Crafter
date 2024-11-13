@@ -8,14 +8,11 @@ namespace DCFrameWork.DefenseEquipment
         [SerializeField]
         private DefenseEquipmentDataBase _dataBase;
 
+        private Data _defenseEquipmentData;
+        protected Data DefenseEquipmentData { get => _defenseEquipmentData; }
+
         [Range(1, 5f)]
         protected int _level = 1;
-
-        #region 共通ステータス
-        protected float _attack;
-        protected float _rate;
-        protected float _critical;
-        #endregion
 
         private void Start()
         {
@@ -41,16 +38,13 @@ namespace DCFrameWork.DefenseEquipment
             if (_dataBase.DataLevelList.Count < level) return;
             Data data = _dataBase.DataLevelList[level - 1] as Data;
             if ((data is null).CheckLog($"{gameObject.name}のデータがキャストできません")) return;
-
-            _attack = data.Attack;
-            _rate = data.Rate;
-            _critical = data.Critical;
+            _defenseEquipmentData = data;
 
             LoadSpecificData(data);
         }
 
         /// <summary>
-        /// 設定した型パラメータに対応した専用変数を代入してください
+        /// 設定した型パラメータに対応した処理を行ってください
         /// </summary>
         /// <param name="data">レベルに応じた設備データ</param>
         protected virtual void LoadSpecificData(Data data) { }

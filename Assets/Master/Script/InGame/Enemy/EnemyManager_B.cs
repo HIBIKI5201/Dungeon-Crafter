@@ -11,20 +11,14 @@ namespace DCFrameWork.Enemy
     public abstract class EnemyManager_B<Data> : MonoBehaviour, IEnemy, IPausable where Data : EnemyData_B
     {
         [SerializeField]
-        EnemyData_B _data;
+        private EnemyData_B _data;
+        private Data _enemyData;
+        protected Data EnemyData { get => _enemyData; }
 
-        #region 共通ステータス
         private float _maxHealth;
         float IFightable.MaxHealth { get => _maxHealth; set => _maxHealth = value; }
         private float _currentHealth;
         float IFightable.CurrentHealth { get => _currentHealth; set { _currentHealth = value; HealthBarUpdate(); } }
-        protected float _defense;
-        protected float _dexterity;
-        protected float _specialChance;
-        protected float _plunder;
-        protected float _dropEXP;
-        protected float _dropGold;
-        #endregion
 
         [SerializeField]
         protected float _levelRequirePoint;
@@ -79,7 +73,7 @@ namespace DCFrameWork.Enemy
         private void Initialize(Vector3 spawnPos, Vector3 targetPos, Action deathAction)
         {
             _currentHealth = _maxHealth;
-            ChangeSpeed(_dexterity);
+            ChangeSpeed(EnemyData.Dexterity);
             _deathAction = deathAction;
             HealthBarUpdate();
 
@@ -99,14 +93,9 @@ namespace DCFrameWork.Enemy
         private void LoadCommonData()
         {
             Data data = _data as Data;
+            _enemyData = data;
             _maxHealth = data.MaxHealth;
             _currentHealth = data.CurrentHealth;
-            _defense = data.Defense;
-            _dexterity = data.Dexterity;
-            _specialChance = data.SpecialChance;
-            _plunder = data.Plunder;
-            _dropEXP = data.DropEXP;
-            _dropGold = data.DropGold;
 
             LoadSpecificnData(data);
         }
@@ -136,7 +125,7 @@ namespace DCFrameWork.Enemy
             switch (type)
             {
                 case ConditionType.slow:
-                    float newSpeed = _dexterity * (1 - (CountCondition(ConditionType.slow) * 0.5f));
+                    float newSpeed = EnemyData.Dexterity * (1 - (CountCondition(ConditionType.slow) * 0.5f));
                     ChangeSpeed(newSpeed);
                     break;
             }

@@ -1,12 +1,12 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Dev/Dev_Branchs/interface/USS/EquipmentCard.uss?fileID=7433441132597879392&amp;guid=e80394ff55ac7584aa48f6c389e13a9f&amp;type=3#EquipmentCard" />
-    <engine:VisualElement name="EquipmentCard" class="equipment-card">
+    <engine:VisualElement name="EquipmentCard" data-source="project://database/Assets/Dev/Dev_Branchs/interface/Test2.asset?fileID=11400000&amp;guid=f411c664c91e9f345a47a8e9ac30c38b&amp;type=2#Test2" class="equipment-card">
         <engine:VisualElement name="Icon" style="width: 60%; height: 53%; align-self: center; background-color: rgb(58, 58, 58); justify-content: space-around; align-items: center; align-content: center; position: relative; top: 0;">
             <Bindings>
                 <engine:DataBinding property="style.backgroundImage" data-source-path="EquipmentIcon" binding-mode="ToTarget" />
             </Bindings>
         </engine:VisualElement>
-        <engine:Label text="Label" name="EquipmentName" style="-unity-text-align: middle-center; font-size: 30%; -unity-font-style: bold; width: auto; text-overflow: ellipsis;">
+        <engine:Label text="Label" name="EquipmentName" enable-rich-text="false" tabindex="-3" style="-unity-text-align: middle-center; font-size: 30%; -unity-font-style: bold; width: auto; text-overflow: ellipsis;">
             <Bindings>
                 <engine:DataBinding property="text" data-source-path="EquipmentName" binding-mode="ToTarget" />
             </Bindings>

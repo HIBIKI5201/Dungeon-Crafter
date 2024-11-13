@@ -1,6 +1,4 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <engine:Template name="TitleWindow" src="project://database/Assets/Dev/Dev_Branchs/interface/UXML/TitleWindow.uxml?fileID=9197481963319205126&amp;guid=90db83c2fb9a45f4ebf1cae127fafa00&amp;type=3#TitleWindow" />
-    <engine:VisualElement name="MasterElement" style="flex-grow: 1; width: auto; flex-direction: column; justify-content: flex-end; align-items: auto; flex-basis: auto; align-content: auto; align-self: center; position: absolute;">
-        <engine:Instance template="TitleWindow" enabled="true" name="TitleWindow" />
-    </engine:VisualElement>
+    <engine:Template name="TitleWindow" src="project://database/Assets/Dev/Dev_Branchs/interface/UXML/OutGame/TitleWindow.uxml?fileID=9197481963319205126&amp;guid=90db83c2fb9a45f4ebf1cae127fafa00&amp;type=3#TitleWindow" />
+    <engine:Instance template="TitleWindow" name="title-window" style="position: absolute; width: 100%; height: 100%;" />
 </engine:UXML>

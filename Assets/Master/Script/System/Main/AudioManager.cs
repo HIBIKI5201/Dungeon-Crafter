@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 namespace DCFrameWork.MainSystem
 {
     public class AudioManager : MonoBehaviour
@@ -9,20 +10,29 @@ namespace DCFrameWork.MainSystem
         private AudioSource _soundEffectSource;
         [SerializeField]
         private AudioSource _BGMSource;
+        [SerializeField]
+        private AudioSource _voiceSource;
+
+        [Space]
 
         [SerializeField]
-        List<AudioData> _inGameSoundEffectList = new();
+        private AudioMixer _mixer;
+
+        [Space]
+
         [SerializeField]
-        List<AudioData> _outGameSoundEffectList = new();
+        private AudioDataBase _inGameSoundEffectData;
         [SerializeField]
-        List<AudioData> _BGMList = new();
+        private AudioDataBase _outGameSoundEffectData;
+        [SerializeField]
+        private AudioDataBase _BGMData;
+        [SerializeField]
+        private AudioDataBase _voiceData;
 
         private void Start()
         {
-            if (_soundEffectSource is null)
-                Debug.LogWarning($"{gameObject.name}のAudioManagerにSoundEffectSourceがアサインされていません");
-            if (_BGMSource is null)
-                Debug.LogWarning($"{gameObject.name}のAudioManagerにBGMSourceがアサインされていません");
+            (_soundEffectSource is null).CheckLog($"{gameObject.name}のAudioManagerにSoundEffectSourceがアサインされていません");
+            (_BGMSource is null).CheckLog($"{gameObject.name}のAudioManagerにBGMSourceがアサインされていません");
         }
 
         public void PlaySound(int index, SoundKind Kind)
@@ -30,32 +40,48 @@ namespace DCFrameWork.MainSystem
             switch (Kind)
             {
                 case SoundKind.InGame:
-                    PlayInGameSoundEffect(index);
+                    PlaySoundEffect(GetAudioData(_inGameSoundEffectData.audioDatas, index));
                     break;
                 case SoundKind.OutGame:
-                    PlayOutGameSoundEffect(index);
+                    PlaySoundEffect(GetAudioData(_outGameSoundEffectData.audioDatas, index));
                     break;
                 case SoundKind.BGM:
-                    PlayBGM(index);
+                    PlayBGM(GetAudioData(_BGMData.audioDatas, index));
+                    break;
+                    case SoundKind.Voice:
+                    PlayVoiceSound(GetAudioData(_voiceData.audioDatas, index));
                     break;
             }
         }
 
-        private void PlayBGM(int index)
+        private AudioData? GetAudioData(List<AudioData> list, int index)
         {
-            AudioData? data = _BGMList[index];
-            if (_BGMSource is null || data is not null) return;
+            if (list.Count < index) return null;
+            return list[index];
+        }
+
+        private void PlayBGM(AudioData? data)
+        {            
+            if ((_BGMSource is null || data.Value.AudioClip is null).CheckLog("BGMの再生で問題が発生しました")) return;
             _BGMSource.Stop();
             _BGMSource.volume = data.Value.AudioVolume;
             _BGMSource.clip = data.Value.AudioClip;
             _BGMSource.Play();
         }
 
-        private void PlayInGameSoundEffect(int index) =>
-            _soundEffectSource?.PlayOneShot(_inGameSoundEffectList[index].AudioClip);
+        private void PlaySoundEffect(AudioData? data)
+        {
+            if ((_soundEffectSource is null || data.Value.AudioClip is null).CheckLog("SEの再生で問題が発生しました")) return;
+            _soundEffectSource.volume = data.Value.AudioVolume;
+            _soundEffectSource.PlayOneShot(data.Value.AudioClip);
+        }
 
-        private void PlayOutGameSoundEffect(int index) =>
-            _soundEffectSource?.PlayOneShot(_outGameSoundEffectList[index].AudioClip);
+        private void PlayVoiceSound(AudioData? data)
+        {
+            if ((_voiceSource is null || data.Value.AudioClip is null).CheckLog("Voiceの再生で問題が発生しました")) return;
+            _voiceSource.volume = data.Value.AudioVolume;
+            _voiceSource?.PlayOneShot(data.Value.AudioClip);
+        }
     }
 
     public enum SoundKind
@@ -63,6 +89,7 @@ namespace DCFrameWork.MainSystem
         InGame,
         OutGame,
         BGM,
+        Voice,
     }
 
     [Serializable]
@@ -71,5 +98,11 @@ namespace DCFrameWork.MainSystem
         public AudioClip AudioClip;
         [Range(0, 1)]
         public float AudioVolume;
+    }
+
+    [CreateAssetMenu(fileName = "AudioDataBase", menuName = "GameData/AudioDataBase")]
+    public class AudioDataBase : ScriptableObject
+    {
+        public List<AudioData> audioDatas = new();
     }
 }

@@ -6,7 +6,7 @@ namespace DCFrameWork.SceneSystem
     {
         CameraManager _cameraManager;
 
-        protected override void Init_S()
+        protected override void Initialize_S()
         {
             _cameraManager = FindAnyObjectByType<CameraManager>();
             (_cameraManager is null).CheckLog("カメラマネージャーが見つかりません");
@@ -14,7 +14,7 @@ namespace DCFrameWork.SceneSystem
 
         protected override void Think(InputContext input)
         {
-            _cameraManager?.CameraMove(input.MoveInput);
+            _cameraManager?.CameraMove(input.MoveInput, input.RotateInput);
         }
     }
 }

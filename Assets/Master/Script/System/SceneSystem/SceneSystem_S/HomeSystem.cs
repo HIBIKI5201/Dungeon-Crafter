@@ -4,20 +4,20 @@ namespace DCFrameWork.SceneSystem
     {
 
 
-        protected override void Init_S()
+        protected override void Initialize_S()
         {
         }
 
         protected override void Think(InputContext input)
         {
         }
+    }
 
-        private enum WindowKind
-        {
-            Title,
-            Story,
-            MainManu,
-            StageSelect,
-        }
+    public enum HomeWindowState
+    {
+        Title,
+        Story,
+        MainMenu,
+        StageSelect,
     }
 }

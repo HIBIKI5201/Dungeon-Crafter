@@ -1,28 +1,26 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnemyHealthBarManager : MonoBehaviour
+
+namespace DCFrameWork.Enemy
 {
-    RectTransform _rectTransform;
-    [SerializeField]
-    Image _image;
-
-    [SerializeField]
-    CapsuleCollider _targetCollider;
-
-    [SerializeField] int _radius = 1 ;
-    private void Start()
+    public class EnemyHealthBarManager : MonoBehaviour
     {
-        _rectTransform = GetComponent<RectTransform>();
-    }
+        private Image _image;
+        public void Initialize()
+        {
+            _image = transform.GetChild(0).GetComponent<Image>();
+        }
 
-    public void FollowTarget(Vector3 target)
-    {
-        Vector3 cameraPos = Camera.main.transform.position;
-        Vector3 towards = target  + new Vector3(target.x - cameraPos.x, 0 , target.z - cameraPos.z).normalized   * _radius;
-        Vector2 screenPos = Camera.main.WorldToScreenPoint(towards);
-        transform.position = screenPos;
-    }
+        public void BarFillUpdate(float value) => _image.fillAmount = value;
 
-    public void BarFillUpdate(float value) => _image.fillAmount = value;
+        public void FollowTarget(Transform target)
+        {
+
+            Vector3 cameraPos = Camera.main.transform.position;
+            Vector3 towards = target.position + new Vector3(target.position.x - cameraPos.x, 0, target.position.z - cameraPos.z).normalized;
+            Vector2 screenPos = Camera.main.WorldToScreenPoint(towards);
+            transform.position = screenPos;
+        }
+    }
 }

@@ -1,28 +1,32 @@
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public abstract class UIManager_B : MonoBehaviour
+namespace DCFrameWork.UI
 {
-    protected UIDocument _document;
-    protected VisualElement _root;
-
-    private void Start()
+    public abstract class UIManager_B : MonoBehaviour
     {
-        _document = GetComponent<UIDocument>();
-        if (_document is null)
+        protected UIDocument _document;
+        protected VisualElement _root;
+
+        public async Task Initialize()
         {
-            Debug.LogWarning("UIDocumentがアタッチされていません");
-            return;
+            _document = GetComponent<UIDocument>();
+            if (_document is null)
+            {
+                Debug.LogWarning("UIDocumentがアタッチされていません");
+                return;
+            }
+            _root = _document?.rootVisualElement;
+
+            await LoadDocumentElement(_root);
         }
-        _root = _document?.rootVisualElement;
 
-        LoadDocumentElement(_root);
+        /// <summary>
+        /// UIDocumentの要素をロードするメソッド
+        /// Startで実行される
+        /// </summary>
+        /// <param name="root">Documentのroot要素</param>
+        protected abstract Task LoadDocumentElement(VisualElement root);
     }
-
-    /// <summary>
-    /// UIDocumentの要素をロードするメソッド
-    /// Startで実行される
-    /// </summary>
-    /// <param name="root">Documentのroot要素</param>
-    protected abstract void LoadDocumentElement(VisualElement root);
 }

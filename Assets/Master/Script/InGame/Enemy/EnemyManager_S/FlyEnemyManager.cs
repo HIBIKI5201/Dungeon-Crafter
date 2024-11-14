@@ -1,29 +1,32 @@
-using DCFrameWork.Enemy;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class FlyEnemyManager : EnemyManager_B<EnemyData_B>
+namespace DCFrameWork.Enemy
 {
-    protected override void Pause()
+    public class FlyEnemyManager : EnemyManager_B<EnemyData_B>
     {
-        throw new System.NotImplementedException();
-    }
 
-    protected override void Resume()
-    {
-        throw new System.NotImplementedException();
-    }
+        protected override void DeathBehaviour()
+        {
+            base.DeathBehaviour();
+        }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        protected override void LoadSpecificnData(EnemyData_B data)
+        {
+
+
+        }
+
+
+
+        protected override void Pause()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        protected override void Resume()
+        {
+            throw new System.NotImplementedException();
+        }
+
+
     }
 }

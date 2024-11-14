@@ -32,29 +32,28 @@ namespace DCFrameWork.Enemy
         private EnemyHealthBarManager _healthBarManager;
 
         private Dictionary<ConditionType, int> _conditionList = new();
-        Dictionary<ConditionType, int> IConditionable.ConditionList
-        {
-            get => _conditionList;
-            set => _conditionList = value;
-        }
+        Dictionary<ConditionType, int> IConditionable.ConditionList { get => _conditionList; set => _conditionList = value; }
         public int CountCondition(ConditionType type) => (_conditionList.TryGetValue(type, out int count)) ? count : 0;
 
         private Action _deathAction;
         Action IFightable.DeathAction { get => _deathAction; set => _deathAction = value; }
 
         private NavMeshAgent _agent;
-        public void StartByPool(EnemyHealthBarManager enemyHealthBarManager, Vector3 targetPos)
+        private void Awake()
         {
+            _agent = GetComponent<NavMeshAgent>();
+        }
+
+        void IEnemy.StartByPool(EnemyHealthBarManager enemyHealthBarManager, Vector3 targetPos)
+        {
+            GameBaseSystem.mainSystem?.AddPausableObject(this);
             _healthBarManager = enemyHealthBarManager;
             if (_data is null)
                 Debug.Log("データがありません");
             LoadCommonData();
-            _agent = GetComponent<NavMeshAgent>();
-            GoToTargetPos(targetPos);
-            GameBaseSystem.mainSystem?.AddPausableObject(this);
+            enemyHealthBarManager.Initialize();
             HealthBarUpdate();
             Start_S();
-            Initialize(targetPos);
         }
 
         /// <summary>
@@ -62,23 +61,32 @@ namespace DCFrameWork.Enemy
         /// </summary>
         protected virtual void Start_S() { }
 
+        private void Update()
+        {
+            _healthBarManager.FollowTarget(transform);
+        }
+
         private void OnEnable()
         {
             GameBaseSystem.mainSystem?.RemovePausableObject(this);
         }
 
-        void IEnemy.Initialize(Vector3 targetPos) => Initialize(targetPos);
-        void IEnemy.StartByPool(EnemyHealthBarManager enemyHealthBarManager, Vector3 targetPos) => StartByPool(enemyHealthBarManager, targetPos);
-
         /// <summary>
         /// 外部からの初期化処理
         /// ステータスの初期化などを行う
         /// </summary>
-        private void Initialize(Vector3 targetPos)
+        void IEnemy.Initialize(Vector3 spawnPos, Vector3 targetPos, Action deathAction) => Initialize(spawnPos, targetPos, deathAction);
+        private void Initialize(Vector3 spawnPos, Vector3 targetPos, Action deathAction)
         {
-            _agent.speed = _dexterity;
             _currentHealth = _maxHealth;
+            ChangeSpeed(_dexterity);
+            _deathAction = deathAction;
             HealthBarUpdate();
+
+            gameObject.SetActive(true);
+            _healthBarManager.gameObject.SetActive(true);
+            gameObject.transform.position = spawnPos;
+            _healthBarManager.FollowTarget(transform);
             GoToTargetPos(targetPos);
             Initialize_S();
         }
@@ -110,10 +118,28 @@ namespace DCFrameWork.Enemy
         /// <param name="data">型パラメータのデータ</param>
         protected virtual void LoadSpecificnData(Data data) { }
 
+        void IFightable.DeathBehaviour() => DeathBehaviour();
         protected virtual void DeathBehaviour()
         {
-            _deathAction?.Invoke();
-            _deathAction = null;
+            gameObject.SetActive(false);
+            _healthBarManager.gameObject.SetActive(false);
+        }
+
+        void IEnemy.Destroy()
+        {
+            Destroy(gameObject);
+            Destroy(_healthBarManager.gameObject);
+        }
+
+        void IConditionable.ChangeCondition(ConditionType type)
+        {
+            switch (type)
+            {
+                case ConditionType.slow:
+                    float newSpeed = _dexterity * (1 - (CountCondition(ConditionType.slow) * 0.5f));
+                    ChangeSpeed(newSpeed);
+                    break;
+            }
         }
 
         /// <summary>
@@ -122,10 +148,7 @@ namespace DCFrameWork.Enemy
         /// <param name="targetPos">移動目標の座標</param>
         protected void GoToTargetPos(Vector3 targetPos)
         {
-            if (_agent.pathStatus != NavMeshPathStatus.PathInvalid)
-            {
-                _agent.SetDestination(targetPos);
-            }
+            _agent.SetDestination(targetPos);
         }
 
         public void HealthBarUpdate()
@@ -158,9 +181,9 @@ namespace DCFrameWork.Enemy
 
     public interface IEnemy : IFightable, IConditionable
     {
-        void Initialize(Vector3 targetPos);
+        void Initialize(Vector3 spawnPos, Vector3 targetPos, Action deathAction);
         void StartByPool(EnemyHealthBarManager enemyHealthBarManager, Vector3 targetPos);
-
+        void Destroy();
     }
 
     public interface IFightable
@@ -178,17 +201,13 @@ namespace DCFrameWork.Enemy
         /// <param name="damage">ダメージ量</param>
         bool HitDamage(float damage)
         {
-            if (CurrentHealth <= 0)
-            {
-                return false;
-            }
-
             CurrentHealth -= damage;
             HealthBarUpdate();
 
             if (CurrentHealth <= 0)
             {
                 DeathAction?.Invoke();
+                DeathAction = null;
                 return false;
             }
             return true;
@@ -208,6 +227,8 @@ namespace DCFrameWork.Enemy
             HealthBarUpdate();
             return true;
         }
+
+        void DeathBehaviour();
     }
 
     public interface IConditionable
@@ -217,6 +238,7 @@ namespace DCFrameWork.Enemy
         void AddCondition(ConditionType type)
         {
             ConditionList[type] = ConditionList.TryGetValue(type, out var count) ? count + 1 : 1;
+            ChangeCondition(type);
         }
 
         void RemoveCondition(ConditionType type)
@@ -231,7 +253,10 @@ namespace DCFrameWork.Enemy
                 {
                     ConditionList.Remove(type);
                 }
+                ChangeCondition(type);
             }
         }
+
+        void ChangeCondition(ConditionType type);
     }
 }

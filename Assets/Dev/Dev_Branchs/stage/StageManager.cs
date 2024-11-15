@@ -80,7 +80,6 @@ public class StageManager : MonoBehaviour
     {
         var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
         var raycastHitList = Physics.RaycastAll(ray, float.PositiveInfinity).Where(x => !x.collider.isTrigger).ToList();
-        var beforeCurrentPos = _currentPosition;
         if (raycastHitList.Any())
         {
             //置く場所を視覚的にサポートするオブジェクトとはレイキャストが当たってないことにする
@@ -117,6 +116,11 @@ public class StageManager : MonoBehaviour
                 _tentativePrefab.GetComponent<MeshRenderer>().material.color = Color.red;
                 _canSet = false;
             }
+        }
+        else
+        {
+            _canSet = false;
+            _tentativePrefab.SetActive(false);
         }
         //オブジェクトを置く処理
         if (Input.GetMouseButtonDown(0))

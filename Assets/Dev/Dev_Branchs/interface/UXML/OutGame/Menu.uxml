@@ -1,0 +1,8 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Dev/Dev_Branchs/interface/USS/Menu.uss?fileID=7433441132597879392&amp;guid=2b7cea8797b07b345b289cd438bb5153&amp;type=3#Menu" />
+    <engine:VisualElement style="flex-grow: 1; justify-content: space-around; align-items: center; flex-direction: row; background-color: rgb(255, 255, 255);">
+        <engine:Button text="ステージ選択" name="stage-select-button" class="stage-select-button font-style" />
+        <engine:Button text="防衛設備" triple-click-selects-line="false" name="defence-equipment-button" class="defence-equipment-button font-style" />
+        <engine:Button text="タイトル" name="title-button" class="title-button font-style" />
+    </engine:VisualElement>
+</engine:UXML>

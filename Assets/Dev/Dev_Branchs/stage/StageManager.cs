@@ -38,13 +38,16 @@ public class StageManager : MonoBehaviour
     //計算に関するコメントアウトのメモが噓をついている可能性があります。鵜吞みにしないように。発見したら教えてください。
     void Start()
     {
-        //_navMeshSurface.BuildNavMesh();
+        _navMeshSurface.BuildNavMesh();
         _mainCamera = Camera.main;
         //_prefabHeight = _setPrefab.GetComponent<BoxCollider>().size.y;
         //何マスx何マスかを調べる
         _sizeX = (int)(_floorPrefab.transform.localScale.x / _gridSize);
         _sizeZ = (int)(_floorPrefab.transform.localScale.z / _gridSize);
         _map = new int[_sizeX, _sizeZ];
+        //
+        _startX = (int)((_targetPos.position.x - _floorCenter.x + _floorPrefab.transform.localScale.x / 2 - _gridSize / 2) / _gridSize);
+        _startZ = (int)((_targetPos.position.z - _floorCenter.z + _floorPrefab.transform.localScale.z / 2 - _gridSize / 2) / _gridSize);
         //デフォルトで配置するオブジェクトをセットしてる。後から消すかも？
         _setPrefab = _obstaclePrefabList[0].PutObstaclePrefab;
         _tentativePrefab = _obstaclePrefabList[0].VisualGuide;
@@ -60,15 +63,29 @@ public class StageManager : MonoBehaviour
                     Vector3 vector3 = new Vector3((_floorCenter.x - _floorPrefab.transform.localScale.x / 2 + _gridSize / 2) + _gridSize * j,
                                                   7.5f,
                                                  (_floorCenter.z - _floorPrefab.transform.localScale.z / 2 + _gridSize / 2) + _gridSize * i);
-                    if (Physics.Raycast(vector3, Vector3.down, out RaycastHit hit, 5, LayerMask.GetMask("Ground")))
+                    if (Physics.Raycast(vector3, Vector3.down, 5, LayerMask.GetMask("Ground")))
                     {
                         _map[j, i] = 1;
                     }
                     else
                     {
-                        _map[j, i] = 0;
-                        //壁のない場所を数える
-                        _noWall++;
+                        if (Physics.Raycast(vector3, Vector3.down, out RaycastHit hit, 5, LayerMask.GetMask("Buildings")))
+                        {
+                            if (!hit.collider.isTrigger)
+                            {
+                                _map[j, i] = 2;
+                            }
+                            else
+                            {
+                                //壁のない場所を数える
+                                _noWall++;
+                            }
+                        }
+                        else
+                        {
+                            //壁のない場所を数える
+                            _noWall++;
+                        }
                     }
                     //Debug.Log($"{vector3}:{_map[j, i]}:({j},{i})={(hit.collider != null ? hit.collider.gameObject.name : null)}");
                     //Debug.DrawRay(vector3, Vector3.down * 5, Color.blue, 10);
@@ -103,18 +120,18 @@ public class StageManager : MonoBehaviour
             }
             else
             {
-                _canSet = true;
                 _tentativePrefab.SetActive(true);
-            }
-            //置けるかどうかの判定
-            if (CheckStage(_currentPosition) && _currentPosition != _spawnPos.position && _currentPosition != _targetPos.position)
-            {
-                _tentativePrefab.GetComponent<MeshRenderer>().material.color = Color.white;
-            }
-            else
-            {
-                _tentativePrefab.GetComponent<MeshRenderer>().material.color = Color.red;
-                _canSet = false;
+                //置けるかどうかの判定
+                if (CheckStage(_currentPosition) && _currentPosition != _spawnPos.position && _currentPosition != _targetPos.position)
+                {
+                    _tentativePrefab.GetComponent<MeshRenderer>().material.color = Color.white;
+                    _canSet = true;
+                }
+                else
+                {
+                    _tentativePrefab.GetComponent<MeshRenderer>().material.color = Color.red;
+                    _canSet = false;
+                }
             }
         }
         else
@@ -144,13 +161,10 @@ public class StageManager : MonoBehaviour
         int[,] subMap = new int[_sizeX, _sizeZ];
         for (int i = 0; i < _sizeZ; i++)
         {
-            string s = "";
             for (int j = 0; j < _sizeX; j++)
             {
                 subMap[j, i] = _map[j, i];
-                s += subMap[j, i];
             }
-            //Debug.Log(s);
         }
         if (subMap[currentX, currentZ] == 1)
         {

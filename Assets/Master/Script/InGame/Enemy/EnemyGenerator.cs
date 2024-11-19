@@ -17,9 +17,13 @@ namespace DCFrameWork.Enemy
 
         [SerializeField]
         private Transform _spawnPos;
+        
+        public Transform SpawnPos {  get { return _spawnPos; } }
 
         [SerializeField]
         private Transform _targetPos;
+
+        public Transform TargetPos { get { return _targetPos; } }
 
         [SerializeField]
         private Canvas _canvas;

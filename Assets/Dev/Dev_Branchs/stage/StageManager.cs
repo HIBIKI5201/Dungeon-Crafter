@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DCFrameWork.Enemy;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,26 +8,26 @@ using UnityEngine;
 
 public class StageManager : MonoBehaviour
 {
-    [SerializeField] Transform _spawnPos;
-    [SerializeField] Transform _targetPos;
     [SerializeField] GameObject _floorPrefab;
-    [SerializeField] Vector3 _floorCenter;
     [SerializeField] float _gridSize = 5f;
     [SerializeField] List<ObstaclePrefabs> _obstaclePrefabList;
+    [SerializeField] GameObject _defaultVisualGuide;
     //[SerializeField] GameObject _clickPointPrefab;//Debug;
-    [SerializeField] NavMeshSurface _navMeshSurface;
-    [SerializeField] GameObject _wallsParent;
     [Serializable]
     public struct ObstaclePrefabs
     {
         public string Name;
         public GameObject PutObstaclePrefab;
-        public GameObject VisualGuide;
+        [Tooltip("特注の視覚サポートオブジェクトがあればいれてください")]public GameObject VisualGuide;
     }
+    Transform _spawnPos;
+    Transform _targetPos;
     GameObject _setPrefab;
     GameObject _tentativePrefab;
+    GameObject _wallsParent;
     private Camera _mainCamera;
     private Vector3 _currentPosition = Vector3.zero;
+    Vector3 _floorCenter;
     //private float _prefabHeight;
     bool _canSet = false;
     int[,] _map;
@@ -38,8 +39,15 @@ public class StageManager : MonoBehaviour
     //計算に関するコメントアウトのメモが噓をついている可能性があります。鵜吞みにしないように。発見したら教えてください。
     void Start()
     {
-        _navMeshSurface.BuildNavMesh();
+        var enemyGenerator = GetComponentInChildren<EnemyGenerator>();
+        _spawnPos = enemyGenerator.SpawnPos;
+        _targetPos = enemyGenerator.TargetPos;
+        _wallsParent = new GameObject();
+        _wallsParent.transform.SetParent(transform);
+        _wallsParent.name = "Obstacle Parent";
+        GetComponentInChildren<NavMeshSurface>().BuildNavMesh();
         _mainCamera = Camera.main;
+        _floorCenter = new Vector3(_floorPrefab.transform.position.x + _floorPrefab.transform.localScale.x / 2, _floorPrefab.transform.position.y, _floorPrefab.transform.position.z - _floorPrefab.transform.localScale.z / 2);
         //_prefabHeight = _setPrefab.GetComponent<BoxCollider>().size.y;
         //何マスx何マスかを調べる
         _sizeX = (int)(_floorPrefab.transform.localScale.x / _gridSize);
@@ -50,7 +58,14 @@ public class StageManager : MonoBehaviour
         _startZ = (int)((_targetPos.position.z - _floorCenter.z + _floorPrefab.transform.localScale.z / 2 - _gridSize / 2) / _gridSize);
         //デフォルトで配置するオブジェクトをセットしてる。後から消すかも？
         _setPrefab = _obstaclePrefabList[0].PutObstaclePrefab;
-        _tentativePrefab = _obstaclePrefabList[0].VisualGuide;
+        if (_obstaclePrefabList[0].VisualGuide == null)
+        {
+            _tentativePrefab = _defaultVisualGuide;
+        }
+        else
+        {
+            _tentativePrefab = _obstaclePrefabList[0].VisualGuide;
+        }
         LoadStage();
         //ステージのグリッド座標に壁があるかしらべて2次元配列に格納
         void LoadStage()

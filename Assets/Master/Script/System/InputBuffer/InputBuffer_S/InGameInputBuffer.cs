@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,20 +6,23 @@ namespace DCFrameWork.SceneSystem
 {
     public class InGameInputBuffer : InputBuffer_B
     {
-        protected override void SetAction()
+        protected override Action<InputAction.CallbackContext> SetAction(Action<InputAction.CallbackContext> action)
         {
-            _moveAction += OnMove;
-            _rotateAction += OnRotate;
+            action += OnMove;
+            action += OnRotate;
+            return action;
         }
 
         private void OnMove(InputAction.CallbackContext context)
         {
-            _currentContext.MoveInput = context.ReadValue<Vector2>();
+            if (context.action.name is "Move")
+                _currentContext.MoveInput = context.ReadValue<Vector2>();
         }
 
         private void OnRotate(InputAction.CallbackContext context)
         {
-            _currentContext.RotateInput = context.ReadValue<float>();
+            if (context.action.name is "Rotate")
+                _currentContext.RotateInput = context.ReadValue<float>();
         }
     }
 }

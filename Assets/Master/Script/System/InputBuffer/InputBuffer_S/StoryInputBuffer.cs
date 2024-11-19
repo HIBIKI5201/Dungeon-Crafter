@@ -1,19 +1,13 @@
-using UnityEngine;
+using System;
+using UnityEngine.InputSystem;
 
-namespace DCFrameWork
+namespace DCFrameWork.SceneSystem
 {
-    public class StoryInputBuffer : MonoBehaviour
+    public class StoryInputBuffer : InputBuffer_B
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
+        protected override Action<InputAction.CallbackContext> SetAction(Action<InputAction.CallbackContext> action)
         {
-        
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
+            return action;
         }
     }
 }

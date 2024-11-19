@@ -10,12 +10,9 @@ public class StageManager : MonoBehaviour
     [SerializeField] Transform _spawnPos;
     [SerializeField] Transform _targetPos;
     [SerializeField] GameObject _floorPrefab;
-    [SerializeField] Vector3 _floorCenter;
     [SerializeField] float _gridSize = 5f;
     [SerializeField] List<ObstaclePrefabs> _obstaclePrefabList;
     //[SerializeField] GameObject _clickPointPrefab;//Debug;
-    [SerializeField] NavMeshSurface _navMeshSurface;
-    [SerializeField] GameObject _wallsParent;
     [Serializable]
     public struct ObstaclePrefabs
     {
@@ -25,8 +22,10 @@ public class StageManager : MonoBehaviour
     }
     GameObject _setPrefab;
     GameObject _tentativePrefab;
+    GameObject _wallsParent;
     private Camera _mainCamera;
     private Vector3 _currentPosition = Vector3.zero;
+    Vector3 _floorCenter;
     //private float _prefabHeight;
     bool _canSet = false;
     int[,] _map;
@@ -38,8 +37,12 @@ public class StageManager : MonoBehaviour
     //計算に関するコメントアウトのメモが噓をついている可能性があります。鵜吞みにしないように。発見したら教えてください。
     void Start()
     {
-        _navMeshSurface.BuildNavMesh();
+        _wallsParent = new GameObject();
+        _wallsParent.transform.SetParent(transform);
+        _wallsParent.name = "Obstacle Parent";
+        GetComponentInChildren<NavMeshSurface>().BuildNavMesh();
         _mainCamera = Camera.main;
+        _floorCenter = new Vector3(_floorPrefab.transform.position.x + _floorPrefab.transform.localScale.x / 2, _floorPrefab.transform.position.y, _floorPrefab.transform.position.z - _floorPrefab.transform.localScale.z / 2);
         //_prefabHeight = _setPrefab.GetComponent<BoxCollider>().size.y;
         //何マスx何マスかを調べる
         _sizeX = (int)(_floorPrefab.transform.localScale.x / _gridSize);

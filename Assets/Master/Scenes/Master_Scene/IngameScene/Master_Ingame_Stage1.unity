@@ -279,6 +279,11 @@ PrefabInstance:
       propertyPath: _canvas
       value: 
       objectReference: {fileID: 518106097}
+    - target: {fileID: 7212133291848024612, guid: 77fd2a5407b56e54d8e660f62bd21e54,
+        type: 3}
+      propertyPath: _canvas
+      value: 
+      objectReference: {fileID: 518106097}
     - target: {fileID: 8015407683335857790, guid: 77fd2a5407b56e54d8e660f62bd21e54,
         type: 3}
       propertyPath: m_NavMeshData

@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 3153999600572148020}
   - component: {fileID: 8090698119137097613}
   - component: {fileID: 3557142542435686237}
-  - component: {fileID: 7105930386278368177}
+  - component: {fileID: 2268703957031868700}
   m_Layer: 0
-  m_Name: FlyEnemy
+  m_Name: SpeedEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,8 +30,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3101622137817443882}
   - {fileID: 7607907937892384297}
@@ -110,7 +110,7 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 0
---- !u!114 &7105930386278368177
+--- !u!114 &2268703957031868700
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -119,10 +119,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7990310466857601233}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 654f7d3bae88a7d46ab1c7d4b0d840cd, type: 3}
+  m_Script: {fileID: 11500000, guid: c37406a090c5e794a8df191cfb5b6981, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _data: {fileID: 11400000, guid: fa1ed81f39b18d84eb03eec2deae987a, type: 2}
+  _data: {fileID: 11400000, guid: 5b23435c06a57c5428910becfe6669a1, type: 2}
   _levelRequirePoint: 0
 --- !u!1001 &3207008905949727169
 PrefabInstance:

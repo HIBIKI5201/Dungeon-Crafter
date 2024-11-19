@@ -1,10 +1,8 @@
 using DCFrameWork.SceneSystem;
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using DCFrameWork.UI;
-using System;
 namespace DCFrameWork.MainSystem
 {
     public class GameBaseSystem : MonoBehaviour

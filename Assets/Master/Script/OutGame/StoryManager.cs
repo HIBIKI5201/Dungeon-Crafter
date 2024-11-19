@@ -1,19 +1,22 @@
+using System.Collections;
 using UnityEngine;
 
 namespace DCFrameWork
 {
     public class StoryManager : MonoBehaviour
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
+        private IEnumerator _enumerator;
+
+        public void Initialize()
         {
-        
+            _enumerator = PlayStoryContext();
         }
 
-        // Update is called once per frame
-        void Update()
+        public void NextContext() => _enumerator.MoveNext();
+
+        private IEnumerator PlayStoryContext()
         {
-        
+            yield return null;
         }
     }
 }

@@ -387,6 +387,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: HomeSystem
       objectReference: {fileID: 0}
+    - target: {fileID: 6312847130623196679, guid: 5eda548d81cb2f447878202eda3d4b41,
+        type: 3}
+      propertyPath: sourceAsset
+      value: 
+      objectReference: {fileID: 9197481963319205126, guid: 2e42fdb582fc71049b90bdde8538cae1,
+        type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

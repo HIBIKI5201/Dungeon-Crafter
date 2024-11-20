@@ -6,11 +6,11 @@ namespace DCFrameWork.SceneSystem
 {
     public class InGameInputBuffer : InputBuffer_B
     {
-        protected override Action<InputAction.CallbackContext> SetAction( ref Action<InputAction.CallbackContext> action)
+        protected override bool SetAction( ref Action<InputAction.CallbackContext> action)
         {
             action += OnMove;
             action += OnRotate;
-            return action;
+            return action is not null;
         }
 
         private void OnMove(InputAction.CallbackContext context)

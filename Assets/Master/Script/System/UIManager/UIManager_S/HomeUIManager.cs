@@ -1,16 +1,13 @@
+using DCFrameWork.MainSystem;
 using DCFrameWork.SceneSystem;
 using System;
-using UnityEngine;
 using System.Threading.Tasks;
 using UnityEngine.UIElements;
-using static UnityEditor.Recorder.OutputPath;
-using UnityEditorInternal;
 
 namespace DCFrameWork.UI
 {
-    public class HomeUIManager : MonoBehaviour
+    public class HomeUIManager : UIManager_B
     {
-        VisualElement _root;
         HomeWindowState _homeUIState = HomeWindowState.Title;
         TemplateContainer _title;
         TemplateContainer _menu;
@@ -35,14 +32,14 @@ namespace DCFrameWork.UI
             _stageSelectButton = _menu.Q<Button>("stage-select-button");
             _defenceEquipmentButton = _menu.Q<Button>("defence-equipment-button");
             _titleButton = _menu.Q<Button>("title-button");
-            _stageSelectButton.RegisterCallback<ClickEvent>(x => {State = HomeWindowState.StageSelect; });
-            _defenceEquipmentButton.RegisterCallback<ClickEvent>(x => {State = HomeWindowState.DefenceEquipment; });
-            _titleButton.RegisterCallback<ClickEvent>(x => {State= HomeWindowState.Title; });
+            _stageSelectButton.RegisterCallback<ClickEvent>(x => { State = HomeWindowState.StageSelect; });
+            _defenceEquipmentButton.RegisterCallback<ClickEvent>(x => { State = HomeWindowState.DefenceEquipment; });
+            _titleButton.RegisterCallback<ClickEvent>(x => { State = HomeWindowState.Title; });
             _stage = _root.Q<TemplateContainer>("stage-select");
             _stageone = _stage.Q<Button>("stage-one-button");
             _stageReturnButton = _stage.Q<Button>("return-button");
             _stageReturnButton.RegisterCallback<ClickEvent>(x => { State = HomeWindowState.MainMenu; });
-            _stageone.RegisterCallback<ClickEvent>(x => { });
+            _stageone.RegisterCallback<ClickEvent>(x => { GameBaseSystem.mainSystem.LoadScene(SceneKind.Ingame_1); });
             _defenceEquipment = _root.Q<TemplateContainer>("defence-equipment");
             _equipmentReturnButton = _defenceEquipment.Q<Button>("return-button");
             _equipmentReturnButton.RegisterCallback<ClickEvent>(x => { State = HomeWindowState.MainMenu; });
@@ -60,7 +57,7 @@ namespace DCFrameWork.UI
             }
         }
         void OnStateChenge()
-        { 
+        {
             Action action = _homeUIState switch
             {
                 HomeWindowState.Title => OnTitle,
@@ -90,6 +87,11 @@ namespace DCFrameWork.UI
         {
             _root.Clear();
             _root.Insert(0, _defenceEquipment);
+        }
+
+        protected override Task LoadDocumentElement(VisualElement root)
+        {
+            return Task.CompletedTask;
         }
     }
 }

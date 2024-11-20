@@ -5,9 +5,9 @@ namespace DCFrameWork.SceneSystem
 {
     public class StoryInputBuffer : InputBuffer_B
     {
-        protected override Action<InputAction.CallbackContext> SetAction(Action<InputAction.CallbackContext> action)
+        protected override bool SetAction(ref Action<InputAction.CallbackContext> action)
         {
-            return action;
+            return action is not null;
         }
     }
 }

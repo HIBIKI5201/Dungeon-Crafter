@@ -118,15 +118,15 @@
         {
             "m_OutputSlot": {
                 "m_Node": {
-                    "m_Id": "814737810e6c4db987b6972b580ead12"
+                    "m_Id": "6c1fc6e3cd2b41cc933a8eceb09ed7c1"
                 },
-                "m_SlotId": 0
+                "m_SlotId": 2
             },
             "m_InputSlot": {
                 "m_Node": {
-                    "m_Id": "6c1fc6e3cd2b41cc933a8eceb09ed7c1"
+                    "m_Id": "b293617e86d54c1d8b2a531b2a2f487e"
                 },
-                "m_SlotId": 1
+                "m_SlotId": 3
             }
         },
         {
@@ -138,9 +138,9 @@
             },
             "m_InputSlot": {
                 "m_Node": {
-                    "m_Id": "b293617e86d54c1d8b2a531b2a2f487e"
+                    "m_Id": "6c1fc6e3cd2b41cc933a8eceb09ed7c1"
                 },
-                "m_SlotId": 3
+                "m_SlotId": 1
             }
         },
         {
@@ -228,6 +228,7 @@
     "m_OutputNode": {
         "m_Id": ""
     },
+    "m_SubDatas": [],
     "m_ActiveTargets": [
         {
             "m_Id": "a5c5de976b18462eaa57ab1108dbacf5"
@@ -408,7 +409,7 @@
     "m_StageCapability": 3,
     "m_BareResource": false,
     "m_Texture": {
-        "m_SerializedTexture": "{\"texture\":{\"instanceID\":0}}",
+        "m_SerializedTexture": "",
         "m_Guid": ""
     },
     "m_DefaultType": 0
@@ -743,10 +744,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1238.0,
-            "y": 512.0,
-            "width": 208.0,
-            "height": 302.0
+            "x": -1264.0,
+            "y": 375.9999694824219,
+            "width": 130.0,
+            "height": 118.00003051757813
         }
     },
     "m_Slots": [
@@ -864,8 +865,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1539.0,
-            "y": 551.0,
+            "x": -1524.0,
+            "y": 410.0,
             "width": 206.0,
             "height": 131.0
         }
@@ -1042,6 +1043,7 @@
     "m_AlphaClip": false,
     "m_CastShadows": true,
     "m_ReceiveShadows": true,
+    "m_DisableTint": false,
     "m_AdditionalMotionVectorMode": 0,
     "m_AlembicMotionVectors": false,
     "m_SupportsLODCrossFade": false,
@@ -1265,10 +1267,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1468.0,
-            "y": 495.0,
-            "width": 133.0,
-            "height": 34.0
+            "x": -1453.0,
+            "y": 375.9999694824219,
+            "width": 135.0,
+            "height": 34.000030517578128
         }
     },
     "m_Slots": [

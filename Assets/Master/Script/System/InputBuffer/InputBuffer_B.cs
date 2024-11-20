@@ -20,13 +20,13 @@ namespace DCFrameWork.SceneSystem
             _playerInput.uiInputModule = GetComponent<InputSystemUIInputModule>();
 
             Action<InputAction.CallbackContext> action = null;
-            if (SetAction(action) is not null)
+            if (SetAction(ref action) is not null)
             {
                 _playerInput.onActionTriggered += action;
             }
         }
 
-        protected abstract Action<InputAction.CallbackContext> SetAction(Action<InputAction.CallbackContext> action);
+        protected abstract Action<InputAction.CallbackContext> SetAction(ref Action<InputAction.CallbackContext> action);
 
         public InputContext GetContext() => _currentContext;
     }

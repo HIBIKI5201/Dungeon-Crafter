@@ -16,8 +16,8 @@ namespace DCFrameWork.SceneSystem
     public enum HomeWindowState
     {
         Title,
-        Story,
         MainMenu,
         StageSelect,
+        DefenceEquipment
     }
 }

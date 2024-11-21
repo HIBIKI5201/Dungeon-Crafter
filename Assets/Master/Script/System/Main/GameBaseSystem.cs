@@ -1,9 +1,8 @@
 using DCFrameWork.SceneSystem;
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using DCFrameWork.UI;
 namespace DCFrameWork.MainSystem
 {
     public class GameBaseSystem : MonoBehaviour
@@ -17,11 +16,12 @@ namespace DCFrameWork.MainSystem
         private static GameBaseSystem _instance;
 
         private AudioManager _audioManager;
-        private UIManager_B _mainUIManager;
+        private MainUIManager _mainUIManager;
         #endregion
-
-        private List<IPausable> _pausableList = new();
-
+        #region pause
+        private event Action OnPaused;
+        private event Action OnResumed;
+        #endregion
         private void Awake()
         {
             if (!_instance)
@@ -37,16 +37,16 @@ namespace DCFrameWork.MainSystem
                 Destroy(gameObject);
                 return;
             }
+
+            _audioManager = GetComponentInChildren<AudioManager>();
+            (_audioManager is null).CheckLog("AudioManager‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
+            _mainUIManager = FindAnyObjectByType<MainUIManager>();
+            (_mainUIManager is null).CheckLog("MainUIManager‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
         }
 
         private void Start()
         {
             SaveDataManager.Load();
-
-            _audioManager = GetComponentInChildren<AudioManager>();
-            (_audioManager is null).CheckLog("AudioManager‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
-            _mainUIManager = FindAnyObjectByType<UIManager_B>();
-            (_mainUIManager is null).CheckLog("MainUIManager‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
 
             SceneInit();
         }
@@ -73,30 +73,19 @@ namespace DCFrameWork.MainSystem
         public void PlaySound(int index, SoundKind kind) => _audioManager?.PlaySound(index, kind);
 
         #region ƒ|[ƒY
-        public void Pause()
-        {
-            _pausableList?.ForEach(p => p.Pause());
-        }
-
-        public void Resume()
-        {
-            _pausableList?.ForEach(p => p.Resume());
-        }
+        public void Pause() => OnPaused?.Invoke();
+        public void Resume() => OnResumed?.Invoke();
 
         public void AddPausableObject(IPausable obj)
         {
             if ((obj is null).CheckLog("Ipausable‚Ínull")) return;
-            if (!_pausableList?.Contains(obj) ?? false)
-            {
-                _pausableList.Add(obj);
-            }
+            OnPaused += obj.Pause;
+            OnResumed += obj.Resume;
         }
         public void RemovePausableObject(IPausable obj)
         {
-            if (_pausableList?.Contains(obj) ?? false)
-            {
-                _pausableList.Remove(obj);
-            }
+            OnPaused -= obj.Pause;
+            OnResumed -= obj.Resume;
         }
         #endregion
     }

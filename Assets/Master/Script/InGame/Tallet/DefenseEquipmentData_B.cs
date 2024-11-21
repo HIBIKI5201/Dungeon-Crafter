@@ -13,8 +13,12 @@ namespace DCFrameWork.DefenseEquipment
         [SerializeField]
         private float _rate;
 
-        public float Critical {  get => _critical; }
+        public float Critical { get => _critical; }
         [SerializeField]
         private float _critical;
+
+        public float Range { get => _range; }
+        [SerializeField]
+        private float _range;
     }
 }

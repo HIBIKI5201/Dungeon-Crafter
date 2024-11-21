@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DCFrameWork.DefenseEquipment
 {
-    public class ShootTurretManager : DEAttackerManager_SB<AttackebleData>
+    public class ShootTurretManager : DEAttackerManager_SB<DefenseEquipmentData_B>
     {
         private float _range;
 
@@ -25,7 +25,7 @@ namespace DCFrameWork.DefenseEquipment
                 _timer = Time.time;
             }
         }
-        protected override void LoadSpecificData(AttackebleData data)
+        protected override void LoadSpecificData(DefenseEquipmentData_B data)
         {
             _range = data.Range;
             RangeSet(_range);

@@ -11,6 +11,7 @@ namespace DCFrameWork.DefenseEquipment
         protected override void Start_SB()
         {
             _enemyList = new();
+            Start_S();
         }
 
         protected virtual void Start_S() { }

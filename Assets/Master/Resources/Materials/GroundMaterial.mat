@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: GroundMaterial
-  m_Shader: {fileID: -6465566751694194690, guid: c0530f8fe3443d742adc3ef7b61ed8ec,
+  m_Shader: {fileID: -6465566751694194690, guid: 4d89ed8644390b249821bd6496796761,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0

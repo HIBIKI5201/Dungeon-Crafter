@@ -48,7 +48,6 @@ public class StageManager : MonoBehaviour
         _wallsParent = new GameObject();
         _wallsParent.transform.SetParent(transform);
         _wallsParent.name = "Obstacle Parent";
-        GetComponentInChildren<NavMeshSurface>().BuildNavMesh();
         _mainCamera = Camera.main;
         //_floorCenter = new Vector3(_floorPrefab.transform.position.x + _floorPrefab.transform.localScale.x / 2, _floorPrefab.transform.position.y, _floorPrefab.transform.position.z - _floorPrefab.transform.localScale.z / 2);
         _floorCenter = transform.position;

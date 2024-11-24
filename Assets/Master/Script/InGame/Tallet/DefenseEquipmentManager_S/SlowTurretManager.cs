@@ -32,10 +32,6 @@ namespace DCFrameWork.DefenseEquipment
                 }
             }
         }
-        protected override void LoadSpecificData(DefenseEquipmentData_B data)
-        {
-
-        }
         protected override void Pause()
         {
             _isPaused = true;

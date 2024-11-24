@@ -8,15 +8,47 @@ namespace DCFrameWork.DefenseEquipment
     public class AreaTurretManager : DefenseEquipmentManager_B<DefenseEquipmentData_B>
     {
         bool _isPaused = false;
+        float _timer = 0;
+        protected List<(GameObject Obj, IFightable Interface)> _enemyList = new();
 
+        protected override void Start_SB()
+        {
+            _enemyList = new();
+        }
         protected override void Think() //UpDate ‚Æ“¯‹`
         {
-            
+            if (_isPaused)
+                _timer += Time.deltaTime;
+
+            if (Time.time > 1 / DefenseEquipmentData.Rate + _timer && _enemyList.Count > 0)
+            {
+                _timer = Time.time;
+                TargetsAddDamage(_enemyList, DefenseEquipmentData.Attack);
+            }
+        }
+        protected void TargetsAddDamage(List<(GameObject Obj, IFightable Interface)> enemies, float damage)
+        {
+            foreach (var enemy in enemies)
+            {
+                if (!enemy.Interface.HitDamage(damage))
+                {
+                    _enemyList.Remove(_enemyList.Where(e => e.Interface == enemy.Interface).FirstOrDefault());
+                }
+            }
         }
 
-        protected override void LoadSpecificData(DefenseEquipmentData_B data)
+        private void OnTriggerEnter(Collider other)
         {
-            
+            if (other.TryGetComponent<IFightable>(out var component))
+            {
+                _enemyList.Add((other.gameObject, component));
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            var result = _enemyList.Find(e => e.Obj == other.gameObject);
+            _enemyList.Remove(result);
         }
 
         protected override void Pause()

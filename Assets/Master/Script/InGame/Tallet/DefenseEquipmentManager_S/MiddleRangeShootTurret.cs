@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DCFrameWork.DefenseEquipment
 {
-    public class ShootTurretManager : DEShooterManager_SB<DefenseEquipmentData_B>
+    public class MiddleRangeShootTurret : DEShooterManager_SB<DefenseEquipmentData_B>
     {
         private float _range;
 

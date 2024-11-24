@@ -1,5 +1,3 @@
-#define DEBUGGING_TRAP_TURR_MAN
-#undef DEBUGGING_TRAP_TURR_MAN
 using UnityEngine;
 
 namespace DCFrameWork.DefenseEquipment
@@ -31,16 +29,10 @@ namespace DCFrameWork.DefenseEquipment
             Physics.BoxCast(pos, _boxCastSize, Vector3.down, out RaycastHit hit);
             if (hit.collider == null)
             {
-#if DEBUGGING_TRAP_TURR_MAN
-            Debug.Log("collider is null");
-#endif
                 return false;
             }
             if (hit.collider.gameObject == null)
             {
-#if DEBUGGING_TRAP_TURR_MAN
-            Debug.Log("gameObject is null");
-#endif
             }
             Debug.Log(hit.collider.gameObject.layer == _groundLayer);
             return hit.collider.gameObject.layer == _groundLayer;
@@ -48,9 +40,6 @@ namespace DCFrameWork.DefenseEquipment
 
         private void OnDrawGizmos()
         {
-#if DEBUGGIN_TRUP_TURR_MAN
-        Debug.Log("ƒMƒYƒ‚‚ð•\Ž¦‚µ‚Ä‚¢‚Ü‚·");
-#endif
             Gizmos.color = Check(_position) ? Color.red : Color.green;
             Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, _boxCastSize);
             Gizmos.DrawCube(_position, new Vector3(1, 1, 1));

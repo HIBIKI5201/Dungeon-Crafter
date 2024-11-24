@@ -3,10 +3,8 @@ using UnityEngine;
 
 namespace DCFrameWork.DefenseEquipment
 {
-    public class ShortRangeShootTurret : DEShooterManager_SB<DefenseEquipmentData_B>
+    public class ShortRangeShootTurretManager : DEShooterManager_SB<DefenseEquipmentData_B>
     {
-        private float _range;
-
         float _timer = 0;
         bool _isPaused = false;
 
@@ -25,11 +23,6 @@ namespace DCFrameWork.DefenseEquipment
                 _timer = Time.time;
             }
         }
-        protected override void LoadSpecificData(DefenseEquipmentData_B data)
-        {
-            _range = data.Range;
-            RangeSet(_range);
-        }
         protected override void Attack()
         {
             var criticalPoint = Random.Range(0, 100);
@@ -38,15 +31,6 @@ namespace DCFrameWork.DefenseEquipment
             TurretRotate(targetSelect.Obj);
         }
 
-        void RangeSet(float range)
-        {
-            var coll = GetComponent<SphereCollider>();
-            coll.radius = range;
-            var syli = transform.GetChild(0);
-            var size = new Vector3(coll.radius * 2, syli.transform.localScale.y, coll.radius * 2);
-            syli.transform.localScale = size;
-
-        }
 
         protected override void Pause()
         {

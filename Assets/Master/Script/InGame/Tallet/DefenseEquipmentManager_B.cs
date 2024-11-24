@@ -39,7 +39,7 @@ namespace DCFrameWork.DefenseEquipment
             Data data = _dataBase.DataLevelList[level - 1] as Data;
             if ((data is null).CheckLog($"{gameObject.name}のデータがキャストできません")) return;
             _defenseEquipmentData = data;
-
+            RangeSet(data.Range);
             LoadSpecificData(data);
         }
 
@@ -58,6 +58,15 @@ namespace DCFrameWork.DefenseEquipment
         /// Updateで実行されます
         /// </summary>
         protected abstract void Think();
+
+        protected private void RangeSet(float range)
+        {
+            var coll = GetComponent<SphereCollider>();
+            coll.radius = range;
+            var syli = transform.GetChild(0);
+            var size = new Vector3(coll.radius * 2, syli.transform.localScale.y, coll.radius * 2);
+            syli.transform.localScale = size;
+        }
 
         #region ポーズ処理
         void IPausable.Pause() => Pause();

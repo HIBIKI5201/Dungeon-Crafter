@@ -1,31 +1,32 @@
 using DCFrameWork.Enemy;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 namespace DCFrameWork.DefenseEquipment
 {
-    public class AreaTurretManager : DEAttackerManager_SB<DefenseEquipmentData_B>
+    public class AreaTurretManager : DefenseEquipmentManager_B<DefenseEquipmentData_B>
     {
+        bool _isPaused = false;
+
         protected override void Think() //UpDate ‚Æ“¯‹`
         {
-            throw new System.NotImplementedException();
-        }
-        protected override void Attack()
-        {
-            throw new System.NotImplementedException();
+            
         }
 
         protected override void LoadSpecificData(DefenseEquipmentData_B data)
         {
-            throw new System.NotImplementedException();
+            
         }
 
         protected override void Pause()
         {
-            throw new System.NotImplementedException();
+            _isPaused = true;
         }
 
         protected override void Resume()
         {
-            throw new System.NotImplementedException();
+            _isPaused = false;
         }
 
     }

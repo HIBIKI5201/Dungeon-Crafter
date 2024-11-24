@@ -517,6 +517,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dataBase: {fileID: 11400000, guid: c274824e63b70424d9afd001f6f40105, type: 2}
+  _turret: {fileID: 8235804675487181680}
 --- !u!135 &7005922117509253869
 SphereCollider:
   m_ObjectHideFlags: 0

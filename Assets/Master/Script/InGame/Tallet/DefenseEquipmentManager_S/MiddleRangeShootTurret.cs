@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DCFrameWork.DefenseEquipment
 {
-    public class ShootTurretManager : DEAttackerManager_SB<AttackebleData>
+    public class MiddleRangeShootTurret : DEShooterManager_SB<DefenseEquipmentData_B>
     {
         private float _range;
 
@@ -19,13 +19,13 @@ namespace DCFrameWork.DefenseEquipment
             if (_isPaused)
                 _timer += Time.deltaTime;
 
-            if (Time.time > 1 / _rate + _timer && _enemyList.Count > 0)
+            if (Time.time > 1 / DefenseEquipmentData.Rate + _timer && _enemyList.Count > 0)
             {
                 Attack();
                 _timer = Time.time;
             }
         }
-        protected override void LoadSpecificData(AttackebleData data)
+        protected override void LoadSpecificData(DefenseEquipmentData_B data)
         {
             _range = data.Range;
             RangeSet(_range);
@@ -34,8 +34,8 @@ namespace DCFrameWork.DefenseEquipment
         {
             var criticalPoint = Random.Range(0, 100);
             var targetSelect = TargetSelect();
-            Debug.Log(targetSelect.Count);
-            TargetsAddDamage(targetSelect, criticalPoint <= _critical ? _attack * 3 : _attack);
+            TargetsAddDamage(targetSelect.Interface, criticalPoint <= DefenseEquipmentData.Critical ? DefenseEquipmentData.Attack * 3 : DefenseEquipmentData.Attack);
+            TurretRotate(targetSelect.Obj);
         }
 
         void RangeSet(float range)
@@ -57,5 +57,6 @@ namespace DCFrameWork.DefenseEquipment
         {
             _isPaused = false;
         }
+
     }
 }

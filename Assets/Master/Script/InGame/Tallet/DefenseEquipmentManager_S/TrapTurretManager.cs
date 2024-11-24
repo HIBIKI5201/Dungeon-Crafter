@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace DCFrameWork.DefenseEquipment
 {
-    public class TrapTurretManager : DEEntityManager_SB<AttackebleData>
+    public class TrapTurretManager : DEEntityManager_SB<DefenseEquipmentData_B>
     {
         private float _range;
 
@@ -65,7 +65,7 @@ namespace DCFrameWork.DefenseEquipment
             float randomPosZ = r * Mathf.Sin(radian);
             return transform.position + new Vector3(randomPosX, 0, randomPosZ);
         }
-        protected override void LoadSpecificData(AttackebleData data)
+        protected override void LoadSpecificData(DefenseEquipmentData_B data)
         {
             _range = data.Range;
         }

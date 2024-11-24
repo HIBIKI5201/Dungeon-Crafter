@@ -1,38 +1,42 @@
 using DCFrameWork.Enemy;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 namespace DCFrameWork.DefenseEquipment
 {
-    public abstract class DEAttackerManager_SB<Data> : DefenseEquipmentManager_B<Data> where Data : DefenseEquipmentData_B
+    public abstract class DEShooterManager_SB<Data> : DefenseEquipmentManager_B<Data> where Data : DefenseEquipmentData_B
     {
         protected List<(GameObject Obj, IFightable Interface)> _enemyList = new();
+        [SerializeField] GameObject _turret;
 
         protected override void Start_SB()
         {
             _enemyList = new();
             Start_S();
-            Debug.Log(_enemyList[0].Obj.transform.position);
         }
 
         protected virtual void Start_S() { }
 
-        protected virtual List<IFightable> TargetSelect()
+        protected virtual (GameObject Obj, IFightable Interface) TargetSelect()
         {
-            return _enemyList.OrderBy(x => Vector3.Distance(transform.position, x.Obj.transform.position)).Select(x => x.Interface).Take(1).ToList();
+            return _enemyList.OrderBy(x => Vector3.Distance(transform.position, x.Obj.transform.position)).ToList().FirstOrDefault();
         }
 
 
         protected abstract void Attack();
 
-        protected void TargetsAddDamage(List<IFightable> enemies, float damage)
+        protected virtual void TurretRotate(GameObject enemy)
         {
-            foreach (var enemy in enemies)
+            _turret.transform.forward = enemy.transform.position - _turret.transform.position;
+        }
+
+        protected void TargetsAddDamage(IFightable enemy, float damage)
+        {
+            if (!enemy.HitDamage(damage))
             {
-                if (!enemy.HitDamage(damage))
-                {
-                    _enemyList.Remove(_enemyList.Where(e => e.Interface == enemy).FirstOrDefault());
-                }
+                _enemyList.Remove(_enemyList.Where(e => e.Interface == enemy).FirstOrDefault());
             }
         }
 

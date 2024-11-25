@@ -315,6 +315,12 @@ PrefabInstance:
       propertyPath: m_VersionIndex
       value: 1124
       objectReference: {fileID: 0}
+    - target: {fileID: 3538332611585799522, guid: 77fd2a5407b56e54d8e660f62bd21e54,
+        type: 3}
+      propertyPath: _obstaclePrefabList.Array.data[0].PutObstaclePrefab
+      value: 
+      objectReference: {fileID: 1580030669442090805, guid: 6800c4699d42ad74e94044a5319af440,
+        type: 3}
     - target: {fileID: 5552272901336012716, guid: 77fd2a5407b56e54d8e660f62bd21e54,
         type: 3}
       propertyPath: m_Mesh

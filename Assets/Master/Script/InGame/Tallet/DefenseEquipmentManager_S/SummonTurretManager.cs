@@ -1,3 +1,4 @@
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
 namespace DCFrameWork.DefenseEquipment
@@ -12,7 +13,7 @@ namespace DCFrameWork.DefenseEquipment
         {
             if (!_isPaused)
             {
-                var summonRate = 1 / _rate * Time.deltaTime;
+                var summonRate = 1 / DefenseEquipmentData.Rate * Time.deltaTime;
                 _timer += summonRate;
                 if (_timer > _interval)
                 {

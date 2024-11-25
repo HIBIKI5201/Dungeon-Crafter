@@ -330,6 +330,12 @@ PrefabInstance:
       propertyPath: _canvas
       value: 
       objectReference: {fileID: 518106097}
+    - target: {fileID: 7212133291848024612, guid: 77fd2a5407b56e54d8e660f62bd21e54,
+        type: 3}
+      propertyPath: _objects.Array.data[0].EnemyPrefab
+      value: 
+      objectReference: {fileID: 7990310466857601233, guid: 837ec1f55b14f894e8397ccb545f2850,
+        type: 3}
     - target: {fileID: 8491387007585437238, guid: 77fd2a5407b56e54d8e660f62bd21e54,
         type: 3}
       propertyPath: m_LocalPosition.x

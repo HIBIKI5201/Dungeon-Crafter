@@ -7,6 +7,8 @@ namespace DCFrameWork.DefenseEquipment
     {
         [SerializeField]
         private DefenseEquipmentDataBase _dataBase;
+        [SerializeField]
+        private GameObject _cylinder;
 
         private Data _defenseEquipmentData;
         protected Data DefenseEquipmentData { get => _defenseEquipmentData; }
@@ -63,9 +65,8 @@ namespace DCFrameWork.DefenseEquipment
         {
             var coll = GetComponent<SphereCollider>();
             coll.radius = range;
-            var syli = transform.GetChild(0);
-            var size = new Vector3(coll.radius * 2, syli.transform.localScale.y, coll.radius * 2);
-            syli.transform.localScale = size;
+            if (_cylinder)
+                _cylinder.transform.localScale = new Vector3(coll.radius * 2, _cylinder.transform.localScale.y, coll.radius * 2);
         }
 
         #region É|Å[ÉYèàóù

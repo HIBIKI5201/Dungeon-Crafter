@@ -1,5 +1,4 @@
 using DCFrameWork.Enemy;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -25,9 +24,15 @@ namespace DCFrameWork.DefenseEquipment
         }
 
 
-        protected abstract void Attack();
+        protected virtual void Attack()
+        {
+            var criticalPoint = Random.Range(0, 100);
+            var targetSelect = TargetSelect();
+            TargetsAddDamage(targetSelect.Interface, criticalPoint <= DefenseEquipmentData.Critical ? DefenseEquipmentData.Attack * 3 : DefenseEquipmentData.Attack);
+            TurretRotate(targetSelect.Obj.transform);
+        }
 
-        protected virtual void TurretRotate(GameObject enemy)
+        protected virtual void TurretRotate(Transform enemy)
         {
             _turret.transform.forward = enemy.transform.position - _turret.transform.position;
         }

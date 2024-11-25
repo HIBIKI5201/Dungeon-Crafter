@@ -23,13 +23,6 @@ namespace DCFrameWork.DefenseEquipment
                 _timer = Time.time;
             }
         }
-        protected override void Attack()
-        {
-            var criticalPoint = Random.Range(0, 100);
-            var targetSelect = TargetSelect();
-            TargetsAddDamage(targetSelect.Interface, criticalPoint <= DefenseEquipmentData.Critical ? DefenseEquipmentData.Attack * 3 : DefenseEquipmentData.Attack);
-            TurretRotate(targetSelect.Obj);
-        }
 
 
         protected override void Pause()

@@ -7,18 +7,18 @@ namespace DCFrameWork.DefenseEquipment
     {
         public float Attack { get => _attack; }
         [SerializeField]
-        private float _attack;
+        private float _attack = 1;
 
         public float Rate { get => _rate; }
         [SerializeField]
-        private float _rate;
+        private float _rate = 1;
 
         public float Critical { get => _critical; }
         [SerializeField]
-        private float _critical;
+        private float _critical = 1;
 
         public float Range { get => _range; }
         [SerializeField]
-        private float _range;
+        private float _range = 1;
     }
 }

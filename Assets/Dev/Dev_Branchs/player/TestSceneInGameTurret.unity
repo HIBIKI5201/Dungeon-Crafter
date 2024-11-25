@@ -308,7 +308,7 @@ PrefabInstance:
     - target: {fileID: 3230375918257091528, guid: 77fd2a5407b56e54d8e660f62bd21e54,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 1118
+      value: 1121
       objectReference: {fileID: 0}
     - target: {fileID: 5552272901336012716, guid: 77fd2a5407b56e54d8e660f62bd21e54,
         type: 3}
@@ -325,6 +325,12 @@ PrefabInstance:
       propertyPath: _canvas
       value: 
       objectReference: {fileID: 1987197833}
+    - target: {fileID: 7212133291848024612, guid: 77fd2a5407b56e54d8e660f62bd21e54,
+        type: 3}
+      propertyPath: _healthBar
+      value: 
+      objectReference: {fileID: 6218801146707754616, guid: a3d6ce18078983a49a949e9f607d794c,
+        type: 3}
     - target: {fileID: 7362610901474410085, guid: 77fd2a5407b56e54d8e660f62bd21e54,
         type: 3}
       propertyPath: 'm_Materials.Array.data[0]'

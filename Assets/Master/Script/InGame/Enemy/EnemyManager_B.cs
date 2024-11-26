@@ -77,9 +77,9 @@ namespace DCFrameWork.Enemy
             _deathAction = deathAction;
             HealthBarUpdate();
 
+            gameObject.transform.position = spawnPos;
             gameObject.SetActive(true);
             _healthBarManager.gameObject.SetActive(true);
-            gameObject.transform.position = spawnPos;
             _healthBarManager.FollowTarget(transform);
             GoToTargetPos(targetPos);
             Initialize_S();

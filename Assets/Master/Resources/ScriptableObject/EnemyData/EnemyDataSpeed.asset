@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: EnemyDataSpeed
   m_EditorClassIdentifier: 
   _maxHealth: 100
-  _defense: 0
-  _dexterity: 0
-  _specialChance: 0
-  _plunder: 0
-  _dropEXP: 0
-  _dropGold: 0
+  _defense: 1
+  _dexterity: 3
+  _specialChance: 1
+  _plunder: 1
+  _dropEXP: 1
+  _dropGold: 1

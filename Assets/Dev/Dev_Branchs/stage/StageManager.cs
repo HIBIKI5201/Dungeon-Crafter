@@ -18,7 +18,7 @@ public class StageManager : MonoBehaviour
     {
         public string Name;
         public GameObject PutObstaclePrefab;
-        [Tooltip("特注の視覚サポートオブジェクトがあればいれてください")]public GameObject VisualGuide;
+        [Tooltip("特注の視覚サポートオブジェクトがあればいれてください")] public GameObject VisualGuide;
     }
     Transform _spawnPos;
     Transform _targetPos;
@@ -42,20 +42,27 @@ public class StageManager : MonoBehaviour
         var enemyGenerator = GetComponentInChildren<EnemyGenerator>();
         _spawnPos = enemyGenerator.SpawnPos;
         _targetPos = enemyGenerator.TargetPos;
+        //スポーン地点と目標地点に障害物を置けないようにするための調整
+        _spawnPos.position = new Vector3(_spawnPos.position.x, 2.5f, _spawnPos.position.z);
+        _targetPos.position = new Vector3(_targetPos.position.x, 2.5f, _targetPos.position.z);
         _wallsParent = new GameObject();
         _wallsParent.transform.SetParent(transform);
         _wallsParent.name = "Obstacle Parent";
-        GetComponentInChildren<NavMeshSurface>().BuildNavMesh();
         _mainCamera = Camera.main;
-        _floorCenter = new Vector3(_floorPrefab.transform.position.x + _floorPrefab.transform.localScale.x / 2, _floorPrefab.transform.position.y, _floorPrefab.transform.position.z - _floorPrefab.transform.localScale.z / 2);
+        //_floorCenter = new Vector3(_floorPrefab.transform.position.x + _floorPrefab.transform.localScale.x / 2, _floorPrefab.transform.position.y, _floorPrefab.transform.position.z - _floorPrefab.transform.localScale.z / 2);
+        _floorCenter = transform.position;
         //_prefabHeight = _setPrefab.GetComponent<BoxCollider>().size.y;
         //何マスx何マスかを調べる
-        _sizeX = (int)(_floorPrefab.transform.localScale.x / _gridSize);
-        _sizeZ = (int)(_floorPrefab.transform.localScale.z / _gridSize);
+        //_sizeX = (int)(_floorPrefab.transform.localScale.x / _gridSize);
+        //_sizeZ = (int)(_floorPrefab.transform.localScale.z / _gridSize);
+        _sizeX = (int)(_floorPrefab.transform.localScale.x);
+        _sizeZ = (int)(_floorPrefab.transform.localScale.z);
+        //Debug.Log($"{_sizeX},{_sizeZ}");
         _map = new int[_sizeX, _sizeZ];
         //
-        _startX = (int)((_targetPos.position.x - _floorCenter.x + _floorPrefab.transform.localScale.x / 2 - _gridSize / 2) / _gridSize);
-        _startZ = (int)((_targetPos.position.z - _floorCenter.z + _floorPrefab.transform.localScale.z / 2 - _gridSize / 2) / _gridSize);
+        _startX = (int)((_targetPos.position.x - _floorCenter.x + _floorPrefab.transform.localScale.x * _gridSize / 2 - _gridSize / 2) / _gridSize);
+        _startZ = (int)((_targetPos.position.z - _floorCenter.z + _floorPrefab.transform.localScale.z * _gridSize / 2 - _gridSize / 2) / _gridSize);
+        //Debug.Log($"{_startX},{_startZ}");
         //デフォルトで配置するオブジェクトをセットしてる。後から消すかも？
         _setPrefab = _obstaclePrefabList[0].PutObstaclePrefab;
         if (_obstaclePrefabList[0].VisualGuide == null)
@@ -75,9 +82,9 @@ public class StageManager : MonoBehaviour
             {
                 for (int j = 0; j < _sizeX; j++)
                 {
-                    Vector3 vector3 = new Vector3((_floorCenter.x - _floorPrefab.transform.localScale.x / 2 + _gridSize / 2) + _gridSize * j,
+                    Vector3 vector3 = new Vector3((_floorCenter.x - _floorPrefab.transform.localScale.x * _gridSize / 2 + _gridSize / 2) + _gridSize * j,
                                                   7.5f,
-                                                 (_floorCenter.z - _floorPrefab.transform.localScale.z / 2 + _gridSize / 2) + _gridSize * i);
+                                                 (_floorCenter.z - _floorPrefab.transform.localScale.z * _gridSize / 2 + _gridSize / 2) + _gridSize * i);
                     if (Physics.Raycast(vector3, Vector3.down, 5, LayerMask.GetMask("Ground")))
                     {
                         _map[j, i] = 1;
@@ -169,8 +176,8 @@ public class StageManager : MonoBehaviour
         int currentX;
         int currentZ;
         //(-42.5-2.5 + 47.5 - 2.5)/5
-        currentX = (int)((currentPosition.x - _floorCenter.x + _floorPrefab.transform.localScale.x / 2 - _gridSize / 2) / _gridSize);
-        currentZ = (int)((currentPosition.z - _floorCenter.z + _floorPrefab.transform.localScale.z / 2 - _gridSize / 2) / _gridSize);
+        currentX = (int)((currentPosition.x - _floorCenter.x + _floorPrefab.transform.localScale.x * _gridSize / 2 - _gridSize / 2) / _gridSize);
+        currentZ = (int)((currentPosition.z - _floorCenter.z + _floorPrefab.transform.localScale.z * _gridSize / 2 - _gridSize / 2) / _gridSize);
         //Debug.Log($"{currentX},{currentZ}");
         if (currentX < 0 || currentZ < 0 || currentX >= _sizeX || currentZ >= _sizeZ) { return false; }
         int[,] subMap = new int[_sizeX, _sizeZ];
@@ -234,8 +241,8 @@ public class StageManager : MonoBehaviour
         int currentZ;
         //(-42.5-2.5 + 47.5 - 2.5)/5
         //オブジェクトを置こうとしている座標がグリッド座標のどこかを調べる
-        currentX = (int)((currentPosition.x - _floorCenter.x + _floorPrefab.transform.localScale.x / 2 - _gridSize / 2) / _gridSize);
-        currentZ = (int)((currentPosition.z - _floorCenter.z + _floorPrefab.transform.localScale.z / 2 - _gridSize / 2) / _gridSize);
+        currentX = (int)((currentPosition.x - _floorCenter.x + _floorPrefab.transform.localScale.x * _gridSize / 2 - _gridSize / 2) / _gridSize);
+        currentZ = (int)((currentPosition.z - _floorCenter.z + _floorPrefab.transform.localScale.z * _gridSize / 2 - _gridSize / 2) / _gridSize);
         //マップ情報の更新
         if (_map[currentX, currentZ] == 0)
         {

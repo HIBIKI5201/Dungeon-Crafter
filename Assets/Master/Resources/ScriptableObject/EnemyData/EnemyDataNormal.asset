@@ -10,13 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a34e79b4860e091428e50ea98cb556d1, type: 3}
-  m_Name: EnemyDataDefence
+  m_Name: EnemyDataNormal
   m_EditorClassIdentifier: 
-  MaxHealth: 100
-  CurrentHealth: 10
-  Defense: 0
-  Dexterity: 3
-  SpecialChance: 0
-  Plunder: 0
-  DropEXP: 0
-  DropGold: 0
+  _maxHealth: 100
+  _defense: 1
+  _dexterity: 3
+  _specialChance: 1
+  _plunder: 1
+  _dropEXP: 1
+  _dropGold: 1

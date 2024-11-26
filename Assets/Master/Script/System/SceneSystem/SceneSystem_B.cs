@@ -17,7 +17,10 @@ namespace DCFrameWork.SceneSystem
             if (_input is null)
                 Debug.LogWarning("InputBuffer‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
 
-            await _UIManager.Initialize();
+            if (_UIManager is not null)
+            {
+                await _UIManager.Initialize();
+            }
 
             Initialize_S();
         }

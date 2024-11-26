@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DCFrameWork.DefenseEquipment
 {
-    public class WeeknessTurretManager : DEWalkerableManager_SB<DefenseEquipmentData_B>
+    public class WeeknessTurretManager : DEConditionChangeManager_SB<DefenseEquipmentData_B>
     {
         protected override void Think() //UpDate ‚Æ“¯‹`
         {

@@ -18,10 +18,12 @@ namespace DCFrameWork.MainSystem
         {
             if (_isLoading) yield break;
             _isLoading = true;
+            yield return SceneManager.UnloadSceneAsync(_currentSceneName);
+
+            _currentSceneName = _sceneNameDict[kind];
             yield return SceneManager.LoadSceneAsync(_sceneNameDict[kind], LoadSceneMode.Additive);
             SceneManager.SetActiveScene(SceneManager.GetSceneByName(_sceneNameDict[kind]));
-            yield return SceneManager.UnloadSceneAsync(_currentSceneName);
-            _currentSceneName = _sceneNameDict[kind];
+
             _isLoading = false;
         }
     }

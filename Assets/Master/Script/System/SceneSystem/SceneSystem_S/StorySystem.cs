@@ -14,5 +14,9 @@ namespace DCFrameWork.SceneSystem
         {
 
         }
+
+        public void NextStory() => _storyManager.NextContext();
+
+        public void SetStoryData(StoryData data) => _storyManager.SetStoryData(data);
     }
 }

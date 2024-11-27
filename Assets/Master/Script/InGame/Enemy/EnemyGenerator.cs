@@ -1,3 +1,4 @@
+using DCFrameWork.MainSystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -103,7 +104,7 @@ namespace DCFrameWork.Enemy
             while (true)
             {
                 objectPool.Get();
-                yield return new WaitForSeconds(_spawnInterval);
+                yield return FrameWork.PausableWaitForSecond(_spawnInterval);
             }
 
         }

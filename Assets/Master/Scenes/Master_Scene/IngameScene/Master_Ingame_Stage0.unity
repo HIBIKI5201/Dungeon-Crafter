@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 190185767}
   - component: {fileID: 190185766}
   - component: {fileID: 190185765}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: OuterWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -406,7 +406,7 @@ GameObject:
   - component: {fileID: 606045133}
   - component: {fileID: 606045132}
   - component: {fileID: 606045131}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: InnerWall (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -527,7 +527,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 629702510}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: OuterWalls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -566,7 +566,7 @@ GameObject:
   - component: {fileID: 765877487}
   - component: {fileID: 765877486}
   - component: {fileID: 765877485}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: InnerWall (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -691,7 +691,7 @@ GameObject:
   - component: {fileID: 1214991289}
   - component: {fileID: 1214991288}
   - component: {fileID: 1214991287}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: OuterWall (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -816,7 +816,7 @@ GameObject:
   - component: {fileID: 1435093419}
   - component: {fileID: 1435093418}
   - component: {fileID: 1435093417}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: InnerWall (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -941,7 +941,7 @@ GameObject:
   - component: {fileID: 1615447871}
   - component: {fileID: 1615447870}
   - component: {fileID: 1615447869}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: OuterWall (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1066,7 +1066,7 @@ GameObject:
   - component: {fileID: 1682486525}
   - component: {fileID: 1682486524}
   - component: {fileID: 1682486523}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: InnerWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1191,7 +1191,7 @@ GameObject:
   - component: {fileID: 1692319512}
   - component: {fileID: 1692319511}
   - component: {fileID: 1692319510}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: InnerWall (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1316,7 +1316,7 @@ GameObject:
   - component: {fileID: 1772475656}
   - component: {fileID: 1772475655}
   - component: {fileID: 1772475654}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: OuterWall (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1720,7 +1720,7 @@ GameObject:
   - component: {fileID: 1971290977}
   - component: {fileID: 1971290976}
   - component: {fileID: 1971290975}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: InnerWall (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1841,7 +1841,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2140638503}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: InnerWalls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1974,6 +1974,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Center.z
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3402836718733780584, guid: dd543114f5589e04ab6ca0e82abc46b7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4487128975985753183, guid: dd543114f5589e04ab6ca0e82abc46b7,
         type: 3}

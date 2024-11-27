@@ -10,36 +10,38 @@ namespace DCFrameWork.Enemy
 
     public abstract class EnemyManager_B<Data> : MonoBehaviour, IEnemy, IPausable where Data : EnemyData_B
     {
+        #region データ類
         [SerializeField]
-        private EnemyData_B _data;
         private Data _enemyData;
-        protected Data EnemyData { get => _enemyData; }
-
-        private float _maxHealth;
-        float IFightable.MaxHealth { get => _maxHealth; set => _maxHealth = value; }
+        float IFightable.MaxHealth { get => _enemyData.MaxHealth; }
         private float _currentHealth;
         float IFightable.CurrentHealth { get => _currentHealth; set { _currentHealth = value; HealthBarUpdate(); } }
+
         private float _defense;
-        float IFightable.Defense { get => _defense; set => _defense = value; }
+        protected float Defense { get => _enemyData.Defense; }
+        protected float Dexterity { get => _enemyData.Dexterity;}
+
         [SerializeField]
         protected float _levelRequirePoint;
-
+        #endregion
         private EnemyHealthBarManager _healthBarManager;
+        private NavMeshAgent _agent;
 
+        #region インターフェース
         private Dictionary<ConditionType, int> _conditionList = new();
-        Dictionary<ConditionType, int> IConditionable.ConditionList { get => _conditionList; set => _conditionList = value; }
+        Dictionary<ConditionType, int> IConditionable.ConditionList { get => _conditionList; }
         public int CountCondition(ConditionType type) => (_conditionList.TryGetValue(type, out int count)) ? count : 0;
 
         private Action _deathAction;
         Action IFightable.DeathAction { get => _deathAction; set => _deathAction = value; }
+        #endregion
 
-        private NavMeshAgent _agent;
 
-        private float _debuff = 0.2f;
-        protected float Debuff { get => _debuff; set => _debuff = value; }
+        private const float _debuff = 0.2f;
+        protected float Debuff { get => _debuff; }
 
-        private float _buff = 0.1f;
-        protected float Buff { get => _buff; set => _buff = value; }
+        private const float _buff = 0.1f;
+        protected float Buff { get => _buff; }
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
@@ -49,7 +51,7 @@ namespace DCFrameWork.Enemy
         {
             GameBaseSystem.mainSystem?.AddPausableObject(this);
             _healthBarManager = enemyHealthBarManager;
-            if (_data is null)
+            if (_enemyData is null)
                 Debug.Log("データがありません");
             LoadCommonData();
             enemyHealthBarManager.Initialize();
@@ -79,14 +81,17 @@ namespace DCFrameWork.Enemy
         void IEnemy.Initialize(Vector3 spawnPos, Vector3 targetPos, Action deathAction) => Initialize(spawnPos, targetPos, deathAction);
         private void Initialize(Vector3 spawnPos, Vector3 targetPos, Action deathAction)
         {
-            _currentHealth = _maxHealth;
-            ChangeSpeed(EnemyData.Dexterity);
-            _deathAction = deathAction;
+            _currentHealth = _enemyData.MaxHealth;
             HealthBarUpdate();
+            ChangeSpeed(Dexterity);
+            _deathAction = deathAction;
+
             gameObject.transform.position = spawnPos;
+
             gameObject.SetActive(true);
             _healthBarManager.gameObject.SetActive(true);
             _healthBarManager.FollowTarget(transform);
+
             GoToTargetPos(targetPos);
             Initialize_S();
         }
@@ -98,11 +103,7 @@ namespace DCFrameWork.Enemy
 
         private void LoadCommonData()
         {
-            Data data = _data as Data;
-            _enemyData = data;
-            _maxHealth = data.MaxHealth;
-            _defense = data.Defense;
-            LoadSpecificnData(data);
+            LoadSpecificnData(_enemyData);
         }
 
 
@@ -130,19 +131,17 @@ namespace DCFrameWork.Enemy
             switch (type)
             {
                 case ConditionType.slow:
-                    float newSpeed = EnemyData.Dexterity * (1 - (CountCondition(ConditionType.slow) * _debuff));
+                    float newSpeed = _enemyData.Dexterity * (1 - (CountCondition(ConditionType.slow) * _debuff));
                     ChangeSpeed(newSpeed);
                     break;
                 case ConditionType.weakness:
-                    float newDefense = EnemyData.Defense * (1 - (CountCondition(ConditionType.weakness) * _debuff));
+                    float newDefense = _enemyData.Defense * (1 - (CountCondition(ConditionType.weakness) * _debuff));
                     ChangeDefense(newDefense);
                     break;
                 case ConditionType.defensive:
-                    newDefense = EnemyData.Defense * (1 + (CountCondition(ConditionType.defensive) * _buff));
+                    newDefense = _enemyData.Defense * (1 + (CountCondition(ConditionType.defensive) * _buff));
                     ChangeDefense(newDefense);
                     break;
-
-
             }
 
         }
@@ -158,7 +157,7 @@ namespace DCFrameWork.Enemy
 
         public void HealthBarUpdate()
         {
-            _healthBarManager?.BarFillUpdate(_currentHealth / _maxHealth);
+            _healthBarManager?.BarFillUpdate(_currentHealth / _enemyData.MaxHealth);
         }
 
 
@@ -208,10 +207,9 @@ namespace DCFrameWork.Enemy
         Action DeathAction { get; set; }
 
         void HealthBarUpdate();
-        float MaxHealth { get; protected set; }
+        float MaxHealth { get; }
         float CurrentHealth { get; protected set; }
-
-        float Defense {  get; protected set; }
+        
         /// <summary>
         /// ダメージを受ける
         /// </summary>
@@ -250,7 +248,7 @@ namespace DCFrameWork.Enemy
 
     public interface IConditionable
     {
-        Dictionary<ConditionType, int> ConditionList { get; protected set; }
+        protected Dictionary<ConditionType, int> ConditionList { get; }
 
         void AddCondition(ConditionType type)
         {

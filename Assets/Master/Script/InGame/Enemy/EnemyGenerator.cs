@@ -2,24 +2,22 @@ using DCFrameWork.MainSystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Pool;
-using Random = UnityEngine.Random;
 
 namespace DCFrameWork.Enemy
 {
     public class EnemyGenerator : MonoBehaviour
     {
-        public ObjectPool<IEnemy> objectPool;
+        public ObjectPool<IEnemy> objectPoolNormal;
 
         [SerializeField]
-        List<EnemyGenerateData> _objects = new();
+        EnemyElement[] _objects;
 
         [SerializeField]
         private Transform _spawnPos;
-        
-        public Transform SpawnPos {  get { return _spawnPos; } }
+
+        public Transform SpawnPos { get { return _spawnPos; } }
 
         [SerializeField]
         private Transform _targetPos;
@@ -40,20 +38,26 @@ namespace DCFrameWork.Enemy
         [SerializeField]
         private float _spawnInterval = 3f;
 
+        Dictionary<EnemyKind, ObjectPool<IEnemy>> _enemyPools = new();
+
         private void Start()
         {
-            ObjectPooling();
+            foreach (var enemy in _objects)
+            {
+                var a = ObjectPooling(enemy.obj);
+                _enemyPools.Add(enemy.kind, a);
+            }
+           
             StartCoroutine(Generate());
         }
 
-        private void ObjectPooling()
+        private ObjectPool<IEnemy> ObjectPooling(GameObject obj)
         {
-
-            objectPool = new ObjectPool<IEnemy>(
+            ObjectPool<IEnemy> objPool = null;
+            return objPool = new ObjectPool<IEnemy>(
             () =>
             {
-                int resultIndex = ChooseNum(_objects.Select(o => o.SpawnChance));
-                var spawnedEnemy = Instantiate(_objects[resultIndex].EnemyPrefab, _spawnPos.position, Quaternion.identity, transform);
+                var spawnedEnemy = Instantiate(obj, _spawnPos.position, Quaternion.identity, transform);
                 var healthBar = Instantiate(_healthBar, _canvas.transform);
                 healthBar.transform.SetParent(_canvas.transform);
                 var enemy = spawnedEnemy.GetComponent<IEnemy>();
@@ -62,7 +66,7 @@ namespace DCFrameWork.Enemy
             },
            target =>
            {
-               target.Initialize(_spawnPos.position, _targetPos.position, () => objectPool.Release(target));
+               target.Initialize(_spawnPos.position, _targetPos.position, () => objPool.Release(target));
            },
            target =>
            {
@@ -75,45 +79,33 @@ namespace DCFrameWork.Enemy
            true, _defaultValue, _maxValue);
         }
 
-        int ChooseNum(IEnumerable<int> chances)
-        {
-            float total = chances.Sum();
-            var randomNum = Random.Range(1, total + 1);
-
-            for (int i = 0; i < chances.Count(); i++)
-            {
-                int element = chances.ElementAt(i);
-                if (randomNum < element)
-                {
-                    return i;
-                }
-                else
-                {
-                    randomNum -= element;
-                }
-
-            }
-
-            return 0;
-
-        }
-
         IEnumerator Generate()
         {
             yield return null;
             while (true)
             {
-                objectPool.Get();
+                _enemyPools[0].Get();
                 yield return FrameWork.PausableWaitForSecond(_spawnInterval);
             }
 
         }
+
     }
 
     [Serializable]
-    public struct EnemyGenerateData
+    public struct EnemyElement
     {
-        public GameObject EnemyPrefab;
-        public int SpawnChance;
+        public GameObject obj;
+        public EnemyKind kind;
+    }
+
+    public enum EnemyKind
+    {
+        Normal,
+        Defense,
+        Lead,
+        Buff,
+        Boss,
+        Fly
     }
 }

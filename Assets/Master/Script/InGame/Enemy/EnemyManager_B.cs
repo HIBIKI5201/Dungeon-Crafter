@@ -19,7 +19,8 @@ namespace DCFrameWork.Enemy
         float IFightable.MaxHealth { get => _maxHealth; set => _maxHealth = value; }
         private float _currentHealth;
         float IFightable.CurrentHealth { get => _currentHealth; set { _currentHealth = value; HealthBarUpdate(); } }
-
+        private float _defense;
+        float IFightable.Defense { get => _defense; set => _defense = value; }
         [SerializeField]
         protected float _levelRequirePoint;
 
@@ -33,6 +34,12 @@ namespace DCFrameWork.Enemy
         Action IFightable.DeathAction { get => _deathAction; set => _deathAction = value; }
 
         private NavMeshAgent _agent;
+
+        private float _debuff = 0.2f;
+        protected float Debuff { get => _debuff; set => _debuff = value; }
+
+        private float _buff = 0.1f;
+        protected float Buff { get => _buff; set => _buff = value; }
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
@@ -76,7 +83,6 @@ namespace DCFrameWork.Enemy
             ChangeSpeed(EnemyData.Dexterity);
             _deathAction = deathAction;
             HealthBarUpdate();
-
             gameObject.transform.position = spawnPos;
             gameObject.SetActive(true);
             _healthBarManager.gameObject.SetActive(true);
@@ -95,7 +101,7 @@ namespace DCFrameWork.Enemy
             Data data = _data as Data;
             _enemyData = data;
             _maxHealth = data.MaxHealth;
-
+            _defense = data.Defense;
             LoadSpecificnData(data);
         }
 
@@ -124,10 +130,21 @@ namespace DCFrameWork.Enemy
             switch (type)
             {
                 case ConditionType.slow:
-                    float newSpeed = EnemyData.Dexterity * (1 - (CountCondition(ConditionType.slow) * 0.5f));
+                    float newSpeed = EnemyData.Dexterity * (1 - (CountCondition(ConditionType.slow) * _debuff));
                     ChangeSpeed(newSpeed);
                     break;
+                case ConditionType.weakness:
+                    float newDefense = EnemyData.Defense * (1 - (CountCondition(ConditionType.weakness) * _debuff));
+                    ChangeDefense(newDefense);
+                    break;
+                case ConditionType.defensive:
+                    newDefense = EnemyData.Defense * (1 + (CountCondition(ConditionType.defensive) * _buff));
+                    ChangeDefense(newDefense);
+                    break;
+
+
             }
+
         }
 
         /// <summary>
@@ -145,6 +162,8 @@ namespace DCFrameWork.Enemy
         }
 
 
+
+
         /// <summary>
         /// スピードを変える
         /// </summary>
@@ -152,6 +171,15 @@ namespace DCFrameWork.Enemy
         private void ChangeSpeed(float speed)
         {
             _agent.speed = speed;
+        }
+        
+        /// <summary>
+        /// 防御力を変える
+        /// </summary>
+        /// <param name="defense">スピード</param>
+        private void ChangeDefense(float defense)
+        {
+            _defense = defense;
         }
 
         #region ポーズ処理
@@ -165,6 +193,7 @@ namespace DCFrameWork.Enemy
     {
         slow,
         weakness,
+        defensive,
     }
 
     public interface IEnemy : IFightable, IConditionable
@@ -182,7 +211,7 @@ namespace DCFrameWork.Enemy
         float MaxHealth { get; protected set; }
         float CurrentHealth { get; protected set; }
 
-
+        float Defense {  get; protected set; }
         /// <summary>
         /// ダメージを受ける
         /// </summary>

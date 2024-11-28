@@ -33,7 +33,6 @@ namespace DCFrameWork.DefenseEquipment
                     summonPos = SummonPosition();
                     _position = summonPos;
                     count++;
-                    Debug.LogError(Check(summonPos));
                     if (count <= 10)
                     {
                         isChecked = true;

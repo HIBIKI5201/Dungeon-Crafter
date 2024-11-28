@@ -21,7 +21,7 @@ namespace DCFrameWork.DefenseEquipment
             if (_entityList.Count < count)
             {
                 if (_entityPrefab is null) return;
-                _entityList.Add(Instantiate(_entityPrefab, pos, Quaternion.identity));
+                _entityList.Add(Instantiate(_entityPrefab, new Vector3(pos.x, 0, pos.z), Quaternion.identity));
             }
         }
         protected bool Check(Vector3 pos)
@@ -30,11 +30,8 @@ namespace DCFrameWork.DefenseEquipment
 
             if (hit.collider != null)
             {
-                Debug.LogWarning($"Hit object: {hit.collider.gameObject.name}, Layer: {hit.collider.gameObject.layer}");
                 return hit.collider.gameObject.layer == Mathf.Log(_groundLayer.value, 2);
             }
-
-            Debug.Log("No collision detected.");
             return false;
         }
 

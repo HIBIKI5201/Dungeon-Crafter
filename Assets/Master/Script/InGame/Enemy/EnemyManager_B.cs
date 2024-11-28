@@ -33,6 +33,8 @@ namespace DCFrameWork.Enemy
         public int CountCondition(ConditionType type) => (_conditionList.TryGetValue(type, out int count)) ? count : 0;
 
         private Action _deathAction;
+
+        Vector3 IEnemy.position { get => this.transform.position; set => this.transform.position = value; }
         Action IFightable.DeathAction { get => _deathAction; set => _deathAction = value; }
         #endregion
 
@@ -201,6 +203,8 @@ namespace DCFrameWork.Enemy
         void Initialize(Vector3 spawnPos, Vector3 targetPos, Action deathAction);
         void StartByPool(EnemyHealthBarManager enemyHealthBarManager, Vector3 targetPos);
         void Destroy();
+
+        Vector3 position { get; set; }
     }
 
     public interface IFightable

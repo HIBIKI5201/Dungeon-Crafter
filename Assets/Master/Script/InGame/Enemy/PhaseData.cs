@@ -20,7 +20,6 @@ namespace DCFrameWork.Enemy
         public int _enemyCount;
         public float _spawnStartTime;
         public float _spawnEndTime;
-        public float _spawnCoolTime;
         public int _spawnPoint;
     }
 }

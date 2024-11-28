@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace DCFrameWork.Enemy
 {
@@ -8,6 +9,7 @@ namespace DCFrameWork.Enemy
     {
         [SerializeField] EnemyGenerator _enemyGenerators;
         [SerializeField] PhaseData _phaseData;
+        [SerializeField] string _homeSceneName;
 
         int _waveCount;
         int _waveEnemySum;
@@ -24,22 +26,21 @@ namespace DCFrameWork.Enemy
         public float WaveProgressNormal { get => (float)_deathEemyCount / (_waveEnemySum != 0 ? _waveEnemySum : 1); }
         WaveData ActiveWave { get => _phaseData._waveData[_waveCount]; }
 
-        private void Awake()
-        {
-            _waveStartAction += () => NextWave();
-            _waveStartAction?.Invoke();
-        }
-        private void Start()
+        public void Initialize()
         {
             if (!_phaseData)
             {
                 Debug.Log("PhaseData is null");
+                return;
             }
+            _waveStartAction += () => NextWave();
+            _waveStartAction?.Invoke();
+            Debug.Log("WaveStart");
         }
-
 
         void Update()
         {
+
             if (WaveProgressNormal >= 1)
             {
                 if (_waveCount != _phaseData._waveData.Length)
@@ -51,12 +52,12 @@ namespace DCFrameWork.Enemy
                 else
                 {
                     _phaseEndAction?.Invoke();
+                    SceneManager.LoadScene(_homeSceneName);
                 }
             }
         }
 
-       
-        public void NextWave()
+        void NextWave()
         {
             _deathEemyCount = 0;
             _enemyGenerators.Waving(ActiveWave);

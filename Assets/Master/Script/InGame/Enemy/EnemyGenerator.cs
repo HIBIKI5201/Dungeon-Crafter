@@ -39,11 +39,9 @@ namespace DCFrameWork.Enemy
 
         private Dictionary<EnemyKind, ObjectPool<IEnemy>> _dict = new();
 
-        public WaveData _waveData;
         private void Start()
         {
            //Initialize();
-          
         }
 
        
@@ -56,10 +54,6 @@ namespace DCFrameWork.Enemy
             }
         }
 
-        public void WaveDebug()
-        {
-            Waving(_waveData);
-        }
 
         public void Waving(WaveData waveData)
         {

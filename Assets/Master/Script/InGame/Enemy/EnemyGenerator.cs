@@ -2,6 +2,8 @@ using DCFrameWork.MainSystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -35,35 +37,25 @@ namespace DCFrameWork.Enemy
         [SerializeField]
         private int _maxValue = 100;
 
-        [SerializeField]
-        private float _spawnInterval = 3f;
-
-        Dictionary<EnemyKind, GameObject> _enemyObjs = new();
-
-        public List<ObjectPool<IEnemy>> _nowPool = new();
+        private Dictionary<EnemyKind, ObjectPool<IEnemy>> _dict = new();
 
         public WaveData _waveData;
         private void Start()
         {
-            Waving();
+            
         }
 
-        public void Waving()
+        [ContextMenu("waving")]
+        public void Waving(WaveData waveData)
         {
-            foreach (var enemy in _objects)
+            var kinds = _objects.Select(e => e.kind);
+            foreach (var a in waveData._spawnData)
             {
-                _enemyObjs.Add(enemy.kind, enemy.obj);
-            }
-
-            foreach (var a in _waveData._spawnData)
-            {
-                if (_enemyObjs.ContainsKey(a._enemyType))
+                if (kinds.Contains(a._enemyType))
                 {
-                    _nowPool.Add(ObjectPooling(_enemyObjs[a._enemyType], DecisionSpawnPoint(a._spawnPoint)));
+                    StartCoroutine(Generate(a, _dict[a._enemyType]));
                 }
             }
-
-            StartCoroutine(Generate());
         }
 
         private ObjectPool<IEnemy> ObjectPooling(GameObject obj, Transform trm)
@@ -94,17 +86,17 @@ namespace DCFrameWork.Enemy
            true, _defaultValue, _maxValue);
         }
 
-        IEnumerator Generate()
+        IEnumerator Generate(EnemySpawnData data, ObjectPool<IEnemy> pool)
         {
-            yield return null;
-            while (true)
+            yield return FrameWork.PausableWaitForSecond(data._spawnStartTime);
+            float timer = data._spawnEndTime - data._spawnStartTime;
+            timer = timer / data._enemyCount;
+            int count = data._enemyCount;
+            while (count > 0)
             {
-                foreach (var op in _nowPool)
-                {
-                    op.Get();
-                }
-
-                yield return FrameWork.PausableWaitForSecond(_spawnInterval);
+                pool.Get();
+                count--;
+                yield return FrameWork.PausableWaitForSecond(timer);
             }
 
         }

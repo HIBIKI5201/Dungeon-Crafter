@@ -42,8 +42,8 @@ namespace DCFrameWork.Enemy
         public WaveData _waveData;
         private void Start()
         {
-           Initialize();
-           WaveDebug();
+           //Initialize();
+          
         }
 
        
@@ -93,6 +93,7 @@ namespace DCFrameWork.Enemy
            target =>
            {
                target.DeathBehaviour();
+               WaveManager.EnemyDeathCount();
            },
            target =>
            {

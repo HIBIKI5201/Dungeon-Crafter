@@ -33,7 +33,7 @@ namespace DCFrameWork.SceneSystem
             UnityWebRequest request = UnityWebRequest.Get("https://docs.google.com/spreadsheets/d/" + _sheet_link + "/gviz/tq?tqx=out:csv&sheet=" + _sheetName);
             await request.SendWebRequest();
 
-            if (request.isHttpError || request.isNetworkError)
+            if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
             {
                 Debug.Log(request.error);
                 return;

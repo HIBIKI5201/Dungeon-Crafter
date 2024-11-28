@@ -154,9 +154,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10e113d43f86a4a4d949d1602b26e9c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyGenerators: {fileID: 0}
-  _phaseData: {fileID: 0}
-  _homeSceneName: 
+  _enemyGenerators: {fileID: 7212133291848024612}
+  _phaseData: {fileID: 11400000, guid: b50d27d6cf95a704db289e0d595bc7a1, type: 2}
+  _homeSceneName: Master_Home
 --- !u!1 &5865097026064514226
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,7 +380,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1130
+  m_VersionIndex: 1136
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -596,7 +596,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _objects:
-  - obj: {fileID: 7990310466857601233, guid: f43d43d562ab52849938a905b822a5de, type: 3}
+  - obj: {fileID: 7990310466857601233, guid: 0a136d5451176e34abf00d05f38d0f85, type: 3}
     kind: 0
   - obj: {fileID: 7990310466857601233, guid: 837ec1f55b14f894e8397ccb545f2850, type: 3}
     kind: 1

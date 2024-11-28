@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4240597087944dc42bfdf5339d77a5d5, type: 3}
   m_Name: StoryTextData
   m_EditorClassIdentifier: 
+  _sheetName: "\u30C1\u30E5\u30FC\u30C8\u30EA\u30A2\u30EB\u30AF\u30EA\u30A2"
   _list:
   - _character: 
     _text: 

@@ -9,15 +9,15 @@ namespace DCFrameWork.Enemy
 {
     public class EnemyGenerator : MonoBehaviour
     {
- 
+
 
         [SerializeField]
         EnemyElement[] _objects;
 
         [SerializeField]
-        private Transform _spawnPos;
+        private Transform[] _spawnPos;
 
-        public Transform SpawnPos { get { return _spawnPos; } }
+        public Transform[] SpawnPos { get { return _spawnPos; } }
 
         [SerializeField]
         private Transform _targetPos;
@@ -40,10 +40,15 @@ namespace DCFrameWork.Enemy
 
         Dictionary<EnemyKind, GameObject> _enemyObjs = new();
 
-        public List <ObjectPool<IEnemy>> _nowPool = new();
+        public List<ObjectPool<IEnemy>> _nowPool = new();
 
         public WaveData _waveData;
         private void Start()
+        {
+            Waving();
+        }
+
+        public void Waving()
         {
             foreach (var enemy in _objects)
             {
@@ -54,20 +59,20 @@ namespace DCFrameWork.Enemy
             {
                 if (_enemyObjs.ContainsKey(a._enemyType))
                 {
-                    _nowPool.Add(ObjectPooling(_enemyObjs[a._enemyType]));
+                    _nowPool.Add(ObjectPooling(_enemyObjs[a._enemyType], DecisionSpawnPoint(a._spawnPoint)));
                 }
             }
 
             StartCoroutine(Generate());
         }
 
-        private ObjectPool<IEnemy> ObjectPooling(GameObject obj)
+        private ObjectPool<IEnemy> ObjectPooling(GameObject obj, Transform trm)
         {
             ObjectPool<IEnemy> objPool = null;
             return objPool = new ObjectPool<IEnemy>(
             () =>
             {
-                var spawnedEnemy = Instantiate(obj, _spawnPos.position, Quaternion.identity, transform);
+                var spawnedEnemy = Instantiate(obj, trm.position, Quaternion.identity, transform);
                 var healthBar = Instantiate(_healthBar, _canvas.transform);
                 healthBar.transform.SetParent(_canvas.transform);
                 var enemy = spawnedEnemy.GetComponent<IEnemy>();
@@ -76,7 +81,7 @@ namespace DCFrameWork.Enemy
             },
            target =>
            {
-               target.Initialize(_spawnPos.position, _targetPos.position, () => objPool.Release(target));
+               target.Initialize(trm.position, _targetPos.position, () => objPool.Release(target));
            },
            target =>
            {
@@ -98,13 +103,32 @@ namespace DCFrameWork.Enemy
                 {
                     op.Get();
                 }
-               
+
                 yield return FrameWork.PausableWaitForSecond(_spawnInterval);
             }
 
         }
 
+        Transform DecisionSpawnPoint(int i)
+        {
+            Transform trm;
+
+            if (i == 0)
+            {
+                trm = _spawnPos[UnityEngine.Random.Range(0, _spawnPos.Length)];
+            }
+            else 
+            {
+                trm = _spawnPos[i - 1];
+            }
+            
+            return trm;
+        }
+
     }
+
+
+
 
     [Serializable]
     public struct EnemyElement

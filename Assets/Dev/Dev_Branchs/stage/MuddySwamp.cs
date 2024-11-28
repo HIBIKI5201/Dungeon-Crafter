@@ -5,19 +5,13 @@ namespace DCFrameWork
 {
     public class MuddySwamp : Swamp_B
     {
-        protected override void AddCondition(EnemyManager_B<EnemyData_B> enemy)
+        protected override void AddCondition(IEnemy enemy)
         {
-            if(enemy.TryGetComponent(out IConditionable component))
-            {
-                component.AddCondition(ConditionType.slow);
-            }
+            enemy.AddCondition(ConditionType.slow);
         }
-        protected override void RemoveCondition(EnemyManager_B<EnemyData_B> enemy)
+        protected override void RemoveCondition(IEnemy enemy)
         {
-            if (enemy.TryGetComponent(out IConditionable component))
-            {
-                component.RemoveCondition(ConditionType.slow);
-            }
+            enemy.RemoveCondition(ConditionType.slow);
         }
     }
 }

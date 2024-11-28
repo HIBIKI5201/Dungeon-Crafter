@@ -1,24 +1,24 @@
 using DCFrameWork.Enemy;
+using DCFrameWork.MainSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 namespace DCFrameWork
 {
     public class PoisonousSwamp : Swamp_B
     {
         [SerializeField] float _damage;
         [SerializeField] float _rate;
-        List<EnemyManager_B<EnemyData_B>> _enemies = new List<EnemyManager_B<EnemyData_B>>();
+        List<IEnemy> _enemies = new List<IEnemy>();
         private void Start()
         {
             StartCoroutine(AddDamage());
         }
-        protected override void AddCondition(EnemyManager_B<EnemyData_B> enemy)
+        protected override void AddCondition(IEnemy enemy)
         {
             _enemies.Add(enemy);
         }
-        protected override void RemoveCondition(EnemyManager_B<EnemyData_B> enemy)
+        protected override void RemoveCondition(IEnemy enemy)
         {
             _enemies.Remove(enemy);
         }
@@ -26,15 +26,11 @@ namespace DCFrameWork
         {
             while (true)
             {
-                foreach (EnemyManager_B<EnemyData_B> enemy in _enemies)
+                foreach (IEnemy enemy in _enemies)
                 {
-                    if (enemy.TryGetComponent(out IFightable component))
-                    {
-                        component.HitDamage(_damage);
-                        //Debug.Log("ì≈É_ÉÅÅ[ÉW");
-                    }
+                    enemy.HitDamage(_damage);
                 }
-                yield return new WaitForSeconds(_rate);
+                yield return FrameWork.PausableWaitForSecond(_rate);
             }         
         }
     }

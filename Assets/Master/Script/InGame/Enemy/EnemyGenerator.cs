@@ -42,9 +42,20 @@ namespace DCFrameWork.Enemy
         public WaveData _waveData;
         private void Start()
         {
+           Initialize();
+           WaveDebug();
         }
 
-        [ContextMenu("Waving")]
+       
+
+        public void Initialize()
+        {
+            foreach (var obj in _objects)
+            {
+                _dict.Add(obj.kind, ObjectPooling(obj.obj));
+            }
+        }
+
         public void WaveDebug()
         {
             Waving(_waveData);
@@ -62,13 +73,13 @@ namespace DCFrameWork.Enemy
             }
         }
 
-        private ObjectPool<IEnemy> ObjectPooling(GameObject obj, Transform trm)
+        private ObjectPool<IEnemy> ObjectPooling(GameObject obj)
         {
             ObjectPool<IEnemy> objPool = null;
             return objPool = new ObjectPool<IEnemy>(
             () =>
             {
-                var spawnedEnemy = Instantiate(obj, trm.position, Quaternion.identity, transform);
+                var spawnedEnemy = Instantiate(obj, Vector3.zero, Quaternion.identity, transform);
                 var healthBar = Instantiate(_healthBar, _canvas.transform);
                 healthBar.transform.SetParent(_canvas.transform);
                 var enemy = spawnedEnemy.GetComponent<IEnemy>();
@@ -77,7 +88,7 @@ namespace DCFrameWork.Enemy
             },
            target =>
            {
-               target.Initialize(trm.position, _targetPos.position, () => objPool.Release(target));
+               target.Initialize(Vector3.zero, _targetPos.position, () => objPool.Release(target));
            },
            target =>
            {
@@ -98,14 +109,14 @@ namespace DCFrameWork.Enemy
             int count = data._enemyCount;
             while (count > 0)
             {
-                pool.Get();
+                pool.Get().position = DecisionSpawnPoint(data._spawnPoint);
                 count--;
                 yield return FrameWork.PausableWaitForSecond(timer);
             }
 
         }
 
-        Transform DecisionSpawnPoint(int i)
+        Vector3 DecisionSpawnPoint(int i)
         {
             Transform trm;
 
@@ -118,7 +129,7 @@ namespace DCFrameWork.Enemy
                 trm = _spawnPos[i - 1];
             }
             
-            return trm;
+            return trm.position;
         }
 
     }

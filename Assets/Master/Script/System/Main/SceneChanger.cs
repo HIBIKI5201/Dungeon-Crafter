@@ -9,6 +9,7 @@ namespace DCFrameWork.MainSystem
         {
             {SceneKind.Home, "Master_Home" },
             { SceneKind.Story, "Master_Story"},
+            {SceneKind.Ingame_0, "Master_Ingame_Stage0"},
             {SceneKind.Ingame_1, "Master_Ingame_Stage1"},
         };
 
@@ -32,6 +33,7 @@ namespace DCFrameWork.MainSystem
     {
         Home,
         Story,
+        Ingame_0,
         Ingame_1,
     }
 }

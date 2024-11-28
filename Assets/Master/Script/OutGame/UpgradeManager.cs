@@ -1,38 +1,29 @@
 using DCFrameWork.DefenseEquipment;
 using DCFrameWork.MainSystem;
 using UnityEngine;
+using System.Collections.Generic;
+using System;
 
 namespace DCFrameWork
 {
-    public class UpgradeManager : DefenseEquipmentManager_B<DefenseEquipmentData_B>
+    public class UpgradeManager : MonoBehaviour
     {
         GameSaveData _gameSaveData;
-        private void Start()
+        List<DefenseEquipmentElement> list = new();
+        [Serializable]
+        struct DefenseEquipmentElement
         {
-            _gameSaveData = new GameSaveData();
+            public DefenseEquipmentDataBase Data;
+            public DefenseObjectsKind Kind;
         }
         public void BuyUpgrade(DefenseObjectsKind defenseObjectsKind)
         {
-            if (_gameSaveData.PowerUpItemValue >= DefenseEquipmentData.LevelRequirePoint)
+            int price = list.Find(e => e.Kind == defenseObjectsKind).Data.PowerUpRequireItem[_gameSaveData.PowerUpDatas[(int)defenseObjectsKind]];
+            if (_gameSaveData.PowerUpItemValue >= price)
             {
-                _gameSaveData.PowerUpItemValue -= DefenseEquipmentData.LevelRequirePoint;
+                _gameSaveData.PowerUpItemValue -= price;
                 _gameSaveData.PowerUpDatas[(int)defenseObjectsKind]++;
             }
-        }
-
-        protected override void Think()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        protected override void Pause()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        protected override void Resume()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

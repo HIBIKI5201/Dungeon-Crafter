@@ -27,7 +27,6 @@ namespace DCFrameWork.MainSystem
             if (!_instance)
             {
                 _instance = this;
-                //DontDestroyOnLoad(_instance);
 
                 Scene scene = SceneManager.CreateScene("SystemScene");
                 SceneManager.MoveGameObjectToScene(gameObject, scene);
@@ -39,9 +38,11 @@ namespace DCFrameWork.MainSystem
             }
 
             _audioManager = GetComponentInChildren<AudioManager>();
-            (_audioManager is null).CheckLog("AudioManager‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
+            if (_audioManager is null)
+                Debug.LogWarning("AudioManager‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
             _mainUIManager = FindAnyObjectByType<MainUIManager>();
-            (_mainUIManager is null).CheckLog("MainUIManager‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
+            if (_mainUIManager is null)
+                Debug.LogWarning("MainUIManager‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
         }
 
         private void Start()

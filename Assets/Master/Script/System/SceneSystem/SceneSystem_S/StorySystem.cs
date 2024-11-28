@@ -6,14 +6,9 @@ namespace DCFrameWork.SceneSystem
     {
         private StoryManager _storyManager;
 
-
-        [SerializeField]
-        private StoryData _storyData;
-
         protected override void Initialize_S()
         {
             _storyManager = new StoryManager();
-            _storyManager.SetStoryData(_storyData);
         }
 
         protected override void Think(InputContext input)

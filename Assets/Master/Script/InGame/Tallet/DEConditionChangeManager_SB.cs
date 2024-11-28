@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace DCFrameWork.DefenseEquipment
 {
-    public abstract class DEWalkerableManager_SB<Data> : DefenseEquipmentManager_B<Data> where Data : DefenseEquipmentData_B
+    public abstract class DEConditionChangeManager_SB<Data> : DefenseEquipmentManager_B<Data> where Data : DefenseEquipmentData_B
     {
         private bool _isPaused = false;
         [SerializeField] ConditionType _conditionType;

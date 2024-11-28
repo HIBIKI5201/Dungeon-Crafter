@@ -31,7 +31,7 @@ namespace DCFrameWork
                     if (enemy.TryGetComponent(out IFightable component))
                     {
                         component.HitDamage(_damage);
-                        Debug.Log("毒ダメージ");
+                        //Debug.Log("毒ダメージ");
                     }
                 }
                 yield return new WaitForSeconds(_rate);

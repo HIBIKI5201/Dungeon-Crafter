@@ -6,7 +6,7 @@ namespace DCFrameWork
     {
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log(other.gameObject.name);
+            //Debug.Log(other.gameObject.name);
             if(other.TryGetComponent(out EnemyManager_B<EnemyData_B> enemy))
             {
                 AddCondition(enemy);

@@ -1,20 +1,28 @@
-using UnityEditor.Build.Content;
-using System;
-using UnityEngine;
 using DCFrameWork.MainSystem;
 using DCFrameWork.SceneSystem;
 
-namespace DCFrameWork
+public class StageSelectManager
 {
-    public class StageSelectManager 
+    private static StageSelectManager _instance;
+    public static StageSelectManager Instance
     {
-        public void StageSelect(SceneKind kind)
+        get
         {
-            GameBaseSystem.mainSystem.LoadScene(kind);
+            if (_instance == null)
+            {
+                _instance = new StageSelectManager();
+            }
+            return _instance;
         }
-        public void StageSelect(SceneKind kind,StoryData storydata)
-        {
-            GameBaseSystem.mainSystem.LoadScene<StorySystem>(kind,x => x.SetStoryData(storydata));
-        }
+    }
+    private StageSelectManager() { }
+    public void Stage1()
+    {
+        GameBaseSystem.mainSystem.LoadScene(SceneKind.Ingame_1);
+    }
+
+    public void Story(StoryData storyData)
+    {
+        GameBaseSystem.mainSystem.LoadScene<StorySystem>(SceneKind.Story, x => x.SetStoryData(storyData));
     }
 }

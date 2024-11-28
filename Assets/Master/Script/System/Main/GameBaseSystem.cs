@@ -27,7 +27,6 @@ namespace DCFrameWork.MainSystem
             if (!_instance)
             {
                 _instance = this;
-                //DontDestroyOnLoad(_instance);
 
                 Scene scene = SceneManager.CreateScene("SystemScene");
                 SceneManager.MoveGameObjectToScene(gameObject, scene);
@@ -39,9 +38,11 @@ namespace DCFrameWork.MainSystem
             }
 
             _audioManager = GetComponentInChildren<AudioManager>();
-            (_audioManager is null).CheckLog("AudioManagerが見つかりませんでした");
+            if (_audioManager is null)
+                Debug.LogWarning("AudioManagerが見つかりませんでした");
             _mainUIManager = FindAnyObjectByType<MainUIManager>();
-            (_mainUIManager is null).CheckLog("MainUIManagerが見つかりませんでした");
+            if (_mainUIManager is null)
+                Debug.LogWarning("MainUIManagerが見つかりませんでした");
         }
 
         private void Start()
@@ -53,21 +54,31 @@ namespace DCFrameWork.MainSystem
 
         public void LoadScene(SceneKind kind)
         {
-            StartCoroutine(SceneLoading(kind));
+            StartCoroutine(SceneLoading<SceneSystem_B>(kind, null));
         }
 
-        private IEnumerator SceneLoading(SceneKind kind)
+        public void LoadScene<T>(SceneKind kind, Action<T> loadedAction) where T : SceneSystem_B
+        {
+            StartCoroutine(SceneLoading(kind, loadedAction));
+        }
+
+        private IEnumerator SceneLoading<T>(SceneKind kind, Action<T> action) where T : SceneSystem_B
         {
             yield return SceneChanger.LoadScene(kind);
-            SceneInit();
+            T system = SceneInit() as T;
+            if (system is not null)
+                action?.Invoke(system);
+            else
+                Debug.LogWarning("ロードされたシーンとシーンシステムが異なります");
         }
 
-        private void SceneInit()
+        private SceneSystem_B SceneInit()
         {
             SceneSystem_B system = FindAnyObjectByType<SceneSystem_B>();
-            if ((system is null).CheckLog("シーンマネージャーが見つかりません")) return;
+            if ((system is null).CheckLog("シーンマネージャーが見つかりません")) return　null;
             sceneSystem = system;
             system?.Initialize();
+            return sceneSystem;
         }
 
         public void PlaySound(int index, SoundKind kind) => _audioManager?.PlaySound(index, kind);

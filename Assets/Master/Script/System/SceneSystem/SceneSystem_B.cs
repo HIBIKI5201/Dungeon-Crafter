@@ -1,5 +1,6 @@
 using DCFrameWork.UI;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace DCFrameWork.SceneSystem
 {
@@ -7,6 +8,9 @@ namespace DCFrameWork.SceneSystem
     {
         protected InputBuffer_B _input;
         protected UIManager_B _UIManager;
+
+        [SerializeField]
+        private UnityEvent _instantiate = new();
 
         public async void Initialize()
         {
@@ -17,9 +21,13 @@ namespace DCFrameWork.SceneSystem
             if (_input is null)
                 Debug.LogWarning("InputBuffer‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
 
-            await _UIManager.Initialize();
+            if (_UIManager is not null)
+            {
+                await _UIManager.Initialize();
+            }
 
             Initialize_S();
+            _instantiate?.Invoke();
         }
 
         protected virtual void Initialize_S() { }

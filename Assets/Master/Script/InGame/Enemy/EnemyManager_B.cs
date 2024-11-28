@@ -226,6 +226,7 @@ namespace DCFrameWork.Enemy
 
             if (CurrentHealth <= 0)
             {
+                //ŒoŒ±’lˆ—‚ð‚±‚±‚Ås‚¤—\’è
                 DeathAction?.Invoke();
                 DeathAction = null;
                 return false;

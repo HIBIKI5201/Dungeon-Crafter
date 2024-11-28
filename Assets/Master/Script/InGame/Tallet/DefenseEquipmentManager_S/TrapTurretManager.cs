@@ -1,18 +1,17 @@
 using Unity.VisualScripting;
 using UnityEngine;
-
 namespace DCFrameWork.DefenseEquipment
 {
     public class TrapTurretManager : DEEntityManager_SB<SummonData>
     {
 
-        [SerializeField] float _minRange = 1;
-        [SerializeField] Vector3 _boxCastSize = new Vector3(1, 10, 1);
-        [SerializeField] LayerMask _groundLayer;
-        Vector3 _position;
         float _timer = 0;
         bool _isPaused = false;
         int _maxCount;
+#if UNITY_EDITOR
+        [SerializeField] Vector3 _boxCastSize = new(1, 10, 1);
+#endif
+        Vector3 _position;
 
         protected override void Start_S()
         {
@@ -43,39 +42,33 @@ namespace DCFrameWork.DefenseEquipment
                         break;
                     }
                 }
-                // Debug.Log(summonPos);
                 if (!isChecked)
                     Summon(summonPos, _maxCount);
             }
         }
-        bool Check(Vector3 pos)
-        {
-            Physics.BoxCast(pos, _boxCastSize / 2, Vector3.down, out RaycastHit hit, Quaternion.identity, 10f);
-
-            if (hit.collider != null)
-            {
-                Debug.Log($"Hit object: {hit.collider.gameObject.name}, Layer: {hit.collider.gameObject.layer}");
-                return hit.collider.gameObject.layer == Mathf.Log(_groundLayer.value, 2);
-            }
-
-            Debug.Log("No collision detected.");
-            return false;
-        }
-
-
 
         protected override void LoadSpecificData(SummonData data)
         {
             _maxCount = DefenseEquipmentData.MaxCount;
         }
-        private void OnDrawGizmos()
+        protected override void Pause()
+        {
+            _isPaused = true;
+        }
+
+        protected override void Resume()
+        {
+            _isPaused = false;
+        }
+#if UNITY_EDITOR
+        void OnDrawGizmos()
         {
             Gizmos.color = Check(_position) ? Color.red : Color.green;
 
             // BoxCast のデータを計算
-            Vector3 boxCastOrigin = _position;
+            Vector3 boxCastOrigin = _position + new Vector3(0, 8, 0);
             Vector3 boxCastDirection = Vector3.down; // 下向き
-            float boxCastDistance = 10f; // 必要に応じて調整
+            float boxCastDistance = 18f; // 必要に応じて調整
             Quaternion boxCastRotation = Quaternion.identity;
 
             // ボックスの範囲を描画 (始点)
@@ -93,24 +86,6 @@ namespace DCFrameWork.DefenseEquipment
             Gizmos.matrix = Matrix4x4.TRS(boxCastEnd, boxCastRotation, _boxCastSize * 2);
             Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
         }
-
-        Vector3 SummonPosition()
-        {
-            float r = Random.Range(_minRange, DefenseEquipmentData.Range);
-            float degree = Random.Range(0, 360);
-            float radian = degree * Mathf.Deg2Rad;
-            float randomPosX = r * Mathf.Cos(radian);
-            float randomPosZ = r * Mathf.Sin(radian);
-            return transform.position + new Vector3(randomPosX, 0, randomPosZ);
-        }
-        protected override void Pause()
-        {
-            _isPaused = true;
-        }
-
-        protected override void Resume()
-        {
-            _isPaused = false;
-        }
+#endif
     }
 }

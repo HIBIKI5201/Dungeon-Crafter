@@ -155,7 +155,8 @@ namespace DCFrameWork.Enemy
             _agent.SetDestination(targetPos);
         }
 
-        public void HealthBarUpdate()
+        void IFightable.HealthBarUpdate() => HealthBarUpdate();
+        private void HealthBarUpdate()
         {
             _healthBarManager?.BarFillUpdate(_currentHealth / _enemyData.MaxHealth);
         }
@@ -206,7 +207,7 @@ namespace DCFrameWork.Enemy
     {
         Action DeathAction { get; set; }
 
-        void HealthBarUpdate();
+        protected void HealthBarUpdate();
         float MaxHealth { get; }
         float CurrentHealth { get; protected set; }
         

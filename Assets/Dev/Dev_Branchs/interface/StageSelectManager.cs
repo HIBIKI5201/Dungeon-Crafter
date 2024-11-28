@@ -1,28 +1,19 @@
 using DCFrameWork.MainSystem;
 using DCFrameWork.SceneSystem;
+using UnityEngine;
 
-public class StageSelectManager
+public class StageSelectManager : MonoBehaviour
 {
-    private static StageSelectManager _instance;
-    public static StageSelectManager Instance
+    [SerializeField] StageSelectManagerData Data;
+    public void Stage()
     {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = new StageSelectManager();
-            }
-            return _instance;
-        }
+        GameBaseSystem.mainSystem.LoadScene<StorySystem>(SceneKind.Story, x => x.SetStoryData(Data.firstStoryData));
     }
-    private StageSelectManager() { }
-    public void Stage1()
-    {
-        GameBaseSystem.mainSystem.LoadScene(SceneKind.Ingame_1);
-    }
-
-    public void Story(StoryData storyData)
-    {
-        GameBaseSystem.mainSystem.LoadScene<StorySystem>(SceneKind.Story, x => x.SetStoryData(storyData));
-    }
+}
+[System.Serializable]
+public struct StageSelectManagerData
+{
+    public StoryData firstStoryData;
+    public StoryData afterStoryData;
+    public SceneKind sceneKind;
 }

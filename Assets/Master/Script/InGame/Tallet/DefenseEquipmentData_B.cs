@@ -20,5 +20,9 @@ namespace DCFrameWork.DefenseEquipment
         public float Range { get => _range; }
         [SerializeField]
         private float _range = 1;
+
+        public int LevelRequirePoint { get => _levelRequirePoint; }
+        [SerializeField]
+        private int _levelRequirePoint = 1;
     }
 }

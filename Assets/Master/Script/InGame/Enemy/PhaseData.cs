@@ -15,7 +15,7 @@ namespace DCFrameWork.Enemy
     [System.Serializable]
     public struct EnemySpawnData
     {
-        public GameObject _enemy;//enum‚É•ÏX—\’è
+        public EnemyKind _enemyType;
         public int _enemyLevel;
         public int _enemyCount;
         public float _spawnStartTime;

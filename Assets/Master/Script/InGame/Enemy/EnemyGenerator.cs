@@ -42,10 +42,14 @@ namespace DCFrameWork.Enemy
         public WaveData _waveData;
         private void Start()
         {
-            
         }
 
-        [ContextMenu("waving")]
+        [ContextMenu("Waving")]
+        public void WaveDebug()
+        {
+            Waving(_waveData);
+        }
+
         public void Waving(WaveData waveData)
         {
             var kinds = _objects.Select(e => e.kind);

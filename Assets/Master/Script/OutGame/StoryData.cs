@@ -18,7 +18,7 @@ namespace DCFrameWork.SceneSystem
     [CreateAssetMenu(menuName = "GameData/StoryTextData", fileName = "StoryTextData")]
     public class StoryData : ScriptableObject
     {
-        const string _sheet_link = "1c7ofmhmkiQzzynmyA9jbkyiZgM5FQ7a_TuC6zxNeGIQ";
+        private const string _sheet_link = "1c7ofmhmkiQzzynmyA9jbkyiZgM5FQ7a_TuC6zxNeGIQ";
 
         [SerializeField, Tooltip("スプレッドシートのページ名")]
         private string _sheetName;

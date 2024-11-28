@@ -137,7 +137,7 @@ public class StageManager : MonoBehaviour
             raycastHitList.Remove(raycastHitList.Where(x => x.collider.gameObject == _tentativePrefab).FirstOrDefault());
             var hit = raycastHitList.OrderBy(x => Vector3.Distance(x.point, Camera.main.transform.position)).FirstOrDefault();
             _currentPosition = hit.point;
-            Debug.Log($"{hit.point}:{hit.collider.gameObject.name}:{hit.collider.gameObject.layer}:{LayerMask.NameToLayer("Ground")}");
+            //Debug.Log($"{hit.point}:{hit.collider.gameObject.name}:{hit.collider.gameObject.layer}:{LayerMask.NameToLayer("Ground")}");
             //_clickPointPrefab.transform.position = _currentPosition;
             //グリッドの計算式
             _currentPosition.y = (int)((_currentPosition.y + hit.normal.y) / 5) * 5 + 2.5f;
@@ -146,7 +146,7 @@ public class StageManager : MonoBehaviour
             //マウスと重なっているグリッドの中心座標に視覚的にサポートするオブジェクトをセット
             _tentativePrefab.transform.position = _currentPosition;
 
-            Debug.Log(_currentPosition);
+            //Debug.Log(_currentPosition);
             //Debug.DrawRay(_currentPosition, Vector3.down, Color.green, 1f);
             //ステージの範囲外に出てたら見えなくする
             if (_tentativePrefab.transform.position.y > 8f || !Physics.Raycast(_currentPosition, Vector3.down, 5f, LayerMask.GetMask("Ground")))

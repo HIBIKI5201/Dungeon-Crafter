@@ -51,7 +51,7 @@ namespace DCFrameWork.MainSystem
     {
         public string SaveDate = "";
         public int PowerUpItemValue = 0;
-        public List<int> PowerUpDatas = new List<int>();
+        public List<int> PowerUpDatas = Enumerable.Repeat(0, Enum.GetValues(typeof(DefenseObjectsKind)).Length).ToList();
         public int EventFlag = 0;
     }
     [Serializable]

@@ -3,26 +3,31 @@ using UnityEngine;
 
 namespace DCFrameWork.DefenseEquipment
 {
-    public class SummonTurretManager : DEEntityManager_SB<DefenseEquipmentData_B>
+    public class SummonTurretManager : DEEntityManager_SB<SummonData>
     {
-        const float _interval = 1;
         float _timer = 0;
         bool _isPaused = false;
+        int _maxCount;
         [SerializeField] Transform _summonPosition;
+        protected override void Start_S()
+        {
+            _timer = Time.time;
+        }
         protected override void Think() //UpDate ‚Æ“¯‹`
         {
-            if (!_isPaused)
+            if (_isPaused)
+                _timer += Time.deltaTime;
+
+            if (Time.time > 1 / DefenseEquipmentData.Rate + _timer)
             {
-                var summonRate = 1 / DefenseEquipmentData.Rate * Time.deltaTime;
-                _timer += summonRate;
-                if (_timer > _interval)
-                {
-                    _timer = 0;
-                    Summon(_summonPosition.position);
-                }
+                Summon(_summonPosition.position, _maxCount);
+                _timer = Time.time;
             }
         }
-
+        protected override void LoadSpecificData(SummonData data)
+        {
+            _maxCount = DefenseEquipmentData.MaxCount;
+        }
         protected override void Pause()
         {
             _isPaused = true;

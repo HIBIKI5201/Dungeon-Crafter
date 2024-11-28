@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SummonDataLevel1
   m_EditorClassIdentifier: 
   _attack: 5
-  _rate: 5
+  _rate: 1
   _critical: 5
   _range: 7
   _maxCount: 5

@@ -123,5 +123,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dataBase: {fileID: 11400000, guid: 700b99a83f0bf9a42b7483e281d90ff8, type: 2}
   _cylinder: {fileID: 0}
-  _entityPrefab: {fileID: 1776559538082072826, guid: 85a08520a8d9f9d4dacc5f07745923d8,
+  _minRange: 1
+  _boxCastSize: {x: 1, y: 10, z: 1}
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  _entityPrefab: {fileID: 5186039198044213997, guid: a9d45e197b1a50149b7f2942dd92aca8,
     type: 3}
+  _boxCastSize: {x: 1, y: 10, z: 1}

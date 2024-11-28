@@ -9,7 +9,7 @@ namespace DCFrameWork.DefenseEquipment
         bool _isPaused = false;
         int _maxCount;
 #if UNITY_EDITOR
-        [SerializeField] Vector3 _boxCastSize = new(1, 10, 1);
+        [SerializeField] Vector3 _boxCastSizeDebug = new(1, 10, 1);
 #endif
         Vector3 _position;
         protected override void Start_S()
@@ -68,7 +68,7 @@ namespace DCFrameWork.DefenseEquipment
             Quaternion boxCastRotation = Quaternion.identity;
 
             // ボックスの範囲を描画 (始点)
-            Gizmos.matrix = Matrix4x4.TRS(boxCastOrigin, boxCastRotation, _boxCastSize * 2);
+            Gizmos.matrix = Matrix4x4.TRS(boxCastOrigin, boxCastRotation, _boxCastSizeDebug * 2);
             Gizmos.DrawWireCube(Vector3.zero, Vector3.one); // 中心を基準にスケール適用
 
             // ボックスの終点を計算
@@ -79,7 +79,7 @@ namespace DCFrameWork.DefenseEquipment
             Gizmos.DrawLine(boxCastOrigin, boxCastEnd);
 
             // ボックスの終点の範囲を描画
-            Gizmos.matrix = Matrix4x4.TRS(boxCastEnd, boxCastRotation, _boxCastSize * 2);
+            Gizmos.matrix = Matrix4x4.TRS(boxCastEnd, boxCastRotation, _boxCastSizeDebug * 2);
             Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
         }
 #endif

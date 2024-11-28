@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.AI.Navigation;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class StageManager : MonoBehaviour
@@ -20,7 +21,7 @@ public class StageManager : MonoBehaviour
         public GameObject PutObstaclePrefab;
         [Tooltip("特注の視覚サポートオブジェクトがあればいれてください")] public GameObject VisualGuide;
     }
-    Transform _spawnPos;
+    Vector3[] _spawnPos;
     Transform _targetPos;
     GameObject _setPrefab;
     GameObject _tentativePrefab;
@@ -40,10 +41,14 @@ public class StageManager : MonoBehaviour
     void Start()
     {
         var enemyGenerator = GetComponentInChildren<EnemyGenerator>();
-        _spawnPos = enemyGenerator.SpawnPos;
+        _spawnPos = new Vector3[enemyGenerator.SpawnPos.Length];
         _targetPos = enemyGenerator.TargetPos;
         //スポーン地点と目標地点に障害物を置けないようにするための調整
-        _spawnPos.position = new Vector3(_spawnPos.position.x, 2.5f, _spawnPos.position.z);
+        for(int i  = 0; i < enemyGenerator.SpawnPos.Length; i++)
+        {
+            _spawnPos[i] = enemyGenerator.SpawnPos[i].position;
+            _spawnPos[i] = new Vector3(_spawnPos[i].x, 2.5f, _spawnPos[i].z);
+        }
         _targetPos.position = new Vector3(_targetPos.position.x, 2.5f, _targetPos.position.z);
         _wallsParent = new GameObject();
         _wallsParent.transform.SetParent(transform);
@@ -124,15 +129,15 @@ public class StageManager : MonoBehaviour
     void Update()
     {
         var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
-        
+
         var raycastHitList = Physics.RaycastAll(ray, float.PositiveInfinity).Where(x => !x.collider.isTrigger).ToList();
         if (raycastHitList.Any())
         {
             //置く場所を視覚的にサポートするオブジェクトとはレイキャストが当たってないことにする
             raycastHitList.Remove(raycastHitList.Where(x => x.collider.gameObject == _tentativePrefab).FirstOrDefault());
-            var hit = raycastHitList.OrderBy(x => Vector3.Distance(x.point,Camera.main.transform.position)).FirstOrDefault();
+            var hit = raycastHitList.OrderBy(x => Vector3.Distance(x.point, Camera.main.transform.position)).FirstOrDefault();
             _currentPosition = hit.point;
-            Debug.Log($"{hit.point}:{hit.collider.gameObject.name}:{hit.collider.gameObject.layer}:{LayerMask.NameToLayer("Ground")}");
+            //Debug.Log($"{hit.point}:{hit.collider.gameObject.name}:{hit.collider.gameObject.layer}:{LayerMask.NameToLayer("Ground")}");
             //_clickPointPrefab.transform.position = _currentPosition;
             //グリッドの計算式
             _currentPosition.y = (int)((_currentPosition.y + hit.normal.y) / 5) * 5 + 2.5f;
@@ -141,7 +146,7 @@ public class StageManager : MonoBehaviour
             //マウスと重なっているグリッドの中心座標に視覚的にサポートするオブジェクトをセット
             _tentativePrefab.transform.position = _currentPosition;
 
-            Debug.Log(_currentPosition);
+            //Debug.Log(_currentPosition);
             //Debug.DrawRay(_currentPosition, Vector3.down, Color.green, 1f);
             //ステージの範囲外に出てたら見えなくする
             if (_tentativePrefab.transform.position.y > 8f || !Physics.Raycast(_currentPosition, Vector3.down, 5f, LayerMask.GetMask("Ground")))
@@ -153,7 +158,7 @@ public class StageManager : MonoBehaviour
             {
                 _tentativePrefab.SetActive(true);
                 //置けるかどうかの判定
-                if (CheckStage(_currentPosition) && _currentPosition != _spawnPos.position && _currentPosition != _targetPos.position)
+                if (CheckStage(_currentPosition) && !_spawnPos.Contains(_currentPosition) && _currentPosition != _targetPos.position)
                 {
                     _tentativePrefab.GetComponent<MeshRenderer>().material.color = Color.white;
                     _canSet = true;

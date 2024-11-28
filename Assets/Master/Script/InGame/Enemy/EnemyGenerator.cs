@@ -2,6 +2,8 @@ using DCFrameWork.MainSystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -9,15 +11,15 @@ namespace DCFrameWork.Enemy
 {
     public class EnemyGenerator : MonoBehaviour
     {
- 
+
 
         [SerializeField]
         EnemyElement[] _objects;
 
         [SerializeField]
-        private Transform _spawnPos;
+        private Transform[] _spawnPos;
 
-        public Transform SpawnPos { get { return _spawnPos; } }
+        public Transform[] SpawnPos { get { return _spawnPos; } }
 
         [SerializeField]
         private Transform _targetPos;
@@ -35,30 +37,34 @@ namespace DCFrameWork.Enemy
         [SerializeField]
         private int _maxValue = 100;
 
-        [SerializeField]
-        private float _spawnInterval = 3f;
+        private Dictionary<EnemyKind, ObjectPool<IEnemy>> _dict = new();
 
-        Dictionary<EnemyKind, GameObject> _enemyObjs = new();
-
-        public List <ObjectPool<IEnemy>> _nowPool = new();
-
-        public WaveData _waveData;
         private void Start()
         {
-            foreach (var enemy in _objects)
-            {
-                _enemyObjs.Add(enemy.kind, enemy.obj);
-            }
+           //Initialize();
+        }
 
-            foreach (var a in _waveData._spawnData)
+       
+
+        public void Initialize()
+        {
+            foreach (var obj in _objects)
             {
-                if (_enemyObjs.ContainsKey(a._enemyType))
+                _dict.Add(obj.kind, ObjectPooling(obj.obj));
+            }
+        }
+
+
+        public void Waving(WaveData waveData)
+        {
+            var kinds = _objects.Select(e => e.kind);
+            foreach (var a in waveData._spawnData)
+            {
+                if (kinds.Contains(a._enemyType))
                 {
-                    _nowPool.Add(ObjectPooling(_enemyObjs[a._enemyType]));
+                    StartCoroutine(Generate(a, _dict[a._enemyType]));
                 }
             }
-
-            StartCoroutine(Generate());
         }
 
         private ObjectPool<IEnemy> ObjectPooling(GameObject obj)
@@ -67,7 +73,7 @@ namespace DCFrameWork.Enemy
             return objPool = new ObjectPool<IEnemy>(
             () =>
             {
-                var spawnedEnemy = Instantiate(obj, _spawnPos.position, Quaternion.identity, transform);
+                var spawnedEnemy = Instantiate(obj, Vector3.zero, Quaternion.identity, transform);
                 var healthBar = Instantiate(_healthBar, _canvas.transform);
                 healthBar.transform.SetParent(_canvas.transform);
                 var enemy = spawnedEnemy.GetComponent<IEnemy>();
@@ -76,11 +82,12 @@ namespace DCFrameWork.Enemy
             },
            target =>
            {
-               target.Initialize(_spawnPos.position, _targetPos.position, () => objPool.Release(target));
+               target.Initialize(Vector3.zero, _targetPos.position, () => objPool.Release(target));
            },
            target =>
            {
                target.DeathBehaviour();
+               WaveManager.EnemyDeathCount();
            },
            target =>
            {
@@ -89,22 +96,41 @@ namespace DCFrameWork.Enemy
            true, _defaultValue, _maxValue);
         }
 
-        IEnumerator Generate()
+        IEnumerator Generate(EnemySpawnData data, ObjectPool<IEnemy> pool)
         {
-            yield return null;
-            while (true)
+            yield return FrameWork.PausableWaitForSecond(data._spawnStartTime);
+            float timer = data._spawnEndTime - data._spawnStartTime;
+            timer = timer / data._enemyCount;
+            int count = data._enemyCount;
+            while (count > 0)
             {
-                foreach (var op in _nowPool)
-                {
-                    op.Get();
-                }
-               
-                yield return FrameWork.PausableWaitForSecond(_spawnInterval);
+                pool.Get().position = DecisionSpawnPoint(data._spawnPoint);
+                count--;
+                yield return FrameWork.PausableWaitForSecond(timer);
             }
 
         }
 
+        Vector3 DecisionSpawnPoint(int i)
+        {
+            Transform trm;
+
+            if (i == 0)
+            {
+                trm = _spawnPos[UnityEngine.Random.Range(0, _spawnPos.Length)];
+            }
+            else 
+            {
+                trm = _spawnPos[i - 1];
+            }
+            
+            return trm.position;
+        }
+
     }
+
+
+
 
     [Serializable]
     public struct EnemyElement

@@ -9,7 +9,7 @@ namespace DCFrameWork.Enemy
 {
     public class EnemyGenerator : MonoBehaviour
     {
-        public ObjectPool<IEnemy> objectPoolNormal;
+ 
 
         [SerializeField]
         EnemyElement[] _objects;
@@ -38,16 +38,26 @@ namespace DCFrameWork.Enemy
         [SerializeField]
         private float _spawnInterval = 3f;
 
-        Dictionary<EnemyKind, ObjectPool<IEnemy>> _enemyPools = new();
+        Dictionary<EnemyKind, GameObject> _enemyObjs = new();
 
+        public List <ObjectPool<IEnemy>> _nowPool = new();
+
+        public WaveData _waveData;
         private void Start()
         {
             foreach (var enemy in _objects)
             {
-                var a = ObjectPooling(enemy.obj);
-                _enemyPools.Add(enemy.kind, a);
+                _enemyObjs.Add(enemy.kind, enemy.obj);
             }
-           
+
+            foreach (var a in _waveData._spawnData)
+            {
+                if (_enemyObjs.ContainsKey(a._enemyType))
+                {
+                    _nowPool.Add(ObjectPooling(_enemyObjs[a._enemyType]));
+                }
+            }
+
             StartCoroutine(Generate());
         }
 
@@ -84,7 +94,11 @@ namespace DCFrameWork.Enemy
             yield return null;
             while (true)
             {
-                _enemyPools[0].Get();
+                foreach (var op in _nowPool)
+                {
+                    op.Get();
+                }
+               
                 yield return FrameWork.PausableWaitForSecond(_spawnInterval);
             }
 

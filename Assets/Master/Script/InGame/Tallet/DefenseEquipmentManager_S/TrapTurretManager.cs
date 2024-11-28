@@ -1,73 +1,116 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace DCFrameWork.DefenseEquipment
 {
-    public class TrapTurretManager : DEEntityManager_SB<DefenseEquipmentData_B>
+    public class TrapTurretManager : DEEntityManager_SB<SummonData>
     {
-        private float _range;
 
         [SerializeField] float _minRange = 1;
-        [SerializeField] Vector3 _boxCastSize = new Vector3(1, 1, 1);
+        [SerializeField] Vector3 _boxCastSize = new Vector3(1, 10, 1);
         [SerializeField] LayerMask _groundLayer;
         Vector3 _position;
+        float _timer = 0;
+        bool _isPaused = false;
+        int _maxCount;
+
+        protected override void Start_S()
+        {
+            _timer = Time.time;
+        }
+
         protected override void Think() //UpDate と同義
         {
-            var summonPos = SummonPosition();
-            _position = summonPos;
-            int count = 0;
-            while (!Check(summonPos) && count <= 10)
+            if (_isPaused)
+                _timer += Time.deltaTime;
+
+            if (Time.time > 1 / DefenseEquipmentData.Rate + _timer)
             {
-                summonPos = SummonPosition();
+                _timer = Time.time;
+                var summonPos = SummonPosition();
                 _position = summonPos;
-                count++;
+                int count = 0;
+                bool isChecked = false;
+                while (!Check(summonPos))
+                {
+                    summonPos = SummonPosition();
+                    _position = summonPos;
+                    count++;
+                    Debug.LogError(Check(summonPos));
+                    if (count <= 10)
+                    {
+                        isChecked = true;
+                        break;
+                    }
+                }
+                // Debug.Log(summonPos);
+                if (!isChecked)
+                    Summon(summonPos, _maxCount);
             }
-            Debug.Log(summonPos);
-            Summon(summonPos);
         }
         bool Check(Vector3 pos)
         {
-            Physics.BoxCast(pos, _boxCastSize, Vector3.down, out RaycastHit hit);
-            if (hit.collider == null)
+            Physics.BoxCast(pos, _boxCastSize / 2, Vector3.down, out RaycastHit hit, Quaternion.identity, 10f);
+
+            if (hit.collider != null)
             {
-                return false;
+                Debug.Log($"Hit object: {hit.collider.gameObject.name}, Layer: {hit.collider.gameObject.layer}");
+                return hit.collider.gameObject.layer == Mathf.Log(_groundLayer.value, 2);
             }
-            if (hit.collider.gameObject == null)
-            {
-            }
-            Debug.Log(hit.collider.gameObject.layer == _groundLayer);
-            return hit.collider.gameObject.layer == _groundLayer;
+
+            Debug.Log("No collision detected.");
+            return false;
         }
 
+
+
+        protected override void LoadSpecificData(SummonData data)
+        {
+            _maxCount = DefenseEquipmentData.MaxCount;
+        }
         private void OnDrawGizmos()
         {
             Gizmos.color = Check(_position) ? Color.red : Color.green;
-            Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, _boxCastSize);
-            Gizmos.DrawCube(_position, new Vector3(1, 1, 1));
+
+            // BoxCast のデータを計算
+            Vector3 boxCastOrigin = _position;
+            Vector3 boxCastDirection = Vector3.down; // 下向き
+            float boxCastDistance = 10f; // 必要に応じて調整
+            Quaternion boxCastRotation = Quaternion.identity;
+
+            // ボックスの範囲を描画 (始点)
+            Gizmos.matrix = Matrix4x4.TRS(boxCastOrigin, boxCastRotation, _boxCastSize * 2);
+            Gizmos.DrawWireCube(Vector3.zero, Vector3.one); // 中心を基準にスケール適用
+
+            // ボックスの終点を計算
+            Vector3 boxCastEnd = boxCastOrigin + boxCastDirection.normalized * boxCastDistance;
+
+            // キャストの移動範囲を描画
+            Gizmos.matrix = Matrix4x4.identity;
+            Gizmos.DrawLine(boxCastOrigin, boxCastEnd);
+
+            // ボックスの終点の範囲を描画
+            Gizmos.matrix = Matrix4x4.TRS(boxCastEnd, boxCastRotation, _boxCastSize * 2);
+            Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
         }
 
         Vector3 SummonPosition()
         {
-            float r = Random.Range(_minRange, _range);
+            float r = Random.Range(_minRange, DefenseEquipmentData.Range);
             float degree = Random.Range(0, 360);
             float radian = degree * Mathf.Deg2Rad;
             float randomPosX = r * Mathf.Cos(radian);
             float randomPosZ = r * Mathf.Sin(radian);
             return transform.position + new Vector3(randomPosX, 0, randomPosZ);
         }
-        protected override void LoadSpecificData(DefenseEquipmentData_B data)
-        {
-            _range = data.Range;
-        }
-
         protected override void Pause()
         {
-            throw new System.NotImplementedException();
+            _isPaused = true;
         }
 
         protected override void Resume()
         {
-            throw new System.NotImplementedException();
+            _isPaused = false;
         }
-
     }
 }

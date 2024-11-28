@@ -10,10 +10,19 @@ namespace DCFrameWork.DefenseEquipment
         GameObject _entityPrefab;
 
         List<GameObject> _entityList = new List<GameObject>();
-        protected void Summon(Vector3 pos)
+        protected void Summon(Vector3 pos, int count)
         {
-            if (_entityPrefab is null) return;
-            _entityList.Add(Instantiate(_entityPrefab, pos, Quaternion.identity));
+            Debug.LogWarning("Summon");
+            if (_entityList.Count < count)
+            {
+                if (_entityPrefab is null) return;
+                _entityList.Add(Instantiate(_entityPrefab, pos, Quaternion.identity));
+            }
         }
+        protected override void Start_SB()
+        {
+            Start_S();
+        }
+        protected virtual void Start_S() { }
     }
 }

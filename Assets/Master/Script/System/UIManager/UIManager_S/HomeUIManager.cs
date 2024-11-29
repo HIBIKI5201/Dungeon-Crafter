@@ -8,6 +8,8 @@ namespace DCFrameWork.UI
 {
     public class HomeUIManager : UIManager_B
     {
+        StageSelectManager stageSelectManager;
+
         HomeWindowState _homeUIState = HomeWindowState.Title;
         TemplateContainer _title;
         TemplateContainer _menu;
@@ -23,6 +25,7 @@ namespace DCFrameWork.UI
 
         private void Start()
         {
+            stageSelectManager = GetComponent<StageSelectManager>();
             var uiDocu = GetComponent<UIDocument>();
             _root = uiDocu.rootVisualElement;
             _title = _root.Q<TemplateContainer>("title-window");
@@ -39,7 +42,7 @@ namespace DCFrameWork.UI
             _stageone = _stage.Q<Button>("stage-one-button");
             _stageReturnButton = _stage.Q<Button>("return-button");
             _stageReturnButton.RegisterCallback<ClickEvent>(x => { State = HomeWindowState.MainMenu; });
-            _stageone.RegisterCallback<ClickEvent>(x => { GameBaseSystem.mainSystem.LoadScene(SceneKind.Ingame_1); });
+            _stageone.RegisterCallback<ClickEvent>(x => { stageSelectManager.Stage(); });
             _defenceEquipment = _root.Q<TemplateContainer>("defence-equipment");
             _equipmentReturnButton = _defenceEquipment.Q<Button>("return-button");
             _equipmentReturnButton.RegisterCallback<ClickEvent>(x => { State = HomeWindowState.MainMenu; });

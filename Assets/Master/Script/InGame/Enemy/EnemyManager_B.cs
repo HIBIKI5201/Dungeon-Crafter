@@ -87,9 +87,7 @@ namespace DCFrameWork.Enemy
             HealthBarUpdate();
             ChangeSpeed(Dexterity);
             _deathAction = deathAction;
-
             gameObject.transform.position = spawnPos;
-
             gameObject.SetActive(true);
             _healthBarManager.gameObject.SetActive(true);
             _healthBarManager.FollowTarget(transform);

@@ -46,6 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ad0c049ceb893a419014f53dc224002, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _instantiate:
+    m_PersistentCalls:
+      m_Calls: []
+  stageSelectManager: {fileID: 137766717854137909}
 --- !u!1 &4642492897010238573
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,6 +196,7 @@ GameObject:
   - component: {fileID: 1619472394602959008}
   - component: {fileID: 8205331609584725027}
   - component: {fileID: 6312847130623196679}
+  - component: {fileID: 137766717854137909}
   m_Layer: 0
   m_Name: HomeUI
   m_TagString: Untagged
@@ -240,8 +245,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PanelSettings: {fileID: 11400000, guid: a350bdf4aed09374c84a7f20bc1fe645, type: 2}
   m_ParentUI: {fileID: 0}
-  sourceAsset: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: 2e42fdb582fc71049b90bdde8538cae1,
+    type: 3}
   m_SortingOrder: 0
   m_WorldSpaceSizeMode: 1
   m_WorldSpaceWidth: 1920
   m_WorldSpaceHeight: 1080
+--- !u!114 &137766717854137909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6931682404433462364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c338bad513bd64f4eacafc4959ff3f42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Data:
+    firstStoryData: {fileID: 0}
+    afterStoryData: {fileID: 0}
+    sceneKind: 0

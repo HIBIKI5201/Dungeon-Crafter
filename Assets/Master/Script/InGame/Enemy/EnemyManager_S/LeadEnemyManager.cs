@@ -1,6 +1,6 @@
 namespace DCFrameWork.Enemy
 {
-    public class SpeedEnemyManager : EnemyManager_B<EnemyData_B>
+    public class LeadEnemyManager : EnemyManager_B<EnemyData_B>
     {
         protected override void DeathBehaviour()
         {
@@ -25,6 +25,7 @@ namespace DCFrameWork.Enemy
         {
             throw new System.NotImplementedException();
         }
+
 
     }
 }

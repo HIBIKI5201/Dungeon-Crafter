@@ -39,6 +39,8 @@ namespace DCFrameWork.Enemy
 
         private Dictionary<EnemyKind, ObjectPool<IEnemy>> _dict = new();
 
+        private Vector3 _initPosition = new Vector3(-22.5f,0,22.5f);
+
         private void Start()
         {
            //Initialize();
@@ -48,6 +50,7 @@ namespace DCFrameWork.Enemy
 
         public void Initialize()
         {
+
             foreach (var obj in _objects)
             {
                 _dict.Add(obj.kind, ObjectPooling(obj.obj));
@@ -73,7 +76,7 @@ namespace DCFrameWork.Enemy
             return objPool = new ObjectPool<IEnemy>(
             () =>
             {
-                var spawnedEnemy = Instantiate(obj, Vector3.zero, Quaternion.identity, transform);
+                var spawnedEnemy = Instantiate(obj,_initPosition, Quaternion.identity, transform);
                 var healthBar = Instantiate(_healthBar, _canvas.transform);
                 healthBar.transform.SetParent(_canvas.transform);
                 var enemy = spawnedEnemy.GetComponent<IEnemy>();
@@ -82,7 +85,7 @@ namespace DCFrameWork.Enemy
             },
            target =>
            {
-               target.Initialize(Vector3.zero, _targetPos.position, () => objPool.Release(target));
+               target.Initialize( Vector3.zero, _targetPos.position, () => objPool.Release(target));
            },
            target =>
            {

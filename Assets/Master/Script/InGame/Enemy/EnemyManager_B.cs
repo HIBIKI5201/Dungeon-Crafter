@@ -226,7 +226,7 @@ namespace DCFrameWork.Enemy
 
             if (CurrentHealth <= 0)
             {
-                //経験値処理をここで行う予定
+                //経験値処理をここで行う予定w
                 DeathAction?.Invoke();
                 DeathAction = null;
                 return false;

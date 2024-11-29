@@ -13,6 +13,7 @@ public class StageManager : MonoBehaviour
     [SerializeField] float _gridSize = 5f;
     [SerializeField] List<ObstaclePrefabs> _obstaclePrefabList;
     [SerializeField] GameObject _defaultVisualGuide;
+    [SerializeField] GameObject _wallPrefab;
     //[SerializeField] GameObject _clickPointPrefab;//Debug;
     [Serializable]
     public struct ObstaclePrefabs
@@ -44,7 +45,7 @@ public class StageManager : MonoBehaviour
         _spawnPos = new Vector3[enemyGenerator.SpawnPos.Length];
         _targetPos = enemyGenerator.TargetPos;
         //スポーン地点と目標地点に障害物を置けないようにするための調整
-        for(int i  = 0; i < enemyGenerator.SpawnPos.Length; i++)
+        for (int i = 0; i < enemyGenerator.SpawnPos.Length; i++)
         {
             _spawnPos[i] = enemyGenerator.SpawnPos[i].position;
             _spawnPos[i] = new Vector3(_spawnPos[i].x, 2.5f, _spawnPos[i].z);
@@ -138,11 +139,21 @@ public class StageManager : MonoBehaviour
             var hit = raycastHitList.OrderBy(x => Vector3.Distance(x.point, Camera.main.transform.position)).FirstOrDefault();
             _currentPosition = hit.point;
             //Debug.Log($"{hit.point}:{hit.collider.gameObject.name}:{hit.collider.gameObject.layer}:{LayerMask.NameToLayer("Ground")}");
-            //_clickPointPrefab.transform.position = _currentPosition;
+            float currentX = _currentPosition.x + hit.normal.x;
+            float currentZ = _currentPosition.z + hit.normal.z;
+            int signX = Math.Sign(currentX);
+            int signZ = Math.Sign(currentZ);
+            float halfGridSize = _gridSize / 2;
             //グリッドの計算式
-            _currentPosition.y = (int)((_currentPosition.y + hit.normal.y) / 5) * 5 + 2.5f;
-            _currentPosition.x = (int)((_currentPosition.x + hit.normal.x) / 5) * 5 + 2.5f * Math.Sign(_currentPosition.x + hit.normal.x);
-            _currentPosition.z = (int)((_currentPosition.z + hit.normal.z) / 5) * 5 + 2.5f * Math.Sign(_currentPosition.z + hit.normal.z);
+            _currentPosition.y = (int)((_currentPosition.y + hit.normal.y) / _gridSize) * _gridSize + halfGridSize;
+            if (_floorPrefab.transform.localScale.x % 2 == 0)
+                _currentPosition.x = (int)(currentX / _gridSize) * _gridSize + halfGridSize * signX;
+            else
+                _currentPosition.x = (int)(currentX / halfGridSize + signX) / 2 * _gridSize;
+            if (_floorPrefab.transform.localScale.z % 2 == 0)
+                _currentPosition.z = (int)(currentZ / _gridSize) * _gridSize + halfGridSize * signZ;
+            else
+                _currentPosition.z = (int)(currentZ / halfGridSize + signZ) / 2 * _gridSize;
             //マウスと重なっているグリッドの中心座標に視覚的にサポートするオブジェクトをセット
             _tentativePrefab.transform.position = _currentPosition;
 
@@ -189,7 +200,6 @@ public class StageManager : MonoBehaviour
         //i = (グリッドの各マスの中心座標のx,z -(_floorPrefab.transform.position.z - _floorPrefab.transform.localScale.z / 2 + _gridSize / 2))/_gridSize
         int currentX;
         int currentZ;
-        //(-42.5-2.5 + 47.5 - 2.5)/5
         currentX = (int)((currentPosition.x - _floorCenter.x + _floorPrefab.transform.localScale.x * _gridSize / 2 - _gridSize / 2) / _gridSize);
         currentZ = (int)((currentPosition.z - _floorCenter.z + _floorPrefab.transform.localScale.z * _gridSize / 2 - _gridSize / 2) / _gridSize);
         //Debug.Log($"{currentX},{currentZ}");
@@ -265,6 +275,13 @@ public class StageManager : MonoBehaviour
         }
         _map[currentX, currentZ] = 2;
         //生成
+        if(currentPosition.y == 2.5f)
+        {
+            var wallObj = Instantiate(_wallPrefab, _currentPosition, Quaternion.identity);
+            wallObj.transform.SetParent(_wallsParent.transform);
+            wallObj.isStatic = true;
+            _currentPosition.y = 7.5f;
+        }
         var obj = Instantiate(_setPrefab, _currentPosition, Quaternion.identity);
         obj.transform.SetParent(_wallsParent.transform);
         obj.isStatic = true;

@@ -7,7 +7,7 @@ public class StageSelectManager : MonoBehaviour
     [SerializeField] StageSelectManagerData Data;
     public void Stage()
     {
-        GameBaseSystem.mainSystem.LoadScene<StorySystem>(SceneKind.Story, x => x.SetStoryData(Data.firstStoryData));
+        GameBaseSystem.mainSystem.LoadScene<StorySystem>(SceneKind.Story, x => x.SetStorySceneData(Data));
     }
 }
 [System.Serializable]

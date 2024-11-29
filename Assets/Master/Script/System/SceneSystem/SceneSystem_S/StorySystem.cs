@@ -10,7 +10,7 @@ namespace DCFrameWork.SceneSystem
         private StoryData _endStoryData;
         protected override void Initialize_S()
         {
-            _storyManager = new StoryManager();
+            _storyManager = GetComponent<StoryManager>();
         }
 
         protected override void Think(InputContext input)

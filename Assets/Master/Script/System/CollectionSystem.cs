@@ -58,9 +58,9 @@ namespace DCFrameWork
             return data;
         }
         public void SetEnemy(EnemyKind kind) => _enemyFrag |= 1 << (int)kind;
-        public void SetDefenseObj(DefenseObjectsKind kind) => _enemyFrag |= 1 << (int)kind;
+        public void SetDefenseObj(DefenseObjectsKind kind) => _defenseObjectFrag |= 1 << (int)kind;
 
-
+        public void SetBGM(int num) => _bgmFrag |= 1 << num;
 
         [ContextMenu("TestCollection")]
         public void TestCollection()

@@ -2,12 +2,9 @@ namespace DCFrameWork.Enemy
 {
     public class NormalEnemyManager : EnemyManager_B<EnemyData_B>
     {
-
-
         protected override void DeathBehaviour()
         {
             base.DeathBehaviour();
-
         }
 
 
@@ -16,6 +13,8 @@ namespace DCFrameWork.Enemy
 
 
         }
+
+
 
         protected override void Pause()
         {
@@ -26,7 +25,6 @@ namespace DCFrameWork.Enemy
         {
             throw new System.NotImplementedException();
         }
-
 
     }
 }

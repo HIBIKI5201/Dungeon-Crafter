@@ -1,6 +1,6 @@
 namespace DCFrameWork.Enemy
 {
-    public class PatrolEnemyManager : EnemyManager_B<EnemyData_B>
+    public class BuffEnemyManager : EnemyManager_B<EnemyData_B>
     {
         protected override void DeathBehaviour()
         {
@@ -25,7 +25,6 @@ namespace DCFrameWork.Enemy
         {
             throw new System.NotImplementedException();
         }
-
 
     }
 }

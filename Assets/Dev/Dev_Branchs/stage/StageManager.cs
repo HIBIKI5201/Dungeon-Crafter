@@ -13,6 +13,7 @@ public class StageManager : MonoBehaviour
     [SerializeField] float _gridSize = 5f;
     [SerializeField] List<ObstaclePrefabs> _obstaclePrefabList;
     [SerializeField] GameObject _defaultVisualGuide;
+    [SerializeField] GameObject _wallPrefab;
     //[SerializeField] GameObject _clickPointPrefab;//Debug;
     [Serializable]
     public struct ObstaclePrefabs
@@ -274,6 +275,13 @@ public class StageManager : MonoBehaviour
         }
         _map[currentX, currentZ] = 2;
         //生成
+        if(currentPosition.y == 2.5f)
+        {
+            var wallObj = Instantiate(_wallPrefab, _currentPosition, Quaternion.identity);
+            wallObj.transform.SetParent(_wallsParent.transform);
+            wallObj.isStatic = true;
+            _currentPosition.y = 7.5f;
+        }
         var obj = Instantiate(_setPrefab, _currentPosition, Quaternion.identity);
         obj.transform.SetParent(_wallsParent.transform);
         obj.isStatic = true;

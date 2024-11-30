@@ -1,5 +1,4 @@
 using DCFrameWork.MainSystem;
-using System;
 using UnityEngine;
 
 namespace DCFrameWork.SceneSystem
@@ -21,13 +20,10 @@ namespace DCFrameWork.SceneSystem
             _cameraManager?.CameraMove(input.MoveInput, input.RotateInput);
         }
 
-        public void EndInGame(bool success)
-        {
-            if (success)
-                GameBaseSystem.mainSystem.LoadScene<StorySystem>(SceneKind.Story, system => system.SetStorySceneData(new StorySceneData { StoryData = StorySceneData, sceneKind = SceneKind.Home }));
-            else
-                GameBaseSystem.mainSystem.LoadScene(SceneKind.Home);
-        }
+        public void FailInGame() => GameBaseSystem.mainSystem.LoadScene(SceneKind.Home);
+
+        public void SuccessInGame() =>
+            GameBaseSystem.mainSystem.LoadScene<StorySystem>(SceneKind.Story, system => system.SetStorySceneData(new StorySceneData { StoryData = StorySceneData, sceneKind = SceneKind.Home }));
     }
 
     [System.Serializable]

@@ -8,11 +8,14 @@ namespace DCFrameWork
     {
         int _treasureHp = 100;
         int _gold;
+        Dictionary<DefenseObjectsKind, int> _defenseObjectsValue = new();
+
         LevelManager _levelManager;
-        Dictionary<DefenseObjectsKind, int> _defenseObjectsValue;
+
         public Action _gameOverEvent;
         public Action<int> _getGold;
 
+        [SerializeField] List<DefenseObjectsKind> _testData = new();
         private void Awake()
         {
             _levelManager = GetComponentInChildren<LevelManager>();
@@ -38,8 +41,16 @@ namespace DCFrameWork
             _gold += gold;
             _getGold?.Invoke(_gold);
         }
-        public void GetDefenseObject(DefenseObjectsKind kind) => _defenseObjectsValue[kind]++;
-        public void UseDefenseObject(DefenseObjectsKind kind) => _defenseObjectsValue[kind]--;
+        public void SetDefenseObject(DefenseObjectsKind kind)
+        {
+            if (_defenseObjectsValue.ContainsKey(kind)) _defenseObjectsValue[kind]++;
+            else _defenseObjectsValue.Add(kind, 1);
+        }
+        public void UseDefenseObject(DefenseObjectsKind kind)
+        {
+            if (_defenseObjectsValue.ContainsKey(kind)) _defenseObjectsValue[kind]--;
+            else Debug.LogWarning($"{nameof(kind)}ÇÕë∂ç›ÇµÇ‹ÇπÇÒ");
+        }
     }
     public enum DefenseObjectsKind
     {

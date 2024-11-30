@@ -1,3 +1,4 @@
+using DCFrameWork.MainSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,7 +33,8 @@ namespace DCFrameWork.SceneSystem
 
         private void EndStory()
         {
-            Debug.Log("End Story");
+            var system = GameBaseSystem.sceneSystem as StorySystem;
+            system.EndStory();
         }
     }
 }

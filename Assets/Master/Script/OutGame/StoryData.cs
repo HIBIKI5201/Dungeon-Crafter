@@ -51,7 +51,7 @@ namespace DCFrameWork.SceneSystem
                 // 行をカンマで分割
                 string[] elements = line.Split(',').Select(s => s.Replace("\"", "").Trim()).ToArray();
                 if (int.Parse(elements[4]) == 0) break;
-                _list.Add(new StoryText(elements[0], elements[1], elements[2]));
+                _list.Add(new StoryText(elements[0], elements[1].Replace('/', '\n'), elements[2]));
             }
             Debug.Log($"{_sheetName}のロード完了");
         }

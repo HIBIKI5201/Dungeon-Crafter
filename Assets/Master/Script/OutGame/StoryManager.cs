@@ -1,15 +1,14 @@
-using DCFrameWork.MainSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace DCFrameWork.SceneSystem
 {
-    public class StoryManager : MonoBehaviour
+    public class StoryManager
     {
         private IEnumerator _enumerator;
         private List<StoryText> _storyData;
-        public void Initialize()
+        public StoryManager()
         {
             _enumerator = PlayStoryContext();
         }
@@ -33,8 +32,7 @@ namespace DCFrameWork.SceneSystem
 
         private void EndStory()
         {
-            var system = GameBaseSystem.sceneSystem as StorySystem;
-            system.EndStory();
+            Debug.Log("End Story");
         }
     }
 }

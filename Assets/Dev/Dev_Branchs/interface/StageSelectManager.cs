@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class StageSelectManager : MonoBehaviour
 {
-    [SerializeField] StorySceneData Data;
+    [SerializeField] StageSelectManagerData Data;
     public void Stage()
     {
-        GameBaseSystem.mainSystem.LoadScene<StorySystem>(SceneKind.Story, system => system.SetStorySceneData(Data));
+        GameBaseSystem.mainSystem.LoadScene<StorySystem>(SceneKind.Story, x => x.SetStorySceneData(Data));
     }
+}
+[System.Serializable]
+public struct StageSelectManagerData
+{
+    public StoryData firstStoryData;
+    public StoryData afterStoryData;
+    public SceneKind sceneKind;
 }

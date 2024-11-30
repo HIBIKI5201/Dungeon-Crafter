@@ -49,6 +49,7 @@ MonoBehaviour:
   _instantiate:
     m_PersistentCalls:
       m_Calls: []
+  stageSelectManager: {fileID: 137766717854137909}
 --- !u!1 &4642492897010238573
 GameObject:
   m_ObjectHideFlags: 0
@@ -263,6 +264,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Data:
-    firstStoryData: {fileID: 11400000, guid: 62ee02b002c70ca40be2df23670ebe82, type: 2}
-    afterStoryData: {fileID: 11400000, guid: 62ee02b002c70ca40be2df23670ebe82, type: 2}
-    sceneKind: 2
+    firstStoryData: {fileID: 0}
+    afterStoryData: {fileID: 0}
+    sceneKind: 0

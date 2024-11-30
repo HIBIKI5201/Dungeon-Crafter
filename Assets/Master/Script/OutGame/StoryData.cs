@@ -51,9 +51,10 @@ namespace DCFrameWork.SceneSystem
                 // 行をカンマで分割
                 string[] elements = line.Split(',').Select(s => s.Replace("\"", "").Trim()).ToArray();
                 if (int.Parse(elements[4]) == 0) break;
-                _list.Add(new StoryText(elements[0], elements[1].Replace('/', '\n'), elements[2]));
+
+                Debug.Log($"{elements[0]} {elements[1]} {elements[2]}");
+                _list.Add(new StoryText(elements[0], elements[1], elements[2]));
             }
-            Debug.Log($"{_sheetName}のロード完了");
         }
     }
 
@@ -78,7 +79,7 @@ namespace DCFrameWork.SceneSystem
     [CustomEditor(typeof(StoryData))]
     public class MyScriptEditor : Editor
     {
-        public override async void OnInspectorGUI()
+        public override void OnInspectorGUI()
         {
             DrawDefaultInspector();
 
@@ -87,7 +88,7 @@ namespace DCFrameWork.SceneSystem
 
             if (GUILayout.Button("テキスト読み込み"))
             {
-                await storyData.Method();
+                storyData.Method();
             }
         }
     }

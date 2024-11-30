@@ -6,6 +6,8 @@ namespace DCFrameWork.SceneSystem
     public class InGameSystem : SceneSystem_B
     {
         private CameraManager _cameraManager;
+        private LevelManager _levelManager;
+
         [SerializeField]
         private StoryData StorySceneData;
 
@@ -13,6 +15,8 @@ namespace DCFrameWork.SceneSystem
         {
             _cameraManager = FindAnyObjectByType<CameraManager>();
             (_cameraManager is null).CheckLog("カメラマネージャーが見つかりません");
+            _levelManager = FindAnyObjectByType<LevelManager>();
+            (_levelManager is null).CheckLog("LevelManagerが見つかりません");
         }
 
         protected override void Think(InputContext input)

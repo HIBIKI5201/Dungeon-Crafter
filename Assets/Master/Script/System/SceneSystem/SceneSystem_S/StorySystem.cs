@@ -7,10 +7,9 @@ namespace DCFrameWork.SceneSystem
     {
         private StoryManager _storyManager;
         private SceneKind _sceneKind;
-        private StoryData _endStoryData;
         protected override void Initialize_S()
         {
-            _storyManager = new StoryManager();
+            _storyManager = GetComponent<StoryManager>();
         }
 
         protected override void Think(InputContext input)
@@ -21,16 +20,15 @@ namespace DCFrameWork.SceneSystem
         [ContextMenu("NextText")]
         public void NextStory() => _storyManager.NextText();
 
-        public void SetStorySceneData(StageSelectManagerData data)
+        public void SetStorySceneData(StorySceneData data)
         {
-            _storyManager.SetStoryData(data.firstStoryData);
+            _storyManager.SetStoryData(data.StoryData);
             _sceneKind = data.sceneKind;
-            _endStoryData = data.afterStoryData;
         }
 
         public void EndStory()
         {
-            GameBaseSystem.mainSystem.LoadScene<InGameSystem>(_sceneKind, system => system.SetStoryData(_endStoryData));
+            GameBaseSystem.mainSystem.LoadScene(_sceneKind);
         }
     }
 }

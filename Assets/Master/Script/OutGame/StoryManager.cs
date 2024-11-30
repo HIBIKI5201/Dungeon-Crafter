@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace DCFrameWork.SceneSystem
 {
-    public class StoryManager
+    public class StoryManager : MonoBehaviour
     {
         private IEnumerator _enumerator;
         private List<StoryText> _storyData;
-        public StoryManager()
+        public void Initialize()
         {
             _enumerator = PlayStoryContext();
         }

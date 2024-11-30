@@ -34,14 +34,6 @@ namespace DCFrameWork.Enemy
         private float _dropGold = 0f;
 
 
-        public float EnemyLevel { get => _enemyLevel; }
-        [SerializeField]
-        private float _enemyLevel = 1f;
-
-       
-
-       
-
-        
+    
     }
 }

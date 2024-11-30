@@ -43,7 +43,7 @@ namespace DCFrameWork.DefenseEquipment
                     }
                 }
                 if (!isChecked)
-                    Summon(summonPos, _maxCount);
+                    Summon(summonPos, _maxCount,transform);
             }
         }
 

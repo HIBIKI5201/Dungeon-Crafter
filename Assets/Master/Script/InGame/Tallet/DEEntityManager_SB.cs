@@ -16,12 +16,13 @@ namespace DCFrameWork.DefenseEquipment
         GameObject _entityPrefab;
 
         List<GameObject> _entityList = new List<GameObject>();
-        protected virtual void Summon(Vector3 pos, int count)
+        protected virtual void Summon(Vector3 pos, int count,Transform entityStorage)
         {
             if (_entityList.Count < count)
             {
                 if (_entityPrefab is null) return;
-                _entityList.Add(Instantiate(_entityPrefab, new Vector3(pos.x, 0, pos.z), Quaternion.identity));
+                var entity = Instantiate(_entityPrefab, new Vector3(pos.x, 0, pos.z), Quaternion.identity, entityStorage);
+                _entityList.Add(entity);
             }
         }
         protected bool Check(Vector3 pos)

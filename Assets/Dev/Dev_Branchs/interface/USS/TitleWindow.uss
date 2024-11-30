@@ -1,0 +1,50 @@
+.game-start-button {
+    width: 30%;
+    height: 20%;
+    font-size: 50px;
+    -unity-font-style: bold;
+    margin-bottom: 30px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    transition-timing-function: ease-in-out-cubic;
+    transition-duration: 0.1s;
+}
+
+.game-start-button:hover {
+    scale: 1.05 1.05;
+    transition-timing-function: ease-in-out-cubic;
+    transition-duration: 0.1s;
+}
+
+.game-start-button:active {
+    scale: 0.95 0.95;
+    transition-timing-function: ease-in-out-cubic;
+    transition-duration: 0.1s;
+}
+
+.credit-button {
+    width: 30%;
+    height: 20%;
+    font-size: 50px;
+    -unity-font-style: bold;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    transition-timing-function: ease-in-out-cubic;
+    transition-duration: 0.1s;
+}
+
+.credit-button:hover {
+    transition-timing-function: ease-in-out-cubic;
+    transition-duration: 0.1s;
+    scale: 1.05 1.05;
+}
+
+.credit-button:active {
+    scale: 0.95 0.95;
+    transition-timing-function: ease-in-out-cubic;
+    transition-duration: 0.1s;
+}

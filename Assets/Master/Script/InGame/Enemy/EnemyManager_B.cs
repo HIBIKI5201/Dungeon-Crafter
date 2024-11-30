@@ -1,6 +1,7 @@
 using DCFrameWork.MainSystem;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -205,7 +206,14 @@ namespace DCFrameWork.Enemy
         {
             _enemyLevel = level;
         }
-           
+
+        void IEnemy.StopEnemy(float time) => StopEnemy(time);
+        private void StopEnemy(float time)
+        {
+            //ここに敵のヒットストップ処理を書く
+        }
+
+
 
         #region ポーズ処理
         void IPausable.Pause() => Pause();
@@ -230,6 +238,8 @@ namespace DCFrameWork.Enemy
         float ChangeStates(float rise ,float level, float param);
 
         void SetLevel(float level);
+
+        void StopEnemy(float time);
 
         Vector3 position { get; set; }
     }
@@ -256,7 +266,6 @@ namespace DCFrameWork.Enemy
         {
             CurrentHealth -= damage;
             HealthBarUpdate();
-
             if (CurrentHealth <= 0)
             {
                 //経験値処理をここで行う予定w

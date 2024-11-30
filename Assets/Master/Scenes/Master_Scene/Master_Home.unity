@@ -352,6 +352,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 137766717854137909, guid: 5eda548d81cb2f447878202eda3d4b41,
         type: 3}
+      propertyPath: Data.StoryData
+      value: 
+      objectReference: {fileID: 11400000, guid: 62ee02b002c70ca40be2df23670ebe82,
+        type: 2}
+    - target: {fileID: 137766717854137909, guid: 5eda548d81cb2f447878202eda3d4b41,
+        type: 3}
       propertyPath: Data.sceneKind
       value: 2
       objectReference: {fileID: 0}

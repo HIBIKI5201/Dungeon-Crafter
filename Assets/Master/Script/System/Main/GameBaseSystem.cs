@@ -28,8 +28,10 @@ namespace DCFrameWork.MainSystem
             {
                 _instance = this;
 
-                Scene scene = SceneManager.CreateScene("SystemScene");
-                SceneManager.MoveGameObjectToScene(gameObject, scene);
+                string sceneName =SceneChanger.SetCurrentSceneName();
+                Scene systemScene = SceneManager.CreateScene("SystemScene");
+                SceneManager.MoveGameObjectToScene(gameObject, systemScene);
+                SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
             }
             else
             {

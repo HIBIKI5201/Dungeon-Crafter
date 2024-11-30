@@ -13,6 +13,12 @@ namespace DCFrameWork
         public Action _gameOverEvent;
         public Action<int> _getGold;
 
+        private void Awake()
+        {
+            _levelManager = GetComponentInChildren<LevelManager>();
+            _levelManager?.Initialize();
+        }
+
         public int TreasureHp { get => _treasureHp; }
 
         public void HPDown(int damage)

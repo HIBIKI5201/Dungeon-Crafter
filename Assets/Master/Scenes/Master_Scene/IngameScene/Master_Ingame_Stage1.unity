@@ -454,6 +454,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2299666661034462887, guid: 0df4d64677fe9b44facaa32a2feee710,
         type: 3}
+<<<<<<< HEAD
       propertyPath: _instantiate.m_PersistentCalls.m_Calls.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -517,6 +518,12 @@ PrefabInstance:
       propertyPath: _instantiate.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+=======
+      propertyPath: StorySceneData
+      value: 
+      objectReference: {fileID: 11400000, guid: 6348ee21bd2f3ae4097c430c2d2c41c0,
+        type: 2}
+>>>>>>> origin/system
     - target: {fileID: 2523116370185415480, guid: 0df4d64677fe9b44facaa32a2feee710,
         type: 3}
       propertyPath: m_LocalPosition.x

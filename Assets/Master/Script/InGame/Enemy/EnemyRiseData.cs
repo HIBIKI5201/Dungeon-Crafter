@@ -1,11 +1,10 @@
 using System;
-using TMPro;
 using UnityEngine;
 
-namespace DCFrameWork.Enemy
+namespace DCFrameWork
 {
-    [Serializable, CreateAssetMenu(menuName = "GameData/EnemyData/Base_Data", fileName = "EnemyData")]
-    public class EnemyData_B : ScriptableObject
+    [Serializable, CreateAssetMenu(menuName = "GameData/EnemyData/EnemyRiseData", fileName = "EnemyRiseData")]
+    public class EnemyRiseData : ScriptableObject
     {
         public float MaxHealth { get => _maxHealth; }
         [SerializeField]
@@ -33,15 +32,5 @@ namespace DCFrameWork.Enemy
         [SerializeField]
         private float _dropGold = 0f;
 
-
-        public float EnemyLevel { get => _enemyLevel; }
-        [SerializeField]
-        private float _enemyLevel = 1f;
-
-       
-
-       
-
-        
     }
 }

@@ -9,13 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a34e79b4860e091428e50ea98cb556d1, type: 3}
-  m_Name: EnemyDataFly
+  m_Script: {fileID: 11500000, guid: 443c7a468ca85404f80153a0342a39c2, type: 3}
+  m_Name: EnemyRiseDataLead
   m_EditorClassIdentifier: 
-  _maxHealth: 15
-  _plunder: 1
-  _dexterity: 12
+  _maxHealth: 30
+  _plunder: 5
+  _dexterity: 10
   _defense: 2
-  _dropEXP: 5
-  _dropGold: 100
-  _enemyLevel: 1
+  _dropEXP: 30
+  _dropGold: 10000

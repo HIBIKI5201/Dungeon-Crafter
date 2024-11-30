@@ -123,6 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyData: {fileID: 11400000, guid: 0640177d1188fb845b1c52625dd084a2, type: 2}
+  _enemyRiseData: {fileID: 11400000, guid: 46eb7c1835c0b504d9ecf1723e614e46, type: 2}
   _levelRequirePoint: 0
 --- !u!1001 &3207008905949727169
 PrefabInstance:

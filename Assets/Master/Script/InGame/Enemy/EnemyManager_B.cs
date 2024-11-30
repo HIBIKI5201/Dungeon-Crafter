@@ -8,18 +8,28 @@ namespace DCFrameWork.Enemy
 {
     [RequireComponent(typeof(NavMeshAgent), typeof(Rigidbody))]
 
-    public abstract class EnemyManager_B<Data> : MonoBehaviour, IEnemy, IPausable where Data : EnemyData_B
+    public abstract class EnemyManager_B<Data , Data2> : MonoBehaviour, IEnemy, IPausable where Data : EnemyData_B  where Data2 : EnemyRiseData
     {
         #region データ類
         [SerializeField]
         private Data _enemyData;
-        float IFightable.MaxHealth { get => _enemyData.MaxHealth; }
+        [SerializeField]
+        private Data2 _enemyRiseData; 
+        float IFightable.MaxHealth { get => _enemyData.MaxHealth; set { } }
         private float _currentHealth;
         float IFightable.CurrentHealth { get => _currentHealth; set { _currentHealth = value; HealthBarUpdate(); } }
 
         private float _defense;
         protected float Defense { get => _enemyData.Defense; }
         protected float Dexterity { get => _enemyData.Dexterity;}
+
+        protected float Plunder { get => _enemyData.Plunder; }
+
+        protected float DropEXP { get => _enemyData.DropEXP; }
+
+        protected float DropGold { get => _enemyData.DropGold; }
+
+         protected float EnemyLevel {  get => _enemyData.EnemyLevel; set { } }
 
         [SerializeField]
         protected float _levelRequirePoint;
@@ -176,7 +186,7 @@ namespace DCFrameWork.Enemy
         /// <summary>
         /// 防御力を変える
         /// </summary>
-        /// <param name="defense">スピード</param>
+        /// <param name="defense">防御力</param>
         private void ChangeDefense(float defense)
         {
             _defense = defense;
@@ -210,9 +220,19 @@ namespace DCFrameWork.Enemy
         Action DeathAction { get; set; }
 
         protected void HealthBarUpdate();
-        float MaxHealth { get; }
+        float MaxHealth { get; protected set; }
         float CurrentHealth { get; protected set; }
         
+        //float EnemyLevel { get; protected set; }
+        
+        
+        void SetLevel(float level)
+        {
+           
+
+        }
+
+
         /// <summary>
         /// ダメージを受ける
         /// </summary>

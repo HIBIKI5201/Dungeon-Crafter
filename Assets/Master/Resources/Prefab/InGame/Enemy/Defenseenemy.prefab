@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3557142542435686237}
   - component: {fileID: 4761154678578794722}
   m_Layer: 0
-  m_Name: DefenseEnemy
+  m_Name: Defenseenemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -123,6 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyData: {fileID: 11400000, guid: c88c7011bf42ac34db4fb49ed833382d, type: 2}
+  _enemyRiseData: {fileID: 11400000, guid: a3e98584ec602f2448a0ee43fba9b260, type: 2}
   _levelRequirePoint: 0
 --- !u!1001 &3207008905949727169
 PrefabInstance:

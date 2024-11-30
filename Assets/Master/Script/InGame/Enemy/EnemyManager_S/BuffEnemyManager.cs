@@ -1,6 +1,6 @@
 namespace DCFrameWork.Enemy
 {
-    public class BuffEnemyManager : EnemyManager_B<EnemyData_B>
+    public class BuffEnemyManager : EnemyManager_B<EnemyData_B, EnemyRiseData>
     {
         protected override void DeathBehaviour()
         {

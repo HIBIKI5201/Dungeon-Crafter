@@ -9,12 +9,10 @@ namespace DCFrameWork
         public List<DropData> _dropData = new();
         public IEnumerable<DefenseObjectsKind> GetRandomDefenseObj(int count)
         {
-            List<DefenseObjectsKind> defenseObjects = new List<DefenseObjectsKind>();
             List<DropData> dropData = new List<DropData>(_dropData);
             Shuffle(dropData);
             dropData.RemoveRange(count, dropData.Count - count);
-            Debug.Log(dropData.Count);
-            return defenseObjects = dropData.ConvertAll(d => d._defenseObjectsKind);
+            return dropData.ConvertAll(d => d._defenseObjectsKind);
         }
         void Shuffle<T>(List<T> list)
         {

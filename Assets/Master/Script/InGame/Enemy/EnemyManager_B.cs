@@ -1,7 +1,6 @@
 using DCFrameWork.MainSystem;
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,7 +8,7 @@ namespace DCFrameWork.Enemy
 {
     [RequireComponent(typeof(NavMeshAgent), typeof(Rigidbody))]
 
-    public abstract class EnemyManager_B<Data , Data2> : MonoBehaviour, IEnemy, IPausable where Data : EnemyData_B  where Data2 : EnemyRiseData
+    public abstract class EnemyManager_B<Data, Data2> : MonoBehaviour, IEnemy, IPausable where Data : EnemyData_B where Data2 : EnemyRiseData
     {
         #region ƒf[ƒ^—Þ
         [SerializeField]
@@ -17,22 +16,22 @@ namespace DCFrameWork.Enemy
 
         private float _enemyLevel = 1;
         [SerializeField]
-        private Data2 _enemyRiseData; 
+        private Data2 _enemyRiseData;
         float IFightable.MaxHealth { get => _enemyData.MaxHealth; set { ChangeStates(_enemyRiseData.MaxHealth, _enemyLevel, _enemyData.MaxHealth); } }
         private float _currentHealth;
         float IFightable.CurrentHealth { get => _currentHealth; set { _currentHealth = value; HealthBarUpdate(); } }
 
         private float _defense;
-        protected float Defense { get => _enemyData.Defense; set { ChangeStates(_enemyRiseData.Defense,_enemyLevel, _enemyData.Defense); } }
+        protected float Defense { get => _enemyData.Defense; set { ChangeStates(_enemyRiseData.Defense, _enemyLevel, _enemyData.Defense); } }
         protected float Dexterity { get => _enemyData.Dexterity; set { ChangeStates(_enemyRiseData.Dexterity, _enemyLevel, _enemyData.Dexterity); } }
 
-        protected float Plunder { get => _enemyData.Plunder;set { ChangeStates(_enemyRiseData.Plunder, _enemyLevel, _enemyData.Plunder); } }
+        protected float Plunder { get => _enemyData.Plunder; set { ChangeStates(_enemyRiseData.Plunder, _enemyLevel, _enemyData.Plunder); } }
 
         protected float DropEXP { get => _enemyData.DropEXP; set { ChangeStates(_enemyRiseData.DropEXP, _enemyLevel, _enemyData.DropEXP); } }
 
         protected float DropGold { get => _enemyData.DropGold; set { ChangeStates(_enemyRiseData.DropGold, _enemyLevel, _enemyData.DropGold); } }
 
-    
+
         [SerializeField]
         protected float _levelRequirePoint;
         #endregion
@@ -126,7 +125,7 @@ namespace DCFrameWork.Enemy
 
         void IFightable.DeathBehaviour() => DeathBehaviour();
         protected virtual void DeathBehaviour()
-        {     
+        {
             gameObject.SetActive(false);
             _healthBarManager.gameObject.SetActive(false);
         }
@@ -174,11 +173,11 @@ namespace DCFrameWork.Enemy
 
 
 
-        float IEnemy.ChangeStates(float rise, float level, float param)=>ChangeStates(rise, level, param);
-        private float ChangeStates(float rise , float level , float param)
+        float IEnemy.ChangeStates(float rise, float level, float param) => ChangeStates(rise, level, param);
+        private float ChangeStates(float rise, float level, float param)
         {
             float defaultParam = param;
-            float riseParam = defaultParam + (level - 1) * rise ;
+            float riseParam = defaultParam + (level - 1) * rise;
             return riseParam;
         }
 
@@ -191,7 +190,7 @@ namespace DCFrameWork.Enemy
         {
             _agent.speed = speed;
         }
-        
+
         /// <summary>
         /// –hŒä—Í‚ð•Ï‚¦‚é
         /// </summary>
@@ -201,7 +200,7 @@ namespace DCFrameWork.Enemy
             _defense = defense;
         }
 
-        void IEnemy.SetLevel(float level)=>SetLevel(level);
+        void IEnemy.SetLevel(float level) => SetLevel(level);
         private void SetLevel(float level)
         {
             _enemyLevel = level;
@@ -235,7 +234,7 @@ namespace DCFrameWork.Enemy
         void StartByPool(EnemyHealthBarManager enemyHealthBarManager, Vector3 targetPos);
         void Destroy();
 
-        float ChangeStates(float rise ,float level, float param);
+        float ChangeStates(float rise, float level, float param);
 
         void SetLevel(float level);
 
@@ -251,11 +250,11 @@ namespace DCFrameWork.Enemy
         protected void HealthBarUpdate();
         float MaxHealth { get; protected set; }
         float CurrentHealth { get; protected set; }
-        
+
         //float EnemyLevel { get; protected set; }
-        
-        
-       
+
+
+
 
 
         /// <summary>
@@ -280,11 +279,11 @@ namespace DCFrameWork.Enemy
         /// ‰ñ•œ‚ðŽó‚¯‚é
         /// </summary>
         /// <param name="amount">‰ñ•œ—Ê</param>
-        bool  HitHeal(float heal)
+        bool HitHeal(float heal)
         {
             if (CurrentHealth == MaxHealth)
             {
-                return false ;
+                return false;
             }
             CurrentHealth = Mathf.Min(CurrentHealth + heal, MaxHealth);
             HealthBarUpdate();

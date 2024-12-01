@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8090698119137097613}
   - component: {fileID: 3557142542435686237}
   - component: {fileID: -2123936812115308389}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BossEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -203,10 +203,25 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -2214671780200814635, guid: b783b57d623b5dc479ed533fc98b5824,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: -1143188817105336646, guid: b783b57d623b5dc479ed533fc98b5824,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b783b57d623b5dc479ed533fc98b5824,
         type: 3}
       propertyPath: m_Name
       value: Adventurer_mock
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b783b57d623b5dc479ed533fc98b5824,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b783b57d623b5dc479ed533fc98b5824,
         type: 3}
@@ -309,6 +324,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6d5c5c46fe563f54a87994bde72e50b7,
         type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6d5c5c46fe563f54a87994bde72e50b7,
+        type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -405,6 +425,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: 3tousin_test
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5eab61e118b5b5a4ea33172c5caeddb7,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 5eab61e118b5b5a4ea33172c5caeddb7,
         type: 3}

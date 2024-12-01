@@ -23,7 +23,7 @@ namespace DCFrameWork.Enemy
         float IFightable.CurrentHealth { get => _currentHealth; set { _currentHealth = value; HealthBarUpdate(); } }
 
         private float _defense;
-        protected float Defense { get => _enemyData.Defense; set { ChangeStates(_enemyRiseData.Defense, _enemyLevel, _enemyData.Defense); } }
+        protected float Defense { get => _enemyData.Defense; set { _defense = value; } }
         protected float Dexterity { get => _enemyData.Dexterity; set { ChangeStates(_enemyRiseData.Dexterity, _enemyLevel, _enemyData.Dexterity); } }
 
         protected float Plunder { get => _enemyData.Plunder; set { ChangeStates(_enemyRiseData.Plunder, _enemyLevel, _enemyData.Plunder); } }
@@ -230,6 +230,7 @@ namespace DCFrameWork.Enemy
     }
     public enum ConditionType
     {
+        normal,
         slow,
         weakness,
         defensive,
@@ -311,7 +312,7 @@ namespace DCFrameWork.Enemy
         }
 
         void RemoveCondition(ConditionType type)
-        {
+        {    
             if (ConditionList.TryGetValue(type, out var count))
             {
                 if (count > 1)

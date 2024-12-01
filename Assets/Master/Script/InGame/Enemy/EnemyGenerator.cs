@@ -43,9 +43,10 @@ namespace DCFrameWork.Enemy
 
         private void Start()
         {
-           //Initialize();
+           
+           
         }
-
+        
        
 
         public void Initialize()

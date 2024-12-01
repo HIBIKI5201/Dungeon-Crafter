@@ -1,5 +1,6 @@
 using DCFrameWork.MainSystem;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -208,10 +209,16 @@ namespace DCFrameWork.Enemy
 
         void IEnemy.StopEnemy(float time) => StopEnemy(time);
         private void StopEnemy(float time)
-        {
-            //ここに敵のヒットストップ処理を書く
+        {       
+            StartCoroutine(StopTime(time)); 
         }
-
+        IEnumerator StopTime(float time)
+        {
+            float speed = _agent.speed;
+            _agent.speed = 0;
+            yield return FrameWork.PausableWaitForSecond(time);
+            _agent.speed = speed;
+        }
 
 
         #region ポーズ処理
@@ -266,7 +273,7 @@ namespace DCFrameWork.Enemy
             CurrentHealth -= damage;
             HealthBarUpdate();
             if (CurrentHealth <= 0)
-            {
+            {              
                 //経験値処理をここで行う予定w
                 DeathAction?.Invoke();
                 DeathAction = null;

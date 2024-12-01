@@ -1,5 +1,8 @@
 
 
+using DCFrameWork.MainSystem;
+using System.Collections;
+
 namespace DCFrameWork.Enemy
 {
     public class NormalEnemyManager : EnemyManager_B<EnemyData_B,EnemyRiseData>
@@ -14,8 +17,6 @@ namespace DCFrameWork.Enemy
 
 
         }
-
-
 
         protected override void Pause()
         {

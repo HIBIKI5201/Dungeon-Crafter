@@ -15,10 +15,10 @@ namespace DCFrameWork
         bool _isPaused;
         [SerializeField] float _attackRate = 2;
         float _timer;
-        [SerializeField] float _attackValue = 1;
         NavMeshAgent _agent;
         SummonTurretManager _turretManager;
         bool _isAttacked = false;
+        GameObject _target;
 
         private void Awake()
         {
@@ -33,15 +33,19 @@ namespace DCFrameWork
 
         void Update()
         {
+            if (_isAttacked)
+            {
+                _timer += Time.deltaTime;
+            }
             if (!_isPaused)
             {
-                if (Time.time > _timer + _attackRate)
+                if (Time.time > _timer + _attackRate && !_isAttacked)
                 {
-                    if (_turretManager._enemyList.Count != 0)
-                    {
-                        _timer = Time.time;
-                        _isAttacked = true;
-                    }
+                    _isAttacked = true;
+                }
+                if (IsTargetSet())
+                {
+                    _agent.SetDestination(_turretManager.transform.position);
                 }
             }
         }
@@ -50,19 +54,26 @@ namespace DCFrameWork
         {
             if (_turretManager._enemyList.Count != 0)
             {
-                _agent.SetDestination(TargetSelect()[0].gameObject.transform.position);
+                _target = TargetSelect().gameObject;
+                _agent.SetDestination(_target.transform.position);
             }
+        }
+        public bool IsTargetSet()
+        {
+            return _agent.destination == Vector3.zero;
         }
         private void OnCollisionEnter(Collision collision)
         {
             if (_isAttacked)
             {
-                TargetsAddDamage(_turretManager._enemyList, _turretManager._attack);
-                var enemy = _turretManager._enemyList;
-                TargetAddCondition(enemy, ConditionType.weakness);
-                if (enemy[0].TryGetComponent(out IConditionable conditionable))
-                    StartCoroutine(TargetRemoveCondition(conditionable));
-                _isAttacked = false;
+                if (collision.gameObject == _target.gameObject)
+                {
+                    TargetsAddDamage(_target, _turretManager._attack);
+                    TargetAddCondition(_target, ConditionType.weakness);
+                    TargetAddHitStop(_target);
+                    if (_target.TryGetComponent(out IConditionable conditionable))
+                        StartCoroutine(TargetRemoveCondition(conditionable));
+                }
             }
         }
 
@@ -71,27 +82,30 @@ namespace DCFrameWork
             yield return FrameWork.PausableWaitForSecond(3f);
             conditionable.RemoveCondition(ConditionType.weakness);
         }
-        public List<GameObject> TargetSelect()
+        public GameObject TargetSelect()
         {
-            return _turretManager._enemyList.OrderBy(x => Vector3.Distance(transform.position, x.transform.position)).Take(1).ToList();
+            return _turretManager._enemyList.OrderBy(x => Vector3.Distance(transform.position, x.transform.position)).First();
         }
 
-        void TargetsAddDamage(List<GameObject> enemies, float damage)
+        void TargetsAddDamage(GameObject enemy, float damage)
         {
-            foreach (var enemy in enemies)
-            {
-                if (enemy.TryGetComponent(out IFightable component))
-                    component.HitDamage(damage);
-            }
+            if (enemy.TryGetComponent(out IFightable component))
+                component.HitDamage(damage);
+            _isAttacked = false;
         }
 
-        void TargetAddCondition(List<GameObject> enemies, ConditionType type)
+        void TargetAddCondition(GameObject enemy, ConditionType type)
         {
-            foreach (var enemy in enemies)
+            if (enemy.TryGetComponent(out IConditionable component))
+                component.AddCondition(type);
+        }
+        void TargetAddHitStop(GameObject enemy)
+        {
+            if (enemy.TryGetComponent(out IEnemy component))
             {
-                if (enemy.TryGetComponent(out IConditionable component))
-                    component.AddCondition(type);
+                //HitStopèàóùÇÇ±Ç±Ç…
             }
+                
         }
         public void Pause()
         {

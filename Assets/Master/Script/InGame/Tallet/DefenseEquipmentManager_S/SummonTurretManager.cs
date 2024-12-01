@@ -46,7 +46,7 @@ namespace DCFrameWork.DefenseEquipment
                     }
                 }
                 if (!isChecked)
-                    Summon(summonPos, _maxCount, transform);
+                    Summon(summonPos, _maxCount);
             }
         }
         protected override void LoadSpecificData(SummonData data)
@@ -71,13 +71,11 @@ namespace DCFrameWork.DefenseEquipment
                 {
                     _enemyList.Add(other.gameObject);
                 }
-                Component[] components = gameObject.GetComponentsInChildren<SummonEntityManager>();
-                foreach (var component in components)
+                if (_entityList.Count > 0)
                 {
-                    if (component.TryGetComponent(out SummonEntityManager entity))
-                    {
-                        entity.SetDestination();
-                    }
+                    List<SummonEntityManager> summonList = new();
+                    _entityList.ForEach(x => summonList.Add(x.GetComponent<SummonEntityManager>()));
+                    summonList.Where(x => x.IsTargetSet()).ToList().ForEach(x => x.SetDestination());
                 }
             }
         }

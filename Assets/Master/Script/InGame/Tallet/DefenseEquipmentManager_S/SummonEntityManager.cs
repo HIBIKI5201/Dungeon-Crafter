@@ -23,12 +23,12 @@ namespace DCFrameWork
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
+            if (transform.parent.TryGetComponent(out _turretManager))
+                SetDestination();
         }
         void Start()
         {
             _timer = Time.time;
-            if (transform.parent.TryGetComponent(out _turretManager))
-                SetDestination();
         }
 
         void Update()
@@ -52,7 +52,7 @@ namespace DCFrameWork
 
         public void SetDestination()
         {
-            if (_turretManager._enemyList.Count != 0)
+            if (_turretManager._enemyList.Count != 0 && _agent.isOnNavMesh)
             {
                 _target = TargetSelect().gameObject;
                 _agent.SetDestination(_target.transform.position);
@@ -62,12 +62,13 @@ namespace DCFrameWork
         {
             return _agent.destination == Vector3.zero;
         }
-        private void OnCollisionEnter(Collision collision)
+        private void OnTriggerEnter(Collider other)
         {
             if (_isAttacked)
             {
-                if (collision.gameObject == _target.gameObject)
+                if (other.gameObject == _target.gameObject)
                 {
+                    Debug.Log("Ç†ÇΩÇ¡ÇΩ");
                     TargetsAddDamage(_target, _turretManager._attack);
                     TargetAddCondition(_target, ConditionType.weakness);
                     TargetAddHitStop(_target);
@@ -76,7 +77,6 @@ namespace DCFrameWork
                 }
             }
         }
-
         IEnumerator TargetRemoveCondition(IConditionable conditionable)
         {
             yield return FrameWork.PausableWaitForSecond(3f);
@@ -105,7 +105,7 @@ namespace DCFrameWork
             {
                 //HitStopèàóùÇÇ±Ç±Ç…
             }
-                
+
         }
         public void Pause()
         {

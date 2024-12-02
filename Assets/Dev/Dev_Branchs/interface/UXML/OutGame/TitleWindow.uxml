@@ -1,6 +1,0 @@
-<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <engine:VisualElement name="TitleWindow" style="flex-grow: 1; height: 1065px; background-color: rgb(255, 255, 255);">
-        <engine:Label text="DangeonCrafter" name="Title" style="top: 120px; left: 0; right: 0; bottom: auto; -unity-text-align: upper-center; font-size: 150px; -unity-font-style: bold; text-overflow: clip; -unity-font-definition: url(&quot;project://database/Assets/Settings/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=2230732570650464555&amp;guid=804a53278a35c0149ab81a2e1981da1d&amp;type=3#NotInter-Regular&quot;);" />
-        <engine:Label text="画面をクリックしてください" name="Guide" enable-rich-text="true" parse-escape-sequences="false" selectable="false" language-direction="Inherit" style="position: relative; top: 45%; -unity-text-align: upper-center; -unity-font-style: bold; font-size: 66px; text-overflow: clip;" />
-    </engine:VisualElement>
-</engine:UXML>

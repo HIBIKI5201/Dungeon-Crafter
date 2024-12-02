@@ -1,5 +1,6 @@
 using DCFrameWork.MainSystem;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -8,18 +9,29 @@ namespace DCFrameWork.Enemy
 {
     [RequireComponent(typeof(NavMeshAgent), typeof(Rigidbody))]
 
-    public abstract class EnemyManager_B<Data> : MonoBehaviour, IEnemy, IPausable where Data : EnemyData_B
+    public abstract class EnemyManager_B<Data, Data2> : MonoBehaviour, IEnemy, IPausable where Data : EnemyData_B where Data2 : EnemyRiseData
     {
         #region データ類
         [SerializeField]
         private Data _enemyData;
-        float IFightable.MaxHealth { get => _enemyData.MaxHealth; }
+
+        private float _enemyLevel = 1;
+        [SerializeField]
+        private Data2 _enemyRiseData;
+        float IFightable.MaxHealth { get => _enemyData.MaxHealth; set { ChangeStates(_enemyRiseData.MaxHealth, _enemyLevel, _enemyData.MaxHealth); } }
         private float _currentHealth;
         float IFightable.CurrentHealth { get => _currentHealth; set { _currentHealth = value; HealthBarUpdate(); } }
 
         private float _defense;
-        protected float Defense { get => _enemyData.Defense; }
-        protected float Dexterity { get => _enemyData.Dexterity;}
+        protected float Defense { get => _enemyData.Defense; set { _defense = value; } }
+        protected float Dexterity { get => _enemyData.Dexterity; set { ChangeStates(_enemyRiseData.Dexterity, _enemyLevel, _enemyData.Dexterity); } }
+
+        protected float Plunder { get => _enemyData.Plunder; set { ChangeStates(_enemyRiseData.Plunder, _enemyLevel, _enemyData.Plunder); } }
+
+        protected float DropEXP { get => _enemyData.DropEXP; set { ChangeStates(_enemyRiseData.DropEXP, _enemyLevel, _enemyData.DropEXP); } }
+
+        protected float DropGold { get => _enemyData.DropGold; set { ChangeStates(_enemyRiseData.DropGold, _enemyLevel, _enemyData.DropGold); } }
+
 
         [SerializeField]
         protected float _levelRequirePoint;
@@ -87,13 +99,10 @@ namespace DCFrameWork.Enemy
             HealthBarUpdate();
             ChangeSpeed(Dexterity);
             _deathAction = deathAction;
-
             gameObject.transform.position = spawnPos;
-
             gameObject.SetActive(true);
             _healthBarManager.gameObject.SetActive(true);
             _healthBarManager.FollowTarget(transform);
-
             GoToTargetPos(targetPos);
             Initialize_S();
         }
@@ -165,6 +174,14 @@ namespace DCFrameWork.Enemy
 
 
 
+        float IEnemy.ChangeStates(float rise, float level, float param) => ChangeStates(rise, level, param);
+        private float ChangeStates(float rise, float level, float param)
+        {
+            float defaultParam = param;
+            float riseParam = defaultParam + (level - 1) * rise;
+            return riseParam;
+        }
+
 
         /// <summary>
         /// スピードを変える
@@ -174,15 +191,35 @@ namespace DCFrameWork.Enemy
         {
             _agent.speed = speed;
         }
-        
+
         /// <summary>
         /// 防御力を変える
         /// </summary>
-        /// <param name="defense">スピード</param>
+        /// <param name="defense">防御力</param>
         private void ChangeDefense(float defense)
         {
             _defense = defense;
         }
+
+        void IEnemy.SetLevel(float level) => SetLevel(level);
+        private void SetLevel(float level)
+        {
+            _enemyLevel = level;
+        }
+
+        void IEnemy.StopEnemy(float time) => StopEnemy(time);
+        private void StopEnemy(float time)
+        {       
+            StartCoroutine(StopTime(time)); 
+        }
+        IEnumerator StopTime(float time)
+        {
+            float speed = _agent.speed;
+            _agent.speed = 0;
+            yield return FrameWork.PausableWaitForSecond(time);
+            _agent.speed = speed;
+        }
+
 
         #region ポーズ処理
         void IPausable.Pause() => Pause();
@@ -193,6 +230,7 @@ namespace DCFrameWork.Enemy
     }
     public enum ConditionType
     {
+        normal,
         slow,
         weakness,
         defensive,
@@ -204,6 +242,12 @@ namespace DCFrameWork.Enemy
         void StartByPool(EnemyHealthBarManager enemyHealthBarManager, Vector3 targetPos);
         void Destroy();
 
+        float ChangeStates(float rise, float level, float param);
+
+        void SetLevel(float level);
+
+        void StopEnemy(float time);
+
         Vector3 position { get; set; }
     }
 
@@ -212,9 +256,15 @@ namespace DCFrameWork.Enemy
         Action DeathAction { get; set; }
 
         protected void HealthBarUpdate();
-        float MaxHealth { get; }
+        float MaxHealth { get; protected set; }
         float CurrentHealth { get; protected set; }
-        
+
+        //float EnemyLevel { get; protected set; }
+
+
+
+
+
         /// <summary>
         /// ダメージを受ける
         /// </summary>
@@ -223,10 +273,9 @@ namespace DCFrameWork.Enemy
         {
             CurrentHealth -= damage;
             HealthBarUpdate();
-
             if (CurrentHealth <= 0)
-            {
-                //経験値処理をここで行う予定
+            {              
+                //経験値処理をここで行う予定w
                 DeathAction?.Invoke();
                 DeathAction = null;
                 return false;
@@ -238,11 +287,11 @@ namespace DCFrameWork.Enemy
         /// 回復を受ける
         /// </summary>
         /// <param name="amount">回復量</param>
-        bool  HitHeal(float heal)
+        bool HitHeal(float heal)
         {
             if (CurrentHealth == MaxHealth)
             {
-                return false ;
+                return false;
             }
             CurrentHealth = Mathf.Min(CurrentHealth + heal, MaxHealth);
             HealthBarUpdate();
@@ -263,7 +312,7 @@ namespace DCFrameWork.Enemy
         }
 
         void RemoveCondition(ConditionType type)
-        {
+        {    
             if (ConditionList.TryGetValue(type, out var count))
             {
                 if (count > 1)

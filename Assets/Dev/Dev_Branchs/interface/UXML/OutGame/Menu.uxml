@@ -1,8 +1,10 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Dev/Dev_Branchs/interface/USS/Menu.uss?fileID=7433441132597879392&amp;guid=2b7cea8797b07b345b289cd438bb5153&amp;type=3#Menu" />
     <engine:VisualElement style="flex-grow: 1; justify-content: space-around; align-items: center; flex-direction: row; background-color: rgb(255, 255, 255);">
-        <engine:Button text="ステージ選択" name="stage-select-button" class="stage-select-button font-style" />
-        <engine:Button text="防衛設備" triple-click-selects-line="false" name="defence-equipment-button" class="defence-equipment-button font-style" />
-        <engine:Button text="タイトル" name="title-button" class="title-button font-style" />
+        <engine:Button text="防衛設備" triple-click-selects-line="false" name="defence-equipment-button" class="defence-equipment-button font-style" style="left: 5%; position: absolute; top: 50%; width: 30%; height: 15%;" />
+        <engine:Label text="メインメニュー" style="position: absolute; width: 20%; height: 6%; top: 0; left: 0; -unity-font-style: bold; -unity-text-align: middle-center; font-size: 60%; margin-top: 1%; margin-left: 1%;" />
+        <engine:VisualElement name="SettingButton" style="flex-grow: 1; position: absolute; width: 100px; height: 100px; bottom: 0; right: 0; background-color: rgb(0, 0, 0); margin-bottom: 1%; margin-right: 1%;" />
+        <engine:Button text="ステージセレクト" name="stage-select-button" class="stage-select-button font-style" style="top: 15%; position: absolute; width: 60%; height: 30%; left: 5%; font-size: 90px;" />
+        <engine:Button text="タイトル" name="title-button" class="title-button font-style" style="top: 50%; left: 36%; position: absolute; width: 30%; height: 15%; background-color: rgb(188, 188, 188);" />
     </engine:VisualElement>
 </engine:UXML>

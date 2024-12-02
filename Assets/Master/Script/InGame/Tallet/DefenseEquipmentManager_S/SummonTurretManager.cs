@@ -1,3 +1,7 @@
+using DCFrameWork.Enemy;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
 
@@ -8,15 +12,17 @@ namespace DCFrameWork.DefenseEquipment
         float _timer = 0;
         bool _isPaused = false;
         int _maxCount;
+        [NonSerialized] public float _attack;
 #if UNITY_EDITOR
         [SerializeField] Vector3 _boxCastSizeDebug = new(1, 10, 1);
 #endif
+        [NonSerialized] public List<GameObject> _enemyList = new();
         Vector3 _position;
         protected override void Start_S()
         {
             _timer = Time.time;
         }
-        protected override void Think() //UpDate ‚Æ“¯‹`
+        protected override void Think() //UpDate ï¿½Æ“ï¿½ï¿½`
         {
             if (_isPaused)
                 _timer += Time.deltaTime;
@@ -46,6 +52,7 @@ namespace DCFrameWork.DefenseEquipment
         protected override void LoadSpecificData(SummonData data)
         {
             _maxCount = DefenseEquipmentData.MaxCount;
+            _attack = DefenseEquipmentData.Attack;
         }
         protected override void Pause()
         {
@@ -56,29 +63,74 @@ namespace DCFrameWork.DefenseEquipment
         {
             _isPaused = false;
         }
+        private void OnTriggerEnter(Collider other)
+        {
+            if (!_isPaused)
+            {
+                if (other.TryGetComponent<IFightable>(out _))
+                {
+                    _enemyList.Add(other.gameObject);
+                }
+                if (_entityList.Count > 0)
+                {
+                    List<SummonEntityManager> summonList = new();
+                    _entityList.ForEach(x => summonList.Add(x.GetComponent<SummonEntityManager>()));
+                    summonList.Where(x => x.IsTargetSet()).ToList().ForEach(x => x.SetDestination());
+                }
+            }
+        }
+        private void OnTriggerExit(Collider other)
+        {
+            if (!_isPaused)
+            {
+                if (other.TryGetComponent<IFightable>(out _))
+                {
+                    _enemyList.Remove(other.gameObject);
+
+                }
+            }
+        }
+
+        protected void TargetsAddDamage(List<GameObject> enemies, float damage)
+        {
+            foreach (var enemy in enemies)
+            {
+                if (enemy.TryGetComponent(out IFightable component))
+                    component.HitDamage(damage);
+            }
+        }
+
+        protected void TargetAddCondition(List<GameObject> enemies, ConditionType type)
+        {
+            foreach (var enemy in enemies)
+            {
+                if (enemy.TryGetComponent(out IConditionable component))
+                    component.AddCondition(type);
+            }
+        }
 #if UNITY_EDITOR
         void OnDrawGizmos()
         {
             Gizmos.color = Check(_position) ? Color.red : Color.green;
 
-            // BoxCast ‚Ìƒf[ƒ^‚ğŒvZ
+            // BoxCast ï¿½Ìƒfï¿½[ï¿½^ï¿½ï¿½ï¿½vï¿½Z
             Vector3 boxCastOrigin = _position + new Vector3(0, 8, 0);
-            Vector3 boxCastDirection = Vector3.down; // ‰ºŒü‚«
-            float boxCastDistance = 18f; // •K—v‚É‰‚¶‚Ä’²®
+            Vector3 boxCastDirection = Vector3.down; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            float boxCastDistance = 18f; // ï¿½Kï¿½vï¿½É‰ï¿½ï¿½ï¿½ï¿½Ä’ï¿½ï¿½ï¿½
             Quaternion boxCastRotation = Quaternion.identity;
 
-            // ƒ{ƒbƒNƒX‚Ì”ÍˆÍ‚ğ•`‰æ (n“_)
+            // ï¿½{ï¿½bï¿½Nï¿½Xï¿½Ì”ÍˆÍ‚ï¿½`ï¿½ï¿½ (ï¿½nï¿½_)
             Gizmos.matrix = Matrix4x4.TRS(boxCastOrigin, boxCastRotation, _boxCastSizeDebug * 2);
-            Gizmos.DrawWireCube(Vector3.zero, Vector3.one); // ’†S‚ğŠî€‚ÉƒXƒP[ƒ‹“K—p
+            Gizmos.DrawWireCube(Vector3.zero, Vector3.one); // ï¿½ï¿½ï¿½Sï¿½ï¿½ï¿½î€ï¿½ÉƒXï¿½Pï¿½[ï¿½ï¿½ï¿½Kï¿½p
 
-            // ƒ{ƒbƒNƒX‚ÌI“_‚ğŒvZ
+            // ï¿½{ï¿½bï¿½Nï¿½Xï¿½ÌIï¿½_ï¿½ï¿½ï¿½vï¿½Z
             Vector3 boxCastEnd = boxCastOrigin + boxCastDirection.normalized * boxCastDistance;
 
-            // ƒLƒƒƒXƒg‚ÌˆÚ“®”ÍˆÍ‚ğ•`‰æ
+            // ï¿½Lï¿½ï¿½ï¿½Xï¿½gï¿½ÌˆÚ“ï¿½ï¿½ÍˆÍ‚ï¿½`ï¿½ï¿½
             Gizmos.matrix = Matrix4x4.identity;
             Gizmos.DrawLine(boxCastOrigin, boxCastEnd);
 
-            // ƒ{ƒbƒNƒX‚ÌI“_‚Ì”ÍˆÍ‚ğ•`‰æ
+            // ï¿½{ï¿½bï¿½Nï¿½Xï¿½ÌIï¿½_ï¿½Ì”ÍˆÍ‚ï¿½`ï¿½ï¿½
             Gizmos.matrix = Matrix4x4.TRS(boxCastEnd, boxCastRotation, _boxCastSizeDebug * 2);
             Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
         }

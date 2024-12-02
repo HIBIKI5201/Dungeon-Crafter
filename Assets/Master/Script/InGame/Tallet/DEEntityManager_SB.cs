@@ -1,6 +1,7 @@
 using DCFrameWork.DefenseEquipment;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace DCFrameWork.DefenseEquipment
 {
@@ -15,13 +16,15 @@ namespace DCFrameWork.DefenseEquipment
         [SerializeField]
         GameObject _entityPrefab;
 
-        List<GameObject> _entityList = new List<GameObject>();
-        protected virtual void Summon(Vector3 pos, int count)
+        protected List<GameObject> _entityList = new List<GameObject>();
+        protected virtual async void Summon(Vector3 pos, int count)
         {
             if (_entityList.Count < count)
             {
                 if (_entityPrefab is null) return;
-                _entityList.Add(Instantiate(_entityPrefab, new Vector3(pos.x, 0, pos.z), Quaternion.identity));
+                var entity = InstantiateAsync(_entityPrefab, transform, new Vector3(pos.x, 0, pos.z), Quaternion.identity);
+                GameObject obj = (await entity)[0];
+                _entityList.Add(obj);
             }
         }
         protected bool Check(Vector3 pos)

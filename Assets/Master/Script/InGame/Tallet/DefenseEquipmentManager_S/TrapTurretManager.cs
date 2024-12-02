@@ -7,6 +7,7 @@ namespace DCFrameWork.DefenseEquipment
 
         float _timer = 0;
         bool _isPaused = false;
+        bool _isCoolTimed = false;
         int _maxCount;
 #if UNITY_EDITOR
         [SerializeField] Vector3 _boxCastSizeDebug = new(1, 10, 1);
@@ -20,7 +21,7 @@ namespace DCFrameWork.DefenseEquipment
 
         protected override void Think() //UpDate ‚Æ“¯‹`
         {
-            if (_isPaused)
+            if (_isPaused || _isCoolTimed)
                 _timer += Time.deltaTime;
 
             if (Time.time > 1 / DefenseEquipmentData.Rate + _timer)
@@ -35,7 +36,6 @@ namespace DCFrameWork.DefenseEquipment
                     summonPos = SummonPosition();
                     _position = summonPos;
                     count++;
-                    Debug.LogError(Check(summonPos));
                     if (count <= 10)
                     {
                         isChecked = true;
@@ -46,7 +46,21 @@ namespace DCFrameWork.DefenseEquipment
                     Summon(summonPos, _maxCount);
             }
         }
+        
+        public void StartCoolTime()
+        {
+            _isCoolTimed = true;
+            foreach (var entity in _entityList)
+            {
+                Destroy(entity);
+            }
+            _entityList.Clear();
+        }
 
+        public void EndCoolTime()
+        {
+            _isCoolTimed = false;
+        }
         protected override void LoadSpecificData(SummonData data)
         {
             _maxCount = DefenseEquipmentData.MaxCount;

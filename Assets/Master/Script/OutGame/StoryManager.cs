@@ -9,9 +9,12 @@ namespace DCFrameWork.SceneSystem
     {
         private IEnumerator _enumerator;
         private List<StoryText> _storyData;
-        public void Initialize()
+
+        private StoryUIManager _storyUIManager;
+        public void Initialize(StoryUIManager storyUIManager)
         {
             _enumerator = PlayStoryContext();
+            _storyUIManager = storyUIManager;
         }
 
         public void SetStoryData(StoryData storyText) => _storyData = storyText.StoryText;
@@ -24,7 +27,7 @@ namespace DCFrameWork.SceneSystem
             while (count < _storyData.Count)
             {
                 Debug.Log($"{_storyData[count]._character} {_storyData[count]._animation}\n{_storyData[count]._text}");
-
+                _storyUIManager.TextBoxUpdate(_storyData[count]._character, _storyData[count]._text);
                 count++;
                 yield return null;
             }

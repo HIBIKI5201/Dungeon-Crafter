@@ -10,7 +10,7 @@ namespace DCFrameWork.SceneSystem
         protected override void Initialize_S()
         {
             _storyManager = GetComponent<StoryManager>();
-            _storyManager?.Initialize();
+            _storyManager?.Initialize(_UIManager as StoryUIManager);
         }
 
         protected override void Think(InputContext input)

@@ -156,6 +156,10 @@ public class StageManager : MonoBehaviour
                     _canSet = false;
                 }
             }
+            if (Input.GetMouseButtonDown(1))
+            {
+                RemoveObstacleObject(hit.collider.gameObject);
+            }
         }
         else
         {
@@ -262,9 +266,23 @@ public class StageManager : MonoBehaviour
         obj.transform.SetParent(_wallsParent.transform);
         obj.isStatic = true;
     }
-    public void RemoveObstacleObject()
+    public void RemoveObstacleObject(GameObject gameObject)
     {
-
+        //消す方法が決まっていないので一旦引数に消すオブジェクトを指定するようにする
+        int currentX;
+        int currentZ;
+        //消そうとしているオブジェクトの座標がグリッド座標のどこかを調べて範囲外か何もないなら処理を終了
+        currentX = (int)((gameObject.transform.position.x - _floorCenter.x + _floorPrefab.transform.localScale.x * _gridSize / 2 - _gridSize / 2) / _gridSize);
+        currentZ = (int)((gameObject.transform.position.z - _floorCenter.z + _floorPrefab.transform.localScale.z * _gridSize / 2 - _gridSize / 2) / _gridSize);
+        if (currentX < 0 || currentZ < 0 || currentX >= _sizeX || currentZ >= _sizeZ || _map[currentX,currentZ] == 0) { return; }
+        //障害物を置けない高さから消すオブジェクトを全取得
+        foreach (var obj in Physics.RaycastAll(gameObject.transform.position + Vector3.up * 8, Vector3.down, 20, LayerMask.GetMask("Buildings")).Where(hit => !hit.collider.isTrigger))
+        {
+            Destroy(obj.collider.gameObject);
+        }
+        //マップ情報を更新
+        _map[currentX, currentZ] = 0;
+        _noWall++;
     }
     //設置するオブジェクトの変更
     public void ChangeObstaclePrefab(string name)

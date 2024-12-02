@@ -1,5 +1,6 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <engine:VisualElement style="flex-grow: 1;">
+    <Style src="project://database/Assets/Master/UITK/USS/Master/Font.uss?fileID=7433441132597879392&amp;guid=8c8dbfa7dccd14b4ebdfec63316899cc&amp;type=3#Font" />
+    <engine:VisualElement class="font-style" style="flex-grow: 1;">
         <engine:VisualElement name="TextBox" style="position: absolute; width: 70%; height: 30%; bottom: 0; align-self: center; margin-bottom: 2%; background-color: rgba(255, 255, 255, 0.44);">
             <engine:Label name="Name" style="position: absolute; width: 18%; height: 20%; -unity-text-align: middle-center; -unity-font-style: bold; font-size: 58px;" />
             <engine:Label name="Text" style="position: absolute; width: 95%; height: 75%; bottom: 5%; -unity-text-align: upper-center; white-space: normal; font-size: 50px; -unity-font-style: normal; align-self: center;" />

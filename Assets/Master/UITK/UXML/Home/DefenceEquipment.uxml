@@ -1,6 +1,7 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/Dev/Dev_Branchs/interface/USS/DefenceEquipment.uss?fileID=7433441132597879392&amp;guid=3126460fad902134f8955c8df9c03084&amp;type=3#DefenceEquipment" />
+    <Style src="project://database/Assets/Master/UITK/USS/InGame/DefenceEquipment.uss?fileID=7433441132597879392&amp;guid=3126460fad902134f8955c8df9c03084&amp;type=3#DefenceEquipment" />
+    <Style src="project://database/Assets/Master/UITK/USS/Master/Font.uss?fileID=7433441132597879392&amp;guid=8c8dbfa7dccd14b4ebdfec63316899cc&amp;type=3#Font" />
     <engine:VisualElement style="flex-grow: 1; background-color: rgb(255, 255, 255); justify-content: center; align-items: center;">
-        <engine:Button text="もどる" name="return-button" class="return-button" />
+        <engine:Button text="もどる" name="return-button" class="return-button font-style" />
     </engine:VisualElement>
 </engine:UXML>

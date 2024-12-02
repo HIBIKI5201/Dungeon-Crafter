@@ -108,7 +108,9 @@ namespace DCFrameWork.Enemy
             int count = data._enemyCount;
             while (count > 0)
             {
-                pool.Get().position = DecisionSpawnPoint(data._spawnPoint);
+                var enemy = pool.Get();
+                enemy.position = DecisionSpawnPoint(data._spawnPoint);
+                enemy.SetLevel(data._enemyLevel);
                 count--;
                 yield return FrameWork.PausableWaitForSecond(timer);
             }

@@ -18,19 +18,19 @@ namespace DCFrameWork.Enemy
         private float _enemyLevel = 1;
         [SerializeField]
         private Data2 _enemyRiseData;
-        float IFightable.MaxHealth { get => _enemyData.MaxHealth; set { ChangeStates(_enemyRiseData.MaxHealth, _enemyLevel, _enemyData.MaxHealth); } }
+        float IFightable.MaxHealth { get => ChangeStates(_enemyRiseData.MaxHealth, _enemyLevel, _enemyData.MaxHealth); set { ChangeStates(_enemyRiseData.MaxHealth, _enemyLevel, _enemyData.MaxHealth); } }
         private float _currentHealth;
         float IFightable.CurrentHealth { get => _currentHealth; set { _currentHealth = value; HealthBarUpdate(); } }
 
         private float _defense;
-        protected float Defense { get => _enemyData.Defense; set { _defense = value; } }
-        protected float Dexterity { get => _enemyData.Dexterity; set { ChangeStates(_enemyRiseData.Dexterity, _enemyLevel, _enemyData.Dexterity); } }
+        protected float Defense { get => _defense; set { _defense = value; } }
+        protected float Dexterity { get => _agent.speed; set => _agent.speed = value; }
 
-        protected float Plunder { get => _enemyData.Plunder; set { ChangeStates(_enemyRiseData.Plunder, _enemyLevel, _enemyData.Plunder); } }
+        protected float Plunder { get => ChangeStates(_enemyRiseData.Plunder, _enemyLevel, _enemyData.Plunder); }
 
-        protected float DropEXP { get => _enemyData.DropEXP; set { ChangeStates(_enemyRiseData.DropEXP, _enemyLevel, _enemyData.DropEXP); } }
+        protected float DropEXP { get => ChangeStates(_enemyRiseData.DropEXP, _enemyLevel, _enemyData.DropEXP); }//set { ChangeStates(_enemyRiseData.DropEXP, _enemyLevel, _enemyData.DropEXP); } }
 
-        protected float DropGold { get => _enemyData.DropGold; set { ChangeStates(_enemyRiseData.DropGold, _enemyLevel, _enemyData.DropGold); } }
+        protected float DropGold { get => ChangeStates(_enemyRiseData.DropGold, _enemyLevel, _enemyData.DropGold); }// set { ChangeStates(_enemyRiseData.DropGold, _enemyLevel, _enemyData.DropGold); } }
 
 
         [SerializeField]
@@ -205,6 +205,9 @@ namespace DCFrameWork.Enemy
         private void SetLevel(float level)
         {
             _enemyLevel = level;
+            _defense = ChangeStates(_enemyRiseData.Defense, level, _enemyData.Defense);
+            Dexterity = ChangeStates(_enemyRiseData.Dexterity, level, _enemyData.Dexterity);
+            _currentHealth = ChangeStates(_enemyRiseData.MaxHealth, level, _enemyData.MaxHealth);
         }
 
         void IEnemy.StopEnemy(float time) => StopEnemy(time);

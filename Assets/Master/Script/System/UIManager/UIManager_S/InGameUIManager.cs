@@ -35,16 +35,7 @@ namespace DCFrameWork.UI
         //防衛設備のウィンドウの表示非表示のメソッド
         public void EquipmentSettingWindowVisible(bool visible)
         {
-            switch(visible)
-            {
-                case true:
-                _equipmentSettingUI.style.visibility = Visibility.Visible;
-                break;
-                case false:
-                _equipmentSettingUI.style.visibility = Visibility.Hidden;
-                break;
-
-            }
+            _equipmentSettingUI.EquipmentSettingWindowVisible = visible;
         }
     }
 }

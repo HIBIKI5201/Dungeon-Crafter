@@ -209,7 +209,8 @@ namespace DCFrameWork.Enemy
 
         void IEnemy.StopEnemy(float time) => StopEnemy(time);
         private void StopEnemy(float time)
-        {       
+        {
+            if(gameObject.activeInHierarchy)
             StartCoroutine(StopTime(time)); 
         }
         IEnumerator StopTime(float time)

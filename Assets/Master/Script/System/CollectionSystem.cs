@@ -1,5 +1,6 @@
 
 using DCFrameWork.Enemy;
+using DCFrameWork.MainSystem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,9 @@ namespace DCFrameWork
     {
         public static CollectionSystem Instans;
 
-        [SerializeField] CollectionData[] _defenseObjCollectionData;
-        [SerializeField] CollectionData[] _enemyCollectionData;
-        [SerializeField] CollectionBGMData[] _bgmCollectionData;
+        [SerializeField] List<CollectionData> _defenseObjCollectionData=new();
+        [SerializeField] List<CollectionData> _enemyCollectionData=new();
+        [SerializeField] AudioDataBase _bgmCollectionData;
 
         int _defenseObjectFrag;
         int _enemyFrag;
@@ -25,7 +26,7 @@ namespace DCFrameWork
         public float CollectionRate
         {
             get => (float)(Convert.ToString(_defenseObjectFrag, 2).Count(c => c == '1') + Convert.ToString(_enemyFrag, 2).Count(c => c == '1') +
-                Convert.ToString(_bgmFrag, 2).Count(c => c == '1')) / (_defenseObjCollectionData.Length + _enemyCollectionData.Length + _bgmCollectionData.Length);
+                Convert.ToString(_bgmFrag, 2).Count(c => c == '1')) / (_defenseObjCollectionData.Count + _enemyCollectionData.Count + _bgmCollectionData.audioDatas.Count);
         }
 
         private void Awake()
@@ -41,7 +42,7 @@ namespace DCFrameWork
         public IEnumerable<CollectionData?> GetEnemyCollection()
         {
             List<CollectionData?> data = new List<CollectionData?>();
-            for (var i = 0; i < _enemyCollectionData.Length; i++)
+            for (var i = 0; i < _enemyCollectionData.Count; i++)
             {
                 data.Add((_enemyFrag & 1 << i) != 0 ? _enemyCollectionData[i] : null);
             }
@@ -51,7 +52,16 @@ namespace DCFrameWork
         public IEnumerable<CollectionData> GetDefenseObjCollection()
         {
             List<CollectionData> data = new List<CollectionData>();
-            for (var i = 1; i < _defenseObjCollectionData.Length; i++)
+            for (var i = 1; i < _defenseObjCollectionData.Count; i++)
+            {
+                data.Add((_defenseObjectFrag & 1 << i - 1) != 0 ? _defenseObjCollectionData[i + 1] : _defenseObjCollectionData[0]);
+            }
+            return data;
+        }
+        public IEnumerable<CollectionData> GetBGMCollection()
+        {
+            List<CollectionData> data = new List<CollectionData>();
+            for (var i = 1; i < _defenseObjCollectionData.Count; i++)
             {
                 data.Add((_defenseObjectFrag & 1 << i - 1) != 0 ? _defenseObjCollectionData[i + 1] : _defenseObjCollectionData[0]);
             }
@@ -75,7 +85,7 @@ namespace DCFrameWork
         public void TestEnemySet()
         {
             EnemyKind kind = EnemyKind.Normal;
-            for (var i = 0; i < _enemyCollectionData.Length - 1; i++)
+            for (var i = 0; i < _enemyCollectionData.Count - 1; i++)
             {
                 int n = UnityEngine.Random.Range(0, 2);
                 if (n == 1) SetEnemy(kind++);
@@ -87,13 +97,6 @@ namespace DCFrameWork
         {
             Debug.Log(CollectionRate);
         }
-    }
-
-    [System.Serializable]
-    public struct CollectionBGMData
-    {
-        public CollectionData _collectionData;
-        public AudioClip _clip;
     }
     [System.Serializable]
     public struct CollectionData

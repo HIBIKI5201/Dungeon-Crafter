@@ -75,7 +75,7 @@ namespace DCFrameWork.DefenseEquipment
                 {
                     List<SummonEntityManager> summonList = new();
                     _entityList.ForEach(x => summonList.Add(x.GetComponent<SummonEntityManager>()));
-                    summonList.Where(x => x.IsTargetSet()).ToList().ForEach(x => x.SetDestination());
+                    summonList.Where(x => x.IsTargetSet()).ToList().ForEach(x => x.SetTarget());
                 }
             }
         }

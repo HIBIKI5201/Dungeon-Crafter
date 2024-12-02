@@ -45,7 +45,7 @@ namespace DCFrameWork.DefenseEquipment
             float radian = degree * Mathf.Deg2Rad;
             float randomPosX = r * Mathf.Cos(radian);
             float randomPosZ = r * Mathf.Sin(radian);
-            return transform.position + new Vector3(randomPosX, 0, randomPosZ);
+            return transform.position + new Vector3(randomPosX * 2, 0, randomPosZ * 2);
         }
         protected override void Start_SB()
         {

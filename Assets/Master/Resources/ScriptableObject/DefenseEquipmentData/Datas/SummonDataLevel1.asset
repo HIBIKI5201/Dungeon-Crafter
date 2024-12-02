@@ -15,6 +15,6 @@ MonoBehaviour:
   _attack: 10
   _rate: 1
   _critical: 5
-  _range: 7
+  _range: 3
   _levelRequirePoint: 1
   _maxCount: 5

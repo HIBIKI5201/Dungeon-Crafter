@@ -1,0 +1,14 @@
+diff a/Assets/Master/Script/System/Main/GameBaseSystem.cs b/Assets/Master/Script/System/Main/GameBaseSystem.cs	(rejected hunks)
+@@ -28,8 +28,10 @@
+             {
+                 _instance = this;
+ 
+-                Scene scene = SceneManager.CreateScene("SystemScene");
+-                SceneManager.MoveGameObjectToScene(gameObject, scene);
++                string sceneName =SceneChanger.SetCurrentSceneName();
++                Scene systemScene = SceneManager.CreateScene("SystemScene");
++                SceneManager.MoveGameObjectToScene(gameObject, systemScene);
++                SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
+             }
+             else
+             {

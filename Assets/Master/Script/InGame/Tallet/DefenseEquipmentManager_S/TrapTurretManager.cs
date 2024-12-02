@@ -46,7 +46,7 @@ namespace DCFrameWork.DefenseEquipment
                     Summon(summonPos, _maxCount);
             }
         }
-        
+        [ContextMenu("StartCoolTime")]
         public void StartCoolTime()
         {
             _isCoolTimed = true;
@@ -56,7 +56,7 @@ namespace DCFrameWork.DefenseEquipment
             }
             _entityList.Clear();
         }
-
+        [ContextMenu("EndCoolTime")]
         public void EndCoolTime()
         {
             _isCoolTimed = false;

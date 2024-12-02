@@ -20,11 +20,13 @@ namespace DCFrameWork
         bool _isAttacked = true;
         GameObject _target;
         [SerializeField] float _hitStopTime = 1;
+        //Vector3 _startPos;
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
             if (transform.parent.TryGetComponent(out _turretManager))
                 SetTarget();
+            //_startPos = transform.position;
         }
         void Start()
         {
@@ -44,14 +46,25 @@ namespace DCFrameWork
                         _timer = 1 / _attackRate;
                     }
                 }
-                if (IsTargetSet())
+                if (_turretManager._enemyList.Count > 0)
                 {
-                    if (_agent.isOnNavMesh)
-                        _agent.SetDestination(_turretManager.transform.position);
+                    if (_target == null || !IsTargetSet())
+                    {
+                        SetTarget();
+                    }
+                    if (_target != null && _agent.isOnNavMesh)
+                    {
+                        _agent.SetDestination(_target.transform.position);
+                    }
                 }
-                if (_target != null && _agent.isOnNavMesh)
+                else
                 {
-                    _agent.SetDestination(_target.transform.position);
+                    //Debug.Log("タレットくんに帰る");
+                    //if (_agent.isOnNavMesh)
+                    //    _agent.SetDestination(_startPos);
+                    if (_agent.isOnNavMesh)
+                        _agent.ResetPath();
+                    _target = null;
                 }
             }
         }
@@ -62,14 +75,18 @@ namespace DCFrameWork
             {
                 _target = TargetSelect().gameObject;
             }
+            else
+            {
+                _target = null;
+            }
         }
         public bool IsTargetSet()
         {
-            return !_turretManager._enemyList.Contains(_target);
+            return _target == null && !_turretManager._enemyList.Contains(_target);
         }
         private void OnTriggerEnter(Collider other)
         {
-            if (_isAttacked)
+            if (_isAttacked && _target)
             {
                 if (other.gameObject == _target.gameObject)
                 {
@@ -107,8 +124,10 @@ namespace DCFrameWork
         void TargetAddHitStop(GameObject enemy, float time)
         {
             if (enemy.TryGetComponent(out IEnemy component))
-                component.StopEnemy(time);
-
+            {
+                if (component != null)
+                    component.StopEnemy(time);
+            }
         }
         public void Pause()
         {

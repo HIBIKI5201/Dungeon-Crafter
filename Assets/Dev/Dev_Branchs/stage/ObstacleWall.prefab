@@ -13,13 +13,13 @@ GameObject:
   - component: {fileID: 4851700930041980476}
   - component: {fileID: 1384547872460025293}
   - component: {fileID: 2145473474692985218}
-  m_Layer: 3
-  m_Name: Wall
+  m_Layer: 7
+  m_Name: ObstacleWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8348769818262055759
 Transform:
   m_ObjectHideFlags: 0

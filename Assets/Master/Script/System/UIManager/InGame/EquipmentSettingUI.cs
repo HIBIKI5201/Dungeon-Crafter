@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -11,7 +12,7 @@ namespace DCFrameWork
     public partial class EquipmentSettingUI : VisualElement
     {
         public Task InitializeTask { get; private set; }
-
+        VisualElement _equipmentSettingWindow;
         Button _powerUpButton;
         Button _removalButton;
         Label _equipmentName;
@@ -20,6 +21,19 @@ namespace DCFrameWork
         Label _powerText;
         Label _fastText;
         Label _rangeText;
+        public bool EquipmentSettingWindowVisible 
+        {
+        set { 
+                if (value)
+                {
+                    _equipmentSettingWindow.RemoveFromClassList("equipment-setting-window-open");
+                    _equipmentSettingWindow.AddToClassList("equipment-setting-window-close");
+                    return;
+                }
+                _equipmentSettingWindow.RemoveFromClassList("equipment-setting-window-close");
+                _equipmentSettingWindow.AddToClassList("equipment-setting-window-open");
+            } 
+        }
         public Action PowerUpButton{ set => _powerUpButton.clicked += value; }
         public Action RemovalButton { set => _removalButton.clicked += value; }
         public string EquipmentName { set => _equipmentName.text = value; }
@@ -52,6 +66,8 @@ namespace DCFrameWork
                 _powerText = container.Q<Label>("PowerText");
                 _fastText = container.Q<Label>("FastText");
                 _rangeText = container.Q<Label>("RangeText");
+                _equipmentSettingWindow = container.Q<VisualElement>("EquipmentSettingWindow");
+                _equipmentSettingWindow.AddToClassList("equipment-setting-window-close");
                 Debug.Log("ウィンドウは正常にロード完了");
             }
             else

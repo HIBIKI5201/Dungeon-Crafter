@@ -40,7 +40,7 @@ MonoBehaviour:
     - UXML
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fae9f9d848fda2845a81e9e4f13d071a
-    m_Address: Assets/Dev/Dev_Branchs/interface/UXML/Ingame/DefenceEquipmentCard.uxml
+    m_Address: UXML/DefenceEquipmentCard.uxml
     m_ReadOnly: 0
     m_SerializedLabels:
     - UXML

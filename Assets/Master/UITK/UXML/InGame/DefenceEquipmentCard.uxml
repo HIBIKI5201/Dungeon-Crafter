@@ -1,6 +1,7 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/Dev/Dev_Branchs/interface/USS/EquipmentCard.uss?fileID=7433441132597879392&amp;guid=e80394ff55ac7584aa48f6c389e13a9f&amp;type=3#EquipmentCard" />
-    <engine:VisualElement name="EquipmentCard" data-source="project://database/Assets/Dev/Dev_Branchs/interface/Test2.asset?fileID=11400000&amp;guid=f411c664c91e9f345a47a8e9ac30c38b&amp;type=2#Test2" class="equipment-card">
+    <Style src="project://database/Assets/Master/UITK/USS/InGame/EquipmentCard.uss?fileID=7433441132597879392&amp;guid=e80394ff55ac7584aa48f6c389e13a9f&amp;type=3#EquipmentCard" />
+    <Style src="project://database/Assets/Master/UITK/USS/Master/Font.uss?fileID=7433441132597879392&amp;guid=8c8dbfa7dccd14b4ebdfec63316899cc&amp;type=3#Font" />
+    <engine:VisualElement name="EquipmentCard" data-source="project://database/Assets/Dev/Dev_Branchs/interface/Test2.asset?fileID=11400000&amp;guid=f411c664c91e9f345a47a8e9ac30c38b&amp;type=2#Test2" class="equipment-card font-style">
         <engine:VisualElement name="Icon" style="width: 60%; height: 53%; align-self: center; background-color: rgb(58, 58, 58); justify-content: space-around; align-items: center; align-content: center; position: relative; top: 0;">
             <Bindings>
                 <engine:DataBinding property="style.backgroundImage" data-source-path="EquipmentIcon" binding-mode="ToTarget" />

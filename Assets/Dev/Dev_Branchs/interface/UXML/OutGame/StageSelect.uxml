@@ -1,8 +1,0 @@
-<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/Dev/Dev_Branchs/interface/USS/StageSelect.uss?fileID=7433441132597879392&amp;guid=f907023049bdee2429c9175fa7a14ee7&amp;type=3#StageSelect" />
-    <engine:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row; align-items: center; justify-content: space-around; background-color: rgb(255, 255, 255);">
-        <engine:Button text="ステージ1" name="stage-one-button" class="stage-one-button" />
-        <engine:Button text="もどる" name="return-button" class="return-button" />
-    </engine:VisualElement>
-    <engine:VisualElement name="SettingButton" style="flex-grow: 1; position: absolute; width: 100px; height: 100px; bottom: 0; right: 0; background-color: rgb(0, 0, 0); margin-bottom: 1%; margin-right: 1%;" />
-</engine:UXML>

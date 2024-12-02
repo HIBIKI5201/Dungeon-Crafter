@@ -142,6 +142,8 @@ MonoBehaviour:
       type: 3}
     VisualGuide: {fileID: 0}
   _defaultVisualGuide: {fileID: 464214968419229631}
+  _obstacleWallPrefab: {fileID: 3923921449293535806, guid: 587a7ac46c6ef654292713c44b49d468,
+    type: 3}
 --- !u!114 &2068504501253040231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,7 +184,7 @@ Transform:
   m_GameObject: {fileID: 5865097026064514226}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -22.5, y: 0, z: 2.5}
+  m_LocalPosition: {x: -22.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -219,8 +221,8 @@ Transform:
   m_GameObject: {fileID: 6341439831795270951}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 10, y: 1, z: 7}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8491387007585437238}
@@ -380,7 +382,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1142
+  m_VersionIndex: 1154
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -545,7 +547,7 @@ Transform:
   m_GameObject: {fileID: 7158942419803864838}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22.5, y: 2.5, z: 2.5}
+  m_LocalPosition: {x: 22.5, y: 2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

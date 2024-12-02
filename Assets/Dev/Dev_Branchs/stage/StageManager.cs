@@ -13,7 +13,7 @@ public class StageManager : MonoBehaviour
     [SerializeField] float _gridSize = 5f;
     [SerializeField] List<ObstaclePrefabs> _obstaclePrefabList;
     [SerializeField] GameObject _defaultVisualGuide;
-    [SerializeField] GameObject _wallPrefab;
+    [SerializeField] GameObject _obstacleWallPrefab;
     //[SerializeField] GameObject _clickPointPrefab;//Debug;
     [Serializable]
     public struct ObstaclePrefabs
@@ -57,18 +57,14 @@ public class StageManager : MonoBehaviour
         _mainCamera = Camera.main;
         //_floorCenter = new Vector3(_floorPrefab.transform.position.x + _floorPrefab.transform.localScale.x / 2, _floorPrefab.transform.position.y, _floorPrefab.transform.position.z - _floorPrefab.transform.localScale.z / 2);
         _floorCenter = _floorPrefab.transform.position;
-        //_prefabHeight = _setPrefab.GetComponent<BoxCollider>().size.y;
         //何マスx何マスかを調べる
         //_sizeX = (int)(_floorPrefab.transform.localScale.x / _gridSize);
         //_sizeZ = (int)(_floorPrefab.transform.localScale.z / _gridSize);
         _sizeX = (int)(_floorPrefab.transform.localScale.x);
         _sizeZ = (int)(_floorPrefab.transform.localScale.z);
-        //Debug.Log($"{_sizeX},{_sizeZ}");
         _map = new int[_sizeX, _sizeZ];
-        //
         _startX = (int)((_targetPos.position.x - _floorCenter.x + _floorPrefab.transform.localScale.x * _gridSize / 2 - _gridSize / 2) / _gridSize);
         _startZ = (int)((_targetPos.position.z - _floorCenter.z + _floorPrefab.transform.localScale.z * _gridSize / 2 - _gridSize / 2) / _gridSize);
-        //Debug.Log($"{_startX},{_startZ}");
         //デフォルトで配置するオブジェクトをセットしてる。後から消すかも？
         _setPrefab = _obstaclePrefabList[0].PutObstaclePrefab;
         if (_obstaclePrefabList[0].VisualGuide == null)
@@ -93,35 +89,15 @@ public class StageManager : MonoBehaviour
                     Vector3 vector3 = new Vector3((_floorCenter.x - _floorPrefab.transform.localScale.x * _gridSize / 2 + _gridSize / 2) + _gridSize * j,
                                                   7.5f,
                                                  (_floorCenter.z - _floorPrefab.transform.localScale.z * _gridSize / 2 + _gridSize / 2) + _gridSize * i);
-                    //Debug.Log(vector3.z);
-                    //Debug.DrawRay(vector3, Vector3.down, Color.green, 10f);
-                    if (Physics.Raycast(vector3, Vector3.down, 5, LayerMask.GetMask("Ground")))
+                    if (Physics.Raycast(vector3, Vector3.down, 5, LayerMask.GetMask("Buildings")))
                     {
                         _map[j, i] = 1;
                     }
                     else
                     {
-                        if (Physics.Raycast(vector3, Vector3.down, out RaycastHit hit, 5, LayerMask.GetMask("Buildings")))
-                        {
-                            if (!hit.collider.isTrigger)
-                            {
-                                _map[j, i] = 2;
-                            }
-                            else
-                            {
-                                //壁のない場所を数える
-                                _noWall++;
-                            }
-                        }
-                        else
-                        {
-                            //壁のない場所を数える
-                            _noWall++;
-                        }
+                        _noWall++;
                     }
                     //s += _map[j, i];
-                    //Debug.Log($"{vector3}:{_map[j, i]}:({j},{i})={(hit.collider != null ? hit.collider.gameObject.name : null)}");
-                    //Debug.DrawRay(vector3, Vector3.down * 5, Color.blue, 10);
                 }
             }
             //Debug.Log(s);
@@ -160,7 +136,7 @@ public class StageManager : MonoBehaviour
             //Debug.Log(_currentPosition);
             //Debug.DrawRay(_currentPosition, Vector3.down, Color.green, 1f);
             //ステージの範囲外に出てたら見えなくする
-            if (_tentativePrefab.transform.position.y > 8f || !Physics.Raycast(_currentPosition, Vector3.down, 5f, LayerMask.GetMask("Ground")))
+            if (_tentativePrefab.transform.position.y > 8f || !Physics.Raycast(_currentPosition, Vector3.down, 5f))
             {
                 _canSet = false;
                 _tentativePrefab.SetActive(false);
@@ -275,9 +251,9 @@ public class StageManager : MonoBehaviour
         }
         _map[currentX, currentZ] = 2;
         //生成
-        if(currentPosition.y == 2.5f)
+        if (currentPosition.y == 2.5f)
         {
-            var wallObj = Instantiate(_wallPrefab, _currentPosition, Quaternion.identity);
+            var wallObj = Instantiate(_obstacleWallPrefab, _currentPosition, Quaternion.identity);
             wallObj.transform.SetParent(_wallsParent.transform);
             wallObj.isStatic = true;
             _currentPosition.y = 7.5f;
@@ -285,6 +261,10 @@ public class StageManager : MonoBehaviour
         var obj = Instantiate(_setPrefab, _currentPosition, Quaternion.identity);
         obj.transform.SetParent(_wallsParent.transform);
         obj.isStatic = true;
+    }
+    public void RemoveObstacleObject()
+    {
+
     }
     //設置するオブジェクトの変更
     public void ChangeObstaclePrefab(string name)

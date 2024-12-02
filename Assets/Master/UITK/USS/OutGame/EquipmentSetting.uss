@@ -47,3 +47,15 @@
     transition-duration: 0.1s;
     transition-timing-function: ease-in-out-cubic;
 }
+
+.equipment-setting-window-open {
+    transition-timing-function: ease-in-out-cubic;
+    transition-duration: 0.1s;
+    translate: 0 0;
+}
+
+.equipment-setting-window-close {
+    transition-timing-function: ease-in-out-cubic;
+    transition-duration: 0.2s;
+    translate: 100% 0;
+}

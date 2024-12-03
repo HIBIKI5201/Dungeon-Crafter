@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 namespace DCFrameWork.DefenseEquipment
@@ -9,6 +10,7 @@ namespace DCFrameWork.DefenseEquipment
         bool _isPaused = false;
         bool _isCoolTimed = false;
         int _maxCount;
+        [NonSerialized] public float _attack;
 #if UNITY_EDITOR
         [SerializeField] Vector3 _boxCastSizeDebug = new(1, 10, 1);
 #endif
@@ -54,16 +56,20 @@ namespace DCFrameWork.DefenseEquipment
             {
                 Destroy(entity);
             }
-            _entityList.Clear();
         }
         [ContextMenu("EndCoolTime")]
         public void EndCoolTime()
         {
             _isCoolTimed = false;
         }
+        public void ThisRemove(GameObject trap)
+        {
+            _entityList.Remove(trap);
+        }
         protected override void LoadSpecificData(SummonData data)
         {
             _maxCount = DefenseEquipmentData.MaxCount;
+            _attack = DefenseEquipmentData.Attack;
         }
         protected override void Pause()
         {

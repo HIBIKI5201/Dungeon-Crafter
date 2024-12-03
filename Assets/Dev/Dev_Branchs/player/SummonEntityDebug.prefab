@@ -199,4 +199,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _attackRate: 2
-  _hitStopTime: 1
+  _hitStopTime: 3

@@ -48,7 +48,7 @@ namespace DCFrameWork
                 }
                 if (_turretManager._enemyList.Count > 0)
                 {
-                    if (_target == null || !IsTargetSet())
+                    if (IsTargetSet())
                     {
                         SetTarget();
                     }
@@ -82,7 +82,7 @@ namespace DCFrameWork
         }
         public bool IsTargetSet()
         {
-            return _target == null && !_turretManager._enemyList.Contains(_target);
+            return _target == null || !_turretManager._enemyList.Contains(_target);
         }
         private void OnTriggerEnter(Collider other)
         {
@@ -125,8 +125,7 @@ namespace DCFrameWork
         {
             if (enemy.TryGetComponent(out IEnemy component))
             {
-                if (component != null)
-                    component.StopEnemy(time);
+                component.StopEnemy(time);
             }
         }
         public void Pause()

@@ -107,7 +107,7 @@ namespace DCFrameWork
         }
         public GameObject TargetSelect()
         {
-            return _turretManager._enemyList.OrderBy(x => Vector3.Distance(transform.position, x.transform.position)).First();
+            return _turretManager._enemyList.OrderBy(x => Vector3.Distance(transform.position, x.transform.position)).Where(x => !x.TryGetComponent(out FlyEnemyManager _)).First();
         }
 
         void TargetsAddDamage(GameObject enemy, float damage)

@@ -1,16 +1,20 @@
+using DCFrameWork.MainSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace DCFrameWork.SceneSystem
 {
-    public class StoryManager
+    public class StoryManager : MonoBehaviour
     {
         private IEnumerator _enumerator;
         private List<StoryText> _storyData;
-        public StoryManager()
+
+        private StoryUIManager _storyUIManager;
+        public void Initialize(StoryUIManager storyUIManager)
         {
             _enumerator = PlayStoryContext();
+            _storyUIManager = storyUIManager;
         }
 
         public void SetStoryData(StoryData storyText) => _storyData = storyText.StoryText;
@@ -23,7 +27,7 @@ namespace DCFrameWork.SceneSystem
             while (count < _storyData.Count)
             {
                 Debug.Log($"{_storyData[count]._character} {_storyData[count]._animation}\n{_storyData[count]._text}");
-
+                _storyUIManager.TextBoxUpdate(_storyData[count]._character, _storyData[count]._text);
                 count++;
                 yield return null;
             }
@@ -32,7 +36,8 @@ namespace DCFrameWork.SceneSystem
 
         private void EndStory()
         {
-            Debug.Log("End Story");
+            var system = GameBaseSystem.sceneSystem as StorySystem;
+            system.EndStory();
         }
     }
 }

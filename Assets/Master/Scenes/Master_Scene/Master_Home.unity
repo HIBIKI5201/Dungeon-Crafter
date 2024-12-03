@@ -332,23 +332,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 137766717854137909, guid: 5eda548d81cb2f447878202eda3d4b41,
-        type: 3}
-      propertyPath: Data.sceneKind
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 137766717854137909, guid: 5eda548d81cb2f447878202eda3d4b41,
-        type: 3}
-      propertyPath: Data.afterStoryData
-      value: 
-      objectReference: {fileID: 11400000, guid: 62ee02b002c70ca40be2df23670ebe82,
-        type: 2}
-    - target: {fileID: 137766717854137909, guid: 5eda548d81cb2f447878202eda3d4b41,
-        type: 3}
-      propertyPath: Data.firstStoryData
-      value: 
-      objectReference: {fileID: 11400000, guid: 62ee02b002c70ca40be2df23670ebe82,
-        type: 2}
     - target: {fileID: 2066877244383706056, guid: 5eda548d81cb2f447878202eda3d4b41,
         type: 3}
       propertyPath: m_LocalPosition.x

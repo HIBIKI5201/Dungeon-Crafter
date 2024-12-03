@@ -13,6 +13,7 @@ namespace DCFrameWork
         protected override async Task LoadDocumentElement(VisualElement root)
         {
             _storyText = root.Q<StoryText>("StoryText");
+            await _storyText.InitializeTask;
             _storyText.TextBoxClickEvent = ()=>(GameBaseSystem.sceneSystem as StorySystem).NextStory();
         }
         public void TextBoxUpdate(string name,string text)

@@ -25,8 +25,8 @@ namespace DCFrameWork.SceneSystem
 
         [SerializeField]
         private List<StoryText> _list = new();
-        public List<StoryText> StoryText { get { return _list; } }
-
+        public List<StoryText> StoryText { get => _list;  }
+#if UNITY_EDITOR
         public async Task Method()
         {
             //スプレッドシート読み込み
@@ -52,10 +52,10 @@ namespace DCFrameWork.SceneSystem
                 string[] elements = line.Split(',').Select(s => s.Replace("\"", "").Trim()).ToArray();
                 if (int.Parse(elements[4]) == 0) break;
 
-                Debug.Log($"{elements[0]} {elements[1]} {elements[2]}");
                 _list.Add(new StoryText(elements[0], elements[1], elements[2]));
             }
         }
+#endif
     }
 
     [Serializable]
@@ -79,7 +79,7 @@ namespace DCFrameWork.SceneSystem
     [CustomEditor(typeof(StoryData))]
     public class MyScriptEditor : Editor
     {
-        public override void OnInspectorGUI()
+        public override async void OnInspectorGUI()
         {
             DrawDefaultInspector();
 
@@ -88,7 +88,7 @@ namespace DCFrameWork.SceneSystem
 
             if (GUILayout.Button("テキスト読み込み"))
             {
-                storyData.Method();
+                await storyData.Method();
             }
         }
     }

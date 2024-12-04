@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -29,6 +30,11 @@ namespace DCFrameWork.MainSystem
         [SerializeField]
         private AudioDataBase _voiceData;
 
+        [Space]
+
+        [SerializeField]
+        private float _changeBGMFadeTime;
+
         private void Start()
         {
             (_soundEffectSource is null).CheckLog($"{gameObject.name}ÇÃAudioManagerÇ…SoundEffectSourceÇ™ÉAÉTÉCÉìÇ≥ÇÍÇƒÇ¢Ç‹ÇπÇÒ");
@@ -48,7 +54,7 @@ namespace DCFrameWork.MainSystem
                 case SoundKind.BGM:
                     PlayBGM(GetAudioData(_BGMData.audioDatas, index));
                     break;
-                    case SoundKind.Voice:
+                case SoundKind.Voice:
                     PlayVoiceSound(GetAudioData(_voiceData.audioDatas, index));
                     break;
             }
@@ -63,10 +69,30 @@ namespace DCFrameWork.MainSystem
         private void PlayBGM(AudioData? data)
         {            
             if ((_BGMSource is null || data.Value.AudioClip is null).CheckLog("BGMÇÃçƒê∂Ç≈ñ‚ëËÇ™î≠ê∂ÇµÇ‹ÇµÇΩ")) return;
+            if (_BGMSource.isPlaying)
+            {
+                StartCoroutine(FadeBGM(data));
+            }
+            else
+            {
+                _BGMSource.volume = data.Value.AudioVolume;
+                _BGMSource.clip = data.Value.AudioClip;
+                _BGMSource.Play();
+            }
+        }
+        private IEnumerator FadeBGM(AudioData? data)
+        {
+            float playingBGMVol=_BGMSource.volume;
+            for (float time = 0; time < _changeBGMFadeTime; time += Time.deltaTime)
+            {
+                _BGMSource.volume = Mathf.Lerp(playingBGMVol, 0, time / _changeBGMFadeTime);
+                yield return null;
+            }
             _BGMSource.Stop();
             _BGMSource.volume = data.Value.AudioVolume;
             _BGMSource.clip = data.Value.AudioClip;
             _BGMSource.Play();
+
         }
 
         private void PlaySoundEffect(AudioData? data)

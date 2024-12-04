@@ -125,6 +125,9 @@ MonoBehaviour:
   _enemyData: {fileID: 11400000, guid: 0640177d1188fb845b1c52625dd084a2, type: 2}
   _enemyRiseData: {fileID: 11400000, guid: 46eb7c1835c0b504d9ecf1723e614e46, type: 2}
   _levelRequirePoint: 0
+  _defenseEnemyPrefab: {fileID: 7990310466857601233, guid: 837ec1f55b14f894e8397ccb545f2850,
+    type: 3}
+  _summonRange: 1
 --- !u!1001 &3207008905949727169
 PrefabInstance:
   m_ObjectHideFlags: 0

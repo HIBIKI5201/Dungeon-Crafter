@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _waveData:
   - _spawnData:
-    - _enemyType: 0
+    - _enemyType: 2
       _enemyLevel: 1
       _enemyCount: 30
       _spawnStartTime: 0

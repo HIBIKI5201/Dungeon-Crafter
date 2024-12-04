@@ -11,6 +11,16 @@ using UnityEngine.UIElements;
     {
         public Task InitializeTask { get; private set; }
         public BlackOut() => InitializeTask = Initialize();
+        public bool IsBlackOut { set { if (value)
+            {
+                RemoveFromClassList("black-out-false");
+                AddToClassList("black-out-true");
+                return;
+            }
+            RemoveFromClassList("black-out-true");
+            AddToClassList("black-out-false");
+            return;
+        } }
         private async Task Initialize()
         {
             AsyncOperationHandle<VisualTreeAsset> handle = Addressables.LoadAssetAsync<VisualTreeAsset>("UXML/BlackOut.uxml");

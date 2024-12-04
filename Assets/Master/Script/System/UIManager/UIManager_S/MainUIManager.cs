@@ -8,20 +8,14 @@ using UnityEngine.UIElements;
 
 public class MainUIManager : UIManager_B
 {
-    VisualElement _backGround;
+    BlackOut _blackOut;
     protected override async Task LoadDocumentElement(VisualElement root)
     {
-        _backGround = root.Q<VisualElement>("BlackOut");
+        _blackOut = root.Q<BlackOut>("BlackOut");
+        await _blackOut.InitializeTask;
     }
     public void BlackOut(bool blackOut)
     {
-        if (blackOut)
-        {
-            _backGround.RemoveFromClassList("black-out-false");
-            _backGround.AddToClassList("black-out-true");
-            return;
-        }
-        _backGround.RemoveFromClassList("black-out-true");
-        _backGround.AddToClassList("black-out-false");
+        _blackOut.IsBlackOut = blackOut;
     }
 }

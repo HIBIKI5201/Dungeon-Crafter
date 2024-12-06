@@ -121,6 +121,7 @@ MonoBehaviour:
     type: 2}
   _BGMData: {fileID: 11400000, guid: 10c97874f9c30ce4392358ccdf91a942, type: 2}
   _voiceData: {fileID: 11400000, guid: f30750fc11700ad4b9c40e7aad8a24ed, type: 2}
+  _changeBGMFadeTime: 1
 --- !u!82 &4824524854244025928
 AudioSource:
   m_ObjectHideFlags: 0

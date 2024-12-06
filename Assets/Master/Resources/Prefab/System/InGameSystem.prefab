@@ -177,6 +177,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2523116370185415480}
   - component: {fileID: 2299666661034462887}
+  - component: {fileID: 5276628429807310651}
   m_Layer: 0
   m_Name: InGameSystem
   m_TagString: Untagged
@@ -214,6 +215,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b94df4a3fe96cf4686b46d7cc8d71fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _instantiate:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: DCFrameWork.Enemy.EnemyGenerator, Assembly-CSharp
+        m_MethodName: Initialize
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: DCFrameWork.Enemy.WaveManager, Assembly-CSharp
+        m_MethodName: Initialize
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _storyData: {fileID: 0}
+--- !u!114 &5276628429807310651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4506796306538443436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 680922bd3dee7cf49a94be9f50236449, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundIndex: 6
 --- !u!1 &6646466906414799099
 GameObject:
   m_ObjectHideFlags: 0

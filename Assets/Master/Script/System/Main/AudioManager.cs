@@ -33,7 +33,7 @@ namespace DCFrameWork.MainSystem
         [Space]
 
         [SerializeField]
-        private float _changeBGMFadeTime;
+        private float _changeBGMFadeTime=1;
 
         private void Start()
         {
@@ -60,6 +60,27 @@ namespace DCFrameWork.MainSystem
             }
         }
 
+        public void PlayBGM(int index, BGMMode mode)
+        {
+            var data = GetAudioData(_BGMData.audioDatas, index);
+            if ((_BGMSource is null || data.Value.AudioClip is null).CheckLog("BGMÇÃçƒê∂Ç≈ñ‚ëËÇ™î≠ê∂ÇµÇ‹ÇµÇΩ")) return;
+            switch (mode)
+            {
+                case BGMMode.Fade:
+                    StartCoroutine(FadeBGM(data));
+                    break;
+                case BGMMode.Stop:
+                    _BGMSource.Stop();
+                    break;
+                case BGMMode.Default:
+                    _BGMSource.Stop();
+                    _BGMSource.volume = data.Value.AudioVolume;
+                    _BGMSource.clip = data.Value.AudioClip;
+                    _BGMSource.Play();
+                    break;
+            }
+        }
+
         private AudioData? GetAudioData(List<AudioData> list, int index)
         {
             if (list.Count < index) return null;
@@ -67,7 +88,7 @@ namespace DCFrameWork.MainSystem
         }
 
         private void PlayBGM(AudioData? data)
-        {            
+        {
             if ((_BGMSource is null || data.Value.AudioClip is null).CheckLog("BGMÇÃçƒê∂Ç≈ñ‚ëËÇ™î≠ê∂ÇµÇ‹ÇµÇΩ")) return;
             if (_BGMSource.isPlaying)
             {
@@ -75,6 +96,7 @@ namespace DCFrameWork.MainSystem
             }
             else
             {
+                _BGMSource.Stop();
                 _BGMSource.volume = data.Value.AudioVolume;
                 _BGMSource.clip = data.Value.AudioClip;
                 _BGMSource.Play();
@@ -82,7 +104,7 @@ namespace DCFrameWork.MainSystem
         }
         private IEnumerator FadeBGM(AudioData? data)
         {
-            float playingBGMVol=_BGMSource.volume;
+            float playingBGMVol = _BGMSource.volume;
             for (float time = 0; time < _changeBGMFadeTime; time += Time.deltaTime)
             {
                 _BGMSource.volume = Mathf.Lerp(playingBGMVol, 0, time / _changeBGMFadeTime);
@@ -117,6 +139,12 @@ namespace DCFrameWork.MainSystem
         BGM,
         Voice,
     }
+    public enum BGMMode
+    {
+        Stop,
+        Fade,
+        Default,
+    }
 
     [Serializable]
     public struct AudioData
@@ -124,11 +152,5 @@ namespace DCFrameWork.MainSystem
         public AudioClip AudioClip;
         [Range(0, 1)]
         public float AudioVolume;
-    }
-
-    [CreateAssetMenu(fileName = "AudioDataBase", menuName = "GameData/AudioDataBase")]
-    public class AudioDataBase : ScriptableObject
-    {
-        public List<AudioData> audioDatas = new();
     }
 }

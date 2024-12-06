@@ -1320,6 +1320,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3538332611585799522, guid: 77fd2a5407b56e54d8e660f62bd21e54,
         type: 3}
+      propertyPath: _gridSize
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3538332611585799522, guid: 77fd2a5407b56e54d8e660f62bd21e54,
+        type: 3}
       propertyPath: _wallPrefab
       value: 
       objectReference: {fileID: 213724873199558240, guid: 15f9e0195939cc44e9fd3570ef7e2082,

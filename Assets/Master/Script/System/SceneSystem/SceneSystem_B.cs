@@ -21,13 +21,13 @@ namespace DCFrameWork.SceneSystem
             if (_input is null)
                 Debug.LogWarning("InputBuffer‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
 
+            Initialize_S();
+            _instantiate?.Invoke();
+
             if (_UIManager is not null)
             {
                 await _UIManager.Initialize();
             }
-
-            Initialize_S();
-            _instantiate?.Invoke();
         }
 
         protected virtual void Initialize_S() { }

@@ -19,6 +19,7 @@ namespace DCFrameWork.MainSystem
         {
             if (_isLoading) yield break;
             _isLoading = true;
+
             try
             {
                 yield return SceneManager.UnloadSceneAsync(_currentSceneName);
@@ -30,7 +31,10 @@ namespace DCFrameWork.MainSystem
             finally
             {
                 _isLoading = false;
-            }
+            }               
+          
+
+
         }
     }
 

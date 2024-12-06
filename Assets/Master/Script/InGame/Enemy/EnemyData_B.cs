@@ -9,30 +9,31 @@ namespace DCFrameWork.Enemy
     {
         public float MaxHealth { get => _maxHealth; }
         [SerializeField]
-        private float _maxHealth = 100f;
-
-        public float Defense { get => _defense; }
-        [SerializeField]
-        private float _defense = 1f;
-
-        public float Dexterity { get => _dexterity; }
-        [SerializeField]
-        private float _dexterity = 3f;
-
-        public float SpecialChance { get => _specialChance; }
-        [SerializeField]
-        private float _specialChance = 1f;
+        private float _maxHealth = 0f;
 
         public float Plunder { get => _plunder; }
         [SerializeField]
-        private float _plunder = 1f;
+        private float _plunder = 0f;
+
+        public float Dexterity { get => _dexterity; }
+        [SerializeField]
+        private float _dexterity = 0f;
+
+        public float Defense { get => _defense; }
+        [SerializeField]
+        private float _defense = 0f;
+
 
         public float DropEXP { get => _dropEXP; }
         [SerializeField]
-        private float _dropEXP = 1f;
+        private float _dropEXP = 0f;
+
 
         public float DropGold { get => _dropGold; }
         [SerializeField]
-        private float _dropGold = 1f;
+        private float _dropGold = 0f;
+
+
+    
     }
 }

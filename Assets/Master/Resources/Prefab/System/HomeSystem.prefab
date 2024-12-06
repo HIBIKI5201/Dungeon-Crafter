@@ -263,6 +263,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Data:
-    firstStoryData: {fileID: 11400000, guid: 62ee02b002c70ca40be2df23670ebe82, type: 2}
-    afterStoryData: {fileID: 11400000, guid: 62ee02b002c70ca40be2df23670ebe82, type: 2}
-    sceneKind: 2
+    StoryData: {fileID: 11400000, guid: 62ee02b002c70ca40be2df23670ebe82, type: 2}
+    sceneKind: 3

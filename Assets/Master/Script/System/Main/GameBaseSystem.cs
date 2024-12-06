@@ -28,7 +28,7 @@ namespace DCFrameWork.MainSystem
             {
                 _instance = this;
 
-                string sceneName =SceneChanger.SetCurrentSceneName();
+                string sceneName = SceneChanger.SetCurrentSceneName();
                 Scene systemScene = SceneManager.CreateScene("SystemScene");
                 SceneManager.MoveGameObjectToScene(gameObject, systemScene);
                 SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));

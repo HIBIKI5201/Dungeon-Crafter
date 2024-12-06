@@ -17,3 +17,4 @@ MonoBehaviour:
   DropChance: 0
   DataLevelList:
   - {fileID: 11400000, guid: 742a2d8a56748774e9c5f9c00ecd0321, type: 2}
+  PowerUpRequireItem: 

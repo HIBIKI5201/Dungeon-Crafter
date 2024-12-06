@@ -11,6 +11,7 @@ namespace DCFrameWork
             if(other.gameObject.TryGetComponent(out IEnemy fightable))
             {    
                 fightable.DeathBehaviour();
+                WaveManager.EnemyDeathCount();
             }
         }
 

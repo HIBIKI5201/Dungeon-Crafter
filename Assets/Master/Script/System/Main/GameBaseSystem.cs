@@ -1,9 +1,8 @@
 using DCFrameWork.SceneSystem;
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using DCFrameWork.UI;
 namespace DCFrameWork.MainSystem
 {
     public class GameBaseSystem : MonoBehaviour
@@ -17,86 +16,89 @@ namespace DCFrameWork.MainSystem
         private static GameBaseSystem _instance;
 
         private AudioManager _audioManager;
-        private UIManager_B _mainUIManager;
+        private MainUIManager _mainUIManager;
         #endregion
-
-        private List<IPausable> _pausableList = new();
-
+        #region pause
+        private event Action OnPaused;
+        private event Action OnResumed;
+        #endregion
         private void Awake()
         {
             if (!_instance)
             {
                 _instance = this;
-                //DontDestroyOnLoad(_instance);
 
-                Scene scene = SceneManager.CreateScene("SystemScene");
-                SceneManager.MoveGameObjectToScene(gameObject, scene);
+                string sceneName = SceneChanger.SetCurrentSceneName();
+                Scene systemScene = SceneManager.CreateScene("SystemScene");
+                SceneManager.MoveGameObjectToScene(gameObject, systemScene);
+                SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
             }
             else
             {
                 Destroy(gameObject);
                 return;
             }
+
+            _audioManager = GetComponentInChildren<AudioManager>();
+            if (_audioManager is null)
+                Debug.LogWarning("AudioManagerが見つかりませんでした");
+            _mainUIManager = FindAnyObjectByType<MainUIManager>();
+            if (_mainUIManager is null)
+                Debug.LogWarning("MainUIManagerが見つかりませんでした");
         }
 
         private void Start()
         {
             SaveDataManager.Load();
 
-            _audioManager = GetComponentInChildren<AudioManager>();
-            (_audioManager is null).CheckLog("AudioManagerが見つかりませんでした");
-            _mainUIManager = FindAnyObjectByType<UIManager_B>();
-            (_mainUIManager is null).CheckLog("MainUIManagerが見つかりませんでした");
-
             SceneInit();
         }
 
         public void LoadScene(SceneKind kind)
         {
-            StartCoroutine(SceneLoading(kind));
+            StartCoroutine(SceneLoading<SceneSystem_B>(kind, null));
         }
 
-        private IEnumerator SceneLoading(SceneKind kind)
+        public void LoadScene<T>(SceneKind kind, Action<T> loadedAction) where T : SceneSystem_B
+        {
+            StartCoroutine(SceneLoading(kind, loadedAction));
+        }
+
+        private IEnumerator SceneLoading<T>(SceneKind kind, Action<T> action) where T : SceneSystem_B
         {
             yield return SceneChanger.LoadScene(kind);
-            SceneInit();
+            T system = SceneInit() as T;
+            if (system is not null)
+                action?.Invoke(system);
+            else
+                Debug.LogWarning("ロードされたシーンとシーンシステムが異なります");
         }
 
-        private void SceneInit()
+        private SceneSystem_B SceneInit()
         {
             SceneSystem_B system = FindAnyObjectByType<SceneSystem_B>();
-            if ((system is null).CheckLog("シーンマネージャーが見つかりません")) return;
+            if ((system is null).CheckLog("シーンマネージャーが見つかりません")) return　null;
             sceneSystem = system;
             system?.Initialize();
+            return sceneSystem;
         }
 
         public void PlaySound(int index, SoundKind kind) => _audioManager?.PlaySound(index, kind);
 
         #region ポーズ
-        public void Pause()
-        {
-            _pausableList?.ForEach(p => p.Pause());
-        }
-
-        public void Resume()
-        {
-            _pausableList?.ForEach(p => p.Resume());
-        }
+        public void Pause() => OnPaused?.Invoke();
+        public void Resume() => OnResumed?.Invoke();
 
         public void AddPausableObject(IPausable obj)
         {
             if ((obj is null).CheckLog("Ipausableはnull")) return;
-            if (!_pausableList?.Contains(obj) ?? false)
-            {
-                _pausableList.Add(obj);
-            }
+            OnPaused += obj.Pause;
+            OnResumed += obj.Resume;
         }
         public void RemovePausableObject(IPausable obj)
         {
-            if (_pausableList?.Contains(obj) ?? false)
-            {
-                _pausableList.Remove(obj);
-            }
+            OnPaused -= obj.Pause;
+            OnResumed -= obj.Resume;
         }
         #endregion
     }

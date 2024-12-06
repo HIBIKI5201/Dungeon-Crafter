@@ -2,8 +2,6 @@ namespace DCFrameWork.SceneSystem
 {
     public class HomeSystem : SceneSystem_B
     {
-
-
         protected override void Initialize_S()
         {
         }
@@ -16,8 +14,8 @@ namespace DCFrameWork.SceneSystem
     public enum HomeWindowState
     {
         Title,
-        Story,
         MainMenu,
         StageSelect,
+        DefenceEquipment
     }
 }

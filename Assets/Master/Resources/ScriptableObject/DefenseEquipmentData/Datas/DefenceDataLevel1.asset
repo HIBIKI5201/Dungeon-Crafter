@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37d0b8bd3101a9944935a3c121904ad6, type: 3}
   m_Name: DefenceDataLevel1
   m_EditorClassIdentifier: 
-  Attack: 10
-  Rate: 2
-  Range: 3
-  Critical: 30
+  _attack: 10
+  _rate: 2
+  _critical: 15
+  _range: 3

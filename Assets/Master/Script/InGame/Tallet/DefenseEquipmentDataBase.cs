@@ -10,5 +10,6 @@ namespace DCFrameWork.DefenseEquipment
         public string Explanation;
         public int DropChance;
         public List<DefenseEquipmentData_B> DataLevelList;
+        public List<int> PowerUpRequireItem;
     }
 }

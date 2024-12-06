@@ -15,6 +15,12 @@ MonoBehaviour:
   m_GroupName: UXML
   m_GUID: a55a9db37ee8a3d4197c2903415c71f1
   m_SerializeEntries:
+  - m_GUID: 1691820eb2a4da74c9220c2a0afa9638
+    m_Address: UXML/StoryText.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UXML
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 21db3fa15e6bfad4281ae5e3440045ac
     m_Address: UXML/EquipmentInventory.uxml
     m_ReadOnly: 0
@@ -34,7 +40,7 @@ MonoBehaviour:
     - UXML
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: fae9f9d848fda2845a81e9e4f13d071a
-    m_Address: Assets/Dev/Dev_Branchs/interface/UXML/Ingame/DefenceEquipmentCard.uxml
+    m_Address: UXML/DefenceEquipmentCard.uxml
     m_ReadOnly: 0
     m_SerializedLabels:
     - UXML

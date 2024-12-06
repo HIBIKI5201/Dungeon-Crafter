@@ -10,7 +10,9 @@ namespace DCFrameWork.MainSystem
         [SerializeField]
         private AudioSource _soundEffectSource;
         [SerializeField]
-        private AudioSource _BGMSource;
+        private AudioSource _defaultBGMSource;
+        [SerializeField]
+        private AudioSource _fadeBGMSource;
         [SerializeField]
         private AudioSource _voiceSource;
 
@@ -33,12 +35,12 @@ namespace DCFrameWork.MainSystem
         [Space]
 
         [SerializeField]
-        private float _changeBGMFadeTime=1;
+        private float _changeBGMFadeTime = 1;
 
         private void Start()
         {
             (_soundEffectSource is null).CheckLog($"{gameObject.name}のAudioManagerにSoundEffectSourceがアサインされていません");
-            (_BGMSource is null).CheckLog($"{gameObject.name}のAudioManagerにBGMSourceがアサインされていません");
+            (_defaultBGMSource is null).CheckLog($"{gameObject.name}のAudioManagerにBGMSourceがアサインされていません");
         }
 
         public void PlaySound(int index, SoundKind Kind)
@@ -63,20 +65,25 @@ namespace DCFrameWork.MainSystem
         public void PlayBGM(int index, BGMMode mode)
         {
             var data = GetAudioData(_BGMData.audioDatas, index);
-            if ((_BGMSource is null || data.Value.AudioClip is null).CheckLog("BGMの再生で問題が発生しました")) return;
+            AudioData? playing=_BGMData.audioDatas.Find(d => d.AudioClip == _defaultBGMSource.clip);
+            if ((_defaultBGMSource is null || data.Value.AudioClip is null).CheckLog("BGMの再生で問題が発生しました")) return;
+            
             switch (mode)
             {
-                case BGMMode.Fade:
-                    StartCoroutine(FadeBGM(data));
+                case BGMMode.CrossFade:
+                    StartCoroutine(FadeBGM(data, playing, true));
+                    break;
+                case BGMMode.FadeOut:
+                    StartCoroutine(FadeBGM(data, playing, false));
                     break;
                 case BGMMode.Stop:
-                    _BGMSource.Stop();
+                    _defaultBGMSource.Stop();
                     break;
                 case BGMMode.Default:
-                    _BGMSource.Stop();
-                    _BGMSource.volume = data.Value.AudioVolume;
-                    _BGMSource.clip = data.Value.AudioClip;
-                    _BGMSource.Play();
+                    _defaultBGMSource.Stop();
+                    _defaultBGMSource.volume = data.Value.AudioVolume;
+                    _defaultBGMSource.clip = data.Value.AudioClip;
+                    _defaultBGMSource.Play();
                     break;
             }
         }
@@ -89,31 +96,38 @@ namespace DCFrameWork.MainSystem
 
         private void PlayBGM(AudioData? data)
         {
-            if ((_BGMSource is null || data.Value.AudioClip is null).CheckLog("BGMの再生で問題が発生しました")) return;
-            if (_BGMSource.isPlaying)
+            if ((_defaultBGMSource is null || data.Value.AudioClip is null).CheckLog("BGMの再生で問題が発生しました")) return;
+
+            _defaultBGMSource.Stop();
+            _defaultBGMSource.volume = data.Value.AudioVolume;
+            _defaultBGMSource.clip = data.Value.AudioClip;
+            _defaultBGMSource.Play();
+        }
+        private IEnumerator FadeBGM(AudioData? data, AudioData? playingData, bool ChangeBGM)
+        {
+            float playingBGMVol = _defaultBGMSource.volume;
+            if (!ChangeBGM)
             {
-                StartCoroutine(FadeBGM(data));
+                for (float time = 0; time < _changeBGMFadeTime; time += Time.deltaTime)
+                {
+                    _defaultBGMSource.volume = Mathf.Lerp(playingBGMVol, 0, time / _changeBGMFadeTime);
+                    yield return null;
+                }
+                _defaultBGMSource.Stop();
             }
             else
             {
-                _BGMSource.Stop();
-                _BGMSource.volume = data.Value.AudioVolume;
-                _BGMSource.clip = data.Value.AudioClip;
-                _BGMSource.Play();
+                for (float time = 0; time < _changeBGMFadeTime; time += Time.deltaTime)
+                {
+                    _defaultBGMSource.volume = Mathf.Lerp(playingBGMVol, 0, time / _changeBGMFadeTime);
+                    _fadeBGMSource.volume = Mathf.Lerp(0, data.Value.AudioVolume, time / _changeBGMFadeTime);
+                    yield return null;
+                }
+                _defaultBGMSource = _fadeBGMSource;
+                Debug.Log(_defaultBGMSource.clip);
+                _fadeBGMSource.Stop();
+
             }
-        }
-        private IEnumerator FadeBGM(AudioData? data)
-        {
-            float playingBGMVol = _BGMSource.volume;
-            for (float time = 0; time < _changeBGMFadeTime; time += Time.deltaTime)
-            {
-                _BGMSource.volume = Mathf.Lerp(playingBGMVol, 0, time / _changeBGMFadeTime);
-                yield return null;
-            }
-            _BGMSource.Stop();
-            _BGMSource.volume = data.Value.AudioVolume;
-            _BGMSource.clip = data.Value.AudioClip;
-            _BGMSource.Play();
 
         }
 
@@ -142,7 +156,8 @@ namespace DCFrameWork.MainSystem
     public enum BGMMode
     {
         Stop,
-        Fade,
+        CrossFade,
+        FadeOut,
         Default,
     }
 

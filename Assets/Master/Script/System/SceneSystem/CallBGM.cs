@@ -5,7 +5,17 @@ namespace DCFrameWork
 {
     public class CallBGM : MonoBehaviour
     {
-        public void Initialize(int soundIndex)=>
-            GameBaseSystem.mainSystem.PlaySound(soundIndex, SoundKind.BGM);
+        [SerializeField]
+        int soundIndex;
+        [SerializeField]
+        BGMMode bgmMode;
+        public void Initialize()=>
+            GameBaseSystem.mainSystem.PlayBGM(soundIndex, bgmMode);
+
+        [ContextMenu("PlayBGM")]
+        void FadeBGM()
+        {
+            GameBaseSystem.mainSystem.PlayBGM(soundIndex++, BGMMode.CrossFade);
+        }
     }
 }

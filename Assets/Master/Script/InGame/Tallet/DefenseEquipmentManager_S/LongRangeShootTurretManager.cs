@@ -1,4 +1,5 @@
 using DCFrameWork.Enemy;
+using System.Linq;
 using UnityEngine;
 
 namespace DCFrameWork.DefenseEquipment
@@ -17,11 +18,23 @@ namespace DCFrameWork.DefenseEquipment
             if (_isPaused)
                 _timer += Time.deltaTime;
 
-            if (Time.time > 1 / DefenseEquipmentData.Rate + _timer && _enemyList.Count > 0)
+            if (Time.time > 1 / Rate + _timer && _enemyList.Count > 0)
             {
-                Attack();
+                EnemyAttack();
                 _timer = Time.time;
             }
+        }
+        protected override (GameObject Obj, IFightable Interface) TargetSelect()
+        {
+            return _enemyList.OrderByDescending(x => Vector3.Distance(transform.position, x.Obj.transform.position)).ToList().FirstOrDefault();
+        }
+        protected override void EnemyAttack()
+        {
+            var criticalPoint = Random.Range(0, 100);
+            var targetSelect = TargetSelect();
+            //var ray = 
+            TargetsAddDamage(targetSelect.Interface, criticalPoint <= Critical ? Attack * 3 : Attack);
+            TurretRotate(targetSelect.Obj.transform);
         }
 
         protected override void Pause()

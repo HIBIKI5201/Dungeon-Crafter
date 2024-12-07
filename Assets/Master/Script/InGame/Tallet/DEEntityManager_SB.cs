@@ -40,7 +40,7 @@ namespace DCFrameWork.DefenseEquipment
 
         protected Vector3 SummonPosition()
         {
-            float r = Random.Range(_minRange, DefenseEquipmentData.Range);
+            float r = Random.Range(_minRange, Range);
             float degree = Random.Range(0, 360);
             float radian = degree * Mathf.Deg2Rad;
             float randomPosX = r * Mathf.Cos(radian);

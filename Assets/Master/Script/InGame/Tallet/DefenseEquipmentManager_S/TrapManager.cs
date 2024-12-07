@@ -26,10 +26,13 @@ namespace DCFrameWork
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.TryGetComponent(out IFightable component) && !other.TryGetComponent(out FlyEnemyManager _))
+            if (!_isPaused) 
             {
-                component.HitDamage(_turretManager._attack);
-                Destroy(gameObject);
+                if (other.TryGetComponent(out IFightable component) && !other.TryGetComponent(out FlyEnemyManager _))
+                {
+                    component.HitDamage(_turretManager.EntityAttack);
+                    Destroy(gameObject);
+                }
             }
         }
         private void OnDestroy()

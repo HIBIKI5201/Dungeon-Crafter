@@ -20,10 +20,10 @@ namespace DCFrameWork.DefenseEquipment
             if (_isPaused)
                 _timer += Time.deltaTime;
 
-            if (Time.time > 1 / DefenseEquipmentData.Rate + _timer && _enemyList.Count > 0)
+            if (Time.time > 1 / Rate + _timer && _enemyList.Count > 0)
             {
                 _timer = Time.time;
-                TargetsAddDamage(_enemyList, DefenseEquipmentData.Attack);
+                TargetsAddDamage(_enemyList, Attack);
             }
         }
         protected void TargetsAddDamage(List<(GameObject Obj, IFightable Interface)> enemies, float damage)

@@ -91,7 +91,7 @@ namespace DCFrameWork
                 if (other.gameObject == _target.gameObject)
                 {
                     Debug.Log("‚ ‚½‚Á‚½");
-                    TargetsAddDamage(_target, _turretManager._attack);
+                    TargetsAddDamage(_target, _turretManager.EntityAttack);
                     TargetAddCondition(_target, ConditionType.weakness);
                     TargetAddHitStop(_target, _hitStopTime);
                     if (_target.TryGetComponent(out IConditionable conditionable))
@@ -107,7 +107,7 @@ namespace DCFrameWork
         }
         public GameObject TargetSelect()
         {
-            return _turretManager._enemyList.OrderBy(x => Vector3.Distance(transform.position, x.transform.position)).Where(x => !x.TryGetComponent(out FlyEnemyManager _)).First();
+            return _turretManager._enemyList.OrderBy(x => Vector3.Distance(transform.position, x.transform.position)).First();
         }
 
         void TargetsAddDamage(GameObject enemy, float damage)

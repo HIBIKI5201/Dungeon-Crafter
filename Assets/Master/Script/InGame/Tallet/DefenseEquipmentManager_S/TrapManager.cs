@@ -14,19 +14,13 @@ namespace DCFrameWork
 
         void Awake()
         {
-            if (transform.parent.TryGetComponent(out _turretManager))
-            {
-                Debug.Log(_turretManager.gameObject.name);
-            }
-            else
-            {
-                Debug.Log("Ž¸”s");
-            }
+            transform.parent.TryGetComponent(out _turretManager);
+
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!_isPaused) 
+            if (!_isPaused)
             {
                 if (other.TryGetComponent(out IFightable component) && !other.TryGetComponent(out FlyEnemyManager _))
                 {

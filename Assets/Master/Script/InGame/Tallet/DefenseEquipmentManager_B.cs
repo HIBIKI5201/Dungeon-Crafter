@@ -43,7 +43,6 @@ namespace DCFrameWork.DefenseEquipment
         {
             _reinforceStatus = new(status.Attack, status.Rate, status.Range, status.Critical);
             RangeSet(Range);
-            Debug.Log("Reinforce Now");
         }
 
         private void LoadCommonData(int level)

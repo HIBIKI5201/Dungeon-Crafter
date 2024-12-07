@@ -29,7 +29,7 @@ namespace DCFrameWork.DefenseEquipment
             }
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             _reinforceEvent.Invoke(ReinforceStatus.Default);
         }

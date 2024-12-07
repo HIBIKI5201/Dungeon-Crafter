@@ -242,6 +242,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 5276628429807310651}
+        m_TargetAssemblyTypeName: DCFrameWork.CallBGM, Assembly-CSharp
+        m_MethodName: Initialize
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 7
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _storyData: {fileID: 0}
 --- !u!114 &5276628429807310651
 MonoBehaviour:
@@ -256,6 +268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundIndex: 6
+  bgmMode: 0
 --- !u!1 &6646466906414799099
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,7 +15,7 @@ namespace DCFrameWork
         [ContextMenu("PlayBGM")]
         void FadeBGM()
         {
-            GameBaseSystem.mainSystem.PlayBGM(soundIndex++, BGMMode.CrossFade);
+            GameBaseSystem.mainSystem.PlayBGM(++soundIndex, BGMMode.CrossFade);
         }
     }
 }

@@ -65,9 +65,9 @@ namespace DCFrameWork.MainSystem
         public void PlayBGM(int index, BGMMode mode)
         {
             var data = GetAudioData(_BGMData.audioDatas, index);
-            AudioData? playing=_BGMData.audioDatas.Find(d => d.AudioClip == _defaultBGMSource.clip);
+            AudioData? playing = _BGMData.audioDatas.Find(d => d.AudioClip == _defaultBGMSource.clip);
             if ((_defaultBGMSource is null || data.Value.AudioClip is null).CheckLog("BGMÇÃçƒê∂Ç≈ñ‚ëËÇ™î≠ê∂ÇµÇ‹ÇµÇΩ")) return;
-            
+
             switch (mode)
             {
                 case BGMMode.CrossFade:
@@ -117,18 +117,25 @@ namespace DCFrameWork.MainSystem
             }
             else
             {
+                if ((_fadeBGMSource is null).CheckLog("fadeBGMSource is null")) yield break;
+                _fadeBGMSource.clip = data.Value.AudioClip;
+                _fadeBGMSource.volume = 0;
+                _fadeBGMSource.time = _defaultBGMSource.time;
+                _fadeBGMSource.Play();
                 for (float time = 0; time < _changeBGMFadeTime; time += Time.deltaTime)
                 {
                     _defaultBGMSource.volume = Mathf.Lerp(playingBGMVol, 0, time / _changeBGMFadeTime);
                     _fadeBGMSource.volume = Mathf.Lerp(0, data.Value.AudioVolume, time / _changeBGMFadeTime);
                     yield return null;
                 }
-                _defaultBGMSource = _fadeBGMSource;
+                _defaultBGMSource.clip = _fadeBGMSource.clip;
+                _defaultBGMSource.volume = _fadeBGMSource.volume;
+                _defaultBGMSource.time = _fadeBGMSource.time;
+                _defaultBGMSource.Play();
                 Debug.Log(_defaultBGMSource.clip);
                 _fadeBGMSource.Stop();
 
             }
-
         }
 
         private void PlaySoundEffect(AudioData? data)
@@ -155,10 +162,10 @@ namespace DCFrameWork.MainSystem
     }
     public enum BGMMode
     {
+        Default,
         Stop,
         CrossFade,
         FadeOut,
-        Default,
     }
 
     [Serializable]

@@ -1,5 +1,7 @@
 using DCFrameWork.Enemy;
+using Unity.AppUI.UI;
 using UnityEngine;
+using static UnityEngine.UI.Image;
 
 namespace DCFrameWork.DefenseEquipment
 {
@@ -23,8 +25,22 @@ namespace DCFrameWork.DefenseEquipment
                 _timer = Time.time;
             }
         }
+        protected override void EnemyAttack()
+        {
+            var criticalPoint = Random.Range(0, 100);
+            var targetSelect = TargetSelect();
+            TurretRotate(targetSelect.Obj.transform);
+            var originPos = new Vector3(transform.position.x, targetSelect.Obj.transform.position.y, transform.position.z);
+            var direction = targetSelect.Obj.transform.position - originPos;
 
+            var hits = Physics.SphereCastAll(originPos, Range, direction, Range * 5);
 
+            foreach (var hit in hits)
+            {
+                if (hit.collider.gameObject.TryGetComponent(out IEnemy component))
+                    TargetsAddDamage(component, criticalPoint <= Critical ? Attack * 3 : Attack);
+            }
+        }
         protected override void Pause()
         {
             _isPaused = true;

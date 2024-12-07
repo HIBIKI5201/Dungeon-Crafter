@@ -605,7 +605,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _obstaclePrefabList.Array.data[0].PutObstaclePrefab
       value: 
-      objectReference: {fileID: 3201622288186106138, guid: a278e15b8295c41429a44fa532116f44,
+      objectReference: {fileID: 4929658656730076202, guid: 9f4ed3ac5146c004ea5c53c7e60d74a5,
         type: 3}
     - target: {fileID: 4412748131171422071, guid: 77fd2a5407b56e54d8e660f62bd21e54,
         type: 3}

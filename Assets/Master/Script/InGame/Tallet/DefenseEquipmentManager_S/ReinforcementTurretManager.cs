@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace DCFrameWork.DefenseEquipment
@@ -5,6 +6,7 @@ namespace DCFrameWork.DefenseEquipment
     public class ReinforcementTurretManager : DefenseEquipmentManager_B<DefenseEquipmentData_B>
     {
         bool _isPaused = false;
+        private event Action<ReinforceStatus> _reinforceEvent;
         protected override void Think() // UpDate ‚Æ“¯‹`
         {
 
@@ -20,11 +22,18 @@ namespace DCFrameWork.DefenseEquipment
             {
                 if (other.TryGetComponent(out ITurret component) && !other.TryGetComponent(out ReinforcementTurretManager _))
                 {
-                    (float attack, float rate, float range, float critical) status = new(DefenseEquipmentData.Attack, DefenseEquipmentData.Rate, DefenseEquipmentData.Range, DefenseEquipmentData.Critical);
+                    ReinforceStatus status = new(Attack, Rate, Range, Critical);
                     component.Reinforce(status);
+                    _reinforceEvent += component.Reinforce;
                 }
             }
         }
+
+        private void OnDestroy()
+        {
+            _reinforceEvent.Invoke(ReinforceStatus.Default);
+        }
+
 
         protected override void Pause()
         {
@@ -45,7 +54,7 @@ namespace DCFrameWork.DefenseEquipment
         public float Range;
         public float Critical;
 
-        public static ReinforceStatus Default { get =>  new ReinforceStatus(1, 1, 1, 1); }
+        public static ReinforceStatus Default { get => new ReinforceStatus(1, 1, 1, 1); }
         public ReinforceStatus(float attack, float rate, float range, float critical)
         {
             Attack = attack; Rate = rate; Range = range; Critical = critical;

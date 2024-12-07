@@ -39,9 +39,9 @@ namespace DCFrameWork.DefenseEquipment
         {
             GameBaseSystem.mainSystem?.RemovePausableObject(this);
         }
-        public void Reinforce((float attack, float rate, float range, float critical) status)
+        public void Reinforce(ReinforceStatus status)
         {
-            _reinforceStatus = new(status.attack, status.rate, status.range, status.critical);
+            _reinforceStatus = new(status.Attack, status.Rate, status.Range, status.Critical);
             RangeSet(Range);
             Debug.Log("Reinforce Now");
         }
@@ -88,11 +88,11 @@ namespace DCFrameWork.DefenseEquipment
         protected abstract void Pause();
         protected abstract void Resume();
 
-        void ITurret.Reinforce((float attack, float rate, float range, float critical) status) => Reinforce(status);
+        void ITurret.Reinforce(ReinforceStatus status) => Reinforce(status);
         #endregion
     }
     public interface ITurret : IPausable
     {
-        void Reinforce((float attack, float rate, float range, float critical) status);
+        void Reinforce(ReinforceStatus status);
     }
 }

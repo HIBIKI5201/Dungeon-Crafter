@@ -28,14 +28,15 @@ namespace DCFrameWork.DefenseEquipment
         }
         protected void TargetsAddDamage(List<(GameObject Obj, IFightable Interface)> enemies, float damage)
         {
-            foreach (var enemy in enemies)
+            for (int i = 0; i < enemies.Count; i++)
             {
-                if (!enemy.Interface.HitDamage(damage))
+                if (!enemies[i].Interface.HitDamage(damage))
                 {
-                    _enemyList.Remove(_enemyList.Where(e => e.Interface == enemy.Interface).FirstOrDefault());
+                    _enemyList.Remove(_enemyList.Where(e => e.Interface == enemies[i].Interface).FirstOrDefault());
                 }
             }
         }
+
 
         private void OnTriggerEnter(Collider other)
         {

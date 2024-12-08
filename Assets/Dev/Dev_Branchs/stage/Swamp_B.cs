@@ -6,16 +6,18 @@ namespace DCFrameWork
     {
         private void OnTriggerEnter(Collider other)
         {
-            if(other.TryGetComponent(out IEnemy enemy))
+            if (other.TryGetComponent(out IEnemy enemy))
             {
-                AddCondition(enemy);
+                if (enemy is not FlyEnemyManager)
+                    AddCondition(enemy);
             }
         }
         private void OnTriggerExit(Collider other)
         {
             if (other.TryGetComponent(out IEnemy enemy))
             {
-                RemoveCondition(enemy);
+                if (enemy is not FlyEnemyManager)
+                    RemoveCondition(enemy);
             }
         }
         protected abstract void AddCondition(IEnemy enemy);

@@ -1,7 +1,22 @@
 namespace DCFrameWork.Enemy
 {
-    public class DefenseEnemyManager : EnemyManager_B<EnemyData_B>
+    public class DefenseEnemyManager : EnemyManager_B<EnemyData_B, EnemyRiseData>
     {
+
+
+        protected override void DeathBehaviour()
+        {
+            base.DeathBehaviour();
+
+        }
+
+
+        protected override void LoadSpecificnData(EnemyData_B data)
+        {
+
+
+        }
+
         protected override void Pause()
         {
             throw new System.NotImplementedException();
@@ -12,16 +27,6 @@ namespace DCFrameWork.Enemy
             throw new System.NotImplementedException();
         }
 
-        // Start is called before the first frame update
-        void Start()
-        {
 
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
     }
 }

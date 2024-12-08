@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.AI;
 using System.Linq;
 using DCFrameWork.MainSystem;
+using DCFrameWork.DefenseEquipment;
+using System.Collections;
 
 namespace DCFrameWork
 {
@@ -13,94 +15,97 @@ namespace DCFrameWork
         bool _isPaused;
         [SerializeField] float _attackRate = 2;
         float _timer;
-        List<GameObject> _enemyList = new();
-        [SerializeField] float _attackValue = 1;
         NavMeshAgent _agent;
-        [SerializeField] EntityType _entityType;
-        enum EntityType
-        {
-            attack,
-            slow,
-            attackandslow,
-        }
+        SummonTurretManager _turretManager;
+        bool _isAttacked = false;
+        GameObject _target;
 
-        void Start()
+        private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
+            if (transform.parent.TryGetComponent(out _turretManager))
+                SetDestination();
+        }
+        void Start()
+        {
+            _timer = Time.time;
         }
 
         void Update()
         {
-            var attackTime = 1 / _attackRate * Time.deltaTime;
+            if (_isAttacked)
+            {
+                _timer += Time.deltaTime;
+            }
             if (!_isPaused)
             {
-                _timer += attackTime;
-                if (_timer > 1)
+                if (Time.time > _timer + _attackRate && !_isAttacked)
                 {
-                    if (_enemyList.Count != 0)
-                    {
-                        var targetSelect = TargetSelect();
-                        _agent.SetDestination(targetSelect[0].transform.position);
-                        switch (_entityType)
-                        {
-                            case EntityType.attack:
-                                TargetsAddDamage(targetSelect, _attackValue);
-                                break;
-                            case EntityType.slow:
-                                TargetAddCondition(targetSelect, ConditionType.slow);
-                                break;
-                            case EntityType.attackandslow:
-                                TargetsAddDamage(targetSelect, _attackValue);
-                                TargetAddCondition(targetSelect, ConditionType.slow);
-                                break;
-                        }
-                        _timer = 0;
-                    }
+                    _isAttacked = true;
+                }
+                if (IsTargetSet())
+                {
+                    _agent.SetDestination(_turretManager.transform.position);
                 }
             }
+        }
+
+        public void SetDestination()
+        {
+            if (_turretManager._enemyList.Count != 0 && _agent.isOnNavMesh)
+            {
+                _target = TargetSelect().gameObject;
+                _agent.SetDestination(_target.transform.position);
+            }
+        }
+        public bool IsTargetSet()
+        {
+            return _agent.destination == Vector3.zero;
         }
         private void OnTriggerEnter(Collider other)
         {
-            if (!_isPaused)
+            if (_isAttacked)
             {
-                if (other.TryGetComponent<IFightable>(out _))
+                if (other.gameObject == _target.gameObject)
                 {
-                    _enemyList.Add(other.gameObject);
+                    Debug.Log("Ç†ÇΩÇ¡ÇΩ");
+                    TargetsAddDamage(_target, _turretManager._attack);
+                    TargetAddCondition(_target, ConditionType.weakness);
+                    TargetAddHitStop(_target);
+                    if (_target.TryGetComponent(out IConditionable conditionable))
+                        StartCoroutine(TargetRemoveCondition(conditionable));
                 }
             }
         }
-        private void OnTriggerExit(Collider other)
+        IEnumerator TargetRemoveCondition(IConditionable conditionable)
         {
-            if (!_isPaused)
-            {
-                if (other.TryGetComponent<IFightable>(out _))
-                {
-                    _enemyList.Remove(other.gameObject);
-
-                }
-            }
+            yield return FrameWork.PausableWaitForSecond(3f);
+            conditionable.RemoveCondition(ConditionType.weakness);
         }
-        List<GameObject> TargetSelect()
+        public GameObject TargetSelect()
         {
-            return _enemyList.OrderBy(x => Vector3.Distance(transform.position, x.transform.position)).Take(1).ToList();
+            return _turretManager._enemyList.OrderBy(x => Vector3.Distance(transform.position, x.transform.position)).First();
         }
 
-        void TargetsAddDamage(List<GameObject> enemies, float damage)
+        void TargetsAddDamage(GameObject enemy, float damage)
         {
-            foreach (var enemy in enemies)
-            {
-                if (enemy.TryGetComponent(out IFightable component))
-                    component.HitDamage(damage);
-            }
+            if (enemy.TryGetComponent(out IFightable component))
+                component.HitDamage(damage);
+            _isAttacked = false;
         }
 
-        void TargetAddCondition(List<GameObject> enemies, ConditionType type)
+        void TargetAddCondition(GameObject enemy, ConditionType type)
         {
-            foreach (var enemy in enemies)
+            if (enemy.TryGetComponent(out IConditionable component))
+                component.AddCondition(type);
+        }
+        void TargetAddHitStop(GameObject enemy)
+        {
+            if (enemy.TryGetComponent(out IEnemy component))
             {
-                if (enemy.TryGetComponent(out IConditionable component))
-                    component.AddCondition(type);
+                //HitStopèàóùÇÇ±Ç±Ç…
             }
+
         }
         public void Pause()
         {

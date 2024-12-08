@@ -1,25 +1,30 @@
+using DCFrameWork.MainSystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Pool;
-using Random = UnityEngine.Random;
 
 namespace DCFrameWork.Enemy
 {
     public class EnemyGenerator : MonoBehaviour
     {
-        public ObjectPool<IEnemy> objectPool;
+
 
         [SerializeField]
-        List<EnemyGenerateData> _objects = new();
+        EnemyElement[] _objects;
 
         [SerializeField]
-        private Transform _spawnPos;
+        private Transform[] _spawnPos;
+
+        public Transform[] SpawnPos { get { return _spawnPos; } }
 
         [SerializeField]
         private Transform _targetPos;
+
+        public Transform TargetPos { get { return _targetPos; } }
 
         [SerializeField]
         private Canvas _canvas;
@@ -32,23 +37,47 @@ namespace DCFrameWork.Enemy
         [SerializeField]
         private int _maxValue = 100;
 
-        [SerializeField]
-        private float _spawnInterval = 3f;
+        private Dictionary<EnemyKind, ObjectPool<IEnemy>> _dict = new();
+
+        
 
         private void Start()
         {
-            ObjectPooling();
-            StartCoroutine(Generate());
+           
+           
         }
+        
+       
 
-        private void ObjectPooling()
+        public void Initialize()
         {
 
-            objectPool = new ObjectPool<IEnemy>(
+            foreach (var obj in _objects)
+            {
+                _dict.Add(obj.kind, ObjectPooling((obj.obj), _spawnPos[0].position));
+            }
+        }
+
+
+        public void Waving(WaveData waveData)
+        {
+            var kinds = _objects.Select(e => e.kind);
+            foreach (var a in waveData._spawnData)
+            {
+                if (kinds.Contains(a._enemyType))
+                {
+                    StartCoroutine(Generate(a, _dict[a._enemyType]));
+                }
+            }
+        }
+
+        private ObjectPool<IEnemy> ObjectPooling(GameObject obj ,Vector3 initPosition)
+        {
+            ObjectPool<IEnemy> objPool = null;
+            return objPool = new ObjectPool<IEnemy>(
             () =>
             {
-                int resultIndex = ChooseNum(_objects.Select(o => o.SpawnChance));
-                var spawnedEnemy = Instantiate(_objects[resultIndex].EnemyPrefab, _spawnPos.position, Quaternion.identity, transform);
+                var spawnedEnemy = Instantiate(obj,initPosition, Quaternion.identity, transform);
                 var healthBar = Instantiate(_healthBar, _canvas.transform);
                 healthBar.transform.SetParent(_canvas.transform);
                 var enemy = spawnedEnemy.GetComponent<IEnemy>();
@@ -57,11 +86,12 @@ namespace DCFrameWork.Enemy
             },
            target =>
            {
-               target.Initialize(_spawnPos.position, _targetPos.position, () => objectPool.Release(target));
+               target.Initialize( initPosition, _targetPos.position, () => objPool.Release(target));
            },
            target =>
            {
                target.DeathBehaviour();
+               WaveManager.EnemyDeathCount();
            },
            target =>
            {
@@ -70,45 +100,58 @@ namespace DCFrameWork.Enemy
            true, _defaultValue, _maxValue);
         }
 
-        int ChooseNum(IEnumerable<int> chances)
+        IEnumerator Generate(EnemySpawnData data, ObjectPool<IEnemy> pool)
         {
-            float total = chances.Sum();
-            var randomNum = Random.Range(1, total + 1);
-
-            for (int i = 0; i < chances.Count(); i++)
+            yield return FrameWork.PausableWaitForSecond(data._spawnStartTime);
+            float timer = data._spawnEndTime - data._spawnStartTime;
+            timer = timer / data._enemyCount;
+            int count = data._enemyCount;
+            while (count > 0)
             {
-                int element = chances.ElementAt(i);
-                if (randomNum < element)
-                {
-                    return i;
-                }
-                else
-                {
-                    randomNum -= element;
-                }
-
-            }
-
-            return 0;
-
-        }
-
-        IEnumerator Generate()
-        {
-            yield return null;
-            while (true)
-            {
-                objectPool.Get();
-                yield return new WaitForSeconds(_spawnInterval);
+                var enemy = pool.Get();
+                enemy.position = DecisionSpawnPoint(data._spawnPoint);
+                enemy.SetLevel(data._enemyLevel);
+                count--;
+                yield return FrameWork.PausableWaitForSecond(timer);
             }
 
         }
+
+        Vector3 DecisionSpawnPoint(int i)
+        {
+            Transform trm;
+
+            if (i == 0)
+            {
+                trm = _spawnPos[UnityEngine.Random.Range(0, _spawnPos.Length)];
+            }
+            else 
+            {
+                trm = _spawnPos[i - 1];
+            }
+            
+            return trm.position;
+        }
+
     }
 
+
+
+
     [Serializable]
-    public struct EnemyGenerateData
+    public struct EnemyElement
     {
-        public GameObject EnemyPrefab;
-        public int SpawnChance;
+        public GameObject obj;
+        public EnemyKind kind;
+    }
+
+    public enum EnemyKind
+    {
+        Normal,
+        Defense,
+        Lead,
+        Buff,
+        Boss,
+        Fly
     }
 }

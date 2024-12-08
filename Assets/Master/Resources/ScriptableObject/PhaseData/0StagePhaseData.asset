@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d66383cb86777446b12588577564234, type: 3}
+  m_Name: 0StagePhaseData
+  m_EditorClassIdentifier: 
+  _waveData:
+  - _spawnData:
+    - _enemyType: 0
+      _enemyLevel: 1
+      _enemyCount: 30
+      _spawnStartTime: 0
+      _spawnEndTime: 15
+      _spawnPoint: 1
+    - _enemyType: 3
+      _enemyLevel: 1
+      _enemyCount: 5
+      _spawnStartTime: 0
+      _spawnEndTime: 15
+      _spawnPoint: 1
+  - _spawnData:
+    - _enemyType: 1
+      _enemyLevel: 1
+      _enemyCount: 30
+      _spawnStartTime: 0
+      _spawnEndTime: 20
+      _spawnPoint: 1
+  - _spawnData:
+    - _enemyType: 0
+      _enemyLevel: 1
+      _enemyCount: 30
+      _spawnStartTime: 0
+      _spawnEndTime: 20
+      _spawnPoint: 1
+    - _enemyType: 1
+      _enemyLevel: 1
+      _enemyCount: 30
+      _spawnStartTime: 10
+      _spawnEndTime: 30
+      _spawnPoint: 1
+  - _spawnData:
+    - _enemyType: 0
+      _enemyLevel: 1
+      _enemyCount: 30
+      _spawnStartTime: 0
+      _spawnEndTime: 15
+      _spawnPoint: 1
+    - _enemyType: 1
+      _enemyLevel: 1
+      _enemyCount: 30
+      _spawnStartTime: 5
+      _spawnEndTime: 20
+      _spawnPoint: 1
+  - _spawnData:
+    - _enemyType: 0
+      _enemyLevel: 1
+      _enemyCount: 30
+      _spawnStartTime: 0
+      _spawnEndTime: 20
+      _spawnPoint: 1
+    - _enemyType: 1
+      _enemyLevel: 1
+      _enemyCount: 30
+      _spawnStartTime: 0
+      _spawnEndTime: 20
+      _spawnPoint: 1

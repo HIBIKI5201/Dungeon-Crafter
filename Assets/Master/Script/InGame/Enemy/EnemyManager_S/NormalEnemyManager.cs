@@ -1,15 +1,16 @@
+
+
+using DCFrameWork.MainSystem;
+using System.Collections;
+
 namespace DCFrameWork.Enemy
 {
-    public class NormalEnemyManager : EnemyManager_B<EnemyData_B>
+    public class NormalEnemyManager : EnemyManager_B<EnemyData_B,EnemyRiseData>
     {
-
-
         protected override void DeathBehaviour()
         {
             base.DeathBehaviour();
-
         }
-
 
         protected override void LoadSpecificnData(EnemyData_B data)
         {
@@ -26,7 +27,6 @@ namespace DCFrameWork.Enemy
         {
             throw new System.NotImplementedException();
         }
-
 
     }
 }

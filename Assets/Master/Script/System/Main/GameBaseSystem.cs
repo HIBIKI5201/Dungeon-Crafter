@@ -85,6 +85,8 @@ namespace DCFrameWork.MainSystem
 
         public void PlaySound(int index, SoundKind kind) => _audioManager?.PlaySound(index, kind);
 
+        public void PlayBGM(int index, BGMMode mode)=> _audioManager?.PlayBGM(index, mode);
+
         #region ƒ|[ƒY
         public void Pause() => OnPaused?.Invoke();
         public void Resume() => OnResumed?.Invoke();

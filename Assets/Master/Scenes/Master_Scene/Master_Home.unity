@@ -387,6 +387,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HomeSystem
       objectReference: {fileID: 0}
+    - target: {fileID: 5588886371859751391, guid: 5eda548d81cb2f447878202eda3d4b41,
+        type: 3}
+      propertyPath: bgmMode
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

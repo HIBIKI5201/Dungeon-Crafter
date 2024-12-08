@@ -17,63 +17,86 @@ namespace DCFrameWork
         float _timer;
         NavMeshAgent _agent;
         SummonTurretManager _turretManager;
-        bool _isAttacked = false;
+        bool _isAttacked = true;
         GameObject _target;
-
+        [SerializeField] float _hitStopTime = 1;
+        //Vector3 _startPos;
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
             if (transform.parent.TryGetComponent(out _turretManager))
-                SetDestination();
+                SetTarget();
+            //_startPos = transform.position;
         }
         void Start()
         {
-            _timer = Time.time;
+            _timer = 1 / _attackRate;
         }
 
         void Update()
         {
-            if (_isAttacked)
-            {
-                _timer += Time.deltaTime;
-            }
             if (!_isPaused)
             {
-                if (Time.time > _timer + _attackRate && !_isAttacked)
+                if (!_isAttacked)
                 {
-                    _isAttacked = true;
+                    _timer -= Time.deltaTime;
+                    if (_timer <= 0)
+                    {
+                        _isAttacked = true;
+                        _timer = 1 / _attackRate;
+                    }
                 }
-                if (IsTargetSet())
+                if (_turretManager._enemyList.Count > 0)
                 {
-                    _agent.SetDestination(_turretManager.transform.position);
+                    if (IsTargetSet())
+                    {
+                        SetTarget();
+                    }
+                    if (_target != null && _agent.isOnNavMesh)
+                    {
+                        _agent.SetDestination(_target.transform.position);
+                    }
+                }
+                else
+                {
+                    //Debug.Log("タレットくんに帰る");
+                    //if (_agent.isOnNavMesh)
+                    //    _agent.SetDestination(_startPos);
+                    if (_agent.isOnNavMesh)
+                        _agent.ResetPath();
+                    _target = null;
                 }
             }
         }
 
-        public void SetDestination()
+        public void SetTarget()
         {
-            if (_turretManager._enemyList.Count != 0 && _agent.isOnNavMesh)
+            if (_turretManager._enemyList.Count != 0)
             {
                 _target = TargetSelect().gameObject;
-                _agent.SetDestination(_target.transform.position);
+            }
+            else
+            {
+                _target = null;
             }
         }
         public bool IsTargetSet()
         {
-            return _agent.destination == Vector3.zero;
+            return _target == null || !_turretManager._enemyList.Contains(_target);
         }
         private void OnTriggerEnter(Collider other)
         {
-            if (_isAttacked)
+            if (_isAttacked && _target)
             {
                 if (other.gameObject == _target.gameObject)
                 {
                     Debug.Log("あたった");
-                    TargetsAddDamage(_target, _turretManager._attack);
+                    TargetsAddDamage(_target, _turretManager.EntityAttack);
                     TargetAddCondition(_target, ConditionType.weakness);
-                    TargetAddHitStop(_target);
+                    TargetAddHitStop(_target, _hitStopTime);
                     if (_target.TryGetComponent(out IConditionable conditionable))
                         StartCoroutine(TargetRemoveCondition(conditionable));
+                    _isAttacked = false;
                 }
             }
         }
@@ -91,7 +114,6 @@ namespace DCFrameWork
         {
             if (enemy.TryGetComponent(out IFightable component))
                 component.HitDamage(damage);
-            _isAttacked = false;
         }
 
         void TargetAddCondition(GameObject enemy, ConditionType type)
@@ -99,13 +121,12 @@ namespace DCFrameWork
             if (enemy.TryGetComponent(out IConditionable component))
                 component.AddCondition(type);
         }
-        void TargetAddHitStop(GameObject enemy)
+        void TargetAddHitStop(GameObject enemy, float time)
         {
             if (enemy.TryGetComponent(out IEnemy component))
             {
-                //HitStop処理をここに
+                component.StopEnemy(time);
             }
-
         }
         public void Pause()
         {

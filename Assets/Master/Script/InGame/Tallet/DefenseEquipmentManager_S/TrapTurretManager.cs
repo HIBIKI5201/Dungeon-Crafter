@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 namespace DCFrameWork.DefenseEquipment
@@ -8,7 +9,7 @@ namespace DCFrameWork.DefenseEquipment
         float _timer = 0;
         bool _isPaused = false;
         bool _isCoolTimed = false;
-        int _maxCount;
+        public float EntityAttack { get => Attack; }
 #if UNITY_EDITOR
         [SerializeField] Vector3 _boxCastSizeDebug = new(1, 10, 1);
 #endif
@@ -24,7 +25,7 @@ namespace DCFrameWork.DefenseEquipment
             if (_isPaused || _isCoolTimed)
                 _timer += Time.deltaTime;
 
-            if (Time.time > 1 / DefenseEquipmentData.Rate + _timer)
+            if (Time.time > 1 / Rate + _timer)
             {
                 _timer = Time.time;
                 var summonPos = SummonPosition();
@@ -43,10 +44,10 @@ namespace DCFrameWork.DefenseEquipment
                     }
                 }
                 if (!isChecked)
-                    Summon(summonPos, _maxCount);
+                    Summon(summonPos, DefenseEquipmentData.MaxCount);
             }
         }
-        
+        [ContextMenu("StartCoolTime")]
         public void StartCoolTime()
         {
             _isCoolTimed = true;
@@ -54,16 +55,19 @@ namespace DCFrameWork.DefenseEquipment
             {
                 Destroy(entity);
             }
-            _entityList.Clear();
         }
-
+        [ContextMenu("EndCoolTime")]
         public void EndCoolTime()
         {
             _isCoolTimed = false;
         }
+        public void ThisRemove(GameObject trap)
+        {
+            _entityList.Remove(trap);
+        }
         protected override void LoadSpecificData(SummonData data)
         {
-            _maxCount = DefenseEquipmentData.MaxCount;
+
         }
         protected override void Pause()
         {

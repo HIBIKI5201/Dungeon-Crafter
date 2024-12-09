@@ -29,14 +29,14 @@ namespace DCFrameWork
 
                 string[] elements = line.Split(',').Select(s => s.Replace("\"", "").Trim()).ToArray();
                 if (elements[0][0] == '/') continue;
-
-                Debug.Log($"{elements[0]}{elements[1]}");
+                Debug.Log(elements.Count());
+                Debug.Log($"{elements[0]}{elements[1]}{elements[2]}{elements[3]}");
                 _defenseCollections.Add(new DefenseCollection()
                 {
                     _name = elements[0],
                     _tips = elements[1],
                     _cardSprite = LoadTexture(elements[2]),
-                    _objectSprite = LoadTexture(elements[3]),
+                    //_objectSprite = LoadTexture(elements[3]),
                 });
             }
             Debug.Log("End");

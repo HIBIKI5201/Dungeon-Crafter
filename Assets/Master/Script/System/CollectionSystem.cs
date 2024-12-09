@@ -1,5 +1,6 @@
 
 using DCFrameWork.Enemy;
+using DCFrameWork.MainSystem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace DCFrameWork
         public static CollectionSystem Instans;
 
         [SerializeField] DefenseCollectionData _defenseObjCollectionData;
-        [SerializeField] EnemyCollectionData _enemyCollectionData = new();
+        [SerializeField] EnemyCollectionData _enemyCollectionData;
         [SerializeField] BGMCollectionData _bgmCollectionData;
 
         int _defenseObjectFrag;
@@ -58,29 +59,35 @@ namespace DCFrameWork
 
         public IEnumerable<EnemyCollection?> GetEnemyCollection()
         {
-            List<EnemyCollection?> data = new ();
+            List<EnemyCollection?> data = new();
+            if ((!_enemyCollectionData).CheckLog("EnemyCollectionData‚ª‚ ‚è‚Ü‚¹‚ñ")) return data;
             for (var i = 0; i < _enemyCollectionData.Count; i++)
             {
-                data.Add((_enemyFrag & 1 << i) != 0 ? _enemyCollectionData.EnemyData[i] : null);
-                data[i]._killCount = _EnemyKillCount[(EnemyKind)i];
+                EnemyCollection? col = (_enemyFrag & 1 << i) != 0 ? _enemyCollectionData.EnemyData[i] : null;
+                if (col != null)
+                {
+                    var j = col.Value;
+                    j._killCount = _EnemyKillCount[(EnemyKind)i];
+                }
+                data.Add(col);
             }
             return data;
         }
         public IEnumerable<DefenseCollection?> GetDefenseObjCollection()
         {
             List<DefenseCollection?> data = new();
-            for (var i = 1; i < _defenseObjCollectionData.Count; i++)
+            if ((!_defenseObjCollectionData).CheckLog("DefenseCollectionData‚ª‚ ‚è‚Ü‚¹‚ñ")) return data;
+            for (var i = 0; i < _defenseObjCollectionData.Count; i++)
             {
                 data.Add((_defenseObjectFrag & 1 << i) != 0 ? _defenseObjCollectionData.DefenseData[i] : null);
             }
             return data;
         }
-
-
         public IEnumerable<AudioCollection?> GetBGMCollection()
         {
             List<AudioCollection?> data = new List<AudioCollection?>();
-            for (var i = 1; i < _bgmCollectionData.BGMCollection.Count; i++)
+            if ((!_bgmCollectionData).CheckLog("bgmData‚ª‚ ‚è‚Ü‚¹‚ñ")) return data;
+            for (var i = 0; i < _bgmCollectionData.BGMCollection.Count; i++)
             {
                 data.Add((_bgmFrag & 1 << i) != 0 ? _bgmCollectionData.BGMCollection[i] : null);
             }
@@ -92,14 +99,14 @@ namespace DCFrameWork
             var i = GetDefenseObjCollection();
             foreach (var item in i)
             {
-                Debug.Log(item!=null?item.Value._name:"null");
+                Debug.Log(item != null ? item.Value._name : "null");
             }
-            var k = GetDefenseObjCollection();
+            var k = GetEnemyCollection();
             foreach (var item in k)
             {
-                Debug.Log(item!=null? item.Value._name:"null");
+                Debug.Log(item != null ? item.Value._name : "null");
             }
-            var j = GetDefenseObjCollection();
+            var j = GetBGMCollection();
             foreach (var item in j)
             {
                 Debug.Log(item != null ? item.Value._name : "null");

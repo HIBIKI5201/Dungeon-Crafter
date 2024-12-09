@@ -1,6 +1,5 @@
 
 using DCFrameWork.Enemy;
-using DCFrameWork.MainSystem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,21 +11,29 @@ namespace DCFrameWork
     {
         public static CollectionSystem Instans;
 
-        [SerializeField] List<CollectionData> _defenseObjCollectionData=new();
-        [SerializeField] List<CollectionData> _enemyCollectionData=new();
-        [SerializeField] AudioDataBase _bgmCollectionData;
+        [SerializeField] DefenseCollectionData _defenseObjCollectionData;
+        [SerializeField] EnemyCollectionData _enemyCollectionData = new();
+        [SerializeField] BGMCollectionData _bgmCollectionData;
 
         int _defenseObjectFrag;
         int _enemyFrag;
         int _bgmFrag;
+
+        public int _defenseObjectFrag2;
+        public int _enemyFrag2;
+        public int _bgmFrag2;
+
+        Dictionary<EnemyKind, int> _EnemyKillCount = new Dictionary<EnemyKind, int>();
 
         /// <summary>
         /// ê}ä”ÇÃêiíª
         /// </summary>
         public float CollectionRate
         {
-            get => (float)(Convert.ToString(_defenseObjectFrag, 2).Count(c => c == '1') + Convert.ToString(_enemyFrag, 2).Count(c => c == '1') +
-                Convert.ToString(_bgmFrag, 2).Count(c => c == '1')) / (_defenseObjCollectionData.Count + _enemyCollectionData.Count + _bgmCollectionData.audioDatas.Count);
+            get => (float)(Convert.ToString(_defenseObjectFrag, 2).Count(c => c == '1') +
+                Convert.ToString(_enemyFrag, 2).Count(c => c == '1') +
+                Convert.ToString(_bgmFrag, 2).Count(c => c == '1')) / (_defenseObjCollectionData.Count +
+                _enemyCollectionData.EnemyData.Count + _bgmCollectionData.BGMCollection.Count);
         }
 
         private void Awake()
@@ -37,72 +44,74 @@ namespace DCFrameWork
             }
             Instans = this;
             DontDestroyOnLoad(gameObject);
+            _defenseObjectFrag = _defenseObjectFrag2;
+            _enemyFrag = _enemyFrag2;
+            _bgmFrag = _bgmFrag2;
+        }
+        public void SetSaveData(int defensObjectFrag, int enemyFrag, int bgmFrag, Dictionary<EnemyKind, int> enemyKillCount)
+        {
+            _defenseObjectFrag = defensObjectFrag;
+            _enemyFrag = enemyFrag;
+            _bgmFrag = bgmFrag;
+            _EnemyKillCount = enemyKillCount;
         }
 
-        public IEnumerable<CollectionData?> GetEnemyCollection()
+        public IEnumerable<EnemyCollection?> GetEnemyCollection()
         {
-            List<CollectionData?> data = new List<CollectionData?>();
+            List<EnemyCollection?> data = new ();
             for (var i = 0; i < _enemyCollectionData.Count; i++)
             {
-                data.Add((_enemyFrag & 1 << i) != 0 ? _enemyCollectionData[i] : null);
+                data.Add((_enemyFrag & 1 << i) != 0 ? _enemyCollectionData.EnemyData[i] : null);
+                data[i]._killCount = _EnemyKillCount[(EnemyKind)i];
+            }
+            return data;
+        }
+        public IEnumerable<DefenseCollection?> GetDefenseObjCollection()
+        {
+            List<DefenseCollection?> data = new();
+            for (var i = 1; i < _defenseObjCollectionData.Count; i++)
+            {
+                data.Add((_defenseObjectFrag & 1 << i) != 0 ? _defenseObjCollectionData.DefenseData[i] : null);
             }
             return data;
         }
 
-        public IEnumerable<CollectionData> GetDefenseObjCollection()
+
+        public IEnumerable<AudioCollection?> GetBGMCollection()
         {
-            List<CollectionData> data = new List<CollectionData>();
-            for (var i = 1; i < _defenseObjCollectionData.Count; i++)
+            List<AudioCollection?> data = new List<AudioCollection?>();
+            for (var i = 1; i < _bgmCollectionData.BGMCollection.Count; i++)
             {
-                data.Add((_defenseObjectFrag & 1 << i - 1) != 0 ? _defenseObjCollectionData[i + 1] : _defenseObjCollectionData[0]);
+                data.Add((_bgmFrag & 1 << i) != 0 ? _bgmCollectionData.BGMCollection[i] : null);
             }
             return data;
         }
-        public IEnumerable<CollectionData> GetBGMCollection()
+        [ContextMenu("test")]
+        public void Test()
         {
-            List<CollectionData> data = new List<CollectionData>();
-            for (var i = 1; i < _defenseObjCollectionData.Count; i++)
+            var i = GetDefenseObjCollection();
+            foreach (var item in i)
             {
-                data.Add((_defenseObjectFrag & 1 << i - 1) != 0 ? _defenseObjCollectionData[i + 1] : _defenseObjCollectionData[0]);
+                Debug.Log(item!=null?item.Value._name:"null");
             }
-            return data;
+            var k = GetDefenseObjCollection();
+            foreach (var item in k)
+            {
+                Debug.Log(item!=null? item.Value._name:"null");
+            }
+            var j = GetDefenseObjCollection();
+            foreach (var item in j)
+            {
+                Debug.Log(item != null ? item.Value._name : "null");
+            }
         }
         public void SetEnemy(EnemyKind kind) => _enemyFrag |= 1 << (int)kind;
         public void SetDefenseObj(DefenseObjectsKind kind) => _defenseObjectFrag |= 1 << (int)kind;
-
         public void SetBGM(int num) => _bgmFrag |= 1 << num;
 
-        [ContextMenu("TestCollection")]
-        public void TestCollection()
+        public void AddEnemyKilCount(EnemyKind kind)
         {
-            var a = GetEnemyCollection();
-            foreach (var item in a)
-            {
-                Debug.Log(item?._name);
-            }
+            _EnemyKillCount[kind]++;
         }
-        [ContextMenu("SetEnemy")]
-        public void TestEnemySet()
-        {
-            EnemyKind kind = EnemyKind.Normal;
-            for (var i = 0; i < _enemyCollectionData.Count - 1; i++)
-            {
-                int n = UnityEngine.Random.Range(0, 2);
-                if (n == 1) SetEnemy(kind++);
-            }
-            Debug.Log($"Frag : {Convert.ToString(_enemyFrag, 2)}");
-        }
-        [ContextMenu("collection")]
-        public void TestLog()
-        {
-            Debug.Log(CollectionRate);
-        }
-    }
-    [System.Serializable]
-    public struct CollectionData
-    {
-        public string _name;
-        public string _tips;
-        public Sprite _sprite;
     }
 }

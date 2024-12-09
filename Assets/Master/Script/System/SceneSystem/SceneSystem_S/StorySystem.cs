@@ -27,6 +27,7 @@ namespace DCFrameWork.SceneSystem
             Debug.Log(data.StoryData);
             _storyManager?.SetStoryData(data.StoryData);
             _sceneKind = data.sceneKind;
+            NextStory();
         }
 
         public void EndStory()

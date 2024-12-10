@@ -1,3 +1,4 @@
+using DCFrameWork.MainSystem;
 using System.IO;
 using System.Threading.Tasks;
 using UnityEditor;
@@ -30,16 +31,15 @@ namespace DCFrameWork
         }
         protected Texture2D LoadTexture(string assetName)
         {
-            Debug.Log(assetName);
+            if (string.IsNullOrWhiteSpace(assetName)) return null;
             string[] assetGUID = AssetDatabase.FindAssets(assetName);
-            if(assetGUID==null) return null;
+
+            if ((assetGUID.Length == 0).CheckLog($"{assetName}‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ")) return null;
             string path = AssetDatabase.GUIDToAssetPath(assetGUID[0]);
-            Debug.Log(path);
+
             Texture2D texture = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
-            Debug.Log(texture);
             if (texture != null)
             {
-                Debug.Log($"Sprite '{texture.name}' ‚ªŒ©‚Â‚©‚è‚Ü‚µ‚½: {path}");
                 return texture;
             }
             return null;

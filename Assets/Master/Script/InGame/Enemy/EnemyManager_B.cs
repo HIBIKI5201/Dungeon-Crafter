@@ -59,9 +59,10 @@ namespace DCFrameWork.Enemy
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
+            _currentHealth = _enemyData.MaxHealth;
         }
 
-        void IEnemy.StartByPool(EnemyHealthBarManager enemyHealthBarManager, Vector3 targetPos)
+        void IEnemy.StartByPool(EnemyHealthBarManager enemyHealthBarManager)
         {
             GameBaseSystem.mainSystem?.AddPausableObject(this);
             _healthBarManager = enemyHealthBarManager;
@@ -81,6 +82,7 @@ namespace DCFrameWork.Enemy
         private void Update()
         {
             _healthBarManager.FollowTarget(transform);
+           
         }
 
         private void OnEnable()
@@ -157,11 +159,13 @@ namespace DCFrameWork.Enemy
 
         }
 
+
+        void IEnemy.GotoTargetPos(Vector3 targetPos) => GoToTargetPos(targetPos);
         /// <summary>
         /// NavMesh上のポジションへ移動する
         /// </summary>
         /// <param name="targetPos">移動目標の座標</param>
-        protected void GoToTargetPos(Vector3 targetPos)
+        public void GoToTargetPos(Vector3 targetPos)
         {
             _agent.SetDestination(targetPos);
         }
@@ -243,7 +247,7 @@ namespace DCFrameWork.Enemy
     public interface IEnemy : IFightable, IConditionable
     {
         void Initialize(Vector3 spawnPos, Vector3 targetPos, Action deathAction);
-        void StartByPool(EnemyHealthBarManager enemyHealthBarManager, Vector3 targetPos);
+        void StartByPool(EnemyHealthBarManager enemyHealthBarManager);
         void Destroy();
 
         float ChangeStates(float rise, float level, float param);
@@ -251,6 +255,8 @@ namespace DCFrameWork.Enemy
         void SetLevel(float level);
 
         void StopEnemy(float time);
+
+        void GotoTargetPos(Vector3 targetPos);
 
         Vector3 position { get; set; }
     }

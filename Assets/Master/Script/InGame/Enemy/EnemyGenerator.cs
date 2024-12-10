@@ -37,7 +37,7 @@ namespace DCFrameWork.Enemy
         [SerializeField]
         private int _maxValue = 100;
 
-        private Dictionary<EnemyKind, ObjectPool<IEnemy>> _dict = new();
+        public Dictionary<EnemyKind, ObjectPool<IEnemy>> _dict = new();
 
         
 
@@ -55,6 +55,7 @@ namespace DCFrameWork.Enemy
             foreach (var obj in _objects)
             {
                 _dict.Add(obj.kind, ObjectPooling((obj.obj), _spawnPos[0].position));
+
             }
         }
 
@@ -81,7 +82,7 @@ namespace DCFrameWork.Enemy
                 var healthBar = Instantiate(_healthBar, _canvas.transform);
                 healthBar.transform.SetParent(_canvas.transform);
                 var enemy = spawnedEnemy.GetComponent<IEnemy>();
-                enemy.StartByPool(healthBar.GetComponent<EnemyHealthBarManager>(), _targetPos.position);
+                enemy.StartByPool(healthBar.GetComponent<EnemyHealthBarManager>());
                 return enemy;
             },
            target =>

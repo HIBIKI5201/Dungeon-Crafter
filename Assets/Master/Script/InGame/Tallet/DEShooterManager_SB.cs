@@ -24,11 +24,11 @@ namespace DCFrameWork.DefenseEquipment
         }
 
 
-        protected virtual void Attack()
+        protected virtual void EnemyAttack()
         {
             var criticalPoint = Random.Range(0, 100);
             var targetSelect = TargetSelect();
-            TargetsAddDamage(targetSelect.Interface, criticalPoint <= DefenseEquipmentData.Critical ? DefenseEquipmentData.Attack * 3 : DefenseEquipmentData.Attack);
+            TargetsAddDamage(targetSelect.Interface, criticalPoint <= Critical ? Attack * 3 : Attack);
             TurretRotate(targetSelect.Obj.transform);
         }
 

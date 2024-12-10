@@ -11,8 +11,7 @@ namespace DCFrameWork.DefenseEquipment
     {
         float _timer = 0;
         bool _isPaused = false;
-        int _maxCount;
-        [NonSerialized] public float _attack;
+        public float EntityAttack { get => Attack; }
 #if UNITY_EDITOR
         [SerializeField] Vector3 _boxCastSizeDebug = new(1, 10, 1);
 #endif
@@ -27,7 +26,7 @@ namespace DCFrameWork.DefenseEquipment
             if (_isPaused)
                 _timer += Time.deltaTime;
 
-            if (Time.time > 1 / DefenseEquipmentData.Rate + _timer)
+            if (Time.time > 1 / Rate + _timer)
             {
                 _timer = Time.time;
                 var summonPos = SummonPosition();
@@ -46,13 +45,8 @@ namespace DCFrameWork.DefenseEquipment
                     }
                 }
                 if (!isChecked)
-                    Summon(summonPos, _maxCount);
+                    Summon(summonPos, DefenseEquipmentData.MaxCount);
             }
-        }
-        protected override void LoadSpecificData(SummonData data)
-        {
-            _maxCount = DefenseEquipmentData.MaxCount;
-            _attack = DefenseEquipmentData.Attack;
         }
         protected override void Pause()
         {
@@ -67,7 +61,7 @@ namespace DCFrameWork.DefenseEquipment
         {
             if (!_isPaused)
             {
-                if (other.TryGetComponent<IFightable>(out _))
+                if (other.TryGetComponent<IFightable>(out _) && !other.TryGetComponent<FlyEnemyManager>(out _))
                 {
                     _enemyList.Add(other.gameObject);
                 }
@@ -75,7 +69,7 @@ namespace DCFrameWork.DefenseEquipment
                 {
                     List<SummonEntityManager> summonList = new();
                     _entityList.ForEach(x => summonList.Add(x.GetComponent<SummonEntityManager>()));
-                    summonList.Where(x => x.IsTargetSet()).ToList().ForEach(x => x.SetDestination());
+                    summonList.Where(x => x.IsTargetSet()).ToList().ForEach(x => x.SetTarget());
                 }
             }
         }

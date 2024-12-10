@@ -127,7 +127,10 @@ MonoBehaviour:
   _levelRequirePoint: 0
   _defenseEnemyPrefab: {fileID: 7990310466857601233, guid: 837ec1f55b14f894e8397ccb545f2850,
     type: 3}
-  _summonRange: 1
+  _summonRange: 0.1
+  _canvas: {fileID: 0}
+  _healthBar: {fileID: 6218801146707754616, guid: a3d6ce18078983a49a949e9f607d794c,
+    type: 3}
 --- !u!1001 &3207008905949727169
 PrefabInstance:
   m_ObjectHideFlags: 0

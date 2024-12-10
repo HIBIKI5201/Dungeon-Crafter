@@ -1,5 +1,6 @@
 using DCFrameWork.MainSystem;
 using System.Collections;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 namespace DCFrameWork.Enemy
@@ -16,19 +17,37 @@ namespace DCFrameWork.Enemy
         [SerializeField]
         private float _summonRange = 1;
 
-        private void Update()
+        
+        private Canvas _canvas;
+
+        [SerializeField]
+        GameObject _healthBar;
+
+        Transform _targetPos;
+
+
+        protected override void Start_S()
         {
+
+            _canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+            _targetPos = GameObject.Find("TargetPos").GetComponent<Transform>();
             InstantiateDefenseEnemy();
         }
-
+       
         void InstantiateDefenseEnemy()
         {
             StartCoroutine(InstantiateEnemy());
         }
 
         IEnumerator InstantiateEnemy()
-        {
-            Instantiate(_defenseEnemyPrefab, gameObject.transform.forward.normalized * _summonRange, Quaternion.identity);
+        {           
+            var defense =Instantiate(_defenseEnemyPrefab, gameObject.transform.position + gameObject.transform.forward * _summonRange, Quaternion.identity);
+            var enemy = defense.GetComponent<IEnemy>();
+            var healthBar = Instantiate(_healthBar, _canvas.transform);
+            healthBar.transform.SetParent(_canvas.transform);
+            enemy.StartByPool(healthBar.GetComponent<EnemyHealthBarManager>());
+            enemy.GotoTargetPos(_targetPos.position);
+            enemy.StopEnemy(_stoppMovingTime);
             yield return FrameWork.PausableWaitForSecond(_coolTime);
 
         }

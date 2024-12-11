@@ -34,7 +34,13 @@ namespace DCFrameWork.DefenseEquipment
 
         protected virtual void TurretRotate(Transform enemy)
         {
-            _turret.transform.forward = enemy.transform.position - _turret.transform.position;
+            var dir = enemy.transform.position - _turret.transform.position;
+            dir.y = 0;
+            dir.Normalize();
+
+            var targetRotation = Quaternion.LookRotation(dir);
+
+            _turret.transform.localRotation = targetRotation;
         }
 
         protected void TargetsAddDamage(IFightable enemy, float damage)

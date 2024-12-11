@@ -40,15 +40,21 @@ namespace DCFrameWork.Enemy
         }
 
         IEnumerator InstantiateEnemy()
-        {           
-            var defense =Instantiate(_defenseEnemyPrefab, gameObject.transform.position + gameObject.transform.forward * _summonRange, Quaternion.identity);
-            var enemy = defense.GetComponent<IEnemy>();
-            var healthBar = Instantiate(_healthBar, _canvas.transform);
-            healthBar.transform.SetParent(_canvas.transform);
-            enemy.StartByPool(healthBar.GetComponent<EnemyHealthBarManager>());
-            enemy.GotoTargetPos(_targetPos.position);
-            enemy.StopEnemy(_stoppMovingTime);
-            yield return FrameWork.PausableWaitForSecond(_coolTime);
+        {
+            while (true)
+            {
+                var defense = Instantiate(_defenseEnemyPrefab, gameObject.transform.position + gameObject.transform.forward * _summonRange, Quaternion.identity);
+                var enemy = defense.GetComponent<IEnemy>();
+                var healthBar = Instantiate(_healthBar, _canvas.transform);
+                healthBar.transform.SetParent(_canvas.transform);
+                enemy.StartByPool(healthBar.GetComponent<EnemyHealthBarManager>());
+                enemy.GotoTargetPos(_targetPos.position);
+                var enemy2 = GetComponent<IEnemy>();
+                enemy2.StopEnemy(_stoppMovingTime);
+                yield return FrameWork.PausableWaitForSecond(_coolTime);
+            }
+            
+           
 
         }
 

@@ -15,7 +15,7 @@ namespace DCFrameWork.DefenseEquipment
 #if UNITY_EDITOR
         [SerializeField] Vector3 _boxCastSizeDebug = new(1, 10, 1);
 #endif
-        [NonSerialized] public List<GameObject> _enemyList = new();
+        [NonSerialized] public List<GameObject> EnemyList = new();
         Vector3 _position;
         protected override void Start_S()
         {
@@ -63,7 +63,7 @@ namespace DCFrameWork.DefenseEquipment
             {
                 if (other.TryGetComponent<IFightable>(out _) && !other.TryGetComponent<FlyEnemyManager>(out _))
                 {
-                    _enemyList.Add(other.gameObject);
+                    EnemyList.Add(other.gameObject);
                 }
                 if (_entityList.Count > 0)
                 {
@@ -79,8 +79,7 @@ namespace DCFrameWork.DefenseEquipment
             {
                 if (other.TryGetComponent<IFightable>(out _))
                 {
-                    _enemyList.Remove(other.gameObject);
-
+                    EnemyList.Remove(other.gameObject);
                 }
             }
         }

@@ -93,6 +93,7 @@ namespace DCFrameWork.Enemy
            {
                target.DeathBehaviour();
                WaveManager.EnemyDeathCount();
+               target.DeathAction = null;
            },
            target =>
            {

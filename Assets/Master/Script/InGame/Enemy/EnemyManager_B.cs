@@ -26,7 +26,7 @@ namespace DCFrameWork.Enemy
         protected float Defense { get => _defense; set { _defense = value; } }
         protected float Dexterity { get => _agent.speed; set => _agent.speed = value; }
 
-        protected float Plunder { get => ChangeStates(_enemyRiseData.Plunder, _enemyLevel, _enemyData.Plunder); }
+        float IFightable.Plunder { get => ChangeStates(_enemyRiseData.Plunder, _enemyLevel, _enemyData.Plunder); }
 
         protected float DropEXP { get => ChangeStates(_enemyRiseData.DropEXP, _enemyLevel, _enemyData.DropEXP); }//set { ChangeStates(_enemyRiseData.DropEXP, _enemyLevel, _enemyData.DropEXP); } }
 
@@ -269,11 +269,9 @@ namespace DCFrameWork.Enemy
         float MaxHealth { get; protected set; }
         float CurrentHealth { get; protected set; }
 
+        float Plunder { get; }
+
         //float EnemyLevel { get; protected set; }
-
-
-
-
 
         /// <summary>
         /// ダメージを受ける
@@ -284,8 +282,9 @@ namespace DCFrameWork.Enemy
             CurrentHealth -= damage;
             HealthBarUpdate();
             if (CurrentHealth <= 0)
-            {              
+            {
                 //経験値処理をここで行う予定w
+                DeathAction += DeathBehaviour;
                 DeathAction?.Invoke();
                 DeathAction = null;
                 return false;

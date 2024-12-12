@@ -1,3 +1,3 @@
 .font-style {
-    -unity-font-definition: url("project://database/Assets/Settings/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=2230732570650464555&guid=804a53278a35c0149ab81a2e1981da1d&type=3#NotInter-Regular");
+    -unity-font-definition: url("project://database/Assets/Master/UITK/Font/GenEiLateMinN_v2.ttf?fileID=12800000&guid=b47040a96cc44be468c12943a4acc9a7&type=3#GenEiLateMinN_v2");
 }

@@ -87,9 +87,9 @@ public class StageManager : MonoBehaviour
                 for (int j = 0; j < _sizeX; j++)
                 {
                     Vector3 vector3 = new Vector3((_floorCenter.x - _floorPrefab.transform.localScale.x * _gridSize / 2 + _gridSize / 2) + _gridSize * j,
-                                                  7.5f,
+                                                  17.5f,
                                                  (_floorCenter.z - _floorPrefab.transform.localScale.z * _gridSize / 2 + _gridSize / 2) + _gridSize * i);
-                    if (Physics.Raycast(vector3, Vector3.down, 5, LayerMask.GetMask("Buildings")))
+                    if (Physics.Raycast(vector3, Vector3.down, 20, LayerMask.GetMask("Buildings")))
                     {
                         _map[j, i] = 1;
                     }

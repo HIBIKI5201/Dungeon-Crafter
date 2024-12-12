@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace DCFrameWork
@@ -10,11 +11,29 @@ namespace DCFrameWork
         public IEnumerable<DefenseObjectsKind> GetRandomDefenseObj(int count)
         {
             List<DropData> dropData = new List<DropData>(_dropData);
-            Shuffle(dropData);
+            List<DropData> outData = new();
+
+            for (int i = 0; i < count; i++)
+            {
+                int rateCount = 0;
+                for (int j = 0; j < i; j++)
+                {
+                    rateCount += dropData[j]._dropRate;
+                }
+                int randomIndex = Random.Range(rateCount, dropData.Sum(x=>x._dropRate));
+                for (int j = 0,k=0; k<dropData.Count; k++)
+                {
+                    j += dropData[k]._dropRate;
+                    if (j >= randomIndex)
+                    {
+                        (dropData[i], dropData[k]) = (dropData[k], dropData[i]);
+                    }
+                }
+            }
             dropData.RemoveRange(count, dropData.Count - count);
             return dropData.ConvertAll(d => d._defenseObjectsKind);
         }
-        void Shuffle<T>(List<T> list)
+        void Shuffle(List<DropData> list)
         {
             for (int i = 0; i < list.Count; i++)
             {

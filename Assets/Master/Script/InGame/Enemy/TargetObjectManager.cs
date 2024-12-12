@@ -31,8 +31,15 @@ namespace DCFrameWork
             if(other.gameObject.TryGetComponent(out IFightable fightable))
             {
                 StartCoroutine(HitDamage(fightable.Plunder));
+
+                if(other.gameObject.TryGetComponent(out BossEnemyManager boss))
+                {
+                    // GameOverèàóù
+
+                }
                 
             }
+
         }
 
         IEnumerator HitDamage(float damage)

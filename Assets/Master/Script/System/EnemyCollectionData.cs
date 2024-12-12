@@ -45,14 +45,12 @@ namespace DCFrameWork
     }
 
     [System.Serializable]
-    public class EnemyCollection
+    public struct EnemyCollection
     {
         public string _name;
         public string _tips;
         public Texture2D _sprite;
         [HideInInspector] public int _killCount;
-
-        void AddKill() => _killCount++;
     }
 #if UNITY_EDITOR
     [CustomEditor(typeof(EnemyCollectionData))]

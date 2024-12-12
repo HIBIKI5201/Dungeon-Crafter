@@ -3,6 +3,7 @@ namespace DCFrameWork.Enemy
     public class DefenseEnemyManager : EnemyManager_B<EnemyData_B, EnemyRiseData>
     {
 
+       
 
         protected override void DeathBehaviour()
         {

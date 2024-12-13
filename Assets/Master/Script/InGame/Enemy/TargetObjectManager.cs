@@ -28,35 +28,31 @@ namespace DCFrameWork
         }
         private void OnTriggerEnter(Collider other)
         {
-            if(other.gameObject.TryGetComponent(out IFightable fightable))
+
+            if (other.gameObject.TryGetComponent(out BossEnemyManager boss) || _currentValue < 0)
             {
-                StartCoroutine(HitDamage(fightable.Plunder));
+                // GameOverˆ—
 
-                if(other.gameObject.TryGetComponent(out BossEnemyManager boss))
-                {
-                    // GameOverˆ—
-
-                }
-                
             }
 
-        }
-
-        IEnumerator HitDamage(float damage)
-        {
-            if(_currentValue <= 0)
+            if (other.gameObject.TryGetComponent(out IEnemy enemy))
             {
-
-            }
-            
-            while(_currentValue > 0)
-            {             
-                _currentValue -= damage;
+                _currentValue -= enemy.Plunder;
                 _healthBarManager.BarFillUpdate(_currentValue / _durabilityValue);
-                yield return FrameWork.PausableWaitForSecond(_coolTime);
+                StartCoroutine(AttackTime(enemy));
+    
             }
-            
+
         }
+
+        IEnumerator AttackTime(IEnemy enemy)
+        {
+            yield return FrameWork.PausableWaitForSecond(0.5f);
+            enemy.DeathAction?.Invoke();
+            enemy.DeathAction = null;    
+        }
+
+       
 
     }
 }

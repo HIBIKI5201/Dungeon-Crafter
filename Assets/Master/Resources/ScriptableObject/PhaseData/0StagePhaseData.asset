@@ -14,15 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _waveData:
   - _spawnData:
-    - _enemyType: 2
+    - _enemyType: 0
       _enemyLevel: 1
       _enemyCount: 30
-      _spawnStartTime: 0
-      _spawnEndTime: 15
-      _spawnPoint: 1
-    - _enemyType: 3
-      _enemyLevel: 1
-      _enemyCount: 5
       _spawnStartTime: 0
       _spawnEndTime: 15
       _spawnPoint: 1

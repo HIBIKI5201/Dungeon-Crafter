@@ -54,7 +54,7 @@ namespace DCFrameWork.Enemy
 
             foreach (var obj in _objects)
             {
-                _dict.Add(obj.kind, ObjectPooling((obj.obj), _spawnPos[0].position));
+                _dict.Add(obj.kind, ObjectPooling((obj.obj), _spawnPos[0].position ,obj.kind));
 
             }
         }
@@ -72,7 +72,7 @@ namespace DCFrameWork.Enemy
             }
         }
 
-        private ObjectPool<IEnemy> ObjectPooling(GameObject obj ,Vector3 initPosition)
+        private ObjectPool<IEnemy> ObjectPooling(GameObject obj ,Vector3 initPosition , EnemyKind kind)
         {
             ObjectPool<IEnemy> objPool = null;
             return objPool = new ObjectPool<IEnemy>(
@@ -91,8 +91,10 @@ namespace DCFrameWork.Enemy
            },
            target =>
            {
+               CollectionSystem.AddEnemyKilCount(kind);
                target.DeathBehaviour();
                WaveManager.EnemyDeathCount();
+               target.DeathAction = null;
            },
            target =>
            {

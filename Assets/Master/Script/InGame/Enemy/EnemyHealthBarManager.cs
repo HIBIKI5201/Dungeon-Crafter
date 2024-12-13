@@ -1,3 +1,6 @@
+using DCFrameWork.MainSystem;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,10 +9,25 @@ namespace DCFrameWork.Enemy
 {
     public class EnemyHealthBarManager : MonoBehaviour
     {
+        private Image _thisImage;
         private Image _image;
         public void Initialize()
         {
+            _thisImage = GetComponent<Image>();
             _image = transform.GetChild(0).GetComponent<Image>();
+            _thisImage.enabled = false;
+            _image.enabled = false;
+        }
+        private void Start()
+        {
+            StartCoroutine(WaitRendering());
+        }
+
+        IEnumerator WaitRendering()
+        {
+            yield return FrameWork.PausableWaitForSecond(0.1f);
+            _thisImage.enabled = true;
+            _image.enabled = true;
         }
 
         public void BarFillUpdate(float value) => _image.fillAmount = value;

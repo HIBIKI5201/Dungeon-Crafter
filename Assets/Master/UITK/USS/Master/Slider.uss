@@ -1,0 +1,56 @@
+Slider #unity-dragger {
+    background-color: rgba(174, 255, 0, 0);
+    background-image: url("project://database/Assets/Master/UITK/UI_option_slider%20(1).psd?fileID=47557884172637382&guid=ad6b3d4a4286ae348bd183551821b1aa&type=3#つまみ");
+    border-top-width: -183px;
+    border-right-width: -183px;
+    border-bottom-width: -183px;
+    border-left-width: -183px;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    width: 24px;
+}
+
+Slider #unity-tracker {
+    border-top-width: -111px;
+    border-right-width: -111px;
+    border-bottom-width: -111px;
+    border-left-width: -111px;
+    background-image: url("project://database/Assets/Master/UITK/UI_option_slider%20(1).psd?fileID=-7721171265738475475&guid=ad6b3d4a4286ae348bd183551821b1aa&type=3#バー　背景");
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    -unity-background-scale-mode: stretch-to-fill;
+}
+
+Slider #unity-fill {
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.minus-button {
+    border-top-width: -191px;
+    border-right-width: -191px;
+    border-bottom-width: -191px;
+    border-left-width: -191px;
+    background-image: url("project://database/Assets/Master/UITK/UI_option_slider%20(1).psd?fileID=8236461989041897644&guid=ad6b3d4a4286ae348bd183551821b1aa&type=3#－");
+    background-color: rgba(188, 188, 188, 0);
+    -unity-background-scale-mode: scale-to-fit;
+    width: 9%;
+    height: 14%;
+    transition-timing-function: ease-in-out-cubic;
+    transition-duration: 0.1s;
+}
+
+.minus-button:hover {
+    scale: 1.05 1.05;
+    transition-timing-function: ease-in-out-cubic;
+    transition-duration: 0.1s;
+}
+
+.minus-button:active {
+    scale: 0.95 0.95;
+    transition-timing-function: ease-in-out-cubic;
+    transition-duration: 0.1s;
+}

@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using DCFrameWork.MainSystem;
 
 namespace DCFrameWork.Enemy
 {
@@ -52,7 +53,7 @@ namespace DCFrameWork.Enemy
                 else
                 {
                     _phaseEndAction?.Invoke();
-                    SceneManager.LoadScene(_homeSceneName);
+                    SceneChanger.LoadScene(SceneKind.Home);
                 }
             }
         }

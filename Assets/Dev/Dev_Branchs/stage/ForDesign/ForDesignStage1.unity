@@ -1763,6 +1763,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+<<<<<<< HEAD
+=======
+    - target: {fileID: 2068504501253040231, guid: 77fd2a5407b56e54d8e660f62bd21e54,
+        type: 3}
+      propertyPath: _enemyGenerators
+      value: 
+      objectReference: {fileID: 0}
+>>>>>>> 478c9e97f2dcf8223151ee5230f8bfd2b7aa58fb
     - target: {fileID: 2573529375639613917, guid: 77fd2a5407b56e54d8e660f62bd21e54,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -1816,7 +1824,11 @@ PrefabInstance:
     - target: {fileID: 3230375918257091528, guid: 77fd2a5407b56e54d8e660f62bd21e54,
         type: 3}
       propertyPath: m_VersionIndex
+<<<<<<< HEAD
       value: 1133
+=======
+      value: 1136
+>>>>>>> 478c9e97f2dcf8223151ee5230f8bfd2b7aa58fb
       objectReference: {fileID: 0}
     - target: {fileID: 3538332611585799522, guid: 77fd2a5407b56e54d8e660f62bd21e54,
         type: 3}
@@ -1829,6 +1841,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 213724873199558240, guid: 15f9e0195939cc44e9fd3570ef7e2082,
         type: 3}
+<<<<<<< HEAD
+=======
+    - target: {fileID: 3538332611585799522, guid: 77fd2a5407b56e54d8e660f62bd21e54,
+        type: 3}
+      propertyPath: _defaultVisualGuide
+      value: 
+      objectReference: {fileID: 0}
+>>>>>>> 478c9e97f2dcf8223151ee5230f8bfd2b7aa58fb
     - target: {fileID: 4412748131171422071, guid: 77fd2a5407b56e54d8e660f62bd21e54,
         type: 3}
       propertyPath: m_NavMeshData

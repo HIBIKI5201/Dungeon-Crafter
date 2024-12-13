@@ -46,7 +46,7 @@ namespace DCFrameWork
                         _timer = 1 / _attackRate;
                     }
                 }
-                if (_turretManager._enemyList.Count > 0)
+                if (_turretManager.EnemyList.Count > 0)
                 {
                     if (IsTargetSet())
                     {
@@ -71,7 +71,7 @@ namespace DCFrameWork
 
         public void SetTarget()
         {
-            if (_turretManager._enemyList.Count != 0)
+            if (_turretManager.EnemyList.Count != 0)
             {
                 _target = TargetSelect().gameObject;
             }
@@ -82,7 +82,7 @@ namespace DCFrameWork
         }
         public bool IsTargetSet()
         {
-            return _target == null || !_turretManager._enemyList.Contains(_target);
+            return _target == null || !_turretManager.EnemyList.Contains(_target);
         }
         private void OnTriggerEnter(Collider other)
         {
@@ -107,13 +107,16 @@ namespace DCFrameWork
         }
         public GameObject TargetSelect()
         {
-            return _turretManager._enemyList.OrderBy(x => Vector3.Distance(transform.position, x.transform.position)).First();
+            return _turretManager.EnemyList.OrderBy(x => Vector3.Distance(transform.position, x.transform.position)).First();
         }
 
         void TargetsAddDamage(GameObject enemy, float damage)
         {
             if (enemy.TryGetComponent(out IFightable component))
-                component.HitDamage(damage);
+                if (!component.HitDamage(damage))
+                {
+                    _turretManager.EnemyList.Remove(enemy);
+                }
         }
 
         void TargetAddCondition(GameObject enemy, ConditionType type)

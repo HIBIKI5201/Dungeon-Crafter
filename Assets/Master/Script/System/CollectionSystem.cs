@@ -20,11 +20,7 @@ namespace DCFrameWork
         int _enemyFrag;
         int _bgmFrag;
 
-        public int _defenseObjectFrag2;
-        public int _enemyFrag2;
-        public int _bgmFrag2;
-
-        Dictionary<EnemyKind, int> _EnemyKillCount = new Dictionary<EnemyKind, int>();
+        static Dictionary<EnemyKind, int> _enemyKillCount = new Dictionary<EnemyKind, int>();
 
         /// <summary>
         /// ê}ä”ÇÃêiíª
@@ -45,16 +41,13 @@ namespace DCFrameWork
             }
             Instans = this;
             DontDestroyOnLoad(gameObject);
-            _defenseObjectFrag = _defenseObjectFrag2;
-            _enemyFrag = _enemyFrag2;
-            _bgmFrag = _bgmFrag2;
         }
         public void SetSaveData(int defensObjectFrag, int enemyFrag, int bgmFrag, Dictionary<EnemyKind, int> enemyKillCount)
         {
             _defenseObjectFrag = defensObjectFrag;
             _enemyFrag = enemyFrag;
             _bgmFrag = bgmFrag;
-            _EnemyKillCount = enemyKillCount;
+            _enemyKillCount = enemyKillCount;
         }
 
         public IEnumerable<EnemyCollection?> GetEnemyCollection()
@@ -67,7 +60,7 @@ namespace DCFrameWork
                 if (col != null)
                 {
                     var j = col.Value;
-                    j._killCount = _EnemyKillCount[(EnemyKind)i];
+                    j._killCount = _enemyKillCount[(EnemyKind)i];
                 }
                 data.Add(col);
             }
@@ -116,9 +109,12 @@ namespace DCFrameWork
         public void SetDefenseObj(DefenseObjectsKind kind) => _defenseObjectFrag |= 1 << (int)kind;
         public void SetBGM(int num) => _bgmFrag |= 1 << num;
 
-        public void AddEnemyKilCount(EnemyKind kind)
+        public static void AddEnemyKilCount(EnemyKind kind)
         {
-            _EnemyKillCount[kind]++;
+            if(_enemyKillCount.ContainsKey(kind))
+                _enemyKillCount[kind]++;
+            else 
+                _enemyKillCount.Add(kind, 1);
         }
     }
 }

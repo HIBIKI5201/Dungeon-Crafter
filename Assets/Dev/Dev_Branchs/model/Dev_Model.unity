@@ -250,6 +250,41 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy_sotai
       objectReference: {fileID: 0}
+    - target: {fileID: 7003811769078035089, guid: aa8284df654bb2c4e9fbc302d683e570,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.8427725
+      objectReference: {fileID: 0}
+    - target: {fileID: 7003811769078035089, guid: aa8284df654bb2c4e9fbc302d683e570,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.42712736
+      objectReference: {fileID: 0}
+    - target: {fileID: 7003811769078035089, guid: aa8284df654bb2c4e9fbc302d683e570,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.042367496
+      objectReference: {fileID: 0}
+    - target: {fileID: 7003811769078035089, guid: aa8284df654bb2c4e9fbc302d683e570,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.32481053
+      objectReference: {fileID: 0}
+    - target: {fileID: 7003811769078035089, guid: aa8284df654bb2c4e9fbc302d683e570,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -48.371
+      objectReference: {fileID: 0}
+    - target: {fileID: 7003811769078035089, guid: aa8284df654bb2c4e9fbc302d683e570,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -18.071
+      objectReference: {fileID: 0}
+    - target: {fileID: 7003811769078035089, guid: aa8284df654bb2c4e9fbc302d683e570,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 50.324
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

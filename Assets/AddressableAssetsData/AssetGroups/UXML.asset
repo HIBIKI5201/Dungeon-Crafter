@@ -13,16 +13,10 @@ MonoBehaviour:
   m_Name: UXML
   m_EditorClassIdentifier: 
   m_GroupName: UXML
-  m_GUID: a55a9db37ee8a3d4197c2903415c71f1
+  m_GUID: e68894c338a0b3b4f8a471bb1e152d08
   m_SerializeEntries:
   - m_GUID: 13bb78dc064ade740b85be6267227f40
     m_Address: UXML/BlackOut.uxml
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - UXML
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1691820eb2a4da74c9220c2a0afa9638
-    m_Address: UXML/StoryText.uxml
     m_ReadOnly: 0
     m_SerializedLabels:
     - UXML
@@ -52,8 +46,8 @@ MonoBehaviour:
     - UXML
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
-  m_Settings: {fileID: 11400000, guid: 76d8c4c6fd6d13d4cbe587daf06341b4, type: 2}
+  m_Settings: {fileID: 11400000, guid: 78caf16212ce2204c91a95cf38907ede, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: 584214e38cbf9fe4eab0602a2cf88e62, type: 2}
-    - {fileID: 11400000, guid: 7a62dfc1ea079674d86439e098dcdb84, type: 2}
+    - {fileID: 11400000, guid: 31320bf86dad1ab41919a0521a4cd328, type: 2}
+    - {fileID: 11400000, guid: 50b66969789bfc84e9abbacb7c5156e7, type: 2}

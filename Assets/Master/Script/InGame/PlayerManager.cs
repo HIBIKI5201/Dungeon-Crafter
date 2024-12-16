@@ -10,16 +10,17 @@ namespace DCFrameWork
         int _gold;
         Dictionary<DefenseObjectsKind, int> _defenseObjectsValue = new();
 
-        LevelManager _levelManager;
 
         public Action _gameOverEvent;
         public Action<int> _getGold;
 
-        [SerializeField] List<DefenseObjectsKind> _testData = new();
-        private void Awake()
+        [SerializeField] LevelManager _levelManager;
+        [SerializeField] DropTableData _dropTable;
+        [SerializeField] int _levelUpGachaCount = 3;
+        private void Initialize()
         {
             _levelManager = GetComponentInChildren<LevelManager>();
-            _levelManager?.Initialize();
+            _levelManager.OnLevelChanged += x => GetRandomDefenseObj(); 
         }
 
         public int TreasureHp { get => _treasureHp; }
@@ -50,6 +51,36 @@ namespace DCFrameWork
         {
             if (_defenseObjectsValue.ContainsKey(kind)) _defenseObjectsValue[kind]--;
             else Debug.LogWarning($"{nameof(kind)}‚Í‘¶Ý‚µ‚Ü‚¹‚ñ");
+        }
+        public void ChangeDropTable(DropTableData dropTable) => _dropTable = dropTable;
+
+        private void GetRandomDefenseObj()
+        {
+            var collection = _dropTable.GetRandomDefenseObj(_levelUpGachaCount);
+            foreach (var item in collection)
+            {
+                CollectionSystem.Instans.SetDefenseObj(item);
+                SetDefenseObject(item);
+            }
+        }
+
+        [ContextMenu("GetRandomObj")]
+        public void TestRandomObj()
+        {
+            var collection = _dropTable.GetRandomDefenseObj(_levelUpGachaCount);
+            foreach (var item in collection)
+            {
+                Debug.Log(item);
+                CollectionSystem.Instans.SetDefenseObj(item);
+                SetDefenseObject(item);
+            }
+            var dObj=CollectionSystem.Instans.GetDefenseObjCollection();
+            foreach (var item in dObj)
+            {
+                if (item != null)
+                    Debug.Log(item.Value._name);
+                else Debug.Log("Null");
+            }
         }
     }
     public enum DefenseObjectsKind

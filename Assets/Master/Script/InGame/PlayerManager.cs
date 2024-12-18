@@ -6,13 +6,13 @@ namespace DCFrameWork
 {
     public class PlayerManager : MonoBehaviour
     {
-        int _treasureHp = 100;
-        int _gold;
+        static int _treasureHp = 100;
+        static int _gold;
         Dictionary<DefenseObjectsKind, int> _defenseObjectsValue = new();
 
 
-        public Action _gameOverEvent;
-        public Action<int> _getGold;
+        public static Action _gameOverEvent;
+        public static Action<int> _getGold;
 
         [SerializeField] LevelManager _levelManager;
         [SerializeField] DropTableData _dropTable;
@@ -23,9 +23,9 @@ namespace DCFrameWork
             _levelManager.OnLevelChanged += x => GetRandomDefenseObj(); 
         }
 
-        public int TreasureHp { get => _treasureHp; }
+        public static int TreasureHp { get => _treasureHp; }
 
-        public void HPDown(int damage)
+        public static void HPDown(int damage)
         {
             _treasureHp -= damage;
             if (TreasureHp <= 0)
@@ -37,7 +37,7 @@ namespace DCFrameWork
         /// 
         /// </summary>
         /// <param name="gold">ëùå∏Ç≥ÇπÇΩÇ¢ó </param>
-        public void ChangeGold(int gold)
+        public static void ChangeGold(int gold)
         {
             _gold += gold;
             _getGold?.Invoke(_gold);

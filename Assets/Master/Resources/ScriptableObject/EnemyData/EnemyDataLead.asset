@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a34e79b4860e091428e50ea98cb556d1, type: 3}
   m_Name: EnemyDataLead
   m_EditorClassIdentifier: 
+  m_EnemyName: "\u738B\u69D8"
+  m_Explanation: "\u6226\u58EB\u53EC\u559A"
   _maxHealth: 1000
   _plunder: 20
   _dexterity: 3
   _defense: 4
   _dropEXP: 5
   _dropGold: 100
-  _enemyLevel: 1

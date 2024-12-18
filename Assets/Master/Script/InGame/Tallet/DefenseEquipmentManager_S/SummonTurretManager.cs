@@ -11,12 +11,11 @@ namespace DCFrameWork.DefenseEquipment
     {
         float _timer = 0;
         bool _isPaused = false;
-        int _maxCount;
-        [NonSerialized] public float _attack;
+        public float EntityAttack { get => Attack; }
 #if UNITY_EDITOR
         [SerializeField] Vector3 _boxCastSizeDebug = new(1, 10, 1);
 #endif
-        [NonSerialized] public List<GameObject> _enemyList = new();
+        [NonSerialized] public List<GameObject> EnemyList = new();
         Vector3 _position;
         protected override void Start_S()
         {
@@ -27,7 +26,7 @@ namespace DCFrameWork.DefenseEquipment
             if (_isPaused)
                 _timer += Time.deltaTime;
 
-            if (Time.time > 1 / DefenseEquipmentData.Rate + _timer)
+            if (Time.time > 1 / Rate + _timer)
             {
                 _timer = Time.time;
                 var summonPos = SummonPosition();
@@ -46,13 +45,8 @@ namespace DCFrameWork.DefenseEquipment
                     }
                 }
                 if (!isChecked)
-                    Summon(summonPos, _maxCount);
+                    Summon(summonPos, DefenseEquipmentData.MaxCount);
             }
-        }
-        protected override void LoadSpecificData(SummonData data)
-        {
-            _maxCount = DefenseEquipmentData.MaxCount;
-            _attack = DefenseEquipmentData.Attack;
         }
         protected override void Pause()
         {
@@ -67,15 +61,15 @@ namespace DCFrameWork.DefenseEquipment
         {
             if (!_isPaused)
             {
-                if (other.TryGetComponent<IFightable>(out _))
+                if (other.TryGetComponent<IFightable>(out _) && !other.TryGetComponent<FlyEnemyManager>(out _))
                 {
-                    _enemyList.Add(other.gameObject);
+                    EnemyList.Add(other.gameObject);
                 }
                 if (_entityList.Count > 0)
                 {
                     List<SummonEntityManager> summonList = new();
                     _entityList.ForEach(x => summonList.Add(x.GetComponent<SummonEntityManager>()));
-                    summonList.Where(x => x.IsTargetSet()).ToList().ForEach(x => x.SetDestination());
+                    summonList.Where(x => x.IsTargetSet()).ToList().ForEach(x => x.SetTarget());
                 }
             }
         }
@@ -85,8 +79,7 @@ namespace DCFrameWork.DefenseEquipment
             {
                 if (other.TryGetComponent<IFightable>(out _))
                 {
-                    _enemyList.Remove(other.gameObject);
-
+                    EnemyList.Remove(other.gameObject);
                 }
             }
         }
@@ -113,24 +106,19 @@ namespace DCFrameWork.DefenseEquipment
         {
             Gizmos.color = Check(_position) ? Color.red : Color.green;
 
-            // BoxCast �̃f�[�^���v�Z
             Vector3 boxCastOrigin = _position + new Vector3(0, 8, 0);
-            Vector3 boxCastDirection = Vector3.down; // ������
-            float boxCastDistance = 18f; // �K�v�ɉ����Ē���
+            Vector3 boxCastDirection = Vector3.down;
+            float boxCastDistance = 18f;
             Quaternion boxCastRotation = Quaternion.identity;
 
-            // �{�b�N�X�͈̔͂�`�� (�n�_)
             Gizmos.matrix = Matrix4x4.TRS(boxCastOrigin, boxCastRotation, _boxCastSizeDebug * 2);
-            Gizmos.DrawWireCube(Vector3.zero, Vector3.one); // ���S����ɃX�P�[���K�p
+            Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
 
-            // �{�b�N�X�̏I�_���v�Z
             Vector3 boxCastEnd = boxCastOrigin + boxCastDirection.normalized * boxCastDistance;
 
-            // �L���X�g�̈ړ��͈͂�`��
             Gizmos.matrix = Matrix4x4.identity;
             Gizmos.DrawLine(boxCastOrigin, boxCastEnd);
 
-            // �{�b�N�X�̏I�_�͈̔͂�`��
             Gizmos.matrix = Matrix4x4.TRS(boxCastEnd, boxCastRotation, _boxCastSizeDebug * 2);
             Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
         }

@@ -16,12 +16,15 @@
     scale: 1.05 1.05;
     transition-timing-function: ease-in-out-cubic;
     transition-duration: 0.1s;
+    background-image: url("project://database/Assets/Master/UITK/UI_light_button.psd?fileID=2800000&guid=5b6e7afa6fec4d94f976d37efac1a194&type=3#UI_light_button");
+    background-color: rgba(0, 0, 0, 0);
 }
 
 .game-start-button:active {
     scale: 0.95 0.95;
     transition-timing-function: ease-in-out-cubic;
     transition-duration: 0.1s;
+    background-image: url("project://database/Assets/Master/UITK/UI_light_button.psd?fileID=2800000&guid=5b6e7afa6fec4d94f976d37efac1a194&type=3#UI_light_button");
 }
 
 .credit-button {
@@ -41,10 +44,12 @@
     transition-timing-function: ease-in-out-cubic;
     transition-duration: 0.1s;
     scale: 1.05 1.05;
+    background-image: url("project://database/Assets/Master/UITK/UI_light_button.psd?fileID=2800000&guid=5b6e7afa6fec4d94f976d37efac1a194&type=3#UI_light_button");
 }
 
 .credit-button:active {
     scale: 0.95 0.95;
     transition-timing-function: ease-in-out-cubic;
     transition-duration: 0.1s;
+    background-image: url("project://database/Assets/Master/UITK/UI_light_button.psd?fileID=2800000&guid=5b6e7afa6fec4d94f976d37efac1a194&type=3#UI_light_button");
 }

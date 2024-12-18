@@ -20,22 +20,23 @@ namespace DCFrameWork.DefenseEquipment
             if (_isPaused)
                 _timer += Time.deltaTime;
 
-            if (Time.time > 1 / DefenseEquipmentData.Rate + _timer && _enemyList.Count > 0)
+            if (Time.time > 1 / Rate + _timer && _enemyList.Count > 0)
             {
                 _timer = Time.time;
-                TargetsAddDamage(_enemyList, DefenseEquipmentData.Attack);
+                TargetsAddDamage(_enemyList, Attack);
             }
         }
         protected void TargetsAddDamage(List<(GameObject Obj, IFightable Interface)> enemies, float damage)
         {
-            foreach (var enemy in enemies)
+            for (int i = 0; i < enemies.Count; i++)
             {
-                if (!enemy.Interface.HitDamage(damage))
+                if (!enemies[i].Interface.HitDamage(damage))
                 {
-                    _enemyList.Remove(_enemyList.Where(e => e.Interface == enemy.Interface).FirstOrDefault());
+                    _enemyList.Remove(_enemyList.Where(e => e.Interface == enemies[i].Interface).FirstOrDefault());
                 }
             }
         }
+
 
         private void OnTriggerEnter(Collider other)
         {

@@ -3,10 +3,17 @@
     <Style src="project://database/Assets/Master/UITK/USS/Master/Font.uss?fileID=7433441132597879392&amp;guid=8c8dbfa7dccd14b4ebdfec63316899cc&amp;type=3#Font" />
     <engine:VisualElement name="TitleWindow" class="font-style" style="flex-grow: 1; height: 1065px; background-color: rgb(255, 255, 255);">
         <engine:Label text="ダンジョンクラフター" name="Title" style="top: 120px; left: 0; right: 0; bottom: auto; font-size: 115px; -unity-text-align: middle-center; -unity-font-style: bold;" />
-        <engine:VisualElement style="flex-grow: 1; position: absolute; width: 100%; height: 50%; bottom: 0; align-items: center; justify-content: center;">
-            <engine:Button text="ゲームを始める" name="GameStartButton" class="game-start-button" />
-            <engine:Button text="クレジット" name="CreditButton" class="credit-button" />
+        <engine:VisualElement name="VisualElement" style="flex-grow: 1; position: absolute; width: 100%; height: 50%; bottom: 2px; align-items: center; justify-content: center; -unity-slice-scale: 1px; left: 3px; background-color: rgba(0, 0, 0, 0); -unity-font-style: bold;">
+            <engine:Button text="GAMESTART" name="GameStartButton" class="game-start-button" style="background-image: url(&quot;project://database/Assets/Master/UITK/UI_title_button.psd?fileID=2800000&amp;guid=ebbfebcb4f56ece48b8ba3e8a83cd60e&amp;type=3#UI_title_button&quot;); -unity-background-scale-mode: scale-to-fit; background-color: rgba(255, 255, 255, 0); background-position-x: center 0; background-position-y: bottom 0; font-size: 65px; -unity-background-image-tint-color: rgb(255, 255, 255); -unity-text-outline-width: 1.5px; color: rgb(255, 255, 255); -unity-text-outline-color: rgb(0, 0, 0); -unity-font-style: bold; width: 40%; height: 30%; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;">
+                <engine:VisualElement name="GameStartLight" class="game-start-button" style="flex-grow: 1; width: 100%; height: 100%; margin-bottom: 2px;" />
+            </engine:Button>
+            <engine:Button text="CREDIT" name="CreditButton" class="credit-button" style="width: 40%; height: 30%; background-image: url(&quot;project://database/Assets/Master/UITK/UI_title_button.psd?fileID=2800000&amp;guid=ebbfebcb4f56ece48b8ba3e8a83cd60e&amp;type=3#UI_title_button&quot;); -unity-background-scale-mode: scale-to-fit; background-color: rgba(188, 188, 188, 0); -unity-background-image-tint-color: rgb(255, 255, 255); border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; background-position-y: bottom 0; font-size: 65px; color: rgb(255, 255, 255); -unity-text-outline-width: 1.5px; -unity-text-outline-color: rgb(0, 0, 0);">
+                <engine:VisualElement name="CreditLight" class="credit-button" style="flex-grow: 1; width: 100%; height: 100%;" />
+            </engine:Button>
         </engine:VisualElement>
-        <engine:VisualElement name="SettingButton" style="flex-grow: 1; position: absolute; width: 100px; height: 100px; bottom: 0; right: 0; background-color: rgb(0, 0, 0); margin-bottom: 1%; margin-right: 1%;" />
+        <engine:VisualElement name="SettingButton" style="flex-grow: 1; position: absolute; width: 7%; height: 14%; bottom: 0; right: 0; margin-bottom: 1%; margin-right: 1%;">
+            <engine:VisualElement name="VisualElement" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Master/UITK/UI_scene_change.psd?fileID=14621&amp;guid=d0eca6be134fb45459306cfcffa19ba6&amp;type=3#UI_scene_change_2&quot;); -unity-background-scale-mode: scale-to-fit; background-position-y: bottom 0;" />
+            <engine:Label text="設定" style="-unity-text-align: middle-center; font-size: 27%; -unity-font-style: bold;" />
+        </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>

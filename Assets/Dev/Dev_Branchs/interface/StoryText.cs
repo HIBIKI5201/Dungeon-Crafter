@@ -36,6 +36,8 @@ namespace DCFrameWork
                 hierarchy.Add(container);
                 _name = container.Q<Label>("Name");
                 _text = container.Q<Label>("Text");
+                _name.enableRichText = true;
+                _text.enableRichText = true;
                 _textBox = container.Q<VisualElement>("TextBox");
                 Debug.Log("ウィンドウは正常にロード完了");
             }

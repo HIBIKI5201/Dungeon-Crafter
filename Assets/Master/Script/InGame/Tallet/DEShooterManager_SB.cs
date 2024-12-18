@@ -24,17 +24,23 @@ namespace DCFrameWork.DefenseEquipment
         }
 
 
-        protected virtual void Attack()
+        protected virtual void EnemyAttack()
         {
             var criticalPoint = Random.Range(0, 100);
             var targetSelect = TargetSelect();
-            TargetsAddDamage(targetSelect.Interface, criticalPoint <= DefenseEquipmentData.Critical ? DefenseEquipmentData.Attack * 3 : DefenseEquipmentData.Attack);
+            TargetsAddDamage(targetSelect.Interface, criticalPoint <= Critical ? Attack * 3 : Attack);
             TurretRotate(targetSelect.Obj.transform);
         }
 
         protected virtual void TurretRotate(Transform enemy)
         {
-            _turret.transform.forward = enemy.transform.position - _turret.transform.position;
+            var dir = enemy.transform.position - _turret.transform.position;
+            dir.y = 0;
+            dir.Normalize();
+
+            var targetRotation = Quaternion.LookRotation(dir);
+
+            _turret.transform.localRotation = targetRotation;
         }
 
         protected void TargetsAddDamage(IFightable enemy, float damage)

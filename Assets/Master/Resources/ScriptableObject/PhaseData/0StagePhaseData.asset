@@ -20,12 +20,6 @@ MonoBehaviour:
       _spawnStartTime: 0
       _spawnEndTime: 15
       _spawnPoint: 1
-    - _enemyType: 3
-      _enemyLevel: 1
-      _enemyCount: 5
-      _spawnStartTime: 0
-      _spawnEndTime: 15
-      _spawnPoint: 1
   - _spawnData:
     - _enemyType: 1
       _enemyLevel: 1

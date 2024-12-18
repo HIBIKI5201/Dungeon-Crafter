@@ -21,12 +21,14 @@ namespace DCFrameWork.SceneSystem
         [ContextMenu("NextText")]
         public void NextStory() => _storyManager?.NextText();
 
-        public void SetStorySceneData(StoryLoadData data)
+        public async void SetStorySceneData(StoryLoadData data)
         {
             Debug.Log(data.sceneKind);
             Debug.Log(data.StoryData);
             _storyManager?.SetStoryData(data.StoryData);
             _sceneKind = data.sceneKind;
+            await Awaitable.WaitForSecondsAsync(1);
+            NextStory();
         }
 
         public void EndStory()

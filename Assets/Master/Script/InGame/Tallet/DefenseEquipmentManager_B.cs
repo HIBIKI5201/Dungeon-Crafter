@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DCFrameWork.DefenseEquipment
 {
-    public abstract class DefenseEquipmentManager_B<Data> : MonoBehaviour, IPausable where Data : DefenseEquipmentData_B
+    public abstract class DefenseEquipmentManager_B<Data> : MonoBehaviour, ITurret where Data : DefenseEquipmentData_B
     {
         [SerializeField]
         private DefenseEquipmentDataBase _dataBase;
@@ -12,6 +12,13 @@ namespace DCFrameWork.DefenseEquipment
 
         private Data _defenseEquipmentData;
         protected Data DefenseEquipmentData { get => _defenseEquipmentData; }
+
+        protected float Attack { get => DefenseEquipmentData.Attack * _reinforceStatus.Attack; }
+        protected float Range { get => DefenseEquipmentData.Range * _reinforceStatus.Range; }
+        protected float Rate { get => DefenseEquipmentData.Rate * _reinforceStatus.Rate; }
+        protected float Critical { get => DefenseEquipmentData.Critical * _reinforceStatus.Critical; }
+
+        private ReinforceStatus _reinforceStatus = new ReinforceStatus(1, 1, 1, 1);
 
         [Range(1, 5f)]
         protected int _level = 1;
@@ -32,6 +39,11 @@ namespace DCFrameWork.DefenseEquipment
         {
             GameBaseSystem.mainSystem?.RemovePausableObject(this);
         }
+        public void Reinforce(ReinforceStatus status)
+        {
+            _reinforceStatus = new(status.Attack, status.Rate, status.Range, status.Critical);
+            RangeSet(Range);
+        }
 
         private void LoadCommonData(int level)
         {
@@ -41,7 +53,7 @@ namespace DCFrameWork.DefenseEquipment
             Data data = _dataBase.DataLevelList[level - 1] as Data;
             if ((data is null).CheckLog($"{gameObject.name}のデータがキャストできません")) return;
             _defenseEquipmentData = data;
-            RangeSet(data.Range);
+            RangeSet(Range);
             LoadSpecificData(data);
         }
 
@@ -74,6 +86,12 @@ namespace DCFrameWork.DefenseEquipment
         void IPausable.Resume() => Resume();
         protected abstract void Pause();
         protected abstract void Resume();
+
+        void ITurret.Reinforce(ReinforceStatus status) => Reinforce(status);
         #endregion
+    }
+    public interface ITurret : IPausable
+    {
+        void Reinforce(ReinforceStatus status);
     }
 }

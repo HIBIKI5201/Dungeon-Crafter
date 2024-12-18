@@ -16,17 +16,11 @@ namespace DCFrameWork
         private float _nextLevelRequireExperiancePoint = 100;
 
 
-        [SerializeField] DropTableData _dropTable;
-        [SerializeField] int _levelUpGachaCount = 3;
-
-        private PlayerManager _playerManager;
 
         public void Initialize()
         {
-            _playerManager = GetComponent<PlayerManager>();
             _level = 1;
             _experiancePoint = 0;
-            OnLevelChanged += (a) => GetRandomDefenseObj();
         }
 
         public void AddExperiancePoint(float point)
@@ -39,16 +33,6 @@ namespace DCFrameWork
                 OnLevelChanged?.Invoke(_level);
             }
             OnExperianceGained?.Invoke(_experiancePoint);
-        }
-        public void ChangeDropTable(DropTableData dropTable) => _dropTable = dropTable;
-
-        private void GetRandomDefenseObj()
-        {
-            var collection = _dropTable.GetRandomDefenseObj(_levelUpGachaCount);
-            foreach (var item in collection)
-            {
-                _playerManager.SetDefenseObject(item);
-            }
         }
     }
 }

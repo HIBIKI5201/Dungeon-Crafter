@@ -91,7 +91,11 @@ namespace DCFrameWork.Enemy
            },
            target =>
            {
-               CollectionSystem.AddEnemyKilCount(kind);
+               var enemy = obj.GetComponent<IEnemy>();
+               if(enemy.CurrentHealth <= 0)
+               {
+                   CollectionSystem.AddEnemyKilCount(kind);
+               }
                target.DeathBehaviour();
                WaveManager.EnemyDeathCount();
                target.DeathAction = null;

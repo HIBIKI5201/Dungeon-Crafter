@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.InputManagerEntry;
 
 namespace DCFrameWork.Enemy
 {
@@ -28,9 +29,9 @@ namespace DCFrameWork.Enemy
 
         float IFightable.Plunder { get => ChangeStates(_enemyRiseData.Plunder, _enemyLevel, _enemyData.Plunder); }
 
-        protected float DropEXP { get => ChangeStates(_enemyRiseData.DropEXP, _enemyLevel, _enemyData.DropEXP); }//set { ChangeStates(_enemyRiseData.DropEXP, _enemyLevel, _enemyData.DropEXP); } }
+        float IFightable.DropEXP { get => ChangeStates(_enemyRiseData.DropEXP, _enemyLevel, _enemyData.DropEXP);}//set { ChangeStates(_enemyRiseData.DropEXP, _enemyLevel, _enemyData.DropEXP); } }
 
-        protected float DropGold { get => ChangeStates(_enemyRiseData.DropGold, _enemyLevel, _enemyData.DropGold); }// set { ChangeStates(_enemyRiseData.DropGold, _enemyLevel, _enemyData.DropGold); } }
+        float IFightable.DropGold { get => ChangeStates(_enemyRiseData.DropGold, _enemyLevel, _enemyData.DropGold); }// set { ChangeStates(_enemyRiseData.DropGold, _enemyLevel, _enemyData.DropGold); } }
 
 
         [SerializeField]
@@ -271,6 +272,10 @@ namespace DCFrameWork.Enemy
 
         float Plunder { get; }
 
+        float DropGold {  get; }
+
+        float DropEXP {  get; }
+
         //float EnemyLevel { get; protected set; }
 
         /// <summary>
@@ -283,7 +288,8 @@ namespace DCFrameWork.Enemy
             HealthBarUpdate();
             if (CurrentHealth <= 0)
             {
-                //ŒoŒ±’lˆ—‚ð‚±‚±‚Ås‚¤—\’èw
+                //PlayerManager.ChangeGold(DropGold);
+                //LevelManager.add
                 DeathAction += DeathBehaviour;
                 DeathAction?.Invoke();
                 DeathAction = null;

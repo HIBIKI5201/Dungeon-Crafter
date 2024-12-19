@@ -7,20 +7,20 @@ namespace DCFrameWork
     public class PlayerManager : MonoBehaviour
     {
         static int _treasureHp = 100;
-        static int _gold;
+        static float _gold;
         Dictionary<DefenseObjectsKind, int> _defenseObjectsValue = new();
 
+        public static event Action _gameOverEvent;
+        public static event Action<float> _getGold;
 
-        public static Action _gameOverEvent;
-        public static Action<int> _getGold;
-
-        [SerializeField] LevelManager _levelManager;
+        static LevelManager _levelManager;
         [SerializeField] DropTableData _dropTable;
         [SerializeField] int _levelUpGachaCount = 3;
+
         private void Initialize()
         {
             _levelManager = GetComponentInChildren<LevelManager>();
-            _levelManager.OnLevelChanged += x => GetRandomDefenseObj(); 
+            _levelManager.OnLevelChanged += x => GetRandomDefenseObj();
         }
 
         public static int TreasureHp { get => _treasureHp; }
@@ -37,11 +37,12 @@ namespace DCFrameWork
         /// 
         /// </summary>
         /// <param name="gold">ëùå∏Ç≥ÇπÇΩÇ¢ó </param>
-        public static void ChangeGold(int gold)
+        public static void ChangeGold(float gold)
         {
             _gold += gold;
             _getGold?.Invoke(_gold);
         }
+        public static void AddEXP(float exp) => _levelManager.AddExperiancePoint(exp);
         public void SetDefenseObject(DefenseObjectsKind kind)
         {
             if (_defenseObjectsValue.ContainsKey(kind)) _defenseObjectsValue[kind]++;
@@ -54,14 +55,17 @@ namespace DCFrameWork
         }
         public void ChangeDropTable(DropTableData dropTable) => _dropTable = dropTable;
 
-        private void GetRandomDefenseObj()
+        private IEnumerable<DefenseObjectsKind> GetRandomDefenseObj()
         {
             var collection = _dropTable.GetRandomDefenseObj(_levelUpGachaCount);
+            var list = new List<DefenseObjectsKind>();
             foreach (var item in collection)
             {
                 CollectionSystem.Instans.SetDefenseObj(item);
+                list.Add(item);
                 SetDefenseObject(item);
             }
+            return list;
         }
 
         [ContextMenu("GetRandomObj")]
@@ -74,7 +78,7 @@ namespace DCFrameWork
                 CollectionSystem.Instans.SetDefenseObj(item);
                 SetDefenseObject(item);
             }
-            var dObj=CollectionSystem.Instans.GetDefenseObjCollection();
+            var dObj = CollectionSystem.Instans.GetDefenseObjCollection();
             foreach (var item in dObj)
             {
                 if (item != null)

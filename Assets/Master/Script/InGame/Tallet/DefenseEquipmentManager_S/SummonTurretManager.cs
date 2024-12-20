@@ -12,9 +12,6 @@ namespace DCFrameWork.DefenseEquipment
         float _timer = 0;
         bool _isPaused = false;
         public float EntityAttack { get => Attack; }
-#if UNITY_EDITOR
-        [SerializeField] Vector3 _boxCastSizeDebug = new(1, 10, 1);
-#endif
         [NonSerialized] public List<GameObject> EnemyList = new();
         Vector3 _position;
         protected override void Start_S()
@@ -111,7 +108,7 @@ namespace DCFrameWork.DefenseEquipment
             float boxCastDistance = 18f;
             Quaternion boxCastRotation = Quaternion.identity;
 
-            Gizmos.matrix = Matrix4x4.TRS(boxCastOrigin, boxCastRotation, _boxCastSizeDebug * 2);
+            Gizmos.matrix = Matrix4x4.TRS(boxCastOrigin, boxCastRotation, _boxCastSize * 2);
             Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
 
             Vector3 boxCastEnd = boxCastOrigin + boxCastDirection.normalized * boxCastDistance;
@@ -119,7 +116,7 @@ namespace DCFrameWork.DefenseEquipment
             Gizmos.matrix = Matrix4x4.identity;
             Gizmos.DrawLine(boxCastOrigin, boxCastEnd);
 
-            Gizmos.matrix = Matrix4x4.TRS(boxCastEnd, boxCastRotation, _boxCastSizeDebug * 2);
+            Gizmos.matrix = Matrix4x4.TRS(boxCastEnd, boxCastRotation, _boxCastSize * 2);
             Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
         }
 #endif

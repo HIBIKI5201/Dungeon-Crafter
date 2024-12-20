@@ -106,13 +106,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ec611c85bebf5a45824801957b702f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dataBase: {fileID: 11400000, guid: c274824e63b70424d9afd001f6f40105, type: 2}
+  _dataBase: {fileID: 11400000, guid: d20b5e1ca5d98b448bde8bece22c6a2f, type: 2}
   _cylinder: {fileID: 1230886657355454221}
   _turret: {fileID: 2554377064845916721}
   _enemyLayer:
     serializedVersion: 2
     m_Bits: 64
-  _raySize: {x: 1, y: 1, z: 1}
+  _raySize: 5
+  _anim: {fileID: 8463630909829381252}
 --- !u!4 &5494967988994788402 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2124433048170454387, guid: 6491d1df532dbce4cb19dc115ad77b73,
@@ -210,6 +211,12 @@ PrefabInstance:
 --- !u!4 &8303253851050180638 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 83448763132776659, guid: ca2a23c91145f0945910ddcafa936571,
+    type: 3}
+  m_PrefabInstance: {fileID: 8220033968343617741}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &8463630909829381252 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 533595397447314505, guid: ca2a23c91145f0945910ddcafa936571,
     type: 3}
   m_PrefabInstance: {fileID: 8220033968343617741}
   m_PrefabAsset: {fileID: 0}

@@ -288,11 +288,11 @@ namespace DCFrameWork.Enemy
             HealthBarUpdate();
             if (CurrentHealth <= 0)
             {
-                PlayerManager.ChangeGold(DropGold);
-                PlayerManager.AddEXP(DropEXP);
                 DeathAction += DeathBehaviour;
                 DeathAction?.Invoke();
                 DeathAction = null;
+                PlayerManager.ChangeGold(DropGold);
+                PlayerManager.AddEXP(DropEXP);
                 return false;
             }
             return true;

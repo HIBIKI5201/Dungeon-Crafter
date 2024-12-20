@@ -1,3 +1,4 @@
+using DCFrameWork.Enemy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,6 +54,11 @@ namespace DCFrameWork.MainSystem
         public int PowerUpItemValue = 0;
         public List<int> PowerUpDatas = Enumerable.Repeat(0, Enum.GetValues(typeof(DefenseObjectsKind)).Length).ToList();
         public int EventFlag = 0;
+        //図鑑のセーブデータ。
+        public int EnemyCollectionFrag = 0;
+        public int DefenseCollectionFrag = 0;
+        public int AudioCollectionFrag = 0;
+        public Dictionary<EnemyKind, int> EnemyKillCount = new Dictionary<EnemyKind, int>();
     }
     [Serializable]
     public class SettingSaveData

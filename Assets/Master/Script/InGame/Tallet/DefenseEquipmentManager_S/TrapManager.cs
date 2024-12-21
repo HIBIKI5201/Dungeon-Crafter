@@ -4,6 +4,7 @@ using DCFrameWork.MainSystem;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.ProBuilder.Shapes;
 
 namespace DCFrameWork
 {
@@ -14,8 +15,10 @@ namespace DCFrameWork
 
         void Awake()
         {
-            transform.parent.TryGetComponent(out _turretManager);
-
+            if (transform.parent.TryGetComponent(out _turretManager))
+            {
+                transform.localScale = Vector3.one * _turretManager.BombRange;
+            }
         }
 
         private void OnTriggerEnter(Collider other)

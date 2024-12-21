@@ -3,16 +3,15 @@ using Unity.VisualScripting;
 using UnityEngine;
 namespace DCFrameWork.DefenseEquipment
 {
-    public class TrapTurretManager : DEEntityManager_SB<SummonData>
+    public class TrapTurretManager : DEEntityManager_SB<TrapData>
     {
 
         float _timer = 0;
         bool _isPaused = false;
         bool _isCoolTimed = false;
         public float EntityAttack { get => Attack; }
-#if UNITY_EDITOR
-        [SerializeField] Vector3 _boxCastSizeDebug = new(1, 10, 1);
-#endif
+        public int BombRange { get => DefenseEquipmentData.BombRng; }
+        [SerializeField] AnimationCurve _animationCurve;
         Vector3 _position;
 
         protected override void Start_S()
@@ -47,6 +46,17 @@ namespace DCFrameWork.DefenseEquipment
                     Summon(summonPos, DefenseEquipmentData.MaxCount);
             }
         }
+        override protected bool Check(Vector3 pos)
+        {
+            var size = BombRange * 5;
+            Physics.BoxCast(pos + new Vector3(0, 8, 0), Vector3.one * size / 2, Vector3.down, out RaycastHit hit, Quaternion.identity, 18f);
+
+            if (hit.collider != null)
+            {
+                return hit.collider.gameObject.layer == Mathf.Log(_groundLayer.value, 2);
+            }
+            return false;
+        }
         [ContextMenu("StartCoolTime")]
         public void StartCoolTime()
         {
@@ -65,7 +75,7 @@ namespace DCFrameWork.DefenseEquipment
         {
             _entityList.Remove(trap);
         }
-        protected override void LoadSpecificData(SummonData data)
+        protected override void LoadSpecificData(TrapData data)
         {
 
         }
@@ -90,7 +100,7 @@ namespace DCFrameWork.DefenseEquipment
             Quaternion boxCastRotation = Quaternion.identity;
 
             // ボックスの範囲を描画 (始点)
-            Gizmos.matrix = Matrix4x4.TRS(boxCastOrigin, boxCastRotation, _boxCastSizeDebug * 2);
+            Gizmos.matrix = Matrix4x4.TRS(boxCastOrigin, boxCastRotation, _boxCastSize * 2);
             Gizmos.DrawWireCube(Vector3.zero, Vector3.one); // 中心を基準にスケール適用
 
             // ボックスの終点を計算
@@ -101,7 +111,7 @@ namespace DCFrameWork.DefenseEquipment
             Gizmos.DrawLine(boxCastOrigin, boxCastEnd);
 
             // ボックスの終点の範囲を描画
-            Gizmos.matrix = Matrix4x4.TRS(boxCastEnd, boxCastRotation, _boxCastSizeDebug * 2);
+            Gizmos.matrix = Matrix4x4.TRS(boxCastEnd, boxCastRotation, _boxCastSize * 2);
             Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
         }
 #endif

@@ -17,7 +17,7 @@ namespace DCFrameWork
         [SerializeField] DropTableData _dropTable;
         [SerializeField] int _levelUpGachaCount = 3;
 
-        private void Initialize()
+        public void Initialize()
         {
             _levelManager = GetComponentInChildren<LevelManager>();
             _levelManager.OnLevelChanged += x => GetRandomDefenseObj();
@@ -36,7 +36,7 @@ namespace DCFrameWork
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="gold">‘Œ¸‚³‚¹‚½‚¢—Ê</param>
+        /// <param name="gold">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</param>
         public static void ChangeGold(float gold)
         {
             _gold += gold;
@@ -51,7 +51,7 @@ namespace DCFrameWork
         public void UseDefenseObject(DefenseObjectsKind kind)
         {
             if (_defenseObjectsValue.ContainsKey(kind)) _defenseObjectsValue[kind]--;
-            else Debug.LogWarning($"{nameof(kind)}‚Í‘¶İ‚µ‚Ü‚¹‚ñ");
+            else Debug.LogWarning($"{nameof(kind)}ï¿½Í‘ï¿½ï¿½İ‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½");
         }
         public void ChangeDropTable(DropTableData dropTable) => _dropTable = dropTable;
 

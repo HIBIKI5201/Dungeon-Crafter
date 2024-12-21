@@ -7,6 +7,12 @@ namespace DCFrameWork.Enemy
     [Serializable, CreateAssetMenu(menuName = "GameData/EnemyData/Base_Data", fileName = "EnemyData")]
     public class EnemyData_B : ScriptableObject
     {
+        [SerializeField]
+        string m_EnemyName;
+
+        [SerializeField]
+        string m_Explanation;
+
         public float MaxHealth { get => _maxHealth; }
         [SerializeField]
         private float _maxHealth = 1f;

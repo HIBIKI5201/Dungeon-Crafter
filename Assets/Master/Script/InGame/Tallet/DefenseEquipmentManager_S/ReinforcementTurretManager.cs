@@ -54,7 +54,7 @@ namespace DCFrameWork.DefenseEquipment
         public float Range;
         public float Critical;
 
-        public static ReinforceStatus Default { get => new ReinforceStatus(1, 1, 1, 1); }
+        public static ReinforceStatus Default { get => new ReinforceStatus(0, 0, 0, 0); }
         public ReinforceStatus(float attack, float rate, float range, float critical)
         {
             Attack = attack; Rate = rate; Range = range; Critical = critical;

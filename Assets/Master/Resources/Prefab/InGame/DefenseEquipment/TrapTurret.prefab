@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 6964938291245240771}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.28, z: 0}
+  m_LocalPosition: {x: 0, y: 0.445, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -145,18 +145,10 @@ MonoBehaviour:
   _entityPrefab: {fileID: 1155410625815294042, guid: 886d62327d8a80f448df3dbada0a2844,
     type: 3}
   _spawnPos: {fileID: 3502731741381371751}
+  _anim: {fileID: 7027753377362257023}
   _animationCurveX:
     serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0.00004229881
-      value: 0.00022809801
-      inSlope: 0.00013821582
-      outSlope: 0.00013821582
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
+    m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -164,8 +156,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.023334503
-      value: 5.77594
+      time: 0.02012587
+      value: 7.7968965
       inSlope: 2
       outSlope: 2
       tangentMode: 0
@@ -173,10 +165,28 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.50129056
-      value: 10.013506
+      time: 0.085796
+      value: 9.1453905
+      inSlope: 7.29749
+      outSlope: 7.29749
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.32549405
+      value: 10.409857
       inSlope: -0.11741604
       outSlope: -0.11741604
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.987444
+      value: 0.6807213
+      inSlope: -14.141367
+      outSlope: -14.141367
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
@@ -195,16 +205,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   _animationCurveZ:
     serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0.00004229881
-      value: 0.00022809801
-      inSlope: 0.00013821582
-      outSlope: 0.00013821582
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
+    m_Curve: []
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -306,6 +307,12 @@ PrefabInstance:
 --- !u!4 &5366963431181309438 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3057565202368274107, guid: 63910ffc17744274c9a28519690b66fe,
+    type: 3}
+  m_PrefabInstance: {fileID: 6923703421938912069}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &7027753377362257023 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 113284755204206394, guid: 63910ffc17744274c9a28519690b66fe,
     type: 3}
   m_PrefabInstance: {fileID: 6923703421938912069}
   m_PrefabAsset: {fileID: 0}

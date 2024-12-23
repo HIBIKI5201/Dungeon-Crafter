@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: TrapTurretDataLevel1
   m_EditorClassIdentifier: 
   _attack: 10
-  _rate: 0.2
+  _rate: 1
   _critical: 5
   _range: 3
   _levelRequirePoint: 1
-  _maxCount: 5
+  _maxCount: 744
   _bombRng: 1

@@ -14,7 +14,7 @@ namespace DCFrameWork.DefenseEquipment
         [SerializeField]
         protected LayerMask _groundLayer;
         [SerializeField]
-        GameObject _entityPrefab;
+        protected GameObject _entityPrefab;
 
         protected List<GameObject> _entityList = new List<GameObject>();
         protected virtual async void Summon(Vector3 pos, int count)

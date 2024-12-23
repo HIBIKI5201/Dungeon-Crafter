@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6964938291245240771
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3502731741381371751}
+  m_Layer: 0
+  m_Name: SpawnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3502731741381371751
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6964938291245240771}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.28, z: 0}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9099184866423318639}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &6618989604711846176
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -66,6 +97,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2710484828236544335, guid: 6491d1df532dbce4cb19dc115ad77b73,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3502731741381371751}
     - targetCorrespondingSourceObject: {fileID: 2124433048170454387, guid: 6491d1df532dbce4cb19dc115ad77b73,
         type: 3}
       insertIndex: -1
@@ -109,12 +144,28 @@ MonoBehaviour:
     m_Bits: 8
   _entityPrefab: {fileID: 1155410625815294042, guid: 886d62327d8a80f448df3dbada0a2844,
     type: 3}
-  _animationCurve:
+  _spawnPos: {fileID: 3502731741381371751}
+  _animationCurveX:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 0
+      time: 0.00004229881
+      value: 0.00022809801
+      inSlope: 0.00013821582
+      outSlope: 0.00013821582
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _animationCurveY:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.023334503
+      value: 5.77594
       inSlope: 2
       outSlope: 2
       tangentMode: 0
@@ -122,17 +173,17 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.50072944
-      value: 0.9456518
-      inSlope: 0.07262194
-      outSlope: 0.07262194
+      time: 0.50129056
+      value: 10.013506
+      inSlope: -0.11741604
+      outSlope: -0.11741604
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1.0966797
-      value: -0.00093460083
+      time: 1
+      value: 0.0009422302
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -142,9 +193,30 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  _animationCurveZ:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.00004229881
+      value: 0.00022809801
+      inSlope: 0.00013821582
+      outSlope: 0.00013821582
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!4 &5089313182365158483 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2124433048170454387, guid: 6491d1df532dbce4cb19dc115ad77b73,
+    type: 3}
+  m_PrefabInstance: {fileID: 6618989604711846176}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &9099184866423318639 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2710484828236544335, guid: 6491d1df532dbce4cb19dc115ad77b73,
     type: 3}
   m_PrefabInstance: {fileID: 6618989604711846176}
   m_PrefabAsset: {fileID: 0}

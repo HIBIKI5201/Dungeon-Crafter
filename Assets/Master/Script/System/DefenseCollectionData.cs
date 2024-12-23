@@ -35,8 +35,7 @@ namespace DCFrameWork
                 {
                     _name = elements[0],
                     _tips = elements[1],
-                    _cardSprite = LoadTexture(elements[2]),
-                    //_objectSprite = LoadTexture(elements[3]),
+                    _cardSprite = LoadAsset<Texture2D>(elements[2]),
                 });
             }
             Debug.Log("End");

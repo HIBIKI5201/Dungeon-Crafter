@@ -1,4 +1,5 @@
 
+using DCFrameWork.DefenseEquipment;
 using DCFrameWork.Enemy;
 using DCFrameWork.MainSystem;
 using System;
@@ -61,9 +62,9 @@ namespace DCFrameWork
             }
             return data;
         }
-        public IEnumerable<DefenseCollection?> GetDefenseObjCollection()
+        public IEnumerable<DefenseEquipmentDataBase> GetDefenseObjCollection()
         {
-            List<DefenseCollection?> data = new();
+            List<DefenseEquipmentDataBase> data = new();
             if ((!_defenseObjCollectionData).CheckLog("DefenseCollectionData‚ª‚ ‚è‚Ü‚¹‚ñ")) return data;
             for (var i = 0; i < _defenseObjCollectionData.Count; i++)
             {
@@ -87,7 +88,7 @@ namespace DCFrameWork
             var i = GetDefenseObjCollection();
             foreach (var item in i)
             {
-                Debug.Log(item != null ? item.Value._name : "null");
+                Debug.Log(item != null ? item.Name : "null");
             }
             var k = GetEnemyCollection();
             foreach (var item in k)

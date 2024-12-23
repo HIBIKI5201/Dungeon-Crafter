@@ -9,14 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a34e79b4860e091428e50ea98cb556d1, type: 3}
-  m_Name: EnemyDataFly
+  m_Script: {fileID: 11500000, guid: 8d3a339fa3592a94182a11c6b0dd3513, type: 3}
+  m_Name: LongRangeDataLevel1
   m_EditorClassIdentifier: 
-  m_EnemyName: "\u9B54\u6CD5\u4F7F\u3044"
-  m_Explanation: "\u98DB\u3079\u308B"
-  _maxHealth: 15
-  _plunder: 1
-  _dexterity: 12
-  _defense: 2
-  _dropEXP: 5
-  _dropGold: 100
+  _attack: 15
+  _rate: 1.2
+  _critical: 1
+  _range: 4
+  _levelRequirePoint: 0
+  _pierceCount: 3

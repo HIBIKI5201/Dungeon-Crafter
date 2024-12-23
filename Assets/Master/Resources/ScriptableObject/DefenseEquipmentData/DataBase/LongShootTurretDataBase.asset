@@ -9,14 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a34e79b4860e091428e50ea98cb556d1, type: 3}
-  m_Name: EnemyDataFly
+  m_Script: {fileID: 11500000, guid: 40478fa587365244da4a99f9af7f1ac2, type: 3}
+  m_Name: LongShootTurretDataBase
   m_EditorClassIdentifier: 
-  m_EnemyName: "\u9B54\u6CD5\u4F7F\u3044"
-  m_Explanation: "\u98DB\u3079\u308B"
-  _maxHealth: 15
-  _plunder: 1
-  _dexterity: 12
-  _defense: 2
-  _dropEXP: 5
-  _dropGold: 100
+  Name: 
+  Explanation: 
+  DropChance: 0
+  DataLevelList:
+  - {fileID: 11400000, guid: 85ee0f33e2ce25d4eb932556c80e787d, type: 2}
+  PowerUpRequireItem: 

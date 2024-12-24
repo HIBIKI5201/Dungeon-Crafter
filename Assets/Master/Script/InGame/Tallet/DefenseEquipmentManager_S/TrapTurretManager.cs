@@ -87,8 +87,8 @@ namespace DCFrameWork.DefenseEquipment
                 GameObject obj = (await entity)[0];
                 _entityList.Add(obj);
                 _isSpawned = true;
-                _animationCurveX.AddKey(1, _position.x);
-                _animationCurveZ.AddKey(1, _position.z);
+                _animationCurveX.AddKey(1, pos.x);
+                _animationCurveZ.AddKey(1, pos.z);
                 _anim.SetTrigger("Attack");
             }
         }
@@ -100,9 +100,6 @@ namespace DCFrameWork.DefenseEquipment
             if (hit.collider != null)
             {
                 return hit.collider.gameObject.layer == Mathf.Log(_groundLayer.value, 2);
-#if UNITY_EDITOR
-                _isChecked = true;
-#endif
             }
             return false;
         }
@@ -140,7 +137,7 @@ namespace DCFrameWork.DefenseEquipment
 #if UNITY_EDITOR
         void OnDrawGizmos()
         {
-            Gizmos.color = _isChecked ? Color.red : Color.green;
+            Gizmos.color = Check(_position) ? Color.red : Color.green;
 
             // BoxCast のデータを計算
             Vector3 boxCastOrigin = _position + new Vector3(0, 8, 0);

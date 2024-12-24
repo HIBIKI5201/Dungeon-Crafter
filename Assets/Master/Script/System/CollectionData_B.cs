@@ -29,20 +29,20 @@ namespace DCFrameWork
             }
             return new StringReader(request.downloadHandler.text);
         }
-        protected Texture2D LoadTexture(string assetName)
+        public static T LoadAsset<T>(string assetName) where T : Object
         {
-            if (string.IsNullOrWhiteSpace(assetName)) return null;
+            if (string.IsNullOrWhiteSpace(assetName)) return default;
             string[] assetGUID = AssetDatabase.FindAssets(assetName);
 
-            if ((assetGUID.Length == 0).CheckLog($"{assetName}‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ")) return null;
+            if ((assetGUID.Length == 0).CheckLog($"{assetName}‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ")) return default;
             string path = AssetDatabase.GUIDToAssetPath(assetGUID[0]);
 
-            Texture2D texture = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
-            if (texture != null)
+            T asset = AssetDatabase.LoadAssetAtPath<T>(path);
+            if (asset != null)
             {
-                return texture;
+                return asset;
             }
-            return null;
+            return default;
         }
         public abstract void ReadData(StringReader reader);
     }

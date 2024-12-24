@@ -11,12 +11,25 @@ namespace DCFrameWork.DefenseEquipment
         bool _isCoolTimed = false;
         public float EntityAttack { get => Attack; }
         public int BombRange { get => DefenseEquipmentData.BombRng; }
-        [SerializeField] AnimationCurve _animationCurve;
+        [SerializeField] Transform _spawnPos;
+        [SerializeField] Animator _anim;
+        [SerializeField] AnimationCurve _animationCurveX;
+        [SerializeField] AnimationCurve _animationCurveY;
+        [SerializeField] AnimationCurve _animationCurveZ;
         Vector3 _position;
+        bool _isSpawned;
+        float _animationTimer = 0;
+        float _animationDuration = 1;
+
+#if UNITY_EDITOR
+        bool _isChecked;
+#endif
 
         protected override void Start_S()
         {
             _timer = Time.time;
+            _animationCurveX.AddKey(0, _spawnPos.position.x);
+            _animationCurveZ.AddKey(0, _spawnPos.position.z);
         }
 
         protected override void Think() //UpDate ‚Æ“¯‹`
@@ -24,26 +37,59 @@ namespace DCFrameWork.DefenseEquipment
             if (_isPaused || _isCoolTimed)
                 _timer += Time.deltaTime;
 
-            if (Time.time > 1 / Rate + _timer)
+            if (!_isPaused)
             {
-                _timer = Time.time;
-                var summonPos = SummonPosition();
-                _position = summonPos;
-                int count = 0;
-                bool isChecked = false;
-                while (!Check(summonPos))
+                if (Time.time > 1 / Rate + _timer)
                 {
-                    summonPos = SummonPosition();
+                    _timer = Time.time;
+                    var summonPos = SummonPosition();
                     _position = summonPos;
-                    count++;
-                    if (count <= 10)
+                    int count = 0;
+                    bool isChecked = false;
+                    while (!Check(summonPos))
                     {
-                        isChecked = true;
-                        break;
+                        summonPos = SummonPosition();
+                        _position = summonPos;
+                        count++;
+                        if (count <= 10)
+                        {
+                            isChecked = true;
+                            break;
+                        }
+                    }
+                    if (!isChecked)
+                        Summon(summonPos, DefenseEquipmentData.MaxCount);
+                }
+                if (_isSpawned && _entityList.Count > 0)
+                {
+                    _animationTimer += Time.deltaTime;
+                    var normalizedTime = Mathf.Clamp01(_animationTimer / _animationDuration);
+                    var x = _animationCurveX.Evaluate(normalizedTime);
+                    var y = _animationCurveY.Evaluate(normalizedTime);
+                    var z = _animationCurveZ.Evaluate(normalizedTime);
+                    _entityList[_entityList.Count - 1].transform.position = new Vector3(x, y, z);
+                    if (_animationTimer > _animationDuration)
+                    {
+                        _animationTimer = 0;
+                        _isSpawned = false;
+                        _animationCurveX.RemoveKey(1);
+                        _animationCurveZ.RemoveKey(1);
                     }
                 }
-                if (!isChecked)
-                    Summon(summonPos, DefenseEquipmentData.MaxCount);
+            }
+        }
+        protected override async void Summon(Vector3 pos, int count)
+        {
+            if (_entityList.Count < count)
+            {
+                if (_entityPrefab is null) return;
+                var entity = InstantiateAsync(_entityPrefab, transform, _spawnPos.position, Quaternion.identity);
+                GameObject obj = (await entity)[0];
+                _entityList.Add(obj);
+                _isSpawned = true;
+                _animationCurveX.AddKey(1, pos.x);
+                _animationCurveZ.AddKey(1, pos.z);
+                _anim.SetTrigger("Attack");
             }
         }
         override protected bool Check(Vector3 pos)

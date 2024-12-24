@@ -9,6 +9,7 @@ namespace DCFrameWork.DefenseEquipment
     {
         protected List<(GameObject Obj, IFightable Interface)> _enemyList = new();
         [SerializeField] GameObject _turret;
+        [SerializeField] protected Animator _anim;
 
         protected override void Start_SB()
         {
@@ -30,6 +31,7 @@ namespace DCFrameWork.DefenseEquipment
             var targetSelect = TargetSelect();
             TargetsAddDamage(targetSelect.Interface, criticalPoint <= Critical ? Attack * 3 : Attack);
             TurretRotate(targetSelect.Obj.transform);
+            _anim.SetTrigger("Attack");
         }
 
         protected virtual void TurretRotate(Transform enemy)

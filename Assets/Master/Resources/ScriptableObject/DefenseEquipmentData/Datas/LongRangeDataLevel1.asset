@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LongRangeDataLevel1
   m_EditorClassIdentifier: 
   _attack: 15
-  _rate: 1.2
+  _rate: 0.5
   _critical: 1
   _range: 4
   _levelRequirePoint: 0

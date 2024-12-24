@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1964422088062069472}
   - component: {fileID: 5645900470431982965}
+  - component: {fileID: 6110439731792907437}
   m_Layer: 0
   m_Name: TrapBomb
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6046706415324299395}
   m_Father: {fileID: 0}
@@ -45,6 +46,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce411dfff7dd9e94f9d50e8a80e85d5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!135 &6110439731792907437
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1155410625815294042}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.23
+  m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!1001 &6222853490045155804
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -72,6 +94,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Center.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4304175496895988486, guid: c43be524a27eee6458f19b4cc09a996b,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 411572722318702943, guid: c43be524a27eee6458f19b4cc09a996b,
         type: 3}
@@ -148,7 +175,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turret_BombMaker_bomb
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: -4304175496895988486, guid: c43be524a27eee6458f19b4cc09a996b, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

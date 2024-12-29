@@ -91,10 +91,14 @@ namespace DCFrameWork.Enemy
            },
            target =>
            {
-               CollectionSystem.AddEnemyKilCount(kind);
                target.DeathBehaviour();
+               if (target.CurrentHealth <= 0)
+               {
+                   CollectionSystem.AddEnemyKilCount(kind);
+               }             
                WaveManager.EnemyDeathCount();
                target.DeathAction = null;
+
            },
            target =>
            {

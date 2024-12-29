@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: DefenceDataLevel1
   m_EditorClassIdentifier: 
   _attack: 10
-  _rate: 2
+  _rate: 1
   _critical: 15
   _range: 3
+  _levelRequirePoint: 1

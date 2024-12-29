@@ -13,12 +13,12 @@ namespace DCFrameWork.DefenseEquipment
         private Data _defenseEquipmentData;
         protected Data DefenseEquipmentData { get => _defenseEquipmentData; }
 
-        protected float Attack { get => DefenseEquipmentData.Attack * _reinforceStatus.Attack; }
-        protected float Range { get => DefenseEquipmentData.Range * _reinforceStatus.Range; }
-        protected float Rate { get => DefenseEquipmentData.Rate * _reinforceStatus.Rate; }
-        protected float Critical { get => DefenseEquipmentData.Critical * _reinforceStatus.Critical; }
+        protected float Attack { get => DefenseEquipmentData.Attack + _reinforceStatus.Attack; }
+        protected float Range { get => DefenseEquipmentData.Range + _reinforceStatus.Range; }
+        protected float Rate { get => DefenseEquipmentData.Rate + _reinforceStatus.Rate; }
+        protected float Critical { get => DefenseEquipmentData.Critical + _reinforceStatus.Critical; }
 
-        private ReinforceStatus _reinforceStatus = new ReinforceStatus(1, 1, 1, 1);
+        private ReinforceStatus _reinforceStatus = ReinforceStatus.Default;
 
         [Range(1, 5f)]
         protected int _level = 1;

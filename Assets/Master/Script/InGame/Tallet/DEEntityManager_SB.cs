@@ -10,11 +10,11 @@ namespace DCFrameWork.DefenseEquipment
         [SerializeField]
         float _minRange = 1;
         [SerializeField]
-        Vector3 _boxCastSize = new(1, 10, 1);
+        protected Vector3 _boxCastSize = new(1, 10, 1);
         [SerializeField]
-        LayerMask _groundLayer;
+        protected LayerMask _groundLayer;
         [SerializeField]
-        GameObject _entityPrefab;
+        protected GameObject _entityPrefab;
 
         protected List<GameObject> _entityList = new List<GameObject>();
         protected virtual async void Summon(Vector3 pos, int count)
@@ -27,7 +27,7 @@ namespace DCFrameWork.DefenseEquipment
                 _entityList.Add(obj);
             }
         }
-        protected bool Check(Vector3 pos)
+        virtual protected bool Check(Vector3 pos)
         {
             Physics.BoxCast(pos + new Vector3(0, 8, 0), _boxCastSize / 2, Vector3.down, out RaycastHit hit, Quaternion.identity, 18f);
 
@@ -45,7 +45,7 @@ namespace DCFrameWork.DefenseEquipment
             float radian = degree * Mathf.Deg2Rad;
             float randomPosX = r * Mathf.Cos(radian);
             float randomPosZ = r * Mathf.Sin(radian);
-            return transform.position + new Vector3(randomPosX * 2, 0, randomPosZ * 2);
+            return transform.position + new Vector3(randomPosX, 0, randomPosZ);
         }
         protected override void Start_SB()
         {

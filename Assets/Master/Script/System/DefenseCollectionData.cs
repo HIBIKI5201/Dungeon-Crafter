@@ -1,45 +1,28 @@
+using DCFrameWork.DefenseEquipment;
+using DCFrameWork.Enemy;
+using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 
 namespace DCFrameWork
 {
     [CreateAssetMenu(fileName = "DefenseCollection", menuName = "CollectionData/DefenseCollection")]
-    public class DefenseCollectionData : CollectionData_B
+    public class DefenseCollectionData : ScriptableObject
     {
         [SerializeField]
-        List<DefenseCollection> _defenseCollections;
-        public List<DefenseCollection> DefenseData { get => _defenseCollections; }
+        List<DefenseEquipmentDataBase> _defenseCollections;
+        public List<DefenseEquipmentDataBase> DefenseData { get => _defenseCollections; }
 
-        public override int Count => _defenseCollections.Count;
+        public int Count => _defenseCollections.Count;
 
-        public override void ReadData(StringReader reader)
+        public void LoadDefenseObj()
         {
             _defenseCollections.Clear();
-            while (reader.Peek() != -1)
+            foreach (DefenseObjectsKind kind in Enum.GetValues(typeof(EnemyKind)))
             {
-                string line = reader.ReadLine();
-                if (string.IsNullOrWhiteSpace(line))
-                {
-                    continue;
-                }
-
-                string[] elements = line.Split(',').Select(s => s.Replace("\"", "").Trim()).ToArray();
-                if (elements[0][0] == '/') continue;
-                Debug.Log(elements.Count());
-                Debug.Log($"{elements[0]}{elements[1]}{elements[2]}{elements[3]}");
-                _defenseCollections.Add(new DefenseCollection()
-                {
-                    _name = elements[0],
-                    _tips = elements[1],
-                    _cardSprite = LoadTexture(elements[2]),
-                    //_objectSprite = LoadTexture(elements[3]),
-                });
+                _defenseCollections.Add(CollectionData_B.LoadAsset<DefenseEquipmentDataBase>(kind + "DataBase"));
             }
-            Debug.Log("End");
         }
     }
     [System.Serializable]
@@ -64,7 +47,7 @@ namespace DCFrameWork
             if (GUILayout.Button("テキスト読み込み"))
             {
                 Debug.Log("load");
-                collection.LoadAndRead();
+                collection.LoadDefenseObj();
             }
         }
     }

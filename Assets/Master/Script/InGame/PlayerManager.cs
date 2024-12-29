@@ -82,7 +82,7 @@ namespace DCFrameWork
             foreach (var item in dObj)
             {
                 if (item != null)
-                    Debug.Log(item.Value._name);
+                    Debug.Log(item.Name);
                 else Debug.Log("Null");
             }
         }

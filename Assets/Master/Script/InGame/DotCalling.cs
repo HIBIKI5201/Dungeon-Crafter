@@ -10,44 +10,49 @@ namespace DCFrameWork
 {
     public class DotCalling : MonoBehaviour
     {
-        DotJob _job=new();
-        MeshRenderer[] _mesh;
-        void Initialize()
+        [SerializeField, Range(-1, 1)] float _cAngle = 0;
+        DotJob _job = new();
+        GameObject[] obj;
+        NativeArray<float> _result;
+        public void Initialize()
         {
-            var objects = GameObject.FindGameObjectsWithTag("DisappearOnBack");
-            _mesh = Array.ConvertAll(objects, x=>x.GetComponent<MeshRenderer>());
-            float3[] foward = Array.ConvertAll(_mesh,x=>new float3( x.transform.forward.x,x.transform.forward.y,x.transform.forward.z));
-            var nArray = new NativeArray<float3>(foward,Allocator.TempJob);
-            for(var i =0; i < _mesh.Length; i++)
-            {
-                nArray[i] = new float3(foward[i].x, foward[i].y, foward[i].z);
-            }
-            _job.objfoward = nArray;
+            obj = GameObject.FindGameObjectsWithTag("DisappearOnBack");
+            _job.objfoward = new NativeArray<float2>(Array.ConvertAll(obj,
+                x => new float2(x.transform.forward.x, x.transform.forward.z))
+                , Allocator.TempJob);
+            _job.objPos = new NativeArray<float2>(Array.ConvertAll(obj,
+                x => new float2(x.transform.position.x, x.transform.position.z))
+                , Allocator.TempJob);
         }
 
-        void Update()
+            void Update()
         {
-            var a = _job.Schedule(_mesh.Length, 0);
-            a.Complete();
-            for (var i = 0; i < _mesh.Length; i++)
+            _job.cameraPos = new float2(Camera.main.transform.position.x, Camera.main.transform.position.z);
+            var result = new NativeArray<float>(_job.objfoward.Length, Allocator.TempJob);
+            _job.result = result;
+            var dot = _job.Schedule(obj.Length, 0);
+            dot.Complete();
+            for (var i = 0; i < obj.Length; i++)
             {
-                if (_job.result[i] < 0)
+                if (result[i] < _cAngle)
                 {
-                    _mesh[i].enabled = false;
+                    obj[i].SetActive(true);
                 }
-                else _mesh[i].enabled = true;
+                else obj[i].SetActive(false);
             }
+            _job.result.Dispose();
         }
     }
     [BurstCompile]
     struct DotJob : IJobParallelFor
     {
-        public float3 cameraPos;
-        public NativeArray<float3> objfoward;
+        public float2 cameraPos;
+        public NativeArray<float2> objfoward;
+        public NativeArray<float2> objPos;
         public NativeArray<float> result;
         public void Execute(int index)
         {
-            result[index] = math.dot(cameraPos, objfoward[index]);
+            result[index] = math.dot(math.normalize(objfoward[index]), math.normalize(objPos[index] - cameraPos));
         }
     }
 }

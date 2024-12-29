@@ -12,7 +12,7 @@ namespace DCFrameWork.DefenseEquipment
         bool _isPaused = false;
         [SerializeField] LayerMask _enemyLayer;
         [SerializeField] float _raySize = 5;
-        [SerializeField] Animator _anim;
+        
 
         protected override void Start_S()
         {

@@ -17,5 +17,5 @@ MonoBehaviour:
   _critical: 5
   _range: 3
   _levelRequirePoint: 1
-  _maxCount: 5
+  _maxCount: 744
   _bombRng: 1

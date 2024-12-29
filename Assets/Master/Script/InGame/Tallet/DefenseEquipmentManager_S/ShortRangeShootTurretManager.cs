@@ -40,6 +40,7 @@ namespace DCFrameWork.DefenseEquipment
                 if (hit.collider.gameObject.TryGetComponent(out IEnemy component))
                     TargetsAddDamage(component, criticalPoint <= Critical ? Attack * 3 : Attack);
             }
+            _anim.SetTrigger("Attack");
         }
         protected override void Pause()
         {

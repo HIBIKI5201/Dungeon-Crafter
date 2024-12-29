@@ -1,4 +1,5 @@
 
+using DCFrameWork.DefenseEquipment;
 using DCFrameWork.Enemy;
 using DCFrameWork.MainSystem;
 using System;
@@ -50,25 +51,20 @@ namespace DCFrameWork
             _enemyKillCount = enemyKillCount;
         }
 
-        public IEnumerable<EnemyCollection?> GetEnemyCollection()
+        public Dictionary<EnemyData_B, int> GetEnemyCollection()
         {
-            List<EnemyCollection?> data = new();
+            Dictionary<EnemyData_B, int> data = new();
             if ((!_enemyCollectionData).CheckLog("EnemyCollectionData‚ª‚ ‚è‚Ü‚¹‚ñ")) return data;
             for (var i = 0; i < _enemyCollectionData.Count; i++)
             {
-                EnemyCollection? col = (_enemyFrag & 1 << i) != 0 ? _enemyCollectionData.EnemyData[i] : null;
-                if (col != null)
-                {
-                    var j = col.Value;
-                    j._killCount = _enemyKillCount[(EnemyKind)i];
-                }
-                data.Add(col);
+                EnemyData_B colection = (_enemyFrag & 1 << i) != 0 ? _enemyCollectionData.EnemyData[i] : null;
+                data.Add(colection, _enemyKillCount[(EnemyKind)i]);
             }
             return data;
         }
-        public IEnumerable<DefenseCollection?> GetDefenseObjCollection()
+        public IEnumerable<DefenseEquipmentDataBase> GetDefenseObjCollection()
         {
-            List<DefenseCollection?> data = new();
+            List<DefenseEquipmentDataBase> data = new();
             if ((!_defenseObjCollectionData).CheckLog("DefenseCollectionData‚ª‚ ‚è‚Ü‚¹‚ñ")) return data;
             for (var i = 0; i < _defenseObjCollectionData.Count; i++)
             {
@@ -92,12 +88,12 @@ namespace DCFrameWork
             var i = GetDefenseObjCollection();
             foreach (var item in i)
             {
-                Debug.Log(item != null ? item.Value._name : "null");
+                Debug.Log(item != null ? item.Name : "null");
             }
             var k = GetEnemyCollection();
             foreach (var item in k)
             {
-                Debug.Log(item != null ? item.Value._name : "null");
+                Debug.Log(item.Key != null ? item.Key.name : "null");
             }
             var j = GetBGMCollection();
             foreach (var item in j)
@@ -111,9 +107,9 @@ namespace DCFrameWork
 
         public static void AddEnemyKilCount(EnemyKind kind)
         {
-            if(_enemyKillCount.ContainsKey(kind))
+            if (_enemyKillCount.ContainsKey(kind))
                 _enemyKillCount[kind]++;
-            else 
+            else
                 _enemyKillCount.Add(kind, 1);
         }
     }

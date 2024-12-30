@@ -8,8 +8,10 @@ namespace DCFrameWork
     {
         static int _treasureHp = 100;
         static float _gold;
-        Dictionary<DefenseObjectsKind, int> _defenseObjectsValue = new();
-
+        static Dictionary<DefenseObjectsKind, int> _defenseObjectsValue = new();
+        public static Dictionary<DefenseObjectsKind, int> TurretInventory{
+            get => _defenseObjectsValue;
+        }
         public static event Action _gameOverEvent;
         public static event Action<float> _getGold;
 
@@ -43,12 +45,12 @@ namespace DCFrameWork
             _getGold?.Invoke(_gold);
         }
         public static void AddEXP(float exp) => _levelManager.AddExperiancePoint(exp);
-        public void SetDefenseObject(DefenseObjectsKind kind)
+        public static void SetDefenseObject(DefenseObjectsKind kind)
         {
             if (_defenseObjectsValue.ContainsKey(kind)) _defenseObjectsValue[kind]++;
             else _defenseObjectsValue.Add(kind, 1);
         }
-        public void UseDefenseObject(DefenseObjectsKind kind)
+        public static void UseDefenseObject(DefenseObjectsKind kind)
         {
             if (_defenseObjectsValue.ContainsKey(kind)) _defenseObjectsValue[kind]--;
             else Debug.LogWarning($"{nameof(kind)}�͑��݂��܂���");

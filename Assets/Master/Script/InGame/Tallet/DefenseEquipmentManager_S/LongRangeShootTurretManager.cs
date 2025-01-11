@@ -54,6 +54,11 @@ namespace DCFrameWork.DefenseEquipment
             TurretRotate(targetSelect.Obj.transform);
             _anim.SetTrigger("Attack");
         }
+
+        void BulletShoot()
+        {
+
+        }
         protected override void Pause()
         {
             _isPaused = true;

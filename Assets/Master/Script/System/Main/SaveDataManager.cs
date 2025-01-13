@@ -22,9 +22,7 @@ namespace DCFrameWork.MainSystem
             get => _settingSaveData;
             private set => _settingSaveData = value;
         }
-
-        static int _storyKey = 0;
-        public static int StoryKey { get => _storyKey; private set => _storyKey = value; }
+        public static int StoryKey { get => SaveData.StoryKey; }
 
         public static void Save()
         {
@@ -49,14 +47,13 @@ namespace DCFrameWork.MainSystem
 
             SaveData = data_g;
             SettingSaveData = data_s;
-            _storyKey = data_g.StoryKey;
             return (data_g, data_s);
         }
 
         static string Encryption(string data) =>
             new string(data.Select(x => (char)(x ^ _key)).ToArray());
 
-        public static void AddStoryKey(int value) => StoryKey += value;
+        public static void AddStoryKey(int value) => SaveData.StoryKey += value;
     }
 
     [Serializable]

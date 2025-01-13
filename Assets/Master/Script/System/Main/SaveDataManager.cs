@@ -10,6 +10,7 @@ namespace DCFrameWork.MainSystem
         private const byte _key = 173;
         private static GameSaveData _saveData = null;
         public static Action<GameSaveData> OnSaveDataChanged;
+
         public static GameSaveData SaveData
         {
             get => _saveData;
@@ -22,6 +23,9 @@ namespace DCFrameWork.MainSystem
             get => _settingSaveData;
             private set => _settingSaveData = value;
         }
+
+        static int _storyKey = 0;
+        public static int StoryKey { get => _storyKey; private set => _storyKey = value; }
 
         public static void Save()
         {
@@ -40,11 +44,14 @@ namespace DCFrameWork.MainSystem
                 JsonUtility.FromJson<SettingSaveData>(Encryption(PlayerPrefs.GetString("SettintgSaveData"))));
             SaveData = data_g;
             SettingSaveData = data_s;
+            StoryKey = data_g.StoryKey;
             return (data_g, data_s);
         }
 
         static string Encryption(string data) =>
             new string(data.Select(x => (char)(x ^ _key)).ToArray());
+
+        public static void AddStoryKey(int value) => StoryKey += value;
     }
 
     [Serializable]
@@ -54,11 +61,7 @@ namespace DCFrameWork.MainSystem
         public int PowerUpItemValue = 0;
         public List<int> PowerUpDatas = Enumerable.Repeat(0, Enum.GetValues(typeof(DefenseObjectsKind)).Length).ToList();
         public int EventFlag = 0;
-        //図鑑のセーブデータ。
-        public int EnemyCollectionFrag = 0;
-        public int DefenseCollectionFrag = 0;
-        public int AudioCollectionFrag = 0;
-        public Dictionary<EnemyKind, int> EnemyKillCount = new Dictionary<EnemyKind, int>();
+        public int StoryKey = 0;
     }
     [Serializable]
     public class SettingSaveData

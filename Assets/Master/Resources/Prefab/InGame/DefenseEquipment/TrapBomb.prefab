@@ -175,6 +175,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turret_BombMaker_bomb
       objectReference: {fileID: 0}
+    - target: {fileID: 1584457731456369200, guid: c43be524a27eee6458f19b4cc09a996b,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 50e2ebabf0d824c4f96007da442044d6, type: 2}
     m_RemovedComponents:
     - {fileID: -4304175496895988486, guid: c43be524a27eee6458f19b4cc09a996b, type: 3}
     m_RemovedGameObjects: []

@@ -9,9 +9,12 @@ namespace DCFrameWork
         static int _treasureHp = 100;
         static float _gold;
         static Dictionary<DefenseObjectsKind, int> _defenseObjectsValue = new();
-        public static Dictionary<DefenseObjectsKind, int> TurretInventory{
+        public static Dictionary<DefenseObjectsKind, int> TurretInventory
+        {
             get => _defenseObjectsValue;
         }
+        public static int TreasureHp { get => _treasureHp; }
+
         public static event Action _gameOverEvent;
         public static event Action<float> _getGold;
 
@@ -25,8 +28,6 @@ namespace DCFrameWork
             _levelManager.OnLevelChanged += x => GetRandomDefenseObj();
         }
 
-        public static int TreasureHp { get => _treasureHp; }
-
         public static void HPDown(int damage)
         {
             _treasureHp -= damage;
@@ -36,9 +37,9 @@ namespace DCFrameWork
             }
         }
         /// <summary>
-        /// 
+        /// インゲームのタレット強化用Gold
         /// </summary>
-        /// <param name="gold">��������������</param>
+        /// <param name="gold">値を所持Goldに加算します。</param>
         public static void ChangeGold(float gold)
         {
             _gold += gold;
@@ -53,7 +54,7 @@ namespace DCFrameWork
         public static void UseDefenseObject(DefenseObjectsKind kind)
         {
             if (_defenseObjectsValue.ContainsKey(kind)) _defenseObjectsValue[kind]--;
-            else Debug.LogWarning($"{nameof(kind)}�͑��݂��܂���");
+            else Debug.LogWarning($"{nameof(kind)}が存在しません");
         }
         public void ChangeDropTable(DropTableData dropTable) => _dropTable = dropTable;
 

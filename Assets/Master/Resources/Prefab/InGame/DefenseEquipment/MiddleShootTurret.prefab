@@ -83,11 +83,43 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turret_crossdevil
       objectReference: {fileID: 0}
+    - target: {fileID: 8097486842213767612, guid: 754a5f6cfebc4b14f9b00093da4021fb,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8097486842213767612, guid: 754a5f6cfebc4b14f9b00093da4021fb,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8097486842213767612, guid: 754a5f6cfebc4b14f9b00093da4021fb,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8097486842213767612, guid: 754a5f6cfebc4b14f9b00093da4021fb,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 754a5f6cfebc4b14f9b00093da4021fb, type: 3}
+--- !u!1 &1853212208749101522 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2699199559535225314, guid: 754a5f6cfebc4b14f9b00093da4021fb,
+    type: 3}
+  m_PrefabInstance: {fileID: 4378225742364059696}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2246058536378400468 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2587616276193335012, guid: 754a5f6cfebc4b14f9b00093da4021fb,
+    type: 3}
+  m_PrefabInstance: {fileID: 4378225742364059696}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &2253484281186520901 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 2560130491006592885, guid: 754a5f6cfebc4b14f9b00093da4021fb,
@@ -182,12 +214,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 6250323246547177996}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2663579386848328060 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8235804675487181680, guid: 6491d1df532dbce4cb19dc115ad77b73,
-    type: 3}
-  m_PrefabInstance: {fileID: 6250323246547177996}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3164453551357321815 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9031967255871615067, guid: 6491d1df532dbce4cb19dc115ad77b73,
@@ -208,8 +234,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dataBase: {fileID: 11400000, guid: c274824e63b70424d9afd001f6f40105, type: 2}
   _cylinder: {fileID: 1626058793573848128}
-  _turret: {fileID: 2663579386848328060}
+  _turretModel: {fileID: 1853212208749101522}
   _anim: {fileID: 2253484281186520901}
+  _bullet: {fileID: 2246058536378400468}
 --- !u!4 &5460081811323572095 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2124433048170454387, guid: 6491d1df532dbce4cb19dc115ad77b73,

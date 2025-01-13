@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using Unity.VisualScripting;
 using UnityEngine;
 namespace DCFrameWork.DefenseEquipment
@@ -32,7 +32,7 @@ namespace DCFrameWork.DefenseEquipment
             _animationCurveZ.AddKey(0, _spawnPos.position.z);
         }
 
-        protected override void Think() //UpDate ‚Æ“¯‹`
+        protected override void Think() //UpDate ã¨åŒç¾©
         {
             if (_isPaused || _isCoolTimed)
                 _timer += Time.deltaTime;
@@ -139,24 +139,24 @@ namespace DCFrameWork.DefenseEquipment
         {
             Gizmos.color = Check(_position) ? Color.red : Color.green;
 
-            // BoxCast ‚Ìƒf[ƒ^‚ğŒvZ
+            // BoxCast ã®ãƒ‡ãƒ¼ã‚¿ã‚’è¨ˆç®—
             Vector3 boxCastOrigin = _position + new Vector3(0, 8, 0);
-            Vector3 boxCastDirection = Vector3.down; // ‰ºŒü‚«
-            float boxCastDistance = 18f; // •K—v‚É‰‚¶‚Ä’²®
+            Vector3 boxCastDirection = Vector3.down; // ä¸‹å‘ã
+            float boxCastDistance = 18f; // å¿…è¦ã«å¿œã˜ã¦èª¿æ•´
             Quaternion boxCastRotation = Quaternion.identity;
 
-            // ƒ{ƒbƒNƒX‚Ì”ÍˆÍ‚ğ•`‰æ (n“_)
+            // ãƒœãƒƒã‚¯ã‚¹ã®ç¯„å›²ã‚’æç”» (å§‹ç‚¹)
             Gizmos.matrix = Matrix4x4.TRS(boxCastOrigin, boxCastRotation, _boxCastSize * 2);
-            Gizmos.DrawWireCube(Vector3.zero, Vector3.one); // ’†S‚ğŠî€‚ÉƒXƒP[ƒ‹“K—p
+            Gizmos.DrawWireCube(Vector3.zero, Vector3.one); // ä¸­å¿ƒã‚’åŸºæº–ã«ã‚¹ã‚±ãƒ¼ãƒ«é©ç”¨
 
-            // ƒ{ƒbƒNƒX‚ÌI“_‚ğŒvZ
+            // ãƒœãƒƒã‚¯ã‚¹ã®çµ‚ç‚¹ã‚’è¨ˆç®—
             Vector3 boxCastEnd = boxCastOrigin + boxCastDirection.normalized * boxCastDistance;
 
-            // ƒLƒƒƒXƒg‚ÌˆÚ“®”ÍˆÍ‚ğ•`‰æ
+            // ã‚­ãƒ£ã‚¹ãƒˆã®ç§»å‹•ç¯„å›²ã‚’æç”»
             Gizmos.matrix = Matrix4x4.identity;
             Gizmos.DrawLine(boxCastOrigin, boxCastEnd);
 
-            // ƒ{ƒbƒNƒX‚ÌI“_‚Ì”ÍˆÍ‚ğ•`‰æ
+            // ãƒœãƒƒã‚¯ã‚¹ã®çµ‚ç‚¹ã®ç¯„å›²ã‚’æç”»
             Gizmos.matrix = Matrix4x4.TRS(boxCastEnd, boxCastRotation, _boxCastSize * 2);
             Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
         }

@@ -57,6 +57,8 @@ namespace DCFrameWork.Enemy
 
         private const float _buff = 0.1f;
         protected float Buff { get => _buff; }
+
+        private float _speed = 0;
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
@@ -82,8 +84,22 @@ namespace DCFrameWork.Enemy
 
         private void Update()
         {
-            _healthBarManager.FollowTarget(transform);
            
+            Move();
+            _healthBarManager.FollowTarget(transform);
+
+        }
+
+        void Move()
+        {
+            var nextPoint = _agent.steeringTarget;
+            Vector3 target = nextPoint - transform.position;
+             Quaternion targetRotation = Quaternion.LookRotation(_agent.desiredVelocity.normalized);
+             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 300f * Time.deltaTime);
+             //transform.position = _agent.nextPosition;
+             _agent.velocity = (_agent.steeringTarget - transform.position).normalized * _agent.speed;
+
+
         }
 
         private void OnEnable()
@@ -108,6 +124,9 @@ namespace DCFrameWork.Enemy
             _healthBarManager.FollowTarget(transform);
             GoToTargetPos(targetPos);
             Initialize_S();
+            //_agent.updatePosition = false;
+            _agent.updateRotation = false;
+            _speed = Dexterity;
         }
 
         /// <summary>

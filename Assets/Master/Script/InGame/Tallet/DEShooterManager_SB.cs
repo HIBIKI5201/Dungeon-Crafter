@@ -8,8 +8,9 @@ namespace DCFrameWork.DefenseEquipment
     public abstract class DEShooterManager_SB<Data> : DefenseEquipmentManager_B<Data> where Data : DefenseEquipmentData_B
     {
         protected List<(GameObject Obj, IFightable Interface)> _enemyList = new();
-        [SerializeField] GameObject _turret;
+        [SerializeField] protected GameObject _turretModel;
         [SerializeField] protected Animator _anim;
+        protected (GameObject Obj, IFightable Interface) _targetSelect;
 
         protected override void Start_SB()
         {
@@ -28,21 +29,21 @@ namespace DCFrameWork.DefenseEquipment
         protected virtual void EnemyAttack()
         {
             var criticalPoint = Random.Range(0, 100);
-            var targetSelect = TargetSelect();
-            TargetsAddDamage(targetSelect.Interface, criticalPoint <= Critical ? Attack * 3 : Attack);
-            TurretRotate(targetSelect.Obj.transform);
+            _targetSelect = TargetSelect();
+            TargetsAddDamage(_targetSelect.Interface, criticalPoint <= Critical ? Attack * 3 : Attack);
+            TurretRotate(_targetSelect.Obj.transform);
             _anim.SetTrigger("Attack");
         }
 
         protected virtual void TurretRotate(Transform enemy)
         {
-            var dir = enemy.transform.position - _turret.transform.position;
+            var dir = enemy.transform.position - _turretModel.transform.position;
             dir.y = 0;
             dir.Normalize();
 
             var targetRotation = Quaternion.LookRotation(dir);
 
-            _turret.transform.localRotation = targetRotation;
+            _turretModel.transform.localRotation = targetRotation;
         }
 
         protected void TargetsAddDamage(IFightable enemy, float damage)

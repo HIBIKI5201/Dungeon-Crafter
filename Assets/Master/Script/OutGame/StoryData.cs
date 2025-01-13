@@ -50,7 +50,9 @@ namespace DCFrameWork.SceneSystem
 
                 // s‚ðƒJƒ“ƒ}‚Å•ªŠ„
                 string[] elements = line.Split(',').Select(s => s.Replace("\"", "").Trim()).ToArray();
-                if (int.Parse(elements[4]) == 0) break;
+                if (int.Parse(elements[4]) == 0) {
+                    break;
+                }
 
                 _list.Add(new StoryText(elements[0], elements[1], elements[2]));
             }
@@ -61,10 +63,21 @@ namespace DCFrameWork.SceneSystem
     [Serializable]
     public class StoryText
     {
-        public string _character;
-        [TextArea]
-        public string _text;
-        public string _animation;
+        [SerializeField]
+        private string _character;
+        public string Character { get => _character; }
+        
+        [SerializeField, TextArea]
+        private string _text;
+        public string Text {  get => _text; }
+
+        [SerializeField]
+        private string _animation;
+        public string Animation { get => _animation; }
+
+        [SerializeField]
+        private AudioClip _audioClip;
+        public AudioClip AudioClip { get => _audioClip; }
 
         public StoryText(string character, string text, string animation)
         {

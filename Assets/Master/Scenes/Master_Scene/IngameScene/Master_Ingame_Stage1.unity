@@ -373,6 +373,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2299666661034462887, guid: 0df4d64677fe9b44facaa32a2feee710,
+        type: 3}
+      propertyPath: _instantiate.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1044968140}
+    - target: {fileID: 2299666661034462887, guid: 0df4d64677fe9b44facaa32a2feee710,
+        type: 3}
+      propertyPath: _instantiate.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1622257948}
     - target: {fileID: 2523116370185415480, guid: 0df4d64677fe9b44facaa32a2feee710,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -634,6 +644,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 15f9e0195939cc44e9fd3570ef7e2082, type: 3}
+--- !u!114 &1044968140 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7212133291848024612, guid: 77fd2a5407b56e54d8e660f62bd21e54,
+    type: 3}
+  m_PrefabInstance: {fileID: 1806754411}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a60d3713b0c1ad46a7109decd8d3e27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1058254285 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5966962928429106648, guid: 15f9e0195939cc44e9fd3570ef7e2082,
@@ -1526,6 +1548,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1169047567512690928}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1622257948 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2068504501253040231, guid: 77fd2a5407b56e54d8e660f62bd21e54,
+    type: 3}
+  m_PrefabInstance: {fileID: 1806754411}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10e113d43f86a4a4d949d1602b26e9c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1711075817
 PrefabInstance:
   m_ObjectHideFlags: 0

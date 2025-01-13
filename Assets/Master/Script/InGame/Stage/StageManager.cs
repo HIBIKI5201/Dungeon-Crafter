@@ -145,7 +145,7 @@ public class StageManager : MonoBehaviour
             {
                 _tentativePrefab.SetActive(true);
                 //置けるかどうかの判定
-                if (CheckStage(_currentPosition) && !_spawnPos.Contains(_currentPosition) && _currentPosition != _targetPos)
+                if (CheckConnected(_currentPosition) && !_spawnPos.Contains(_currentPosition) && _currentPosition != _targetPos)
                 {
                     _tentativePrefab.GetComponent<MeshRenderer>().material.color = Color.white;
                     _canSet = true;
@@ -175,7 +175,7 @@ public class StageManager : MonoBehaviour
             }
         }
     }
-    public bool CheckStage(Vector3 currentPosition)
+    private bool CheckConnected(Vector3 currentPosition)
     {
         //i = (グリッドの各マスの中心座標のx,z -(_floorPrefab.transform.position.z - _floorPrefab.transform.localScale.z / 2 + _gridSize / 2))/_gridSize
         int currentX;
@@ -274,7 +274,7 @@ public class StageManager : MonoBehaviour
         //消そうとしているオブジェクトの座標がグリッド座標のどこかを調べて範囲外か何もないなら処理を終了
         currentX = (int)((gameObject.transform.position.x - _floorCenter.x + _floorPrefab.transform.localScale.x * _gridSize / 2 - _gridSize / 2) / _gridSize);
         currentZ = (int)((gameObject.transform.position.z - _floorCenter.z + _floorPrefab.transform.localScale.z * _gridSize / 2 - _gridSize / 2) / _gridSize);
-        if (currentX < 0 || currentZ < 0 || currentX >= _sizeX || currentZ >= _sizeZ || _map[currentX,currentZ] == 0) { return; }
+        if (currentX < 0 || currentZ < 0 || currentX >= _sizeX || currentZ >= _sizeZ || _map[currentX, currentZ] == 0) { return; }
         //障害物を置けない高さから消すオブジェクトを全取得
         foreach (var obj in Physics.RaycastAll(gameObject.transform.position + Vector3.up * 8, Vector3.down, 20, LayerMask.GetMask("Buildings")).Where(hit => !hit.collider.isTrigger))
         {
@@ -290,5 +290,27 @@ public class StageManager : MonoBehaviour
         ObstaclePrefabs p = _obstaclePrefabList.Find(x => x.Name == name);
         _setPrefab = p.PutObstaclePrefab;
         _tentativePrefab = p.VisualGuide;
+    }
+    /// <summary>
+    /// 引数にワールド座標を入れると、
+    /// 対応したステージ上の座標に壁などが設置されているかを調べて、
+    /// なければfalseあればtrueを返します
+    /// </summary>
+    /// <param name="currentPosition"></param>
+    /// <returns></returns>
+    public bool CheckObjectPlaced(Vector3 currentPosition)
+    {
+        int currentX;
+        int currentZ;
+        currentX = (int)((currentPosition.x - _floorCenter.x + _floorPrefab.transform.localScale.x * _gridSize / 2 - _gridSize / 2) / _gridSize);
+        currentZ = (int)((currentPosition.z - _floorCenter.z + _floorPrefab.transform.localScale.z * _gridSize / 2 - _gridSize / 2) / _gridSize);
+        if (currentX < 0 || currentZ < 0 || currentX >= _sizeX || currentZ >= _sizeZ)
+        {
+            return true;
+        }
+        else
+        {
+            return _map[currentX, currentZ] == 0 ? false : true;
+        }
     }
 }

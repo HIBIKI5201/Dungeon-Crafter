@@ -1576,11 +1576,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2782304487744603710, guid: 77fd2a5407b56e54d8e660f62bd21e54,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2836544923973954782, guid: 77fd2a5407b56e54d8e660f62bd21e54,
         type: 3}
       propertyPath: m_Name
@@ -1606,6 +1601,12 @@ PrefabInstance:
       propertyPath: _wallPrefab
       value: 
       objectReference: {fileID: 3923921449293535806, guid: 587a7ac46c6ef654292713c44b49d468,
+        type: 3}
+    - target: {fileID: 3538332611585799522, guid: 77fd2a5407b56e54d8e660f62bd21e54,
+        type: 3}
+      propertyPath: _obstaclePrefabList.Array.data[0].PutObstaclePrefab
+      value: 
+      objectReference: {fileID: 375986730686726717, guid: 5ea6139d64765354284fd069c0c4adbb,
         type: 3}
     - target: {fileID: 4412748131171422071, guid: 77fd2a5407b56e54d8e660f62bd21e54,
         type: 3}

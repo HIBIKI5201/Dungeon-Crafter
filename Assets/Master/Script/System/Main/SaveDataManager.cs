@@ -1,4 +1,3 @@
-using DCFrameWork.Enemy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,7 @@ namespace DCFrameWork.MainSystem
     public class SaveDataManager
     {
         private const byte _key = 173;
-        private static GameSaveData _saveData = null;
+        private static GameSaveData _saveData = new();
         public static Action<GameSaveData> OnSaveDataChanged;
 
         public static GameSaveData SaveData
@@ -42,9 +41,15 @@ namespace DCFrameWork.MainSystem
         {
             (GameSaveData data_g, SettingSaveData data_s) = (JsonUtility.FromJson<GameSaveData>(Encryption(PlayerPrefs.GetString("GemeSaveData"))),
                 JsonUtility.FromJson<SettingSaveData>(Encryption(PlayerPrefs.GetString("SettintgSaveData"))));
+
+            if (data_g == null)
+                data_g = new GameSaveData();
+            if (data_s == null)
+                data_s = new SettingSaveData();
+
             SaveData = data_g;
             SettingSaveData = data_s;
-            StoryKey = data_g.StoryKey;
+            _storyKey = data_g.StoryKey;
             return (data_g, data_s);
         }
 

@@ -313,4 +313,28 @@ public class StageManager : MonoBehaviour
             return _map[currentX, currentZ] == 0 ? false : true;
         }
     }
+    /// <summary>
+    /// 指定座標のオブジェクト全部消す
+    /// </summary>
+    /// <param name="currentPosition"></param>
+    public void RemoveObject(Vector3 currentPosition)
+    {
+        int currentX;
+        int currentZ;
+        //オブジェクトを消そうとしている座標がグリッド座標のどこかを調べる
+        currentX = (int)((currentPosition.x - _floorCenter.x + _floorPrefab.transform.localScale.x * _gridSize / 2 - _gridSize / 2) / _gridSize);
+        currentZ = (int)((currentPosition.z - _floorCenter.z + _floorPrefab.transform.localScale.z * _gridSize / 2 - _gridSize / 2) / _gridSize);
+
+        //オブジェクト消す処理どうする？(一旦指定座標のオブジェクト全部消す方針)
+        currentPosition.y = 20;
+        RaycastHit[] hits = Physics.RaycastAll(currentPosition, Vector3.down,20,LayerMask.GetMask("Buildings"));
+        foreach (RaycastHit hit in hits)
+        {
+            Destroy(hit.collider.gameObject);
+        }
+
+        //ステージ情報の更新
+        _map[currentX, currentZ] = 0;
+        _noWall++;
+    }
 }

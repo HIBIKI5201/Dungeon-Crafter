@@ -1,11 +1,11 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Master/UITK/USS/Master/Font.uss?fileID=7433441132597879392&amp;guid=8c8dbfa7dccd14b4ebdfec63316899cc&amp;type=3#Font" />
     <engine:VisualElement name="VisualElement" class="font-style" style="flex-grow: 1;">
-        <engine:VisualElement name="TextBox" style="position: absolute; width: 70%; height: 30%; bottom: 0; margin-bottom: 2%; align-self: center;">
-            <engine:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Master/UITK/Picture/UI_text_panel.psd?fileID=4877682425177123770&amp;guid=015c2c709a7d2f54c87a97edb8001d21&amp;type=3#テキスト背景&quot;); position: absolute; width: 100%; height: 90%; bottom: 0;">
+        <engine:VisualElement name="TextBox" style="position: absolute; width: 70%; height: 30%; bottom: 0; margin-bottom: 2%; align-self: center; background-image: url(&quot;project://database/Assets/Master/UITK/Picture/UI_text_panel.psd?fileID=4877682425177123770&amp;guid=015c2c709a7d2f54c87a97edb8001d21&amp;type=3#テキスト背景&quot;);">
+            <engine:VisualElement style="flex-grow: 1; background-image: none; position: absolute; width: 100%; height: 90%; bottom: 0; background-color: rgba(219, 229, 255, 0);">
                 <engine:Label name="Text" style="position: absolute; width: 95%; height: 80%; bottom: 5%; -unity-text-align: upper-center; white-space: normal; font-size: 50px; -unity-font-style: normal; align-self: center;" />
             </engine:VisualElement>
-            <engine:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Master/UITK/Picture/UI_text_panel.psd?fileID=1101184980092164821&amp;guid=015c2c709a7d2f54c87a97edb8001d21&amp;type=3#名前欄&quot;); position: absolute; width: 31%; height: 22%; left: 1%;">
+            <engine:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Master/UITK/Picture/UI_text_panel.psd?fileID=1101184980092164821&amp;guid=015c2c709a7d2f54c87a97edb8001d21&amp;type=3#名前欄&quot;); position: absolute; width: 31%; height: 22%; left: 1%; bottom: 90%;">
                 <engine:Label name="Name" style="position: absolute; width: 100%; height: 100%; -unity-text-align: lower-center; -unity-font-style: bold; font-size: 52px; align-self: center; -unity-text-outline-width: 4px; -unity-text-outline-color: rgb(0, 0, 0); color: rgb(255, 255, 255); bottom: -4%;" />
             </engine:VisualElement>
         </engine:VisualElement>

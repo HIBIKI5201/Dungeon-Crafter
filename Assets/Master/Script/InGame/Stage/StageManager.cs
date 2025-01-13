@@ -156,10 +156,10 @@ public class StageManager : MonoBehaviour
                     _canSet = false;
                 }
             }
-            if (Input.GetMouseButtonDown(1))
-            {
-                RemoveObstacleObject(hit.collider.gameObject);
-            }
+            //if (Input.GetMouseButtonDown(1))
+            //{
+            //    RemoveObstacleObject(hit.collider.gameObject);
+            //}
         }
         else
         {
@@ -294,7 +294,7 @@ public class StageManager : MonoBehaviour
     /// <summary>
     /// 引数にワールド座標を入れると、
     /// 対応したステージ上の座標に壁などが設置されているかを調べて、
-    /// なければfalseあればtrueを返します
+    /// なければtrueあればfalseを返します
     /// </summary>
     /// <param name="currentPosition"></param>
     /// <returns></returns>
@@ -306,12 +306,16 @@ public class StageManager : MonoBehaviour
         currentZ = (int)((currentPosition.z - _floorCenter.z + _floorPrefab.transform.localScale.z * _gridSize / 2 - _gridSize / 2) / _gridSize);
         if (currentX < 0 || currentZ < 0 || currentX >= _sizeX || currentZ >= _sizeZ)
         {
-            return true;
+            return false;
         }
         else
         {
-            return _map[currentX, currentZ] == 0 ? false : true;
+            return _map[currentX, currentZ] == 0 ? true : false;
         }
+    }
+    public Vector3 GetGroundScale()
+    {
+        return _floorPrefab.transform.localScale * _gridSize / 2;
     }
     /// <summary>
     /// 指定座標のオブジェクト全部消す

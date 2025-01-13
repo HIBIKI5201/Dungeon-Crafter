@@ -35,6 +35,7 @@ namespace DCFrameWork.DefenseEquipment
         {
             var criticalPoint = Random.Range(0, 100);
             var targetSelect = TargetSelect();
+            _enemyPos = targetSelect.Obj.transform.position;
             TurretRotate(targetSelect.Obj.transform);
             var originPos = new Vector3(transform.position.x, targetSelect.Obj.transform.position.y, transform.position.z);
             var direction = targetSelect.Obj.transform.position - originPos;

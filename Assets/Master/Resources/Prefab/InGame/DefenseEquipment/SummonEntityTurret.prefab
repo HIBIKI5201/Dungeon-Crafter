@@ -119,7 +119,6 @@ MonoBehaviour:
     m_Bits: 8
   _entityPrefab: {fileID: 8377026512502004535, guid: 8cda1dc5098d8e04ca943aba7f39d8f5,
     type: 3}
-  _boxCastSizeDebug: {x: 1, y: 10, z: 1}
 --- !u!1 &8413869622034432852 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4624475791337522764, guid: 6491d1df532dbce4cb19dc115ad77b73,

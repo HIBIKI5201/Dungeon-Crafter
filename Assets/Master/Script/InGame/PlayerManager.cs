@@ -14,6 +14,7 @@ namespace DCFrameWork
             get => _defenseObjectsValue;
         }
         public static int TreasureHp { get => _treasureHp; }
+        public static float Gold { get => _gold; }
 
         public static event Action _gameOverEvent;
         public static event Action<float> _getGold;
@@ -26,6 +27,7 @@ namespace DCFrameWork
         {
             _levelManager = GetComponentInChildren<LevelManager>();
             _levelManager.OnLevelChanged += x => GetRandomDefenseObj();
+            _gold = 0;
         }
 
         public static void HPDown(int damage)
@@ -40,10 +42,15 @@ namespace DCFrameWork
         /// インゲームのタレット強化用Gold
         /// </summary>
         /// <param name="gold">値を所持Goldに加算します。</param>
-        public static void ChangeGold(float gold)
+        public static bool ChangeGold(float gold)
         {
-            _gold += gold;
-            _getGold?.Invoke(_gold);
+            if (_gold + gold >= 0)
+            {
+                _gold += gold;
+                _getGold?.Invoke(_gold);
+                return true;
+            }
+            return false;
         }
         public static void AddEXP(float exp) => _levelManager.AddExperiancePoint(exp);
         public static void SetDefenseObject(DefenseObjectsKind kind)
@@ -102,5 +109,4 @@ namespace DCFrameWork
         WeeknessTurret,
         SlowTurret
     }
-
 }

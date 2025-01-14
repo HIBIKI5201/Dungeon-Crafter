@@ -9,25 +9,29 @@ namespace DCFrameWork
         static int _treasureHp = 100;
         static float _gold;
         static Dictionary<DefenseObjectsKind, int> _defenseObjectsValue = new();
-        public static Dictionary<DefenseObjectsKind, int> TurretInventory
-        {
-            get => _defenseObjectsValue;
-        }
+        public static Dictionary<DefenseObjectsKind, int> TurretInventory{  get => _defenseObjectsValue; }
         public static int TreasureHp { get => _treasureHp; }
         public static float Gold { get => _gold; }
 
         public static event Action _gameOverEvent;
+        public static event Action<IEnumerable<DefenseObjectsKind>> _levelUpAction;
         public static event Action<float> _getGold;
 
         static LevelManager _levelManager;
         [SerializeField] DropTableData _dropTable;
         [SerializeField] int _levelUpGachaCount = 3;
+        [SerializeField] int _startGold;
+        [SerializeField] int _startTurretCount;
 
         public void Initialize()
         {
             _levelManager = GetComponentInChildren<LevelManager>();
             _levelManager.OnLevelChanged += x => GetRandomDefenseObj();
-            _gold = 0;
+            for(int i = 0; i < _startTurretCount; i++)
+            {
+                SetDefenseObject(DefenseObjectsKind.MiddleShootTurret);
+            }
+            _startGold = 0;
         }
 
         public static void HPDown(int damage)
@@ -73,8 +77,8 @@ namespace DCFrameWork
             {
                 CollectionSystem.Instans.SetDefenseObj(item);
                 list.Add(item);
-                SetDefenseObject(item);
             }
+            _levelUpAction(list);
             return list;
         }
 

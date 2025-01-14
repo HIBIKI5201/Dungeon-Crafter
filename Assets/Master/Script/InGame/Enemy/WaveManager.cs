@@ -1,5 +1,7 @@
+using DCFrameWork.MainSystem;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,6 +11,7 @@ namespace DCFrameWork.Enemy
     {
         [SerializeField] EnemyGenerator _enemyGenerators;
         [SerializeField] PhaseData _phaseData;
+        [SerializeField] float _startWaveWaitingTime = 20;
 
         int _waveCount;
         int _loopCount = 1;
@@ -27,7 +30,7 @@ namespace DCFrameWork.Enemy
         /// </summary>
         public float WaveProgressNormalize { get => (float)_deathEemyCount / (_waveEnemySum != 0 ? _waveEnemySum : 1); }
 
-        public void Initialize()
+        public async void Initialize()
         {
             if (!_phaseData)
             {
@@ -36,6 +39,7 @@ namespace DCFrameWork.Enemy
             }
             _addDeathCountAction = WaveEndCheck;
             _waveStartAction += () => NextWave();
+            await Awaitable.WaitForSecondsAsync(_startWaveWaitingTime);
             _waveStartAction?.Invoke();
             Debug.Log("WaveStart");
         }
@@ -80,5 +84,6 @@ namespace DCFrameWork.Enemy
             ++_deathEemyCount; 
             _addDeathCountAction?.Invoke();
         }
+
     }
 }

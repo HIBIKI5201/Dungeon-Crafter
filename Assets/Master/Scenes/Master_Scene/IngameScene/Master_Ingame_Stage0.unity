@@ -875,6 +875,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 3880580402287804729, guid: 5b55fce87c7ca2143b44f5cf00b4ab7d, type: 3}
+    - {fileID: 7940901645695952040, guid: 5b55fce87c7ca2143b44f5cf00b4ab7d, type: 3}
+    - {fileID: 8543180478680676997, guid: 5b55fce87c7ca2143b44f5cf00b4ab7d, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b55fce87c7ca2143b44f5cf00b4ab7d, type: 3}
@@ -1576,6 +1578,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2573529375639613917, guid: 77fd2a5407b56e54d8e660f62bd21e54,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2836544923973954782, guid: 77fd2a5407b56e54d8e660f62bd21e54,
         type: 3}
       propertyPath: m_Name
@@ -1624,6 +1631,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 1878350495}
+    - target: {fileID: 6341439831795270951, guid: 77fd2a5407b56e54d8e660f62bd21e54,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 123
+      objectReference: {fileID: 0}
     - target: {fileID: 7212133291848024612, guid: 77fd2a5407b56e54d8e660f62bd21e54,
         type: 3}
       propertyPath: _canvas

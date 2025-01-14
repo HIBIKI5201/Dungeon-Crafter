@@ -13,6 +13,7 @@ namespace DCFrameWork.DefenseEquipment
         protected override void Start_S()
         {
             _timer = Time.time;
+            _bulletPos = _bullet.transform.position;
         }
         protected override void Think() //UpDate ‚Æ“¯‹`
         {
@@ -23,12 +24,18 @@ namespace DCFrameWork.DefenseEquipment
             {
                 EnemyAttack();
                 _timer = Time.time;
+                _isShoot = true;
+            }
+            if (!_isPaused && _isShoot)
+            {
+                BulletShoot();
             }
         }
         protected override void EnemyAttack()
         {
             var criticalPoint = Random.Range(0, 100);
             var targetSelect = TargetSelect();
+            _enemyPos = targetSelect.Obj.transform.position;
             TurretRotate(targetSelect.Obj.transform);
             var originPos = new Vector3(transform.position.x, targetSelect.Obj.transform.position.y, transform.position.z);
             var direction = targetSelect.Obj.transform.position - originPos;
@@ -42,6 +49,25 @@ namespace DCFrameWork.DefenseEquipment
             }
             _anim.SetTrigger("Attack");
         }
+
+        void BulletShoot()
+        {
+            _bullet.SetActive(true);
+            _shootTimer += Time.deltaTime;
+            var dir = _enemyPos - _bulletPos;
+            var speed = dir / _hitTime;
+            _bullet.transform.forward = dir;
+            _bullet.transform.position = _bulletPos + speed * _shootTimer;
+            if (_shootTimer >= _hitTime)
+            {
+                _isShoot = false;
+                _bullet.transform.position = _bulletPos;
+                _bullet.transform.eulerAngles = _turretModel.transform.eulerAngles + new Vector3(90, 0, 0);
+                _shootTimer = 0;
+                _bullet.SetActive(false);
+            }
+        }
+
         protected override void Pause()
         {
             _isPaused = true;

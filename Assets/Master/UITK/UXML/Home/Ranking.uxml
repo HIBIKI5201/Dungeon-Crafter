@@ -5,15 +5,15 @@
             <ui:Label text="ランキング" parse-escape-sequences="false" enabled="true" name="RankingTitle" class="font-style" style="-unity-font-style: bold; font-size: 100px; -unity-text-align: middle-center; background-color: rgba(55, 55, 55, 0); background-size: 100% 100%; width: 100%; height: 15%; transform-origin: center; translate: 0 0; color: rgb(0, 0, 0); -unity-text-outline-color: rgb(0, 0, 0); -unity-text-outline-width: 0;" />
             <ui:VisualElement name="VisualElement1" style="width: 100%; height: 10%; flex-direction: row;">
                 <ui:Label text="1位" style="font-size: 54px; width: 30%; height: 100%; align-items: stretch; top: auto; -unity-text-align: middle-center;" />
-                <ui:Label text="Label" name="FirstRankText" style="background-size: 70% 100%; translate: 0 0; -unity-text-align: middle-center; width: 70%; height: 100%; transform-origin: center; font-size: 54px;" />
+                <ui:Label text="Label" name="RankText0" style="background-size: 70% 100%; translate: 0 0; -unity-text-align: middle-center; width: 70%; height: 100%; transform-origin: center; font-size: 54px;" />
             </ui:VisualElement>
             <ui:VisualElement name="VisualElement2" style="width: 100%; height: 10%; flex-direction: row; translate: 0 0;">
                 <ui:Label text="2位" double-click-selects-word="true" style="font-size: 54px; width: 30%; height: 100%; align-items: stretch; top: auto; -unity-text-align: middle-center;" />
-                <ui:Label text="Label" name="SecondRankText" style="background-size: 70% 100%; translate: 0 0; -unity-text-align: middle-center; width: 70%; height: 100%; transform-origin: center; font-size: 54px;" />
+                <ui:Label text="Label" name="RankText1" style="background-size: 70% 100%; translate: 0 0; -unity-text-align: middle-center; width: 70%; height: 100%; transform-origin: center; font-size: 54px;" />
             </ui:VisualElement>
             <ui:VisualElement name="VisualElement3" style="width: 100%; height: 10%; flex-direction: row;">
                 <ui:Label text="3位" style="font-size: 54px; width: 30%; height: 100%; align-items: stretch; top: auto; -unity-text-align: middle-center;" />
-                <ui:Label text="Label" name="ThirdRankText" style="background-size: 70% 100%; translate: 0 0; -unity-text-align: middle-center; width: 70%; height: 100%; transform-origin: center; font-size: 54px;" />
+                <ui:Label text="Label" name="RankText2" style="background-size: 70% 100%; translate: 0 0; -unity-text-align: middle-center; width: 70%; height: 100%; transform-origin: center; font-size: 54px;" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

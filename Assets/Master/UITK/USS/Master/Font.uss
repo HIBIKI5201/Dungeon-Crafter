@@ -1,3 +1,6 @@
 .font-style {
     -unity-font-definition: resource('TextMesh Pro/Fonts/LiberationSans');
+    -unity-font-style: bold;
+    font-size: 32px;
+    -unity-text-align: upper-center;
 }

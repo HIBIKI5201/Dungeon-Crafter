@@ -1,14 +1,15 @@
 using DCFrameWork.MainSystem;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace DCFrameWork.SceneSystem {
     public class StoryManager : MonoBehaviour {
         private AudioSource _audioSource;
-        private Image _backGround;
+        private Image _backGround1;
+        private Image _backGround2;
 
         private IEnumerator _enumerator;
         private List<StoryText> _storyTextList;
@@ -25,7 +26,9 @@ namespace DCFrameWork.SceneSystem {
         private void Awake()
         {
             _audioSource = GetComponent<AudioSource>();
-            _backGround = GetComponentInChildren<Image>();
+            Image[] images = GetComponentsInChildren<Image>();
+            _backGround1 = images[0];
+            _backGround2 = images[1];
 
             _culliethSprites = _cullieth.GetComponentsInChildren<SpriteRenderer>();
             _rabbilissSprites = _rabbiliss.GetComponentsInChildren<SpriteRenderer>();
@@ -37,10 +40,10 @@ namespace DCFrameWork.SceneSystem {
             _storyUIManager = storyUIManager;
         }
 
-        public void SetStoryData(StoryData storyData)
+        public async void SetStoryData(StoryData storyData)
         {
             _storyTextList = storyData.StoryText;
-            SetBackGround(storyData.BackGround);
+            await SetBackGround(storyData.BackGround[0], BackGroundSetType.None);
         }
 
         public void NextText() => _enumerator.MoveNext();
@@ -70,9 +73,26 @@ namespace DCFrameWork.SceneSystem {
             }
             EndStory();
         }
-        private void SetBackGround(Sprite sprite)
+        private async Task SetBackGround(Sprite sprite, BackGroundSetType type)
         {
-            _backGround.sprite = sprite;
+            switch (type) {
+                case BackGroundSetType.None:
+                    _backGround1.sprite = sprite;
+                    break;
+
+                case BackGroundSetType.Fade:
+                    _backGround2.sprite = sprite;
+
+                    //背景1をフェードアウトする
+                    while (_backGround1.color.a > 0) {
+                        Color newColor = _backGround1.color;
+                        newColor.a -= 30 * Time.deltaTime;
+                        _backGround1.color = newColor;
+                        await Awaitable.NextFrameAsync();
+                    }
+                    break;
+            }
+
         }
 
         private void CharacterHighlight(CharacterEnum character)
@@ -82,12 +102,12 @@ namespace DCFrameWork.SceneSystem {
                     ColorChange(_rabbilissSprites, Color.white);
                     ColorChange(_culliethSprites, Color.gray);
                     break;
-                
+
                 case CharacterEnum.Culieth:
                     ColorChange(_culliethSprites, Color.white);
                     ColorChange(_rabbilissSprites, Color.gray);
                     break;
-                
+
                 case CharacterEnum.None:
                     ColorChange(_rabbilissSprites, Color.gray);
                     ColorChange(_culliethSprites, Color.gray);
@@ -118,11 +138,15 @@ namespace DCFrameWork.SceneSystem {
             return true;
         }
 
-        private enum CharacterEnum
-        {
+        private enum CharacterEnum {
             None = 0,
             Culieth = 1 << 1,
             Rabbiliss = 1 << 2,
+        }
+
+        private enum BackGroundSetType {
+            None = 0,
+            Fade = 1,
         }
     }
 }

@@ -24,8 +24,8 @@ namespace DCFrameWork.SceneSystem
         private string _sheetName;
 
         [SerializeField]
-        private Sprite _backGround;
-        public Sprite BackGround { get => _backGround; }
+        private Sprite[] _backGround;
+        public Sprite[] BackGround { get => _backGround; }
 
         [SerializeField]
         private List<StoryText> _list = new();

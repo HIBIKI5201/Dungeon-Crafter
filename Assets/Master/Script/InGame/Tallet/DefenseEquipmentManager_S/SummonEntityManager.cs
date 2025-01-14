@@ -26,7 +26,6 @@ namespace DCFrameWork
             _agent = GetComponent<NavMeshAgent>();
             if (transform.parent.TryGetComponent(out _turretManager))
                 SetTarget();
-            //_startPos = transform.position;
         }
         void Start()
         {
@@ -59,9 +58,6 @@ namespace DCFrameWork
                 }
                 else
                 {
-                    //Debug.Log("タレットくんに帰る");
-                    //if (_agent.isOnNavMesh)
-                    //    _agent.SetDestination(_startPos);
                     if (_agent.isOnNavMesh)
                         _agent.ResetPath();
                     _target = null;
@@ -90,7 +86,6 @@ namespace DCFrameWork
             {
                 if (other.gameObject == _target.gameObject)
                 {
-                    Debug.Log("あたった");
                     TargetsAddDamage(_target, _turretManager.EntityAttack);
                     TargetAddCondition(_target, ConditionType.weakness);
                     TargetAddHitStop(_target, _hitStopTime);

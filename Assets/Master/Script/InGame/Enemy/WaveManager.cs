@@ -9,10 +9,9 @@ namespace DCFrameWork.Enemy
     {
         [SerializeField] EnemyGenerator _enemyGenerators;
         [SerializeField] PhaseData _phaseData;
-        [SerializeField] string _homeSceneName;
 
-        [SerializeField] int _waveCount;
-        [SerializeField] int _loopCount = 1;
+        int _waveCount;
+        int _loopCount = 1;
         int _waveEnemySum;
         static int _deathEemyCount;
 

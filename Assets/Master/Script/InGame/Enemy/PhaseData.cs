@@ -5,12 +5,20 @@ namespace DCFrameWork.Enemy
     [CreateAssetMenu(menuName = "GameData/PhaseData", fileName = "PhaseData")]
     public class PhaseData : ScriptableObject
     {
-        public WaveData[] _waveData;
+        [SerializeField] WaveDataSelection[] _waveData;
+        public WaveDataSelection[] WaveData { get => _waveData; }
+    }
+    [System.Serializable]
+    public class WaveDataSelection
+    {
+        [SerializeField] WaveData[] _selectionWaveData;
+        public WaveData[] SelectintWaveData { get => _selectionWaveData; }
     }
     [System.Serializable]
     public struct WaveData
     {
-        public EnemySpawnData[] _spawnData;
+        [SerializeField] EnemySpawnData[] _spawnData;
+        public EnemySpawnData[] SpawnData { get => _spawnData; }
     }
     [System.Serializable]
     public struct EnemySpawnData

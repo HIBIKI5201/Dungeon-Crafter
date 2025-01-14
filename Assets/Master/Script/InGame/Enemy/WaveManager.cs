@@ -1,8 +1,9 @@
+using DCFrameWork.MainSystem;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using DCFrameWork.MainSystem;
+using Random = UnityEngine.Random;
 
 namespace DCFrameWork.Enemy
 {
@@ -10,50 +11,56 @@ namespace DCFrameWork.Enemy
     {
         [SerializeField] EnemyGenerator _enemyGenerators;
         [SerializeField] PhaseData _phaseData;
-        [SerializeField] string _homeSceneName;
+        [SerializeField] float _startWaveWaitingTime = 20;
 
         int _waveCount;
+        int _loopCount = 1;
         int _waveEnemySum;
         static int _deathEemyCount;
 
         public event Action _waveStartAction;
         public event Action _waveEndAction;
         public event Action _phaseEndAction;
+        static Action _addDeathCountAction;
 
-        public int WaveCount { get => _waveCount; }
+        public int WaveCount { get => _waveCount; private set => _waveCount = value; }
+        int CurrentWaveIndex { get => _waveCount % _phaseData.WaveData.Length; }
         /// <summary>
         /// ウェーブの進行状況を正規化した値
         /// </summary>
-        public float WaveProgressNormal { get => (float)_deathEemyCount / (_waveEnemySum != 0 ? _waveEnemySum : 1); }
-        WaveData ActiveWave { get => _phaseData._waveData[_waveCount]; }
+        public float WaveProgressNormalize { get => (float)_deathEemyCount / (_waveEnemySum != 0 ? _waveEnemySum : 1); }
 
-        public void Initialize()
+        public async void Initialize()
         {
             if (!_phaseData)
             {
                 Debug.Log("PhaseData is null");
                 return;
             }
+            _addDeathCountAction = WaveEndCheck;
             _waveStartAction += () => NextWave();
+            await Awaitable.WaitForSecondsAsync(_startWaveWaitingTime);
             _waveStartAction?.Invoke();
             Debug.Log("WaveStart");
         }
 
-        void Update()
+        void WaveEndCheck()
         {
-
-            if (WaveProgressNormal >= 1)
+            if (WaveProgressNormalize >= 1)
             {
-                if (_waveCount != _phaseData._waveData.Length)
+                WaveCount++;
+                if (CurrentWaveIndex == 0)
                 {
-                    Debug.Log("WaveEnd");
-                    _waveEndAction?.Invoke();
+                    Debug.Log("pheseEnd" + $"WaveCount:{WaveCount}");
+                    _loopCount++;
+                    _phaseEndAction?.Invoke();
                     _waveStartAction?.Invoke();
                 }
                 else
                 {
-                    _phaseEndAction?.Invoke();
-                    SceneChanger.LoadScene(SceneKind.Home);
+                    Debug.Log("WaveEnd");
+                    _waveEndAction?.Invoke();
+                    _waveStartAction?.Invoke();
                 }
             }
         }
@@ -61,10 +68,22 @@ namespace DCFrameWork.Enemy
         void NextWave()
         {
             _deathEemyCount = 0;
-            _enemyGenerators.Waving(ActiveWave);
-            _waveEnemySum = ActiveWave._spawnData.Sum(data => data._enemyCount);
-            _waveCount++;
+
+            //選択肢の中からランダムなデータを取得
+            var waveData = _phaseData.WaveData[CurrentWaveIndex].
+                SelectintWaveData[Random.Range(0,_phaseData.WaveData.Length)];
+
+            waveData.SpawnData.Select(x => x._enemyLevel += _loopCount - 1);//周回ごとのレベル上昇
+            Debug.Log(_loopCount - 1);
+            _waveEnemySum = waveData.SpawnData.Sum(data => data._enemyCount);
+
+            _enemyGenerators.Waving(waveData);
         }
-        public static void EnemyDeathCount() => ++_deathEemyCount;　//エネミー死亡時に呼んでほしい
+        public static void EnemyDeathCount()　//エネミー死亡時に呼んでほしい
+        {
+            ++_deathEemyCount; 
+            _addDeathCountAction?.Invoke();
+        }
+
     }
 }

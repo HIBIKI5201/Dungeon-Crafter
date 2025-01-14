@@ -24,6 +24,10 @@ namespace DCFrameWork.SceneSystem
         private string _sheetName;
 
         [SerializeField]
+        private Sprite _backGround;
+        public Sprite BackGround { get => _backGround; }
+
+        [SerializeField]
         private List<StoryText> _list = new();
         public List<StoryText> StoryText { get => _list;  }
 #if UNITY_EDITOR
@@ -49,8 +53,8 @@ namespace DCFrameWork.SceneSystem
                 if (string.IsNullOrWhiteSpace(line)) continue;
 
                 // s‚ðƒJƒ“ƒ}‚Å•ªŠ„
-                string[] elements = line.Split(',').Select(s => s.Replace("\"", "").Trim()).ToArray();
-                if (int.Parse(elements[4]) == 0) {
+                string[] elements = line.Split(',').Select(s => s.Replace("\"", "").Replace('/', '\n').Trim()).ToArray();
+                if (int.Parse(elements[4]) == 0 && string.IsNullOrEmpty(elements[3])) {
                     break;
                 }
 

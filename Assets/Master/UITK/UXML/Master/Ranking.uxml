@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/Master/UITK/USS/Master/Font.uss?fileID=7433441132597879392&amp;guid=8c8dbfa7dccd14b4ebdfec63316899cc&amp;type=3#Font" />
+    <ui:VisualElement class="font-style" style="background-color: rgba(0, 0, 0, 0.31); width: 100%; height: 100%; left: auto; right: auto; position: relative; transform-origin: center;">
+        <ui:Label text="ランキング" parse-escape-sequences="false" enabled="true" name="RankingTitle" class="font-style" style="-unity-font-style: bold; font-size: 100px; -unity-text-align: middle-center; background-color: rgba(255, 255, 255, 0.64); background-size: 100% 100%; width: 50%; height: 15%; transform-origin: center; translate: 50% 0;" />
+        <ui:VisualElement style="left: auto; right: auto; width: 10%; height: 10%; transform-origin: center; translate: 250% 90%;">
+            <ui:Label text="１位" parse-escape-sequences="false" display-tooltip-when-elided="true" triple-click-selects-line="true" style="width: auto; height: auto; background-size: 100% 100%; transform-origin: left top; translate: 0 0; font-size: 54px; left: auto; right: auto; position: relative; justify-content: flex-start;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

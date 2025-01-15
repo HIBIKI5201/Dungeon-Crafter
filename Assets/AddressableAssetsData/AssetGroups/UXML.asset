@@ -50,6 +50,11 @@ MonoBehaviour:
     m_SerializedLabels:
     - UXML
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fee3ef8d9da3d8048bc2e2c23a8f3e84
+    m_Address: UXML/RankingPanel.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 78caf16212ce2204c91a95cf38907ede, type: 2}
   m_SchemaSet:

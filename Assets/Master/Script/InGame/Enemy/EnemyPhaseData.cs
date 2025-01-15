@@ -3,7 +3,7 @@ using UnityEngine;
 namespace DCFrameWork.Enemy
 {
     [CreateAssetMenu(menuName = "GameData/EnemyWaveData", fileName = "EnemyWaveData")]
-    public class EnemyWaveData : ScriptableObject
+    public class EnemyPhaseData : ScriptableObject
     {
         [SerializeField] RandomPhaseDataSelection[] _PhaseData;
         public RandomPhaseDataSelection[] WaveData { get => _PhaseData; }

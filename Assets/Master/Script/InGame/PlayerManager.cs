@@ -6,10 +6,11 @@ namespace DCFrameWork
 {
     public class PlayerManager : MonoBehaviour
     {
+        [SerializeField] int _DefaltTreasureHp = 100;
         static int _treasureHp = 100;
         static float _gold;
         static Dictionary<DefenseObjectsKind, int> _defenseObjectsValue = new();
-        public static Dictionary<DefenseObjectsKind, int> TurretInventory{  get => _defenseObjectsValue; }
+        public static Dictionary<DefenseObjectsKind, int> TurretInventory { get => _defenseObjectsValue; }
         public static int TreasureHp { get => _treasureHp; }
         public static float Gold { get => _gold; }
 
@@ -25,13 +26,21 @@ namespace DCFrameWork
 
         public void Initialize()
         {
+            //staticの初期化
+            _startGold = 0;
+            _treasureHp = _DefaltTreasureHp;
+            _gameOverEvent = null;
+            _getGold = null;
+            _levelUpAction = null;
+            _defenseObjectsValue = new();
+
+
             _levelManager = GetComponentInChildren<LevelManager>();
             _levelManager.OnLevelChanged += x => GetRandomDefenseObj();
-            for(int i = 0; i < _startTurretCount; i++)
+            for (int i = 0; i < _startTurretCount; i++)
             {
                 SetDefenseObject(DefenseObjectsKind.MiddleShootTurret);
             }
-            _startGold = 0;
         }
 
         public static void HPDown(int damage)

@@ -2,20 +2,20 @@ using UnityEngine;
 
 namespace DCFrameWork.Enemy
 {
-    [CreateAssetMenu(menuName = "GameData/PhaseData", fileName = "PhaseData")]
-    public class PhaseData : ScriptableObject
+    [CreateAssetMenu(menuName = "GameData/EnemyWaveData", fileName = "EnemyWaveData")]
+    public class EnemyWaveData : ScriptableObject
     {
-        [SerializeField] WaveDataSelection[] _waveData;
-        public WaveDataSelection[] WaveData { get => _waveData; }
+        [SerializeField] RandomPhaseDataSelection[] _PhaseData;
+        public RandomPhaseDataSelection[] WaveData { get => _PhaseData; }
     }
     [System.Serializable]
-    public class WaveDataSelection
+    public class RandomPhaseDataSelection
     {
-        [SerializeField] WaveData[] _selectionWaveData;
-        public WaveData[] SelectintWaveData { get => _selectionWaveData; }
+        [SerializeField] PhaseData[] _selectionPhaseData;
+        public PhaseData[] SelectintWaveData { get => _selectionPhaseData; }
     }
     [System.Serializable]
-    public struct WaveData
+    public struct PhaseData
     {
         [SerializeField] EnemySpawnData[] _spawnData;
         public EnemySpawnData[] SpawnData { get => _spawnData; }

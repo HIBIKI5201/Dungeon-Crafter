@@ -10,7 +10,7 @@ namespace DCFrameWork.Enemy
     public class WaveManager : MonoBehaviour
     {
         [SerializeField] EnemyGenerator _enemyGenerators;
-        [SerializeField] PhaseData _phaseData;
+        [SerializeField] EnemyWaveData _phaseData;
         [SerializeField] float _startWaveWaitingTime = 20;
 
         int _waveCount;

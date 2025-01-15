@@ -21,13 +21,11 @@ namespace DCFrameWork.Enemy
         public EnemySpawnData[] SpawnData { get => _spawnData; }
     }
     [System.Serializable]
-    public struct EnemySpawnData
+    public class EnemySpawnData
     {
         public EnemyKind _enemyType;
-        public int _enemyLevel;
-        public int _enemyCount;
-        public float _spawnStartTime;
-        public float _spawnEndTime;
-        public int _spawnPoint;
+        public int _enemyLevel = 1;
+        public float _spawnTime = 0;
+        [HideInInspector] public int _spawnPoint = 0;
     }
 }

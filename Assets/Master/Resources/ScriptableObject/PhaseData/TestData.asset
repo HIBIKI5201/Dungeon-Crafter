@@ -12,40 +12,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d66383cb86777446b12588577564234, type: 3}
   m_Name: TestData
   m_EditorClassIdentifier: 
-  _waveData:
-  - _selectionWaveData:
+  _PhaseData:
+  - _selectionPhaseData:
+    - _spawnData:
+      - _enemyType: 0
+        _enemyLevel: 1
+        _spawnTime: 1
+        _spawnPoint: 0
     - _spawnData:
       - _enemyType: 1
         _enemyLevel: 1
-        _enemyCount: 5
-        _spawnStartTime: 0
-        _spawnEndTime: 5
+        _spawnTime: 1
         _spawnPoint: 0
+      - _enemyType: 3
+        _enemyLevel: 1
+        _spawnTime: 1
+        _spawnPoint: 0
+  - _selectionPhaseData:
     - _spawnData:
       - _enemyType: 0
         _enemyLevel: 1
-        _enemyCount: 5
-        _spawnStartTime: 0
-        _spawnEndTime: 5
+        _spawnTime: 0
         _spawnPoint: 0
-  - _selectionWaveData:
+      - _enemyType: 0
+        _enemyLevel: 1
+        _spawnTime: 0
+        _spawnPoint: 0
     - _spawnData:
       - _enemyType: 1
         _enemyLevel: 1
-        _enemyCount: 5
-        _spawnStartTime: 0
-        _spawnEndTime: 5
+        _spawnTime: 1
         _spawnPoint: 0
-      - _enemyType: 0
+      - _enemyType: 3
         _enemyLevel: 1
-        _enemyCount: 5
-        _spawnStartTime: 0
-        _spawnEndTime: 5
-        _spawnPoint: 0
-    - _spawnData:
-      - _enemyType: 0
-        _enemyLevel: 1
-        _enemyCount: 10
-        _spawnStartTime: 0
-        _spawnEndTime: 5
+        _spawnTime: 1
         _spawnPoint: 0

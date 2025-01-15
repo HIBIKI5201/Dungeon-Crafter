@@ -75,7 +75,7 @@ namespace DCFrameWork.Enemy
 
             waveData.SpawnData.Select(x => x._enemyLevel += _loopCount - 1);//Žü‰ñ‚²‚Æ‚ÌƒŒƒxƒ‹ã¸
             Debug.Log(_loopCount - 1);
-            _waveEnemySum = waveData.SpawnData.Sum(data => data._enemyCount);
+            _waveEnemySum = waveData.SpawnData.Length;
 
             _enemyGenerators.Waving(waveData);
         }

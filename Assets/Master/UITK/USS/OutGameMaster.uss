@@ -1,0 +1,18 @@
+.setting-button {
+    transition-duration: 0.1s;
+    transition-timing-function: ease-in-out-circ;
+}
+
+.setting-button:hover {
+    scale: 1.05 1.05;
+    transition-timing-function: ease-out-cubic;
+    transition-delay: 0.1s;
+    transition-duration: 0.1s;
+}
+
+.setting-button:active {
+    scale: 0.95 0.95;
+    transition-delay: 0.1s;
+    transition-timing-function: ease-in-out-cubic;
+    transition-duration: 0.1s;
+}

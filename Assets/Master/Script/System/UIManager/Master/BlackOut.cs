@@ -22,7 +22,6 @@ public partial class BlackOut : VisualElement
             }
             _blackOut.RemoveFromClassList("black-out-true");
             _blackOut.AddToClassList("black-out-false");
-            return;
         }
     }
     private async Task Initialize()

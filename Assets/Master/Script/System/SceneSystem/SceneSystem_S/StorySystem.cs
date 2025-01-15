@@ -27,8 +27,6 @@ namespace DCFrameWork.SceneSystem {
 
         public async void SetStorySceneData(StoryLoadData data)
         {
-            Debug.Log(data.sceneKind);
-            Debug.Log(data.StoryData);
             _storyManager?.SetStoryData(data.StoryData);
             _sceneKind = data.sceneKind;
             await Awaitable.WaitForSecondsAsync(1);
@@ -42,7 +40,7 @@ namespace DCFrameWork.SceneSystem {
 
 #if UNITY_EDITOR
         [ContextMenu("DebugStory")]
-        private void DebugStory()
+        public void DebugStory()
         {
             SetStorySceneData(new StoryLoadData() { StoryData = _debugStoryData, sceneKind = SceneKind.Home});
         }

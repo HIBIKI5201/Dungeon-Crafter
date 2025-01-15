@@ -1,6 +1,7 @@
 using DCFrameWork.MainSystem;
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,17 +12,17 @@ namespace DCFrameWork.SceneSystem {
         private Image _backGround1;
         private Image _backGround2;
 
-        private IEnumerator _enumerator;
-        private List<StoryText> _storyTextList;
+        private IAsyncEnumerator<int?> _enumerator;
+        private StoryData _storyData;
 
         private StoryUIManager _storyUIManager;
 
         [SerializeField]
-        private GameObject _cullieth;
-        private SpriteRenderer[] _culliethSprites;
+        private GameObject _creato;
+        private SpriteRenderer[] _creatoSprites;
         [SerializeField]
-        private GameObject _rabbiliss;
-        private SpriteRenderer[] _rabbilissSprites;
+        private GameObject _labiris;
+        private SpriteRenderer[] _labirisSprites;
 
         private void Awake()
         {
@@ -30,8 +31,8 @@ namespace DCFrameWork.SceneSystem {
             _backGround1 = images[0];
             _backGround2 = images[1];
 
-            _culliethSprites = _cullieth.GetComponentsInChildren<SpriteRenderer>();
-            _rabbilissSprites = _rabbiliss.GetComponentsInChildren<SpriteRenderer>();
+            _creatoSprites = _creato.GetComponentsInChildren<SpriteRenderer>();
+            _labirisSprites = _labiris.GetComponentsInChildren<SpriteRenderer>();
         }
 
         public void Initialize(StoryUIManager storyUIManager)
@@ -42,75 +43,128 @@ namespace DCFrameWork.SceneSystem {
 
         public async void SetStoryData(StoryData storyData)
         {
-            _storyTextList = storyData.StoryText;
-            await SetBackGround(storyData.BackGround[0], BackGroundSetType.None);
+            _storyData = storyData;
+            SetBackGround(storyData.BackGround[0]);
         }
 
-        public void NextText() => _enumerator.MoveNext();
+        public void NextText() => _enumerator.MoveNextAsync();
 
-        private IEnumerator PlayStoryContext()
+        private async IAsyncEnumerator<int?> PlayStoryContext()
         {
             int count = 0;
-            while (count < _storyTextList.Count) {
-                StoryText storyText = _storyTextList[count];
+
+#if UNITY_EDITOR
+            StorySystem storySystem = GetComponent<StorySystem>();
+            storySystem.DebugStory();
+#endif
+
+            while (count < _storyData.StoryText.Count) {
+                StoryText storyText = _storyData.StoryText[count];
+
+                string[] animations = storyText.Animation.Split();
+                await AnimationAsync(animations);
 
                 //サウンドとUIを更新
                 _storyUIManager.TextBoxUpdate(storyText.Character, storyText.Text);
-                _audioSource.PlayOneShot(storyText.AudioClip);
+                if (storyText.AudioClip != null) {
+                    _audioSource.PlayOneShot(storyText.AudioClip);
+                }
 
                 //もしクリエトかラビリスならハイライト
                 CharacterEnum character = storyText.Character switch {
-                    "クリエト" => CharacterEnum.Culieth,
-                    "ラビリス" => CharacterEnum.Rabbiliss,
+                    "クリエト" => CharacterEnum.Creato,
+                    "ラビリス" => CharacterEnum.Labiris,
                     _ => CharacterEnum.None,
                 };
                 CharacterHighlight(character);
 
                 count++;
 
-                Debug.Log($"{storyText.Character} {storyText.Animation}\n{storyText.Text}");
+                Debug.Log($"<b>{storyText.Character}</b> {storyText.Animation}\n{storyText.Text}");
                 yield return null;
             }
             EndStory();
         }
-        private async Task SetBackGround(Sprite sprite, BackGroundSetType type)
+
+        private async Task AnimationAsync(string[] animations)
         {
-            switch (type) {
-                case BackGroundSetType.None:
-                    _backGround1.sprite = sprite;
-                    break;
+            foreach (string animation in animations) {
+                if (string.IsNullOrEmpty(animation)) {
+                    continue;
+                }
 
-                case BackGroundSetType.Fade:
-                    _backGround2.sprite = sprite;
+                //アニメーションの種類を取得
+                string animationContext = new string(animation
+                                    .TakeWhile(c => c != '[')
+                                    .ToArray());
 
-                    //背景1をフェードアウトする
-                    while (_backGround1.color.a > 0) {
-                        Color newColor = _backGround1.color;
-                        newColor.a -= 30 * Time.deltaTime;
-                        _backGround1.color = newColor;
-                        await Awaitable.NextFrameAsync();
+                //アニメーションごとの処理
+                switch (animationContext) {
+                    case "立ち絵出現":
+                        string character = GetIndexer();
+                        Debug.Log($"立ち絵出現 <b>{character}</b>");
+                        break;
+                    case "暗転解除":
+                        Debug.Log("暗転解除");
+                        break;
+                    case "Jump":
+                        Debug.Log("Jump");
+                        break;
+                    default:
+                        Debug.LogWarning($"<b><color=yellow>{animationContext}</color></b>というアニメーションはありません");
+                        break;
+                }
+
+                string GetIndexer()
+                {
+                    //[]で囲ってある部分を取得
+                    const string pattern = @"\[(.*?)\]";
+                    var matchCollection = Regex.Matches(animation, pattern);
+                    string indexer = string.Empty;
+                    if (matchCollection.Count > 0) {
+                        indexer = matchCollection[0].Groups[1].Value;
                     }
-                    break;
+                    return indexer;
+                }
             }
+        }
 
+        private void SetBackGround(Sprite sprite)
+        {
+            _backGround1.sprite = sprite;
+        }
+
+        private async Task FadeBackGround(Sprite sprite)
+        {
+            _backGround2.sprite = sprite;
+
+            //背景1をフェードアウトする
+            while (_backGround1.color.a > 0) {
+                Color newColor = _backGround1.color;
+                newColor.a -= 0.5f * Time.deltaTime;
+                _backGround1.color = newColor;
+                await Awaitable.NextFrameAsync();
+            }
+            _backGround1.sprite = sprite;
+            _backGround1.color = Color.white;
         }
 
         private void CharacterHighlight(CharacterEnum character)
         {
             switch (character) {
-                case CharacterEnum.Rabbiliss:
-                    ColorChange(_rabbilissSprites, Color.white);
-                    ColorChange(_culliethSprites, Color.gray);
+                case CharacterEnum.Labiris:
+                    ColorChange(_labirisSprites, Color.white);
+                    ColorChange(_creatoSprites, Color.gray);
                     break;
 
-                case CharacterEnum.Culieth:
-                    ColorChange(_culliethSprites, Color.white);
-                    ColorChange(_rabbilissSprites, Color.gray);
+                case CharacterEnum.Creato:
+                    ColorChange(_creatoSprites, Color.white);
+                    ColorChange(_labirisSprites, Color.gray);
                     break;
 
                 case CharacterEnum.None:
-                    ColorChange(_rabbilissSprites, Color.gray);
-                    ColorChange(_culliethSprites, Color.gray);
+                    ColorChange(_labirisSprites, Color.gray);
+                    ColorChange(_creatoSprites, Color.gray);
                     break;
             }
 
@@ -140,13 +194,8 @@ namespace DCFrameWork.SceneSystem {
 
         private enum CharacterEnum {
             None = 0,
-            Culieth = 1 << 1,
-            Rabbiliss = 1 << 2,
-        }
-
-        private enum BackGroundSetType {
-            None = 0,
-            Fade = 1,
+            Creato = 1 << 1,
+            Labiris = 1 << 2,
         }
     }
 }

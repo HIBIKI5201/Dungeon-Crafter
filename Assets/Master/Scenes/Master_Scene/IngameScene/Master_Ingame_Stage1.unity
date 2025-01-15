@@ -1993,6 +1993,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8651929433404874125, guid: 4ba936171b0fad44c8d5e2605781657e,
+        type: 3}
+      propertyPath: m_TagString
+      value: DisappearOnBack
+      objectReference: {fileID: 0}
     - target: {fileID: 8842184271255390353, guid: 4ba936171b0fad44c8d5e2605781657e,
         type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -2031,7 +2036,11 @@ PrefabInstance:
         type: 3}
       insertIndex: 45
       addedObject: {fileID: 1580223729}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8993581104563411696, guid: 4ba936171b0fad44c8d5e2605781657e,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1711075820}
   m_SourcePrefab: {fileID: 100100000, guid: 4ba936171b0fad44c8d5e2605781657e, type: 3}
 --- !u!4 &1711075818 stripped
 Transform:
@@ -2039,6 +2048,25 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1711075817}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1711075819 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8993581104563411696, guid: 4ba936171b0fad44c8d5e2605781657e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1711075817}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1711075820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1711075819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0b0d0902287e784f81a7ee34dbb0e3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cAngle: -0.295
 --- !u!1001 &1806754411
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2126,7 +2154,7 @@ PrefabInstance:
     - target: {fileID: 3230375918257091528, guid: 77fd2a5407b56e54d8e660f62bd21e54,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 1133
+      value: 1145
       objectReference: {fileID: 0}
     - target: {fileID: 3538332611585799522, guid: 77fd2a5407b56e54d8e660f62bd21e54,
         type: 3}

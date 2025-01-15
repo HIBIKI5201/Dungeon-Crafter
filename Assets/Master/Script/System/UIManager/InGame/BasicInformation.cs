@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using DCFrameWork;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -9,25 +10,16 @@ using UnityEngine.UIElements;
 public partial class BasicInformation : VisualElement
 {
     public Task InitializeTask { get; private set; }
-
-    Button _menu;
-    VisualElement _waveGuege;
-    VisualElement _expGuege;
-    Label _waveText;
-    Label _expText;
-    Label _goldText;
-    Label _levelText;
-    Label _killEnemyCountText;
-    Label _equipmentText;
-    public Action MenuButton { set => _menu.clicked += value; }
-    public float WaveGuege { set => _waveGuege.style.width = Length.Percent(value * 100); }
-    public float EXPGuege { set => _expGuege.style.width = Length.Percent(value * 100); }
-    public string WaveText { set => _waveText.text = value; }
-    public string EXPText { set => _expText.text = value; }
-    public string GoldText { set => _goldText.text = value; }
-    public string LevelText { set => _levelText.text = value; }
-    public string KillEnemyCountText { set => _killEnemyCountText.text = value; }
-    public string EquipmentText { set => _equipmentText.text = value; }
+    private GuageMesh _guageMesh;
+    private VisualElement _eXPGuage;
+    private Label _eXPText;
+    private Label _phaseText;
+    private Button _menuButton;
+    public GuageMesh GuageMesh{get => _guageMesh;set => _guageMesh = value;}
+    public VisualElement EXPGuage{get => _eXPGuage;set => _eXPGuage = value;}
+    public Label EXPText{get => _eXPText;set => _eXPText = value;}
+    public Label PhaseText{get => _phaseText;set => _phaseText = value;}
+    public Button MenuButton{get => _menuButton;set => _menuButton = value;}
     public BasicInformation() => InitializeTask = Initialize();
     private async Task Initialize()
     {
@@ -45,26 +37,16 @@ public partial class BasicInformation : VisualElement
             container.RegisterCallback<KeyDownEvent>(e => e.StopImmediatePropagation());
             container.pickingMode = PickingMode.Ignore;
             hierarchy.Add(container);
-
-            // UI要素の取得
-            _menu = container.Q<Button>("MenuButton");
-            _waveGuege = container.Q<VisualElement>("WaveGuege");
-            _expGuege = container.Q<VisualElement>("EXPGuege");
-            _waveText = container.Q<Label>("WaveText");
-            _expText = container.Q<Label>("EXPText");
-            _goldText = container.Q<Label>("GoldText");
-            _levelText = container.Q<Label>("LevelText");
-            _killEnemyCountText = container.Q<Label>("KillEnemyCountText");
-            _equipmentText = container.Q<Label>("EquipmentText");
-
-            Debug.Log("ウィンドウは正常にロード完了");
+            _guageMesh = container.Q<GuageMesh>("PhaseGuage");
+            _eXPGuage = container.Q<VisualElement>("EXPGuage");
+            _eXPText = container.Q<Label>("EXPText");
+            _phaseText = container.Q<Label>("PhaseText");
+            _menuButton = container.Q<Button>("MenuButton");
         }
         else
         {
             Debug.LogError("Failed to load UXML file from Addressables: UXML/BasicInformation.uxml");
         }
-
-        // メモリの解放
         Addressables.Release(handle);
     }
 }

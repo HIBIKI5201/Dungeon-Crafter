@@ -16,7 +16,6 @@ namespace DCFrameWork
         {
             if (Input.GetKeyDown("k"))
             {
-                _inGameUiManager.WaveGuageUpdate(321, 0.5f);
                 _inGameUiManager.EquipmentSettingWindowVisible(true);
             }
         }

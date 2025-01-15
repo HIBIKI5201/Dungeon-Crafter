@@ -1,6 +1,6 @@
 Slider #unity-dragger {
-    background-color: rgba(174, 255, 0, 0);
-    background-image: url("project://database/Assets/Master/UITK/UI_option_slider%20(1).psd?fileID=47557884172637382&guid=ad6b3d4a4286ae348bd183551821b1aa&type=3#つまみ");
+    background-color: rgba(255, 255, 255, 0);
+    background-image: url('project://database/Assets/Master/UITK/UI_option_slider%20(1).psd?fileID=47557884172637382&guid=ad6b3d4a4286ae348bd183551821b1aa&type=3#つまみ');
     border-top-width: -183px;
     border-right-width: -183px;
     border-bottom-width: -183px;
@@ -17,7 +17,7 @@ Slider #unity-tracker {
     border-right-width: -111px;
     border-bottom-width: -111px;
     border-left-width: -111px;
-    background-image: url("project://database/Assets/Master/UITK/UI_option_slider%20(1).psd?fileID=-7721171265738475475&guid=ad6b3d4a4286ae348bd183551821b1aa&type=3#バー　背景");
+    background-image: url("project://database/Assets/Master/UITK/Picture/UI_option_slider%20(1).psd?fileID=-7721171265738475475&guid=ad6b3d4a4286ae348bd183551821b1aa&type=3#バー　背景");
     -unity-background-image-tint-color: rgb(255, 255, 255);
     -unity-background-scale-mode: stretch-to-fill;
 }
@@ -34,7 +34,7 @@ Slider #unity-fill {
     border-right-width: -191px;
     border-bottom-width: -191px;
     border-left-width: -191px;
-    background-image: url("project://database/Assets/Master/UITK/UI_option_slider%20(1).psd?fileID=8236461989041897644&guid=ad6b3d4a4286ae348bd183551821b1aa&type=3#－");
+    background-image: url('project://database/Assets/Master/UITK/UI_option_slider%20(1).psd?fileID=8236461989041897644&guid=ad6b3d4a4286ae348bd183551821b1aa&type=3#－');
     background-color: rgba(188, 188, 188, 0);
     -unity-background-scale-mode: scale-to-fit;
     width: 9%;
@@ -47,6 +47,7 @@ Slider #unity-fill {
     scale: 1.05 1.05;
     transition-timing-function: ease-in-out-cubic;
     transition-duration: 0.1s;
+    background-image: url("project://database/Assets/Master/UITK/Picture/UI_option_slider%20(1).psd?fileID=47557884172637382&guid=ad6b3d4a4286ae348bd183551821b1aa&type=3#つまみ");
 }
 
 .minus-button:active {

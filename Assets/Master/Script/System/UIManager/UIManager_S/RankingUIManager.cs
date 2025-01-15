@@ -1,6 +1,5 @@
 using DCFrameWork.UI;
 using System;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -12,6 +11,7 @@ namespace DCFrameWork.UI
         Label[] _labels = new Label[3];
         UIDocument _uiDocument;
         private int[] _scores = new int[4];
+        public int[] _saveScores = new int[3];
         private void Start()
         {
             if (instance == null)
@@ -48,5 +48,21 @@ namespace DCFrameWork.UI
             }
         }
 
+        public int[] SaveScore()
+        {
+            for(int i = 0; i < 3; i++)
+            {
+                _saveScores[i] = _scores[i];
+            }
+            return _saveScores;
+        }
+
+        public void LoadScore(int[] scores)
+        {
+            for (int i = 0;i < 3;i++)
+            {
+                _scores[i] = scores[i];
+            }
+        }
     }
 }

@@ -12,7 +12,8 @@ namespace DCFrameWork.DefenseEquipment
         bool _isPaused = false;
         [SerializeField] LayerMask _enemyLayer;
         [SerializeField] float _raySize = 5;
-        
+        [SerializeField] ParticleSystem _particle;
+
 
         protected override void Start_S()
         {
@@ -37,6 +38,7 @@ namespace DCFrameWork.DefenseEquipment
         {
             var criticalPoint = Random.Range(0, 100);
             var targetSelect = TargetSelect();
+            _enemyPos = targetSelect.Obj.transform.position;
             var originPos = new Vector3(transform.position.x, targetSelect.Obj.transform.position.y, transform.position.z);
             var direction = targetSelect.Obj.transform.position - originPos;
             var hits = Physics.BoxCastAll(originPos, Vector3.one * _raySize / 2, direction, Quaternion.identity, Range * 5);
@@ -57,7 +59,14 @@ namespace DCFrameWork.DefenseEquipment
 
         void BulletShoot()
         {
-
+            if (_particle)
+            {
+                var dir = _enemyPos - _bulletPos;
+                _particle.transform.forward = dir;
+                _particle.Play();
+            }
+            else
+                Debug.Log("パーティクルがアサインされておりません");
         }
         protected override void Pause()
         {

@@ -60,10 +60,10 @@ namespace DCFrameWork.Enemy
         }
 
 
-        public void Waving(WaveData waveData)
+        public void Waving(PhaseData waveData)
         {
             var kinds = _objects.Select(e => e.kind);
-            foreach (var a in waveData._spawnData)
+            foreach (var a in waveData.SpawnData)
             {
                 if (kinds.Contains(a._enemyType))
                 {

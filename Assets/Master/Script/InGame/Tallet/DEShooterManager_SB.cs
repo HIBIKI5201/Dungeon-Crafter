@@ -1,4 +1,4 @@
-using DCFrameWork.Enemy;
+﻿using DCFrameWork.Enemy;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -10,7 +10,12 @@ namespace DCFrameWork.DefenseEquipment
         protected List<(GameObject Obj, IFightable Interface)> _enemyList = new();
         [SerializeField] protected GameObject _turretModel;
         [SerializeField] protected Animator _anim;
-        protected (GameObject Obj, IFightable Interface) _targetSelect;
+        protected Vector3 _enemyPos;
+        [SerializeField] protected GameObject _bullet;
+        [Tooltip("矢が着弾するまでの時間")] protected float _hitTime = 0.2f;
+        [Tooltip("矢の初期位置")] protected Vector3 _bulletPos;
+        protected float _shootTimer;
+        protected bool _isShoot;
 
         protected override void Start_SB()
         {
@@ -29,9 +34,10 @@ namespace DCFrameWork.DefenseEquipment
         protected virtual void EnemyAttack()
         {
             var criticalPoint = Random.Range(0, 100);
-            _targetSelect = TargetSelect();
-            TargetsAddDamage(_targetSelect.Interface, criticalPoint <= Critical ? Attack * 3 : Attack);
-            TurretRotate(_targetSelect.Obj.transform);
+            var targetSelect = TargetSelect();
+            _enemyPos = targetSelect.Obj.transform.position;
+            TargetsAddDamage(targetSelect.Interface, criticalPoint <= Critical ? Attack * 3 : Attack);
+            TurretRotate(targetSelect.Obj.transform);
             _anim.SetTrigger("Attack");
         }
 

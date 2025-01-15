@@ -1,4 +1,3 @@
-using DCFrameWork.Enemy;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +7,9 @@ namespace DCFrameWork.MainSystem
     public class SaveDataManager
     {
         private const byte _key = 173;
-        private static GameSaveData _saveData = null;
+        private static GameSaveData _saveData = new();
         public static Action<GameSaveData> OnSaveDataChanged;
+
         public static GameSaveData SaveData
         {
             get => _saveData;
@@ -22,6 +22,7 @@ namespace DCFrameWork.MainSystem
             get => _settingSaveData;
             private set => _settingSaveData = value;
         }
+        public static int StoryKey { get => SaveData.StoryKey; }
 
         public static void Save()
         {
@@ -38,6 +39,12 @@ namespace DCFrameWork.MainSystem
         {
             (GameSaveData data_g, SettingSaveData data_s) = (JsonUtility.FromJson<GameSaveData>(Encryption(PlayerPrefs.GetString("GemeSaveData"))),
                 JsonUtility.FromJson<SettingSaveData>(Encryption(PlayerPrefs.GetString("SettintgSaveData"))));
+
+            if (data_g == null)
+                data_g = new GameSaveData();
+            if (data_s == null)
+                data_s = new SettingSaveData();
+
             SaveData = data_g;
             SettingSaveData = data_s;
             return (data_g, data_s);
@@ -45,6 +52,8 @@ namespace DCFrameWork.MainSystem
 
         static string Encryption(string data) =>
             new string(data.Select(x => (char)(x ^ _key)).ToArray());
+
+        public static void AddStoryKey(int value) => SaveData.StoryKey += value;
     }
 
     [Serializable]
@@ -54,11 +63,7 @@ namespace DCFrameWork.MainSystem
         public int PowerUpItemValue = 0;
         public List<int> PowerUpDatas = Enumerable.Repeat(0, Enum.GetValues(typeof(DefenseObjectsKind)).Length).ToList();
         public int EventFlag = 0;
-        //図鑑のセーブデータ。
-        public int EnemyCollectionFrag = 0;
-        public int DefenseCollectionFrag = 0;
-        public int AudioCollectionFrag = 0;
-        public Dictionary<EnemyKind, int> EnemyKillCount = new Dictionary<EnemyKind, int>();
+        public int StoryKey = 0;
     }
     [Serializable]
     public class SettingSaveData

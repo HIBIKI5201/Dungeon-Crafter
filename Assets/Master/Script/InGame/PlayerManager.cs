@@ -9,23 +9,30 @@ namespace DCFrameWork
         static int _treasureHp = 100;
         static float _gold;
         static Dictionary<DefenseObjectsKind, int> _defenseObjectsValue = new();
-        public static Dictionary<DefenseObjectsKind, int> TurretInventory{
-            get => _defenseObjectsValue;
-        }
+        public static Dictionary<DefenseObjectsKind, int> TurretInventory{  get => _defenseObjectsValue; }
+        public static int TreasureHp { get => _treasureHp; }
+        public static float Gold { get => _gold; }
+
         public static event Action _gameOverEvent;
+        public static event Action<IEnumerable<DefenseObjectsKind>> _levelUpAction;
         public static event Action<float> _getGold;
 
         static LevelManager _levelManager;
         [SerializeField] DropTableData _dropTable;
         [SerializeField] int _levelUpGachaCount = 3;
+        [SerializeField] int _startGold;
+        [SerializeField] int _startTurretCount;
 
         public void Initialize()
         {
             _levelManager = GetComponentInChildren<LevelManager>();
             _levelManager.OnLevelChanged += x => GetRandomDefenseObj();
+            for(int i = 0; i < _startTurretCount; i++)
+            {
+                SetDefenseObject(DefenseObjectsKind.MiddleShootTurret);
+            }
+            _startGold = 0;
         }
-
-        public static int TreasureHp { get => _treasureHp; }
 
         public static void HPDown(int damage)
         {
@@ -36,13 +43,18 @@ namespace DCFrameWork
             }
         }
         /// <summary>
-        /// 
+        /// インゲームのタレット強化用Gold
         /// </summary>
-        /// <param name="gold">��������������</param>
-        public static void ChangeGold(float gold)
+        /// <param name="gold">値を所持Goldに加算します。</param>
+        public static bool ChangeGold(float gold)
         {
-            _gold += gold;
-            _getGold?.Invoke(_gold);
+            if (_gold + gold >= 0)
+            {
+                _gold += gold;
+                _getGold?.Invoke(_gold);
+                return true;
+            }
+            return false;
         }
         public static void AddEXP(float exp) => _levelManager.AddExperiancePoint(exp);
         public static void SetDefenseObject(DefenseObjectsKind kind)
@@ -53,7 +65,7 @@ namespace DCFrameWork
         public static void UseDefenseObject(DefenseObjectsKind kind)
         {
             if (_defenseObjectsValue.ContainsKey(kind)) _defenseObjectsValue[kind]--;
-            else Debug.LogWarning($"{nameof(kind)}�͑��݂��܂���");
+            else Debug.LogWarning($"{nameof(kind)}が存在しません");
         }
         public void ChangeDropTable(DropTableData dropTable) => _dropTable = dropTable;
 
@@ -65,8 +77,8 @@ namespace DCFrameWork
             {
                 CollectionSystem.Instans.SetDefenseObj(item);
                 list.Add(item);
-                SetDefenseObject(item);
             }
+            _levelUpAction(list);
             return list;
         }
 
@@ -101,5 +113,4 @@ namespace DCFrameWork
         WeeknessTurret,
         SlowTurret
     }
-
 }

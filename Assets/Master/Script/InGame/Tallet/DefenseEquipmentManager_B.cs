@@ -1,5 +1,8 @@
-using DCFrameWork.MainSystem;
+ï»¿using DCFrameWork.MainSystem;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
+
 
 namespace DCFrameWork.DefenseEquipment
 {
@@ -23,14 +26,17 @@ namespace DCFrameWork.DefenseEquipment
         [Range(1, 5f)]
         protected int _level = 1;
 
+        PlayerManager _playerManager;
+
         private void Start()
         {
             if (_dataBase is null)
-                Debug.Log("ƒf[ƒ^‚ª‚ ‚è‚Ü‚¹‚ñ");
+                Debug.Log("ãƒ‡ãƒ¼ã‚¿ãŒã‚ã‚Šã¾ã›ã‚“");
             _level = 1;
             LoadCommonData(_level);
             GameBaseSystem.mainSystem?.AddPausableObject(this);
             Start_SB();
+            _playerManager = FindAnyObjectByType<PlayerManager>();
         }
 
         protected virtual void Start_SB() { }
@@ -47,20 +53,20 @@ namespace DCFrameWork.DefenseEquipment
 
         private void LoadCommonData(int level)
         {
-            if ((_dataBase is null).CheckLog($"{gameObject.name}‚Éƒf[ƒ^‚ª‚ ‚è‚Ü‚¹‚ñ")) return;
+            if ((_dataBase is null).CheckLog($"{gameObject.name}ã«ãƒ‡ãƒ¼ã‚¿ãŒã‚ã‚Šã¾ã›ã‚“")) return;
 
             if (_dataBase.DataLevelList.Count < level) return;
             Data data = _dataBase.DataLevelList[level - 1] as Data;
-            if ((data is null).CheckLog($"{gameObject.name}‚Ìƒf[ƒ^‚ªƒLƒƒƒXƒg‚Å‚«‚Ü‚¹‚ñ")) return;
+            if ((data is null).CheckLog($"{gameObject.name}ã®ãƒ‡ãƒ¼ã‚¿ãŒã‚­ãƒ£ã‚¹ãƒˆã§ãã¾ã›ã‚“")) return;
             _defenseEquipmentData = data;
             RangeSet(Range);
             LoadSpecificData(data);
         }
 
         /// <summary>
-        /// İ’è‚µ‚½Œ^ƒpƒ‰ƒ[ƒ^‚É‘Î‰‚µ‚½ˆ—‚ğs‚Á‚Ä‚­‚¾‚³‚¢
+        /// è¨­å®šã—ãŸå‹ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã«å¯¾å¿œã—ãŸå‡¦ç†ã‚’è¡Œã£ã¦ãã ã•ã„
         /// </summary>
-        /// <param name="data">ƒŒƒxƒ‹‚É‰‚¶‚½İ”õƒf[ƒ^</param>
+        /// <param name="data">ãƒ¬ãƒ™ãƒ«ã«å¿œã˜ãŸè¨­å‚™ãƒ‡ãƒ¼ã‚¿</param>
         protected virtual void LoadSpecificData(Data data) { }
 
         private void Update()
@@ -69,7 +75,7 @@ namespace DCFrameWork.DefenseEquipment
         }
 
         /// <summary>
-        /// Update‚ÅÀs‚³‚ê‚Ü‚·
+        /// Updateã§å®Ÿè¡Œã•ã‚Œã¾ã™
         /// </summary>
         protected abstract void Think();
 
@@ -81,7 +87,25 @@ namespace DCFrameWork.DefenseEquipment
                 _cylinder.transform.localScale = new Vector3(coll.radius * 2, _cylinder.transform.localScale.y, coll.radius * 2);
         }
 
-        #region ƒ|[ƒYˆ—
+        public virtual void UpGrade()
+        {
+            if (_level == 5)
+            {
+                Debug.Log("å¼·åŒ–ä¸Šé™ã«é”ã—ã¾ã—ãŸã€‚");
+                return;
+            }
+            if (_playerManager.ChangeGold(-DefenseEquipmentData.UseGold))
+            {
+                _level = Mathf.Min(5, _level + 1);
+                LoadCommonData(_level);
+            }
+            else if (!_playerManager.ChangeGold(-DefenseEquipmentData.UseGold))
+            {
+                Debug.Log("ãŠé‡‘ãŒè¶³ã‚Šã¾ã›ã‚“ã€‚");
+            }
+        }
+
+        #region ãƒãƒ¼ã‚ºå‡¦ç†
         void IPausable.Pause() => Pause();
         void IPausable.Resume() => Resume();
         protected abstract void Pause();

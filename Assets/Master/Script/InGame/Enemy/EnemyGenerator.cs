@@ -42,6 +42,9 @@ namespace DCFrameWork.Enemy
         [SerializeField]
         PlayerManager _playerManager;
 
+        [SerializeField]
+        PhaseManager _phaseData;
+
         private void Start()
         {
           
@@ -93,8 +96,8 @@ namespace DCFrameWork.Enemy
                    _playerManager.ChangeGold(target.DropGold);
                    _playerManager.AddEXP(target.DropEXP);
 
-               }             
-               WaveManager.EnemyDeathCount();
+               }
+               _phaseData.EnemyDeathCount();
                target.DeathAction = null;
 
            },

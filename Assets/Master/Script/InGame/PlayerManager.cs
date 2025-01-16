@@ -18,6 +18,8 @@ namespace DCFrameWork
         public event Action _gameOverEvent;
         public event Action<IEnumerable<DefenseObjectsKind>> _levelUpAction;
         public event Action<float> _getGold;
+        public event Action<DefenseObjectsKind> OnGetDefenseObject;
+        public event Action<DefenseObjectsKind> OnUseDefenseObject;
 
         LevelManager _levelManager;
         public LevelManager LavelManager { get => _levelManager; }
@@ -73,11 +75,13 @@ namespace DCFrameWork
         {
             if (_defenseObjectsValue.ContainsKey(kind)) _defenseObjectsValue[kind]++;
             else _defenseObjectsValue.Add(kind, 1);
+            OnGetDefenseObject?.Invoke(kind);
         }
         public void UseDefenseObject(DefenseObjectsKind kind)
         {
             if (_defenseObjectsValue.ContainsKey(kind)) _defenseObjectsValue[kind]--;
             else Debug.LogWarning($"{nameof(kind)}が存在しません");
+            OnUseDefenseObject?.Invoke(kind);
         }
         public void ChangeDropTable(DropTableData dropTable) => _dropTable = dropTable;
 

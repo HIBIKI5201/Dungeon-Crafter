@@ -23,7 +23,7 @@ MonoBehaviour:
   - _character: "\u30E9\u30D3\u30EA\u30B9"
     _text: "\u3044\u3044\u3093\u3060\u3001\u305D\u308C\u3088\u308A\u541B\u306B\u602A\u6211\u306F\u306A\u3044\u304B\uFF1F"
     _animation: 
-    _audioClip: {fileID: 0}
+    _audioClip: {fileID: 8300000, guid: d8763a95aed135040a6768649704afea, type: 3}
   - _character: "\uFF1F\uFF1F\uFF1F"
     _text: "\u5927\u4E08\u592B\u3002\u3067\u3082\u304A\u3058\u3055\u3093\u3001\n\u305D\u308C\u3060\u3068\u7A7A\u3092\u98DB\u3079\u306A\u3044\u3088\u3002"
     _animation: 
@@ -31,7 +31,7 @@ MonoBehaviour:
   - _character: "\u30E9\u30D3\u30EA\u30B9"
     _text: "\u4EF2\u9593\u3092\u5B88\u308C\u308B\u306A\u3089\u305D\u308C\u3067\u826F\u3044\u3002\n\u3058\u3083\u3042\u306A\u3002"
     _animation: 
-    _audioClip: {fileID: 0}
+    _audioClip: {fileID: 8300000, guid: 13af2712b02271d499033036c8a0df53, type: 3}
   - _character: "\uFF1F\uFF1F\uFF1F"
     _text: "\u2026\u2026\u3042\u308A\u304C\u3068\u3046\u3001\u7ADC\u306E\u304A\u3058\u3055\u3093\u3002"
     _animation: 
@@ -63,7 +63,7 @@ MonoBehaviour:
   - _character: "\u30E9\u30D3\u30EA\u30B9"
     _text: "\u306A\u3093\u3060\u8CB4\u69D8\u3002\u4F55\u3092\u3057\u306B\u6765\u305F\u3002"
     _animation: Jump
-    _audioClip: {fileID: 0}
+    _audioClip: {fileID: 8300000, guid: 5f5661721ce1600409236baa9b2cb466, type: 3}
   - _character: "\u30AF\u30EA\u30A8\u30C8"
     _text: "\u79C1\u306E\u540D\u524D\u306F\u30AF\u30EA\u30A8\u30C8\u3002"
     _animation: 

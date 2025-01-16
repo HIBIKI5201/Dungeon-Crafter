@@ -19,6 +19,7 @@ namespace DCFrameWork
         public static event Action<float> _getGold;
 
         static LevelManager _levelManager;
+        public static LevelManager LavelManager { get => _levelManager; }
         [SerializeField] DropTableData _dropTable;
         [SerializeField] int _levelUpGachaCount = 3;
         [SerializeField] int _startGold;
@@ -27,7 +28,7 @@ namespace DCFrameWork
         public void Initialize()
         {
             //staticの初期化
-            _startGold = 0;
+            _gold = _startGold;
             _treasureHp = _DefaltTreasureHp;
             _gameOverEvent = null;
             _getGold = null;

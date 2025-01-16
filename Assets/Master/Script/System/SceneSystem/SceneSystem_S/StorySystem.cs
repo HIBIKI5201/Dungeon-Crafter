@@ -1,12 +1,16 @@
 using DCFrameWork.MainSystem;
 using UnityEngine;
 
-namespace DCFrameWork.SceneSystem
-{
-    public class StorySystem : SceneSystem_B
-    {
+namespace DCFrameWork.SceneSystem {
+    public class StorySystem : SceneSystem_B {
         private StoryManager _storyManager;
         private SceneKind _sceneKind;
+
+#if UNITY_EDITOR
+        [SerializeField]
+        private StoryData _debugStoryData;
+#endif
+
         protected override void Initialize_S()
         {
             _storyManager = GetComponent<StoryManager>();
@@ -23,8 +27,6 @@ namespace DCFrameWork.SceneSystem
 
         public async void SetStorySceneData(StoryLoadData data)
         {
-            Debug.Log(data.sceneKind);
-            Debug.Log(data.StoryData);
             _storyManager?.SetStoryData(data.StoryData);
             _sceneKind = data.sceneKind;
             await Awaitable.WaitForSecondsAsync(1);
@@ -35,11 +37,18 @@ namespace DCFrameWork.SceneSystem
         {
             GameBaseSystem.mainSystem.LoadScene(_sceneKind);
         }
+
+#if UNITY_EDITOR
+        [ContextMenu("DebugStory")]
+        public void DebugStory()
+        {
+            SetStorySceneData(new StoryLoadData() { StoryData = _debugStoryData, sceneKind = SceneKind.Home});
+        }
+#endif
     }
 
     [System.Serializable]
-    public struct StoryLoadData
-    {
+    public struct StoryLoadData {
         public StoryData StoryData;
         public SceneKind sceneKind;
     }

@@ -20,10 +20,6 @@ namespace DCFrameWork.UI
             await _basicInformation.InitializeTask;
             await _equipmentSettingUI.InitializeTask;
         }
-        void Update()
-        {
-            _basicInformation.GuageMesh.UpdateGuage(parsent);
-        }
 
         public void EquipmentSettingWindowVisible(bool visible)
         {

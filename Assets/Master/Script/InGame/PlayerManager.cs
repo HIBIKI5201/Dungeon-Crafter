@@ -1,3 +1,4 @@
+using DCFrameWork.MainSystem;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -42,6 +43,7 @@ namespace DCFrameWork
             {
                 SetDefenseObject(DefenseObjectsKind.MiddleShootTurret);
             }
+            _gameOverEvent += () => SceneChanger.LoadScene(SceneKind.Home);
         }
 
         public void HPDown(int damage)

@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 namespace DCFrameWork.Enemy
 {
-    public class WaveManager : MonoBehaviour
+    public class PhaseManager : MonoBehaviour
     {
         [SerializeField] EnemyGenerator _enemyGenerators;
         [SerializeField] EnemyPhaseData _phaseData;
@@ -20,7 +20,6 @@ namespace DCFrameWork.Enemy
         public event Action _phaseStartAction;
         public event Action _phaseEndAction;
         public event Action<float> PhaseProgressChanged;
-        Action _addDeathCountAction;
 
         public int WaveCount { get => _phaseCount; private set => _phaseCount = value; }
         int CurrentWaveIndex { get => _phaseCount % _phaseData.WaveData.Length; }
@@ -31,13 +30,12 @@ namespace DCFrameWork.Enemy
 
         public void Initialize()
         {
-            _addDeathCountAction = null;
             if (!_phaseData)
             {
                 Debug.Log("PhaseData is null");
                 return;
             }
-            _addDeathCountAction = WaveEndCheck;
+            _phaseStartAction += WaveEndCheck;
             _phaseStartAction += () => NextWave();
             _phaseStartAction?.Invoke();
         }
@@ -76,7 +74,6 @@ namespace DCFrameWork.Enemy
         {
             ++_deathEemyCount;
             PhaseProgressChanged?.Invoke(WaveProgressNormalize);
-            _addDeathCountAction?.Invoke();
         }
 
     }

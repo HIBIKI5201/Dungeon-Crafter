@@ -19,7 +19,7 @@ namespace DCFrameWork
         public event Action<IEnumerable<DefenseObjectsKind>> _levelUpAction;
         public event Action<float> _getGold;
 
-        static LevelManager _levelManager;
+        LevelManager _levelManager;
         public LevelManager LavelManager { get => _levelManager; }
         [SerializeField] DropTableData _dropTable;
         [SerializeField] int _levelUpGachaCount = 3;

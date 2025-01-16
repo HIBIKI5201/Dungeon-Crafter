@@ -68,7 +68,8 @@ namespace DCFrameWork.SceneSystem {
                 StoryText storyText = _storyData.StoryText[count];
 
                 string[] animations = storyText.Animation.Split();
-                await AnimationAsync(animations);
+                Task[] tasks = animations.Select(s => AnimationAsync(s)).ToArray();
+                await Task.WhenAll(tasks);
 
                 //サウンドとUIを更新
                 _storyUIManager.TextBoxUpdate(storyText.Character, storyText.Text);
@@ -92,47 +93,50 @@ namespace DCFrameWork.SceneSystem {
             EndStory();
         }
 
-        private async Task AnimationAsync(string[] animations)
+        private async Task AnimationAsync(string animation)
         {
-            foreach (string animation in animations) {
-                if (string.IsNullOrEmpty(animation)) {
-                    continue;
-                }
+            if (string.IsNullOrEmpty(animation)) {
+                return;
+            }
 
-                //アニメーションの種類を取得
-                string animationContext = new string(animation
-                                    .TakeWhile(c => c != '[')
-                                    .ToArray());
+            //アニメーションの種類を取得
+            string animationContext = new string(animation
+                                .TakeWhile(c => c != '[')
+                                .ToArray());
 
-                //アニメーションごとの処理
-                switch (animationContext) {
-                    case "立ち絵出現":
-                        string character = GetIndexer();
-                        Debug.Log($"立ち絵出現 <b>{character}</b>");
-                        break;
-                    case "暗転解除":
-                        Debug.Log("暗転解除");
-                        await BlackFade(1);
-                        break;
-                    case "Jump":
-                        Debug.Log("Jump");
-                        break;
-                    default:
-                        Debug.LogWarning($"<b><color=yellow>{animationContext}</color></b>というアニメーションはありません");
-                        break;
-                }
+            //アニメーションごとの処理
+            switch (animationContext) {
+                case "立ち絵出現":
+                    string character = GetIndexer();
+                    Debug.Log($"立ち絵出現 <b>{character}</b>");
+                    break;
+                case "暗転解除":
+                    Debug.Log("暗転解除");
+                    await BlackFade(1);
+                    break;
+                case "ブラックアウト":
+                    await BlackFade(3);
+                    break;
 
-                string GetIndexer()
-                {
-                    //[]で囲ってある部分を取得
-                    const string pattern = @"\[(.*?)\]";
-                    var matchCollection = Regex.Matches(animation, pattern);
-                    string indexer = string.Empty;
-                    if (matchCollection.Count > 0) {
-                        indexer = matchCollection[0].Groups[1].Value;
-                    }
-                    return indexer;
+                case "Jump":
+                    Debug.Log("Jump");
+                    break;
+                default:
+                    Debug.LogWarning($"<b><color=yellow>{animationContext}</color></b>というアニメーションはありません");
+                    break;
+            }
+
+            string GetIndexer()
+            {
+                //[]で囲ってある部分を取得
+                const string pattern = @"\[(.*?)\]";
+                var matchCollection = Regex.Matches(animation, pattern);
+                string indexer = string.Empty;
+                if (matchCollection.Count > 0) {
+                    indexer = matchCollection[0].Groups[1].Value;
                 }
+                return indexer;
+
             }
         }
 
@@ -156,7 +160,7 @@ namespace DCFrameWork.SceneSystem {
                         _blackFade.color = color;
                     }
                     break;
-                
+
                 case 2:
                     for (int i = 0; i < fadeSpeed; i++) {
                         await Awaitable.FixedUpdateAsync(token);
@@ -167,11 +171,11 @@ namespace DCFrameWork.SceneSystem {
                     }
 
                     break;
-                    
+
                 case 3:
                     _blackFade.color = _blackFade.color + new Color(0, 0, 0, 1);
                     break;
-                
+
                 default:
                     Debug.LogWarning($"{kind}というフェードはありません");
                     break;

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static Cinemachine.DocumentationSortingAttribute;
 
 
 namespace DCFrameWork.DefenseEquipment
@@ -27,6 +28,7 @@ namespace DCFrameWork.DefenseEquipment
         protected int _level = 1;
 
         PlayerManager _playerManager;
+
 
         private void Start()
         {
@@ -86,8 +88,10 @@ namespace DCFrameWork.DefenseEquipment
             if (_cylinder)
                 _cylinder.transform.localScale = new Vector3(coll.radius * 2, _cylinder.transform.localScale.y, coll.radius * 2);
         }
-
-        public virtual void UpGrade()
+        /// <summary>
+        /// タレットのレベルアップ機能
+        /// </summary>
+        public void LevelUp()
         {
             if (_level == 5)
             {
@@ -104,6 +108,20 @@ namespace DCFrameWork.DefenseEquipment
                 Debug.Log("お金が足りません。");
             }
         }
+
+        /// <summary>
+        /// 次のレベルのステータスが格納されたデータを返すメソッド
+        /// </summary>
+        /// <returns></returns>
+        public DefenseEquipmentData_B NextStatus()
+        {
+            if (_level != 5)
+            {
+                return _dataBase.DataLevelList[_level];
+            }
+            return null;
+        }
+
 
         #region ポーズ処理
         void IPausable.Pause() => Pause();

@@ -208,6 +208,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turret_MagicCircle
       objectReference: {fileID: 0}
+    - target: {fileID: 5917893844142046307, guid: 312fd90f9dbb1124caa83ec577d2db5a,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 81980cb7538e9a0429a86ae342acf99b, type: 2}
+    - target: {fileID: 9140302696541037975, guid: 312fd90f9dbb1124caa83ec577d2db5a,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ba69eb08801eece45be9db0620a2be22, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

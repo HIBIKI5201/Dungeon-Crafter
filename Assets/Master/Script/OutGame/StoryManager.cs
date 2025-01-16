@@ -2,6 +2,7 @@ using DCFrameWork.MainSystem;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +12,7 @@ namespace DCFrameWork.SceneSystem {
         private AudioSource _audioSource;
         private Image _backGround1;
         private Image _backGround2;
+        private Image _blackFade;
 
         private IAsyncEnumerator<int?> _enumerator;
         private StoryData _storyData;
@@ -30,6 +32,8 @@ namespace DCFrameWork.SceneSystem {
             Image[] images = GetComponentsInChildren<Image>();
             _backGround1 = images[0];
             _backGround2 = images[1];
+            _blackFade = images[2];
+
 
             _creatoSprites = _creato.GetComponentsInChildren<SpriteRenderer>();
             _labirisSprites = _labiris.GetComponentsInChildren<SpriteRenderer>();
@@ -44,7 +48,9 @@ namespace DCFrameWork.SceneSystem {
         public async void SetStoryData(StoryData storyData)
         {
             _storyData = storyData;
-            SetBackGround(storyData.BackGround[0]);
+            if (storyData.BackGround[0] != null) {
+                SetBackGround(storyData.BackGround[0]);
+            }
         }
 
         public void NextText() => _enumerator.MoveNextAsync();
@@ -62,7 +68,8 @@ namespace DCFrameWork.SceneSystem {
                 StoryText storyText = _storyData.StoryText[count];
 
                 string[] animations = storyText.Animation.Split();
-                await AnimationAsync(animations);
+                Task[] tasks = animations.Select(s => AnimationAsync(s)).ToArray();
+                await Task.WhenAll(tasks);
 
                 //サウンドとUIを更新
                 _storyUIManager.TextBoxUpdate(storyText.Character, storyText.Text);
@@ -86,46 +93,92 @@ namespace DCFrameWork.SceneSystem {
             EndStory();
         }
 
-        private async Task AnimationAsync(string[] animations)
+        private async Task AnimationAsync(string animation)
         {
-            foreach (string animation in animations) {
-                if (string.IsNullOrEmpty(animation)) {
-                    continue;
+            if (string.IsNullOrEmpty(animation)) {
+                return;
+            }
+
+            //アニメーションの種類を取得
+            string animationContext = new string(animation
+                                .TakeWhile(c => c != '[')
+                                .ToArray());
+
+            //アニメーションごとの処理
+            switch (animationContext) {
+                case "立ち絵出現":
+                    string character = GetIndexer();
+                    Debug.Log($"立ち絵出現 <b>{character}</b>");
+                    break;
+                case "暗転解除":
+                    Debug.Log("暗転解除");
+                    await BlackFade(1);
+                    break;
+                case "ブラックアウト":
+                    await BlackFade(3);
+                    break;
+
+                case "Jump":
+                    Debug.Log("Jump");
+                    break;
+                default:
+                    Debug.LogWarning($"<b><color=yellow>{animationContext}</color></b>というアニメーションはありません");
+                    break;
+            }
+
+            string GetIndexer()
+            {
+                //[]で囲ってある部分を取得
+                const string pattern = @"\[(.*?)\]";
+                var matchCollection = Regex.Matches(animation, pattern);
+                string indexer = string.Empty;
+                if (matchCollection.Count > 0) {
+                    indexer = matchCollection[0].Groups[1].Value;
                 }
+                return indexer;
 
-                //アニメーションの種類を取得
-                string animationContext = new string(animation
-                                    .TakeWhile(c => c != '[')
-                                    .ToArray());
+            }
+        }
 
-                //アニメーションごとの処理
-                switch (animationContext) {
-                    case "立ち絵出現":
-                        string character = GetIndexer();
-                        Debug.Log($"立ち絵出現 <b>{character}</b>");
-                        break;
-                    case "暗転解除":
-                        Debug.Log("暗転解除");
-                        break;
-                    case "Jump":
-                        Debug.Log("Jump");
-                        break;
-                    default:
-                        Debug.LogWarning($"<b><color=yellow>{animationContext}</color></b>というアニメーションはありません");
-                        break;
-                }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="kind">1はフェードイン、2はフェードアウト、3はブラックアウト</param>
+        private async Task BlackFade(int kind)
+        {
+            CancellationToken token = destroyCancellationToken;
 
-                string GetIndexer()
-                {
-                    //[]で囲ってある部分を取得
-                    const string pattern = @"\[(.*?)\]";
-                    var matchCollection = Regex.Matches(animation, pattern);
-                    string indexer = string.Empty;
-                    if (matchCollection.Count > 0) {
-                        indexer = matchCollection[0].Groups[1].Value;
+            const float fadeSpeed = 20;
+
+            switch (kind) {
+                case 1:
+                    for (int i = 0; i < fadeSpeed; i++) {
+                        await Awaitable.FixedUpdateAsync(token);
+
+                        Color color = _blackFade.color;
+                        color.a -= 1f / fadeSpeed;
+                        _blackFade.color = color;
                     }
-                    return indexer;
-                }
+                    break;
+
+                case 2:
+                    for (int i = 0; i < fadeSpeed; i++) {
+                        await Awaitable.FixedUpdateAsync(token);
+
+                        Color color = _blackFade.color;
+                        color.a += 1f / fadeSpeed;
+                        _blackFade.color = color;
+                    }
+
+                    break;
+
+                case 3:
+                    _blackFade.color = _blackFade.color + new Color(0, 0, 0, 1);
+                    break;
+
+                default:
+                    Debug.LogWarning($"{kind}というフェードはありません");
+                    break;
             }
         }
 

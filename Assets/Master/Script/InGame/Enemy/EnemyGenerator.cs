@@ -39,11 +39,12 @@ namespace DCFrameWork.Enemy
 
         public Dictionary<EnemyKind, ObjectPool<IEnemy>> _dict = new();
 
-        
+        [SerializeField]
+        PlayerManager _playerManager;
 
         private void Start()
         {
-           
+          
            
         }
         
@@ -89,6 +90,9 @@ namespace DCFrameWork.Enemy
                if (target.CurrentHealth <= 0)
                {
                    CollectionSystem.AddEnemyKilCount(kind);
+                   _playerManager.ChangeGold(target.DropGold);
+                   _playerManager.AddEXP(target.DropEXP);
+
                }             
                WaveManager.EnemyDeathCount();
                target.DeathAction = null;

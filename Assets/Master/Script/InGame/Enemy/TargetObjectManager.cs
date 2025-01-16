@@ -13,10 +13,13 @@ namespace DCFrameWork
 
         TargetHealthBarManager _healthBarManager;
 
+        PlayerManager _playerManager;
+
         private void Start()
         {
             _healthBarManager = GameObject.Find("HealthBarForTarget").GetComponent<TargetHealthBarManager>();
-            _maxValue = PlayerManager.TreasureHp;
+            _playerManager = FindAnyObjectByType<PlayerManager>();
+            _maxValue = _playerManager.TreasureHp;
            
         }
 
@@ -36,8 +39,8 @@ namespace DCFrameWork
         IEnumerator AttackTime(IEnemy enemy)
         {
             yield return FrameWork.PausableWaitForSecond(0.5f);
-            PlayerManager.HPDown((int)enemy.Plunder);
-            _healthBarManager.BarFillUpdate(PlayerManager.TreasureHp / _maxValue);
+            _playerManager.HPDown((int)enemy.Plunder);
+            _healthBarManager.BarFillUpdate(_playerManager.TreasureHp / _maxValue);
             enemy.DeathAction?.Invoke();
             enemy.DeathAction = null;    
         }

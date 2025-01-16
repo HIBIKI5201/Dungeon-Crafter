@@ -58,11 +58,15 @@ namespace DCFrameWork.Enemy
         private const float _buff = 0.1f;
         protected float Buff { get => _buff; }
 
+
+
         private float _speed = 0;
+
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
             _currentHealth = _enemyData.MaxHealth;
+          
         }
 
         void IEnemy.StartByPool(EnemyHealthBarManager enemyHealthBarManager)
@@ -310,8 +314,6 @@ namespace DCFrameWork.Enemy
                 DeathAction += DeathBehaviour;
                 DeathAction?.Invoke();
                 DeathAction = null;
-                PlayerManager.ChangeGold(DropGold);
-                PlayerManager.AddEXP(DropEXP);
                 return false;
             }
             return true;

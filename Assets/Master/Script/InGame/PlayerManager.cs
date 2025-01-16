@@ -7,19 +7,19 @@ namespace DCFrameWork
     public class PlayerManager : MonoBehaviour
     {
         [SerializeField] int _DefaltTreasureHp = 100;
-        static int _treasureHp = 100;
-        static float _gold;
-        static Dictionary<DefenseObjectsKind, int> _defenseObjectsValue = new();
-        public static Dictionary<DefenseObjectsKind, int> TurretInventory { get => _defenseObjectsValue; }
-        public static int TreasureHp { get => _treasureHp; }
-        public static float Gold { get => _gold; }
+        int _treasureHp = 100;
+        float _gold;
+        Dictionary<DefenseObjectsKind, int> _defenseObjectsValue = new();
+        public Dictionary<DefenseObjectsKind, int> TurretInventory { get => _defenseObjectsValue; }
+        public int TreasureHp { get => _treasureHp; }
+        public float Gold { get => _gold; }
 
-        public static event Action _gameOverEvent;
-        public static event Action<IEnumerable<DefenseObjectsKind>> _levelUpAction;
-        public static event Action<float> _getGold;
+        public event Action _gameOverEvent;
+        public event Action<IEnumerable<DefenseObjectsKind>> _levelUpAction;
+        public event Action<float> _getGold;
 
         static LevelManager _levelManager;
-        public static LevelManager LavelManager { get => _levelManager; }
+        public LevelManager LavelManager { get => _levelManager; }
         [SerializeField] DropTableData _dropTable;
         [SerializeField] int _levelUpGachaCount = 3;
         [SerializeField] int _startGold;
@@ -44,7 +44,7 @@ namespace DCFrameWork
             }
         }
 
-        public static void HPDown(int damage)
+        public void HPDown(int damage)
         {
             _treasureHp -= damage;
             if (TreasureHp <= 0)
@@ -56,7 +56,7 @@ namespace DCFrameWork
         /// インゲームのタレット強化用Gold
         /// </summary>
         /// <param name="gold">値を所持Goldに加算します。</param>
-        public static bool ChangeGold(float gold)
+        public bool ChangeGold(float gold)
         {
             if (_gold + gold >= 0)
             {
@@ -66,13 +66,13 @@ namespace DCFrameWork
             }
             return false;
         }
-        public static void AddEXP(float exp) => _levelManager.AddExperiancePoint(exp);
-        public static void SetDefenseObject(DefenseObjectsKind kind)
+        public void AddEXP(float exp) => _levelManager.AddExperiancePoint(exp);
+        public void SetDefenseObject(DefenseObjectsKind kind)
         {
             if (_defenseObjectsValue.ContainsKey(kind)) _defenseObjectsValue[kind]++;
             else _defenseObjectsValue.Add(kind, 1);
         }
-        public static void UseDefenseObject(DefenseObjectsKind kind)
+        public void UseDefenseObject(DefenseObjectsKind kind)
         {
             if (_defenseObjectsValue.ContainsKey(kind)) _defenseObjectsValue[kind]--;
             else Debug.LogWarning($"{nameof(kind)}が存在しません");

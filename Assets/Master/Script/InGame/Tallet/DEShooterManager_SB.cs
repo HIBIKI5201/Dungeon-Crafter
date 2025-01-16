@@ -12,8 +12,8 @@ namespace DCFrameWork.DefenseEquipment
         [SerializeField] protected Animator _anim;
         protected Vector3 _enemyPos;
         [SerializeField] protected GameObject _bullet;
-        [Tooltip("矢が着弾するまでの時間")] protected float _hitTime = 0.2f;
-        [Tooltip("矢の初期位置")] protected Vector3 _bulletPos;
+        [Tooltip("弾が着弾するまでの時間")] protected float _hitTime = 0.2f;
+        [Tooltip("弾の初期位置")] protected Vector3 _bulletPos;
         protected float _shootTimer;
         protected bool _isShoot;
 

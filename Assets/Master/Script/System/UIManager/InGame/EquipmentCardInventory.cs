@@ -35,7 +35,6 @@ namespace DCFrameWork
         private Label _wallGold;
         private Label _wallText;
         private ListView _listView;
-       
         //プロパティ
         public ListView ListView { get => _listView; }
         public VisualElement DoorButton { get => _doorButton; }

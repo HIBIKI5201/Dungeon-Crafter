@@ -18,7 +18,6 @@ namespace DCFrameWork
         Button _powerUpButton;
         Button _removalButton;
         Label _equipmentName;
-        Label _powerUpGText;
         Label _levelText;
         Label _powerText;
         Label _fastText;
@@ -42,7 +41,6 @@ namespace DCFrameWork
         public Action PowerUpButton{ set => _powerUpButton.clicked += value; }
         public Action RemovalButton { set => _removalButton.clicked += value; }
         public string EquipmentName { set => _equipmentName.text = value; }
-        public string PowerUpGText { set => _powerUpGText.text = value; }
         public string LevelText { set => _levelText.text = value; }
         public string PowerText { set => _powerText.text = value; }
         public string FastText { set => _fastText.text = value; }
@@ -73,14 +71,12 @@ namespace DCFrameWork
                 _powerUpButton = container.Q<Button>("PowerUpButton");
                 _removalButton = container.Q<Button>("RemovalButton");
                 _equipmentName = container.Q<Label>("EquipmentName");
-                _powerUpGText = container.Q<Label>("PowerUpGText");
                 _levelText = container.Q<Label>("LavelText");
                 _powerText = container.Q<Label>("PowerText");
                 _fastText = container.Q<Label>("FastText");
                 _rangeText = container.Q<Label>("RangeText");
                 _equipmentSettingWindow = container.Q<VisualElement>("EquipmentSettingWindow");
                 _equipmentSettingWindow.AddToClassList("equipment-setting-window-close");
-                Debug.Log("�E�B���h�E�͐���Ƀ��[�h����");
             }
             else
             {

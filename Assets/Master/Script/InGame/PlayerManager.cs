@@ -78,7 +78,7 @@ namespace DCFrameWork
                 CollectionSystem.Instans.SetDefenseObj(item);
                 list.Add(item);
             }
-            _levelUpAction(list);
+            _levelUpAction?.Invoke(list);
             return list;
         }
 

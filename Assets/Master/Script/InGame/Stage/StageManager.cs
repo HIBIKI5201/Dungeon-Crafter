@@ -1,4 +1,6 @@
-﻿using DCFrameWork.Enemy;
+﻿using DCFrameWork;
+using DCFrameWork.DefenseEquipment;
+using DCFrameWork.Enemy;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,7 +23,9 @@ public class StageManager : MonoBehaviour
         public string Name;
         public GameObject PutObstaclePrefab;
         [Tooltip("特注の視覚サポートオブジェクトがあればいれてください")] public GameObject VisualGuide;
+        public bool IsPutTogetherWithWall;
     }
+    public event Action<ITurret> OnActivateTurretSelectedUI;//タレットがクリックされたときに呼ぶ処理
     Vector3[] _spawnPos;
     Vector3 _targetPos;
     GameObject _setPrefab;
@@ -32,6 +36,7 @@ public class StageManager : MonoBehaviour
     Vector3 _floorCenter;
     //private float _prefabHeight;
     bool _canSet = false;
+    bool _isPutTogetherWithWall;
     int[,] _map;
     int _sizeX;
     int _sizeZ;
@@ -106,13 +111,13 @@ public class StageManager : MonoBehaviour
     void Update()
     {
         var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
-
+        RaycastHit hit = new();
         var raycastHitList = Physics.RaycastAll(ray, float.PositiveInfinity).Where(x => !x.collider.isTrigger).ToList();
         if (raycastHitList.Any())
         {
             //置く場所を視覚的にサポートするオブジェクトとはレイキャストが当たってないことにする
             raycastHitList.Remove(raycastHitList.Where(x => x.collider.gameObject == _tentativePrefab).FirstOrDefault());
-            var hit = raycastHitList.OrderBy(x => Vector3.Distance(x.point, Camera.main.transform.position)).FirstOrDefault();
+            hit = raycastHitList.OrderBy(x => Vector3.Distance(x.point, Camera.main.transform.position)).FirstOrDefault();
             _currentPosition = hit.point;
             //Debug.Log($"{hit.point}:{hit.collider.gameObject.name}:{hit.collider.gameObject.layer}:{LayerMask.NameToLayer("Ground")}");
             float currentX = _currentPosition.x + hit.normal.x;
@@ -156,10 +161,6 @@ public class StageManager : MonoBehaviour
                     _canSet = false;
                 }
             }
-            //if (Input.GetMouseButtonDown(1))
-            //{
-            //    RemoveObstacleObject(hit.collider.gameObject);
-            //}
         }
         else
         {
@@ -173,6 +174,18 @@ public class StageManager : MonoBehaviour
             {
                 SetObject(_currentPosition);
             }
+            else if(hit.collider != null)
+            {
+                TalletSelect(hit.collider.gameObject);
+            }
+        }
+    }
+    void TalletSelect(GameObject turret)
+    {
+        if (turret.TryGetComponent<ITurret>(out ITurret t))
+        {
+            Debug.Log("タレットがクリックされた");
+            OnActivateTurretSelectedUI?.Invoke(t);
         }
     }
     private bool CheckConnected(Vector3 currentPosition)
@@ -331,7 +344,7 @@ public class StageManager : MonoBehaviour
 
         //オブジェクト消す処理どうする？(一旦指定座標のオブジェクト全部消す方針)
         currentPosition.y = 20;
-        RaycastHit[] hits = Physics.RaycastAll(currentPosition, Vector3.down,20,LayerMask.GetMask("Buildings"));
+        RaycastHit[] hits = Physics.RaycastAll(currentPosition, Vector3.down, 20, LayerMask.GetMask("Buildings"));
         foreach (RaycastHit hit in hits)
         {
             Destroy(hit.collider.gameObject);

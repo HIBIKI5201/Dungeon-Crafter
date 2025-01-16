@@ -3,6 +3,7 @@
     <engine:VisualElement name="CustomSlider" style="justify-content: space-around; align-items: center; align-self: center; width: 100%; height: 100%; flex-direction: row;">
         <engine:Button name="Minus" class="minus-button" />
         <engine:Slider value="75.5" high-value="100" name="Slider" inverted="false" show-input-field="false" fill="true" style="width: 80%;" />
-        <engine:Button name="Plus" class="minus-button" style="border-top-width: -191px; border-right-width: -191px; border-bottom-width: -191px; border-left-width: -191px; background-image: url(&quot;project://database/Assets/Master/UITK/UI_option_slider%20(1).psd?fileID=2580325946229139654&amp;guid=ad6b3d4a4286ae348bd183551821b1aa&amp;type=3#＋&quot;); background-color: rgba(188, 188, 188, 0); -unity-background-scale-mode: scale-to-fit; width: 9%; height: 14%;" />
+        <engine:Button name="Plus" class="minus-button" style="border-top-width: -191px; border-right-width: -191px; border-bottom-width: -191px; border-left-width: -191px; background-image: url(&apos;project://database/Assets/Master/UITK/UI_option_slider%20(1).psd?fileID=2580325946229139654&amp;guid=ad6b3d4a4286ae348bd183551821b1aa&amp;type=3#＋&apos;); background-color: rgba(188, 188, 188, 0); -unity-background-scale-mode: scale-to-fit; width: 9%; height: 14%;" />
     </engine:VisualElement>
+    <engine:ListView />
 </engine:UXML>

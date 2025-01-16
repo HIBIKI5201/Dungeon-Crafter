@@ -10,25 +10,24 @@ namespace DCFrameWork.Enemy
     public class WaveManager : MonoBehaviour
     {
         [SerializeField] EnemyGenerator _enemyGenerators;
-        [SerializeField] EnemyWaveData _phaseData;
+        [SerializeField] EnemyPhaseData _phaseData;
         [SerializeField] float _startWaveWaitingTime = 20;
 
-        int _waveCount;
+        int _phaseCount;
         int _loopCount = 1;
-        int _waveEnemySum;
+        int _phaseEnemySum;
         static int _deathEemyCount;
 
-        public event Action _waveStartAction;
-        public event Action _waveEndAction;
+        public event Action _phaseStartAction;
         public event Action _phaseEndAction;
         static Action _addDeathCountAction;
 
-        public int WaveCount { get => _waveCount; private set => _waveCount = value; }
-        int CurrentWaveIndex { get => _waveCount % _phaseData.WaveData.Length; }
+        public int WaveCount { get => _phaseCount; private set => _phaseCount = value; }
+        int CurrentWaveIndex { get => _phaseCount % _phaseData.WaveData.Length; }
         /// <summary>
         /// ウェーブの進行状況を正規化した値
         /// </summary>
-        public float WaveProgressNormalize { get => (float)_deathEemyCount / (_waveEnemySum != 0 ? _waveEnemySum : 1); }
+        public float WaveProgressNormalize { get => (float)_deathEemyCount / (_phaseEnemySum != 0 ? _phaseEnemySum : 1); }
 
         public async void Initialize()
         {
@@ -38,9 +37,9 @@ namespace DCFrameWork.Enemy
                 return;
             }
             _addDeathCountAction = WaveEndCheck;
-            _waveStartAction += () => NextWave();
+            _phaseStartAction += () => NextWave();
             await Awaitable.WaitForSecondsAsync(_startWaveWaitingTime);
-            _waveStartAction?.Invoke();
+            _phaseStartAction?.Invoke();
             Debug.Log("WaveStart");
         }
 
@@ -54,13 +53,13 @@ namespace DCFrameWork.Enemy
                     Debug.Log("pheseEnd" + $"WaveCount:{WaveCount}");
                     _loopCount++;
                     _phaseEndAction?.Invoke();
-                    _waveStartAction?.Invoke();
+                    _phaseStartAction?.Invoke();
                 }
                 else
                 {
                     Debug.Log("WaveEnd");
-                    _waveEndAction?.Invoke();
-                    _waveStartAction?.Invoke();
+                    _phaseEndAction?.Invoke();
+                    _phaseStartAction?.Invoke();
                 }
             }
         }
@@ -75,7 +74,7 @@ namespace DCFrameWork.Enemy
 
             waveData.SpawnData.Select(x => x._enemyLevel += _loopCount - 1);//周回ごとのレベル上昇
             Debug.Log(_loopCount - 1);
-            _waveEnemySum = waveData.SpawnData.Length;
+            _phaseEnemySum = waveData.SpawnData.Length;
 
             _enemyGenerators.Waving(waveData);
         }

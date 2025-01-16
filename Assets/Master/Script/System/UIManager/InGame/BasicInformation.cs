@@ -9,18 +9,23 @@ using UnityEngine.UIElements;
 [UxmlElement]
 public partial class BasicInformation : VisualElement
 {
+    //初期化タスク
     public Task InitializeTask { get; private set; }
+    //UI要素
     private GuageMesh _guageMesh;
     private VisualElement _eXPGuage;
     private Label _eXPText;
     private Label _phaseText;
+
     private Button _menuButton;
+    //プロパティ
     public GuageMesh GuageMesh{get => _guageMesh;set => _guageMesh = value;}
     public VisualElement EXPGuage{get => _eXPGuage;set => _eXPGuage = value;}
-    public Label EXPText{get => _eXPText;set => _eXPText = value;}
-    public Label PhaseText{get => _phaseText;set => _phaseText = value;}
+    public string EXPText{get => _eXPText.text;set => _eXPText.text = value;}
+    public string PhaseText{get => _phaseText.text;set => _phaseText.text = value;}
     public Button MenuButton{get => _menuButton;set => _menuButton = value;}
     public BasicInformation() => InitializeTask = Initialize();
+    //初期化
     private async Task Initialize()
     {
         AsyncOperationHandle<VisualTreeAsset> handle = Addressables.LoadAssetAsync<VisualTreeAsset>("UXML/BasicInformation.uxml");
@@ -28,15 +33,19 @@ public partial class BasicInformation : VisualElement
 
         if (handle.Status == AsyncOperationStatus.Succeeded && handle.Result != null)
         {
+            //UXMLファイルの読み込み
             var treeAsset = handle.Result;
             var container = treeAsset.Instantiate();
+            //スタイルの読み込み
             container.style.width = Length.Percent(100);
             container.style.height = Length.Percent(100);
+            //マウスイベントの無効化
             this.RegisterCallback<KeyDownEvent>(e => e.StopImmediatePropagation());
             pickingMode = PickingMode.Ignore;
             container.RegisterCallback<KeyDownEvent>(e => e.StopImmediatePropagation());
             container.pickingMode = PickingMode.Ignore;
             hierarchy.Add(container);
+            //UI要素の取得
             _guageMesh = container.Q<GuageMesh>("PhaseGuage");
             _eXPGuage = container.Q<VisualElement>("EXPGuage");
             _eXPText = container.Q<Label>("EXPText");
@@ -45,8 +54,10 @@ public partial class BasicInformation : VisualElement
         }
         else
         {
+            //エラーログ
             Debug.LogError("Failed to load UXML file from Addressables: UXML/BasicInformation.uxml");
         }
+        //リソースの解放
         Addressables.Release(handle);
     }
 }

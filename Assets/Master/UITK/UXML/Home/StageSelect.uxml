@@ -1,11 +1,20 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Master/UITK/USS/OutGame/StageSelect.uss?fileID=7433441132597879392&amp;guid=f907023049bdee2429c9175fa7a14ee7&amp;type=3#StageSelect" />
     <Style src="project://database/Assets/Master/UITK/USS/Master/Font.uss?fileID=7433441132597879392&amp;guid=8c8dbfa7dccd14b4ebdfec63316899cc&amp;type=3#Font" />
-    <engine:VisualElement class="font-style" style="flex-grow: 1;">
-        <engine:VisualElement name="VisualElement" style="flex-grow: 1; flex-direction: row; align-items: center; justify-content: space-around; background-color: rgb(255, 255, 255);">
-            <engine:Button text="ステージ1" name="stage-one-button" class="stage-one-button" />
-            <engine:Button text="もどる" name="return-button" class="return-button" />
+    <engine:VisualElement name="VisualElement" class="font-style" style="flex-grow: 1;">
+        <engine:VisualElement name="SettingButton" class="setting-button" style="flex-grow: 1; position: absolute; width: 7%; height: 14%; bottom: 0; right: 0; margin-bottom: 1%; margin-right: 1%;">
+            <engine:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Master/UITK/Picture/UI_scene_change.psd?fileID=14621&amp;guid=d0eca6be134fb45459306cfcffa19ba6&amp;type=3#UI_scene_change_2&quot;); -unity-background-scale-mode: scale-to-fit; background-position-y: bottom 0;" />
+            <engine:Label text="設定" style="-unity-text-align: middle-center; font-size: 27%; -unity-font-style: bold; color: rgb(255, 255, 255); -unity-text-outline-width: 2px; -unity-text-outline-color: rgb(0, 0, 0);" />
         </engine:VisualElement>
-        <engine:VisualElement name="SettingButton" class="font-style" style="flex-grow: 1; position: absolute; width: 100px; height: 100px; bottom: 0; right: 0; background-color: rgb(0, 0, 0); margin-bottom: 1%; margin-right: 1%;" />
+        <engine:VisualElement name="TitleButton" class="setting-button" style="flex-grow: 1; position: absolute; width: 7%; height: 14%; bottom: 0; right: auto; margin-bottom: 1%; margin-right: 1%; left: 0;">
+            <engine:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Master/UITK/Picture/UI_scene_change.psd?fileID=681208853&amp;guid=d0eca6be134fb45459306cfcffa19ba6&amp;type=3#UI_scene_change_0&quot;); -unity-background-scale-mode: scale-to-fit; background-position-y: bottom 0;" />
+            <engine:Label text="タイトル" style="-unity-text-align: middle-center; font-size: 27%; -unity-font-style: bold; color: rgb(255, 255, 255); -unity-text-outline-width: 2px; -unity-text-outline-color: rgb(0, 0, 0);" />
+        </engine:VisualElement>
+        <engine:VisualElement name="OutGameInfo" style="flex-grow: 1; position: absolute; bottom: 0; width: 80%; height: 10%; background-image: url(&quot;project://database/Assets/Master/UITK/Picture/UI_info_panel.psd?fileID=2800000&amp;guid=3e279e9ebc896ea4596ccb21242fea10&amp;type=3#UI_info_panel&quot;); -unity-background-scale-mode: scale-and-crop; left: 9%;">
+            <engine:Label text="これはアウトゲームの説明です" name="OutGameLabel" style="-unity-text-align: middle-center; font-size: 67px; width: 100%; height: 90%; bottom: 0; -unity-font-style: bold; color: rgb(255, 255, 255); -unity-text-outline-width: 3px; -unity-text-outline-color: rgb(0, 0, 0);" />
+        </engine:VisualElement>
+        <engine:VisualElement name="StageSelect" style="left: -68px; top: -121px; width: 622px; height: 405px; position: absolute; background-image: url(&quot;project://database/Assets/Master/UITK/Picture/UI_heading%201.psd?fileID=2800000&amp;guid=8ecceac9b64cfbd47a45a996a7992dfd&amp;type=3#UI_heading 1&quot;); background-size: 95% 157%; -unity-background-scale-mode: scale-and-crop;">
+            <engine:Label text="ステージセレクト" name="StageSelect" class="font-style" style="position: relative; width: 20%; height: 6%; top: 39%; left: 39%; -unity-font-style: bold; -unity-text-align: middle-center; font-size: 60%; margin-top: 1%; margin-left: 1%; background-image: none; background-size: 0 0; -unity-background-scale-mode: scale-and-crop; background-color: rgba(255, 255, 255, 0); color: rgb(255, 255, 255); -unity-text-outline-width: 3px; -unity-text-outline-color: rgb(0, 0, 0); bottom: 0; right: 0;" />
+        </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>

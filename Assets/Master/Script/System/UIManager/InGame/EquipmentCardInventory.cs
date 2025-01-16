@@ -11,7 +11,6 @@ namespace DCFrameWork
     {
         //Task
         public Task InitializeTask { get; private set; }
-        
         //const
         private const string _windowClose = "equipment-inventory_close";
         private const string _windowOpen = "equipment-inventory_open";
@@ -81,7 +80,7 @@ namespace DCFrameWork
                     _equipment.RemoveFromClassList(_windowOpen);
                     _equipment.AddToClassList(_windowClose);
                 });
-                Debug.Log("ƒEƒBƒ“ƒhƒE‚Í³í‚Éƒ[ƒhŠ®—¹");
+                Debug.Log("ï¿½Eï¿½Bï¿½ï¿½ï¿½hï¿½Eï¿½Íï¿½ï¿½ï¿½Éƒï¿½ï¿½[ï¿½hï¿½ï¿½ï¿½ï¿½");
             }
             else
             {

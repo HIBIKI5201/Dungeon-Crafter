@@ -146,28 +146,32 @@ namespace DCFrameWork.DefenseEquipment
 #if UNITY_EDITOR
         void OnDrawGizmos()
         {
-            Gizmos.color = Check(_position) ? Color.red : Color.green;
+            if (Application.isPlaying)
+            {
+                Gizmos.color = Check(_position) ? Color.red : Color.green;
 
-            // BoxCast のデータを計算
-            Vector3 boxCastOrigin = _position + new Vector3(0, 8, 0);
-            Vector3 boxCastDirection = Vector3.down; // 下向き
-            float boxCastDistance = 18f; // 必要に応じて調整
-            Quaternion boxCastRotation = Quaternion.identity;
 
-            // ボックスの範囲を描画 (始点)
-            Gizmos.matrix = Matrix4x4.TRS(boxCastOrigin, boxCastRotation, _boxCastSize * 2);
-            Gizmos.DrawWireCube(Vector3.zero, Vector3.one); // 中心を基準にスケール適用
+                // BoxCast のデータを計算
+                Vector3 boxCastOrigin = _position + new Vector3(0, 8, 0);
+                Vector3 boxCastDirection = Vector3.down; // 下向き
+                float boxCastDistance = 18f; // 必要に応じて調整
+                Quaternion boxCastRotation = Quaternion.identity;
 
-            // ボックスの終点を計算
-            Vector3 boxCastEnd = boxCastOrigin + boxCastDirection.normalized * boxCastDistance;
+                // ボックスの範囲を描画 (始点)
+                Gizmos.matrix = Matrix4x4.TRS(boxCastOrigin, boxCastRotation, _boxCastSize * 2);
+                Gizmos.DrawWireCube(Vector3.zero, Vector3.one); // 中心を基準にスケール適用
 
-            // キャストの移動範囲を描画
-            Gizmos.matrix = Matrix4x4.identity;
-            Gizmos.DrawLine(boxCastOrigin, boxCastEnd);
+                // ボックスの終点を計算
+                Vector3 boxCastEnd = boxCastOrigin + boxCastDirection.normalized * boxCastDistance;
 
-            // ボックスの終点の範囲を描画
-            Gizmos.matrix = Matrix4x4.TRS(boxCastEnd, boxCastRotation, _boxCastSize * 2);
-            Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
+                // キャストの移動範囲を描画
+                Gizmos.matrix = Matrix4x4.identity;
+                Gizmos.DrawLine(boxCastOrigin, boxCastEnd);
+
+                // ボックスの終点の範囲を描画
+                Gizmos.matrix = Matrix4x4.TRS(boxCastEnd, boxCastRotation, _boxCastSize * 2);
+                Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
+            }
         }
 #endif
     }

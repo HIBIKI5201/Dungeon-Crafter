@@ -18,7 +18,8 @@ namespace DCFrameWork
         }
         public void TextBoxUpdate(string name,string text)
         {
-            _storyText.Name = name;
+            //名前が「システム」の時だけ空文字にする
+            _storyText.Name = (name != "システム") ? name : string.Empty;
             _storyText.Text = text;
         }
     }

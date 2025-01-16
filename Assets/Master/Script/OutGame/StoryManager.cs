@@ -2,6 +2,7 @@ using DCFrameWork.MainSystem;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +12,7 @@ namespace DCFrameWork.SceneSystem {
         private AudioSource _audioSource;
         private Image _backGround1;
         private Image _backGround2;
+        private Image _blackFade;
 
         private IAsyncEnumerator<int?> _enumerator;
         private StoryData _storyData;
@@ -30,6 +32,8 @@ namespace DCFrameWork.SceneSystem {
             Image[] images = GetComponentsInChildren<Image>();
             _backGround1 = images[0];
             _backGround2 = images[1];
+            _blackFade = images[2];
+
 
             _creatoSprites = _creato.GetComponentsInChildren<SpriteRenderer>();
             _labirisSprites = _labiris.GetComponentsInChildren<SpriteRenderer>();
@@ -44,7 +48,9 @@ namespace DCFrameWork.SceneSystem {
         public async void SetStoryData(StoryData storyData)
         {
             _storyData = storyData;
-            SetBackGround(storyData.BackGround[0]);
+            if (storyData.BackGround[0] != null) {
+                SetBackGround(storyData.BackGround[0]);
+            }
         }
 
         public void NextText() => _enumerator.MoveNextAsync();
@@ -106,6 +112,7 @@ namespace DCFrameWork.SceneSystem {
                         break;
                     case "暗転解除":
                         Debug.Log("暗転解除");
+                        await BlackFade(1);
                         break;
                     case "Jump":
                         Debug.Log("Jump");
@@ -126,6 +133,48 @@ namespace DCFrameWork.SceneSystem {
                     }
                     return indexer;
                 }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="kind">1はフェードイン、2はフェードアウト、3はブラックアウト</param>
+        private async Task BlackFade(int kind)
+        {
+            CancellationToken token = destroyCancellationToken;
+
+            const float fadeSpeed = 20;
+
+            switch (kind) {
+                case 1:
+                    for (int i = 0; i < fadeSpeed; i++) {
+                        await Awaitable.FixedUpdateAsync(token);
+
+                        Color color = _blackFade.color;
+                        color.a -= 1f / fadeSpeed;
+                        _blackFade.color = color;
+                    }
+                    break;
+                
+                case 2:
+                    for (int i = 0; i < fadeSpeed; i++) {
+                        await Awaitable.FixedUpdateAsync(token);
+
+                        Color color = _blackFade.color;
+                        color.a += 1f / fadeSpeed;
+                        _blackFade.color = color;
+                    }
+
+                    break;
+                    
+                case 3:
+                    _blackFade.color = _blackFade.color + new Color(0, 0, 0, 1);
+                    break;
+                
+                default:
+                    Debug.LogWarning($"{kind}というフェードはありません");
+                    break;
             }
         }
 

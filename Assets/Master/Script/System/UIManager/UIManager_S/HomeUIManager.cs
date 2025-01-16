@@ -32,20 +32,14 @@ namespace DCFrameWork.UI
             _titleBackGround = _title.Q<VisualElement>("TitleWindow");
             _titleBackGround.RegisterCallback<ClickEvent>(x => { State = HomeWindowState.MainMenu; });
             _menu = _root.Q<TemplateContainer>("menu-window");
-            _stageSelectButton = _menu.Q<Button>("stage-select-button");
-            _defenceEquipmentButton = _menu.Q<Button>("defence-equipment-button");
-            _titleButton = _menu.Q<Button>("title-button");
-            _stageSelectButton.RegisterCallback<ClickEvent>(x => { State = HomeWindowState.StageSelect; });
-            _defenceEquipmentButton.RegisterCallback<ClickEvent>(x => { State = HomeWindowState.DefenceEquipment; });
-            _titleButton.RegisterCallback<ClickEvent>(x => { State = HomeWindowState.Title; });
+            _stageSelectButton = _menu.Q<Button>("StageButton");
+            _titleButton = _menu.Q<Button>("TitleButton");
+            _stageSelectButton.RegisterCallback<ClickEvent>(x => {GameBaseSystem.mainSystem.LoadScene(SceneKind.Ingame_1);});
             _stage = _root.Q<TemplateContainer>("stage-select");
             _stageone = _stage.Q<Button>("stage-one-button");
             _stageReturnButton = _stage.Q<Button>("return-button");
-            _stageReturnButton.RegisterCallback<ClickEvent>(x => { State = HomeWindowState.MainMenu; });
-            _stageone.RegisterCallback<ClickEvent>(x => { stageSelectManager.Stage(); });
             _defenceEquipment = _root.Q<TemplateContainer>("defence-equipment");
             _equipmentReturnButton = _defenceEquipment.Q<Button>("return-button");
-            _equipmentReturnButton.RegisterCallback<ClickEvent>(x => { State = HomeWindowState.MainMenu; });
         }
         public HomeWindowState State
         {

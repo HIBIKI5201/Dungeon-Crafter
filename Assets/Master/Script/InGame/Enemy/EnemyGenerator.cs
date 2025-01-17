@@ -45,7 +45,6 @@ namespace DCFrameWork.Enemy
         [SerializeField]
         PhaseManager _phaseData;
 
-        public Dictionary<IEnemy,EnemyHealthBarManager> _barDict = new();
 
         private void Start()
         {
@@ -83,7 +82,6 @@ namespace DCFrameWork.Enemy
                 healthBar.transform.SetParent(_canvas.transform);
                 var enemy = spawnedEnemy.GetComponent<IEnemy>();
                 enemy.StartByPool(healthBar.GetComponent<EnemyHealthBarManager>());
-                _barDict.Add(enemy, healthBar.GetComponent < EnemyHealthBarManager>());
                 return enemy;
             },
 
@@ -124,7 +122,6 @@ namespace DCFrameWork.Enemy
                 enemy.Initialize(_spawnPos[0].position, _targetPos.position, i._enemyLevel, i._enemyType);
                 enemy.DeathAction = () => _dict[i._enemyType].Release(enemy);
                 enemy.ChooseStatus(i._enemyLevel, i._enemyType);
-                _barDict[enemy].SetLevelText(i._enemyLevel);
                 spawned = i._spawnTime;
             }
         }

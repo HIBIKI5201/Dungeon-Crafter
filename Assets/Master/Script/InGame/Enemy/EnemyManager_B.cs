@@ -121,6 +121,7 @@ namespace DCFrameWork.Enemy
             _healthBarManager.gameObject.SetActive(true);
             _healthBarManager.FollowTarget(transform);
             GoToTargetPos(targetPos);
+            _healthBarManager.SetLevelText(level);
             Initialize_S();
             //_agent.updatePosition = false;
             _agent.updateRotation = false;

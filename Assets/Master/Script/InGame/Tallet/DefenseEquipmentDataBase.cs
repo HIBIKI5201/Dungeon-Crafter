@@ -7,6 +7,8 @@ namespace DCFrameWork.DefenseEquipment
     public class DefenseEquipmentDataBase : ScriptableObject
     {
         public string Name;
+        public DefenseObjectsKind Kind;
+        public GameObject Prefab;
         public string Explanation;
         public int DropChance;
         public List<DefenseEquipmentData_B> DataLevelList;

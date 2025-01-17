@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: LongShootTurretDataBase
   m_EditorClassIdentifier: 
   Name: 
+  Kind: 1
+  Prefab: {fileID: 3201622288186106138, guid: a278e15b8295c41429a44fa532116f44, type: 3}
   Explanation: 
   DropChance: 0
   DataLevelList:

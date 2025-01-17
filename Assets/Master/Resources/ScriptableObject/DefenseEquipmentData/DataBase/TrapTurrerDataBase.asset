@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: TrapTurrerDataBase
   m_EditorClassIdentifier: 
   Name: 
+  Kind: 6
+  Prefab: {fileID: 2777772811596702075, guid: 3edd4d2074dd72e49a78027989313d79, type: 3}
   Explanation: 
   DropChance: 0
   DataLevelList:

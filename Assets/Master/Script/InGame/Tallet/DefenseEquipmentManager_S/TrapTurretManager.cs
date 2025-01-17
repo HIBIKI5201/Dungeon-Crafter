@@ -20,6 +20,9 @@ namespace DCFrameWork.DefenseEquipment
         bool _isSpawned;
         float _animationTimer = 0;
         float _animationDuration = 1;
+        StageManager _stageManager;
+        Vector3 _groundScale;
+
 
 #if UNITY_EDITOR
         bool _isChecked;
@@ -30,6 +33,8 @@ namespace DCFrameWork.DefenseEquipment
             _timer = Time.time;
             _animationCurveX.AddKey(0, _spawnPos.position.x);
             _animationCurveZ.AddKey(0, _spawnPos.position.z);
+            _stageManager = FindAnyObjectByType<StageManager>();
+            _groundScale = _stageManager.GetGroundScale();
         }
 
         protected override void Think() //UpDate と同義
@@ -83,7 +88,7 @@ namespace DCFrameWork.DefenseEquipment
             if (_entityList.Count < count)
             {
                 if (_entityPrefab is null) return;
-                var entity = InstantiateAsync(_entityPrefab, transform, _spawnPos.position, Quaternion.identity);
+                var entity = InstantiateAsync(_entityPrefab, transform, _spawnPos.position, Quaternion.Euler(0, 180, 0));
                 GameObject obj = (await entity)[0];
                 _entityList.Add(obj);
                 _isSpawned = true;
@@ -95,11 +100,15 @@ namespace DCFrameWork.DefenseEquipment
         override protected bool Check(Vector3 pos)
         {
             var size = BombRange * 5;
+            var radius = size / 2;
             Physics.BoxCast(pos + new Vector3(0, 8, 0), Vector3.one * size / 2, Vector3.down, out RaycastHit hit, Quaternion.identity, 18f);
-
-            if (hit.collider != null)
+            if (hit.collider != null &&
+                -_groundScale.x <= pos.x - radius &&   //Groundからはみ出さない座標かどうか
+                _groundScale.x >= pos.x + radius &&
+                -_groundScale.z <= pos.z - radius &&
+                _groundScale.z >= pos.z + radius)
             {
-                return hit.collider.gameObject.layer == Mathf.Log(_groundLayer.value, 2);
+                return _stageManager.CheckObjectPlaced(pos) && hit.collider.gameObject.layer == Mathf.Log(_groundLayer.value, 2);
             }
             return false;
         }
@@ -137,28 +146,32 @@ namespace DCFrameWork.DefenseEquipment
 #if UNITY_EDITOR
         void OnDrawGizmos()
         {
-            Gizmos.color = Check(_position) ? Color.red : Color.green;
+            if (Application.isPlaying)
+            {
+                Gizmos.color = Check(_position) ? Color.red : Color.green;
 
-            // BoxCast のデータを計算
-            Vector3 boxCastOrigin = _position + new Vector3(0, 8, 0);
-            Vector3 boxCastDirection = Vector3.down; // 下向き
-            float boxCastDistance = 18f; // 必要に応じて調整
-            Quaternion boxCastRotation = Quaternion.identity;
 
-            // ボックスの範囲を描画 (始点)
-            Gizmos.matrix = Matrix4x4.TRS(boxCastOrigin, boxCastRotation, _boxCastSize * 2);
-            Gizmos.DrawWireCube(Vector3.zero, Vector3.one); // 中心を基準にスケール適用
+                // BoxCast のデータを計算
+                Vector3 boxCastOrigin = _position + new Vector3(0, 8, 0);
+                Vector3 boxCastDirection = Vector3.down; // 下向き
+                float boxCastDistance = 18f; // 必要に応じて調整
+                Quaternion boxCastRotation = Quaternion.identity;
 
-            // ボックスの終点を計算
-            Vector3 boxCastEnd = boxCastOrigin + boxCastDirection.normalized * boxCastDistance;
+                // ボックスの範囲を描画 (始点)
+                Gizmos.matrix = Matrix4x4.TRS(boxCastOrigin, boxCastRotation, _boxCastSize * 2);
+                Gizmos.DrawWireCube(Vector3.zero, Vector3.one); // 中心を基準にスケール適用
 
-            // キャストの移動範囲を描画
-            Gizmos.matrix = Matrix4x4.identity;
-            Gizmos.DrawLine(boxCastOrigin, boxCastEnd);
+                // ボックスの終点を計算
+                Vector3 boxCastEnd = boxCastOrigin + boxCastDirection.normalized * boxCastDistance;
 
-            // ボックスの終点の範囲を描画
-            Gizmos.matrix = Matrix4x4.TRS(boxCastEnd, boxCastRotation, _boxCastSize * 2);
-            Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
+                // キャストの移動範囲を描画
+                Gizmos.matrix = Matrix4x4.identity;
+                Gizmos.DrawLine(boxCastOrigin, boxCastEnd);
+
+                // ボックスの終点の範囲を描画
+                Gizmos.matrix = Matrix4x4.TRS(boxCastEnd, boxCastRotation, _boxCastSize * 2);
+                Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
+            }
         }
 #endif
     }

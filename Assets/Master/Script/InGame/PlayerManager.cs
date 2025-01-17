@@ -1,3 +1,4 @@
+using DCFrameWork.MainSystem;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,54 +7,74 @@ namespace DCFrameWork
 {
     public class PlayerManager : MonoBehaviour
     {
-        static int _treasureHp = 100;
-        static float _gold;
-        static Dictionary<DefenseObjectsKind, int> _defenseObjectsValue = new();
-        public static Dictionary<DefenseObjectsKind, int> TurretInventory{
-            get => _defenseObjectsValue;
-        }
-        public static event Action _gameOverEvent;
-        public static event Action<float> _getGold;
-
-        static LevelManager _levelManager;
         [SerializeField] DropTableData _dropTable;
         [SerializeField] int _levelUpGachaCount = 3;
+        [SerializeField] int _startGold;
+        [SerializeField] int _startTurretCount;
+        [SerializeField] int _startTreasureHp = 100;
+        int _treasureHp = 100;
+        float _gold;
+        Dictionary<DefenseObjectsKind, int> _defenseObjectsValue = new();
+        public Dictionary<DefenseObjectsKind, int> TurretInventory { get => _defenseObjectsValue; }
+        public int TreasureHp { get => _treasureHp; }
+        public float Gold { get => _gold; }
+
+        public event Action _gameOverEvent;
+        public event Action<IEnumerable<DefenseObjectsKind>> _levelUpAction;
+        public event Action<float> _getGold;
+        public event Action<DefenseObjectsKind> OnGetDefenseObject;
+        public event Action<DefenseObjectsKind> OnUseDefenseObject;
+
+        LevelManager _levelManager;
+        public LevelManager LavelManager { get => _levelManager; }
 
         public void Initialize()
         {
+            _treasureHp = _startTreasureHp;
             _levelManager = GetComponentInChildren<LevelManager>();
             _levelManager.OnLevelChanged += x => GetRandomDefenseObj();
+            for (int i = 0; i < _startTurretCount; i++)
+            {
+                SetDefenseObject(DefenseObjectsKind.MiddleShootTurret);
+            }
+            _gameOverEvent += () => SceneChanger.LoadScene(SceneKind.Home);
         }
 
-        public static int TreasureHp { get => _treasureHp; }
-
-        public static void HPDown(int damage)
+        public void HPDown(int damage)
         {
             _treasureHp -= damage;
             if (TreasureHp <= 0)
             {
+                Debug.Log("GameOver");
                 _gameOverEvent?.Invoke();
             }
         }
         /// <summary>
-        /// 
+        /// インゲームのタレット強化用Gold
         /// </summary>
-        /// <param name="gold">��������������</param>
-        public static void ChangeGold(float gold)
+        /// <param name="gold">値を所持Goldに加算します。</param>
+        public bool ChangeGold(float gold)
         {
-            _gold += gold;
-            _getGold?.Invoke(_gold);
+            if (_gold + gold >= 0)
+            {
+                _gold += gold;
+                _getGold?.Invoke(_gold);
+                return true;
+            }
+            return false;
         }
-        public static void AddEXP(float exp) => _levelManager.AddExperiancePoint(exp);
-        public static void SetDefenseObject(DefenseObjectsKind kind)
+        public void AddEXP(float exp) => _levelManager.AddExperiancePoint(exp);
+        public void SetDefenseObject(DefenseObjectsKind kind)
         {
             if (_defenseObjectsValue.ContainsKey(kind)) _defenseObjectsValue[kind]++;
             else _defenseObjectsValue.Add(kind, 1);
+            OnGetDefenseObject?.Invoke(kind);
         }
-        public static void UseDefenseObject(DefenseObjectsKind kind)
+        public void UseDefenseObject(DefenseObjectsKind kind)
         {
             if (_defenseObjectsValue.ContainsKey(kind)) _defenseObjectsValue[kind]--;
-            else Debug.LogWarning($"{nameof(kind)}�͑��݂��܂���");
+            else Debug.LogWarning($"{nameof(kind)}が存在しません");
+            OnUseDefenseObject?.Invoke(kind);
         }
         public void ChangeDropTable(DropTableData dropTable) => _dropTable = dropTable;
 
@@ -65,8 +86,8 @@ namespace DCFrameWork
             {
                 CollectionSystem.Instans.SetDefenseObj(item);
                 list.Add(item);
-                SetDefenseObject(item);
             }
+            _levelUpAction?.Invoke(list);
             return list;
         }
 
@@ -101,5 +122,4 @@ namespace DCFrameWork
         WeeknessTurret,
         SlowTurret
     }
-
 }

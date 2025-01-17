@@ -1,18 +1,21 @@
-using System.Collections;
+using System;
 using System.Threading.Tasks;
-using Unity.VisualScripting;
+using DCFrameWork.DefenseEquipment;
+using DCFrameWork.Enemy;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UIElements;
-using static UnityEditor.Recorder.OutputPath;
 
 namespace DCFrameWork.UI
 {
     public class InGameUIManager : UIManager_B
     {
-        [SerializeField] EquipmentCardData[] testcard;
+        [SerializeField] StageManager _stageManager;
+        [SerializeField] PhaseManager _phaseManager;
         EquipmentCardInventory _equipmentList;
         BasicInformation _basicInformation;
         EquipmentSettingUI _equipmentSettingUI;
+        public event Action<bool> OnMouseOnUI;
         protected override async Task LoadDocumentElement(VisualElement root)
         {
             _equipmentList = root.Q<EquipmentCardInventory>("EquipmentCardInventory");
@@ -21,21 +24,22 @@ namespace DCFrameWork.UI
             await _equipmentList.InitializeTask;
             await _basicInformation.InitializeTask;
             await _equipmentSettingUI.InitializeTask;
-            _equipmentList.ListView.itemsSource = testcard;
-            Debug.Log("実行しています");
+            _stageManager.OnActivateTurretSelectedUI += EquipmentSettingUIUpdate;
+            _phaseManager.PhaseProgressChanged += PhaseUpdate;
+            _phaseManager._phaseEndAction += PhaseCount;
         }
-
-        //ウェーブゲージを更新するためのメソッド
-        public void WaveGuageUpdate(int waveCount, float newParsent)
+        void EquipmentSettingUIUpdate(ITurret turret)
         {
-            _basicInformation.WaveGuege = newParsent;
-            _basicInformation.WaveText = waveCount.ToString();
+            _equipmentSettingUI.EquipmentSettingWindowVisible = true;
         }
-
-        //防衛設備のウィンドウの表示非表示のメソッド
-        public void EquipmentSettingWindowVisible(bool visible)
+        void PhaseUpdate(float parsent)
         {
-            _equipmentSettingUI.EquipmentSettingWindowVisible = visible;
+            _basicInformation.GuageMesh.UpdateGuage(parsent * 100);
+        }
+        void PhaseCount()
+        {
+            _basicInformation.PhaseText = _phaseManager.PhaseCount.ToString();
+            _basicInformation.GuageMesh.UpdateGuage(0);
         }
     }
 }

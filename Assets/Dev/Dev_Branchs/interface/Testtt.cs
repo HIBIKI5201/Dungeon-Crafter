@@ -12,13 +12,5 @@ namespace DCFrameWork
             _uiDocument = GameObject.Find("UIDocument");
             _inGameUiManager = _uiDocument.GetComponent<InGameUIManager>();
         }
-        void Update()
-        {
-            if (Input.GetKeyDown("k"))
-            {
-                _inGameUiManager.WaveGuageUpdate(321, 0.5f);
-                _inGameUiManager.EquipmentSettingWindowVisible(true);
-            }
-        }
     }
 }

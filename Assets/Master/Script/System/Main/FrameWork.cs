@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace DCFrameWork.MainSystem
@@ -24,8 +25,21 @@ namespace DCFrameWork.MainSystem
             float timer = 0;
             while (timer < time)
             {
-                timer += Time.deltaTime;
+                if(!GameBaseSystem.IsPause)
+                    timer += Time.deltaTime;
                 yield return null;
+            }
+        }
+        public static async Task PausableWaitForSecondAsync(float time)
+        {
+            float timer = 0;
+            while (timer < time)
+            {
+                if (!GameBaseSystem.IsPause)
+                {
+                    timer += Time.deltaTime;
+                }
+                await Awaitable.NextFrameAsync();
             }
         }
     }

@@ -9,10 +9,9 @@ namespace DCFrameWork
     [UxmlElement]
     public partial class EquipmentCardInventory : VisualElement
     {
-        //Task
+        //初期化タスク
         public Task InitializeTask { get; private set; }
-        
-        //const
+        //定数
         private const string _windowClose = "equipment-inventory_close";
         private const string _windowOpen = "equipment-inventory_open";
         private const string _equipmentingButtonElementNotActive = "equipmenting-button-element-not-active";
@@ -20,7 +19,7 @@ namespace DCFrameWork
         private const string _equipmentTextBoxNotActive = "equipment-text-box-not-active";
         private const string _equipmentTextBoxActive = "equipment-text-box-active";
 
-        //private
+        //UI要素
         private VisualElement _equipment;
         private VisualElement _equipmentButton;
         private VisualElement _backGround;
@@ -36,26 +35,31 @@ namespace DCFrameWork
         private Label _wallGold;
         private Label _wallText;
         private ListView _listView;
-       
-        //public
+        //プロパティ
         public ListView ListView { get => _listView; }
         public VisualElement DoorButton { get => _doorButton; }
         public VisualElement WallButton { get => _wallButton; }
         public Label DoorGold { get => _doorGold; }
         public Label WallGold { get => _wallGold; }
+        //コンストラクタ
         public EquipmentCardInventory() => InitializeTask = Initialize();
+        // 初期化
         private async Task Initialize()
         {
+            //UXMLファイルの読み込み
             AsyncOperationHandle<VisualTreeAsset> handle = Addressables.LoadAssetAsync<VisualTreeAsset>("UXML/EquipmentInventory.uxml");
             await handle.Task;
 
             if (handle.Status == AsyncOperationStatus.Succeeded && handle.Result != null)
             {
+                //UXMLファイルの読み込み
                 var treeAsset = handle.Result;
                 var container = treeAsset.Instantiate();
+                //スタイルの読み込み
                 container.style.width = Length.Percent(100);
                 container.style.height = Length.Percent(100);
                 hierarchy.Add(container);
+                //UI要素の取得
                 _equipment = container.Q<VisualElement>("EquipsInventory");
                 _equipmentButton = container.Q<VisualElement>("EquipmentTextBox");
                 _backGround = container.Q<VisualElement>("Background");
@@ -68,6 +72,7 @@ namespace DCFrameWork
                 _wallText = container.Q<Label>("WallText");
                 _wallGold = container.Q<Label>("WallGold");
                 _listView = container.Q<ListView>("EquipmentCardList");
+                //スタイルの読み込み
                 _equipment.AddToClassList(_windowClose);
                 _equipmentButton.RegisterCallback<ClickEvent>(x =>
                 {
@@ -81,7 +86,7 @@ namespace DCFrameWork
                     _equipment.RemoveFromClassList(_windowOpen);
                     _equipment.AddToClassList(_windowClose);
                 });
-                Debug.Log("�E�B���h�E�͐���Ƀ��[�h����");
+                Debug.Log("�E�B���h�E�͐���Ƀ��[�h����");
             }
             else
             {
@@ -89,14 +94,6 @@ namespace DCFrameWork
             }
 
             Addressables.Release(handle);
-        }
-        void Equipmenting()
-        {
-
-        }
-        void UnEquipmenting()
-        {
-
         }
     }
 }

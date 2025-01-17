@@ -77,7 +77,7 @@ namespace DCFrameWork.MainSystem
         private SceneSystem_B SceneInit()
         {
             SceneSystem_B system = FindAnyObjectByType<SceneSystem_B>();
-            if ((system is null).CheckLog("シーンマネージャーが見つかりません")) return　null;
+            if ((system is null).CheckLog("シーンマネージャーが見つかりません")) return null;
             sceneSystem = system;
             system?.Initialize();
             return sceneSystem;
@@ -85,11 +85,20 @@ namespace DCFrameWork.MainSystem
 
         public void PlaySound(int index, SoundKind kind) => _audioManager?.PlaySound(index, kind);
 
-        public void PlayBGM(int index, BGMMode mode)=> _audioManager?.PlayBGM(index, mode);
+        public void PlayBGM(int index, BGMMode mode) => _audioManager?.PlayBGM(index, mode);
 
         #region ポーズ
-        public void Pause() => OnPaused?.Invoke();
-        public void Resume() => OnResumed?.Invoke();
+        public static bool IsPause;
+        public void Pause()
+        {
+            OnPaused?.Invoke();
+            IsPause = true;
+        }
+        public void Resume()
+        {
+            OnResumed?.Invoke();
+            IsPause = false;
+        }
 
         public void AddPausableObject(IPausable obj)
         {

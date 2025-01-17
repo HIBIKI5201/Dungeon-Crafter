@@ -7,11 +7,7 @@ namespace DCFrameWork.DefenseEquipment
     {
         float _timer = 0;
         bool _isPaused = false;
-        [SerializeField] GameObject _bullet;
-        [Tooltip("矢が着弾するまでの時間")] float _hitTime = 0.2f;
-        [Tooltip("矢の初期位置")] Vector3 _bulletPos;
-        float _shootTimer;
-        bool _isShoot;
+
 
         protected override void Start_S()
         {
@@ -38,7 +34,7 @@ namespace DCFrameWork.DefenseEquipment
         void BulletShoot()
         {
             _shootTimer += Time.deltaTime;
-            var dir = _targetSelect.Obj.transform.position - _bulletPos;
+            var dir = _enemyPos - _bulletPos;
             var speed = dir / _hitTime;
             _bullet.transform.forward = dir;
             _bullet.transform.position = _bulletPos + speed * _shootTimer;

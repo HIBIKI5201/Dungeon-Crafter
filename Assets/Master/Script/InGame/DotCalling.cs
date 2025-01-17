@@ -14,7 +14,7 @@ namespace DCFrameWork
         DotJob _job = new();
         GameObject[] obj;
         NativeArray<float> _result;
-        public void Initialize()
+        public void Start()
         {
             obj = GameObject.FindGameObjectsWithTag("DisappearOnBack");
             _job.objfoward = new NativeArray<float2>(Array.ConvertAll(obj,
@@ -25,7 +25,7 @@ namespace DCFrameWork
                 , Allocator.TempJob);
         }
 
-            void Update()
+        void Update()
         {
             _job.cameraPos = new float2(Camera.main.transform.position.x, Camera.main.transform.position.z);
             var result = new NativeArray<float>(_job.objfoward.Length, Allocator.TempJob);

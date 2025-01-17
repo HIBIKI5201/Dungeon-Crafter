@@ -39,11 +39,15 @@ namespace DCFrameWork.Enemy
 
         public Dictionary<EnemyKind, ObjectPool<IEnemy>> _dict = new();
 
-        
+        [SerializeField]
+        PlayerManager _playerManager;
+
+        [SerializeField]
+        PhaseManager _phaseData;
 
         private void Start()
         {
-           
+          
            
         }
         
@@ -60,16 +64,10 @@ namespace DCFrameWork.Enemy
         }
 
 
-        public void Waving(WaveData waveData)
+        public void Waving(PhaseData waveData)
         {
             var kinds = _objects.Select(e => e.kind);
-            foreach (var a in waveData._spawnData)
-            {
-                if (kinds.Contains(a._enemyType))
-                {
-                    StartCoroutine(Generate(a, _dict[a._enemyType]));
-                }
-            }
+            StartCoroutine(Generate(waveData.SpawnData));
         }
 
         private ObjectPool<IEnemy> ObjectPooling(GameObject obj ,Vector3 initPosition , EnemyKind kind)
@@ -95,8 +93,11 @@ namespace DCFrameWork.Enemy
                if (target.CurrentHealth <= 0)
                {
                    CollectionSystem.AddEnemyKilCount(kind);
-               }             
-               WaveManager.EnemyDeathCount();
+                   _playerManager.ChangeGold(target.DropGold);
+                   _playerManager.AddEXP(target.DropEXP);
+
+               }
+               _phaseData.EnemyDeathCount();
                target.DeathAction = null;
 
            },
@@ -107,21 +108,18 @@ namespace DCFrameWork.Enemy
            true, _defaultValue, _maxValue);
         }
 
-        IEnumerator Generate(EnemySpawnData data, ObjectPool<IEnemy> pool)
+        IEnumerator Generate(EnemySpawnData[] data)
         {
-            yield return FrameWork.PausableWaitForSecond(data._spawnStartTime);
-            float timer = data._spawnEndTime - data._spawnStartTime;
-            timer = timer / data._enemyCount;
-            int count = data._enemyCount;
-            while (count > 0)
+            var spawnQueue = new Queue<EnemySpawnData>(data.OrderBy(x => x._spawnTime));
+            float spawned = 0;
+            while(spawnQueue.Count > 0)
             {
-                var enemy = pool.Get();
-                enemy.position = DecisionSpawnPoint(data._spawnPoint);
-                enemy.SetLevel(data._enemyLevel);
-                count--;
-                yield return FrameWork.PausableWaitForSecond(timer);
+                var i = spawnQueue.Dequeue();
+                yield return FrameWork.PausableWaitForSecond(i._spawnTime - spawned);
+                var enemy = _dict[i._enemyType].Get();
+                enemy.SetLevel(i._enemyLevel);
+                spawned = i._spawnTime;
             }
-
         }
 
         Vector3 DecisionSpawnPoint(int i)

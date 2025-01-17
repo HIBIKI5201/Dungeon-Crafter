@@ -19,7 +19,7 @@ MonoBehaviour:
       _state:
         _maxHealth: 1
         _plunder: 1
-        _dexterity: 1
+        _dexterity: 10
         _defense: 1
         _dropEXP: 1
         _dropGold: 1

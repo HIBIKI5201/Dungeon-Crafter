@@ -15,16 +15,12 @@ MonoBehaviour:
   _PhaseData:
   - _selectionPhaseData:
     - _spawnData:
-      - _enemyType: 0
-        _enemyLevel: 1
-        _spawnTime: 1
-        _spawnPoint: 0
-    - _spawnData:
       - _enemyType: 1
         _enemyLevel: 1
         _spawnTime: 1
         _spawnPoint: 0
-      - _enemyType: 3
+    - _spawnData:
+      - _enemyType: 0
         _enemyLevel: 1
         _spawnTime: 1
         _spawnPoint: 0

@@ -1,22 +1,12 @@
 namespace DCFrameWork.Enemy
 {
-    public class FlyEnemyManager : EnemyManager_B<EnemyStateData>
+    public class FlyEnemyManager : EnemyManager_B
     {
 
         protected override void DeathBehaviour()
         {
             base.DeathBehaviour();
         }
-
-
-        protected override void LoadSpecificnData(EnemyStateData data)
-        {
-
-
-        }
-
-
-
         protected override void Pause()
         {
             throw new System.NotImplementedException();

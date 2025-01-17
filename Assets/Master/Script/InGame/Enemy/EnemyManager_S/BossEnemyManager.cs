@@ -1,20 +1,11 @@
 namespace DCFrameWork.Enemy
 {
-    public class BossEnemyManager : EnemyManager_B<EnemyStateData>
+    public class BossEnemyManager : EnemyManager_B
     {
         protected override void DeathBehaviour()
         {
             base.DeathBehaviour();
         }
-
-
-        protected override void LoadSpecificnData(EnemyStateData data)
-        {
-
-
-        }
-
-
 
         protected override void Pause()
         {

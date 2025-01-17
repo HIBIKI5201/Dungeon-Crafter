@@ -2,6 +2,7 @@ using DCFrameWork.MainSystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using static UnityEngine.InputManagerEntry;
@@ -10,24 +11,23 @@ namespace DCFrameWork.Enemy
 {
     [RequireComponent(typeof(NavMeshAgent), typeof(Rigidbody))]
 
-    public abstract class EnemyManager_B<Data> : MonoBehaviour, IEnemy, IPausable where Data : EnemyStateData
+    public abstract class EnemyManager_B : MonoBehaviour, IEnemy, IPausable 
     {
         #region データ類
         [SerializeField]
-        private Data _enemyData;
+        private EnemyStateData _enemyData;
 
         private int _enemyLevel = 1;
 
         EnemyKind _enemykind;
 
-        private float _maxHealth;
-        float IFightable.MaxHealth { get => ChooseStatus(_enemyLevel, _enemykind).MaxHealth; set => _maxHealth = value;}
+        float IFightable.MaxHealth { get => ChooseStatus(_enemyLevel, _enemykind).MaxHealth; }
         private float _currentHealth;
         float IFightable.CurrentHealth { get => _currentHealth; set { _currentHealth = value; HealthBarUpdate(); } }
 
         private float _defense;
         protected float Defense { get => ChooseStatus(_enemyLevel, _enemykind).Defense; set { _defense = value; } }
-        protected float Dexterity { get => ChooseStatus(_enemyLevel, _enemykind).Dexterity; set => _agent.speed = value; }
+        protected float Dexterity { get => ChooseStatus(_enemyLevel, _enemykind).Dexterity;}
 
         float IFightable.Plunder { get => ChooseStatus(_enemyLevel, _enemykind).Plunder; }
 
@@ -56,10 +56,6 @@ namespace DCFrameWork.Enemy
         private const float _buff = 0.1f;
         protected float Buff { get => _buff; }
 
-
-
-        private float _speed = 0;
-
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
@@ -72,7 +68,6 @@ namespace DCFrameWork.Enemy
             _healthBarManager = enemyHealthBarManager;
             if (_enemyData is null)
                 Debug.Log("データがありません");
-            LoadCommonData();
             enemyHealthBarManager.Initialize();
             HealthBarUpdate();
             Start_S();
@@ -113,7 +108,9 @@ namespace DCFrameWork.Enemy
         void IEnemy.Initialize(Vector3 spawnPos, Vector3 targetPos,int level,EnemyKind kind) => Initialize(spawnPos, targetPos,level,kind);
         private void Initialize(Vector3 spawnPos, Vector3 targetPos, int level,EnemyKind kind)
         {
-            _currentHealth = _enemyData.EnemyKindData[(int)kind].LevelData[level].State.MaxHealth;
+            _enemykind = kind;
+            _enemyLevel = level;
+            _currentHealth = (this as IFightable).MaxHealth;
             HealthBarUpdate();
             ChangeSpeed(Dexterity);
             gameObject.transform.position = spawnPos;
@@ -125,7 +122,7 @@ namespace DCFrameWork.Enemy
             Initialize_S();
             //_agent.updatePosition = false;
             _agent.updateRotation = false;
-            _speed = Dexterity;
+            Debug.Log(Dexterity);
         }
 
         /// <summary>
@@ -133,17 +130,7 @@ namespace DCFrameWork.Enemy
         /// </summary>
         protected virtual void Initialize_S() { }
 
-        private void LoadCommonData()
-        {
-            LoadSpecificnData(_enemyData);
-        }
-
-
-        /// <summary>
-        /// 設定した型パラメータに対応した専用変数を代入してください
-        /// </summary>
-        /// <param name="data">型パラメータのデータ</param>
-        protected virtual void LoadSpecificnData(Data data) { }
+ 
 
         void IFightable.DeathBehaviour() => DeathBehaviour();
         protected virtual void DeathBehaviour()
@@ -192,7 +179,7 @@ namespace DCFrameWork.Enemy
         void IFightable.HealthBarUpdate() => HealthBarUpdate();
         private void HealthBarUpdate()
         {
-            _healthBarManager?.BarFillUpdate(_currentHealth /_maxHealth);
+            _healthBarManager?.BarFillUpdate(_currentHealth /(this as IFightable).MaxHealth);
         }
 
 
@@ -200,9 +187,8 @@ namespace DCFrameWork.Enemy
         EnemyState IEnemy.ChooseStatus(int level, EnemyKind kind) => ChooseStatus(level,kind);
         private EnemyState ChooseStatus(int level , EnemyKind kind)
         {
-            EnemyState state = _enemyData.EnemyKindData[(int)kind].LevelData[level].State;
-            _enemykind = kind;
-            _enemyLevel = level;
+            EnemyState state = Array.Find(_enemyData.EnemyKindData, (i) => i.Kind == kind)?.LevelData[level - 1].State;
+            Debug.Log(state);
             return state;
         }
 
@@ -278,7 +264,7 @@ namespace DCFrameWork.Enemy
         Action DeathAction { get; set; }
 
         protected void HealthBarUpdate();
-        float MaxHealth { get; protected set; }
+        float MaxHealth { get;}
         float CurrentHealth { get; protected set; }
 
         float Plunder { get; }

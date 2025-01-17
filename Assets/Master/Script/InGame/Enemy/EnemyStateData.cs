@@ -49,6 +49,11 @@ namespace DCFrameWork.Enemy
 
         [SerializeField] private float _dropGold = 1f;
         public float DropGold => _dropGold;
+
+        public override string ToString()
+        {
+            return $"sokudo{_dexterity} hp{_maxHealth}";
+        }
     }
 
     public enum EnemyKind

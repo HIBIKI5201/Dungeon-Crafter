@@ -121,7 +121,7 @@ namespace DCFrameWork.Enemy
                 var enemy = _dict[i._enemyType].Get();
                 enemy.Initialize(_spawnPos[0].position, _targetPos.position, i._enemyLevel, i._enemyType);
                 enemy.DeathAction = () => _dict[i._enemyType].Release(enemy);
-                enemy.ChooseStatus(i._enemyLevel, i._enemyType);
+                enemy.ChooseStatus(i._enemyLevel, i._enemyType);               
                 spawned = i._spawnTime;
             }
         }

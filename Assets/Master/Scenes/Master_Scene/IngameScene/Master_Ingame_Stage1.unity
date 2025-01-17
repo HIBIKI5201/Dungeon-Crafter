@@ -661,6 +661,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a60d3713b0c1ad46a7109decd8d3e27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1047674327 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8315951428447432683, guid: 0df4d64677fe9b44facaa32a2feee710,
+    type: 3}
+  m_PrefabInstance: {fileID: 336622896}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a386f33aeaeaaa44e921ba53be46ddad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1058254285 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5966962928429106648, guid: 15f9e0195939cc44e9fd3570ef7e2082,
@@ -2218,6 +2230,16 @@ PrefabInstance:
       propertyPath: _canvas
       value: 
       objectReference: {fileID: 518106097}
+    - target: {fileID: 7212133291848024612, guid: 77fd2a5407b56e54d8e660f62bd21e54,
+        type: 3}
+      propertyPath: _phaseData
+      value: 
+      objectReference: {fileID: 1622257948}
+    - target: {fileID: 7212133291848024612, guid: 77fd2a5407b56e54d8e660f62bd21e54,
+        type: 3}
+      propertyPath: _playerManager
+      value: 
+      objectReference: {fileID: 1047674327}
     - target: {fileID: 7703117587782075800, guid: 77fd2a5407b56e54d8e660f62bd21e54,
         type: 3}
       propertyPath: m_LocalPosition.x

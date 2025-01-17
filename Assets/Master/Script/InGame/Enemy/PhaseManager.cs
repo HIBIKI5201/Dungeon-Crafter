@@ -16,7 +16,7 @@ namespace DCFrameWork.Enemy
         int _phaseCount;
         int _loopCount = 1;
         int _phaseEnemySum;
-        static int _deathEemyCount;
+        int _deathEemyCount;
 
         public event Action _phaseStartAction;
         public event Action _phaseEndAction;

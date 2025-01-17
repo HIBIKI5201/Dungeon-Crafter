@@ -84,11 +84,9 @@ namespace DCFrameWork.Enemy
         protected virtual void Start_S() { }
 
         private void Update()
-        {
-           
+        {           
             Move();
             _healthBarManager.FollowTarget(transform);
-
         }
 
         void Move()

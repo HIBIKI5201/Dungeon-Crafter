@@ -747,6 +747,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3df9c3f4edca9c044885d3483b80fb32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _saveScores: 000000000000000000000000
 --- !u!1001 &1090840015
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2211,7 +2212,7 @@ PrefabInstance:
     - target: {fileID: 3230375918257091528, guid: 77fd2a5407b56e54d8e660f62bd21e54,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 1133
+      value: 1136
       objectReference: {fileID: 0}
     - target: {fileID: 3538332611585799522, guid: 77fd2a5407b56e54d8e660f62bd21e54,
         type: 3}
@@ -2270,6 +2271,32 @@ PrefabInstance:
       propertyPath: _canvas
       value: 
       objectReference: {fileID: 518106097}
+    - target: {fileID: 7212133291848024612, guid: 77fd2a5407b56e54d8e660f62bd21e54,
+        type: 3}
+      propertyPath: _objects.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7212133291848024612, guid: 77fd2a5407b56e54d8e660f62bd21e54,
+        type: 3}
+      propertyPath: _objects.Array.data[4].obj
+      value: 
+      objectReference: {fileID: 7990310466857601233, guid: 587299aa6d6919b45bed17fac4b47acb,
+        type: 3}
+    - target: {fileID: 7212133291848024612, guid: 77fd2a5407b56e54d8e660f62bd21e54,
+        type: 3}
+      propertyPath: _objects.Array.data[2].kind
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7212133291848024612, guid: 77fd2a5407b56e54d8e660f62bd21e54,
+        type: 3}
+      propertyPath: _objects.Array.data[3].kind
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7212133291848024612, guid: 77fd2a5407b56e54d8e660f62bd21e54,
+        type: 3}
+      propertyPath: _objects.Array.data[4].kind
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7703117587782075800, guid: 77fd2a5407b56e54d8e660f62bd21e54,
         type: 3}
       propertyPath: m_LocalPosition.x

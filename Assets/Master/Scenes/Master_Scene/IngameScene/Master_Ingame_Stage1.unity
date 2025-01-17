@@ -2240,6 +2240,21 @@ PrefabInstance:
       propertyPath: _playerManager
       value: 
       objectReference: {fileID: 1047674327}
+    - target: {fileID: 7212133291848024612, guid: 77fd2a5407b56e54d8e660f62bd21e54,
+        type: 3}
+      propertyPath: _objects.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7212133291848024612, guid: 77fd2a5407b56e54d8e660f62bd21e54,
+        type: 3}
+      propertyPath: _objects.Array.data[2].kind
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7212133291848024612, guid: 77fd2a5407b56e54d8e660f62bd21e54,
+        type: 3}
+      propertyPath: _objects.Array.data[3].kind
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7703117587782075800, guid: 77fd2a5407b56e54d8e660f62bd21e54,
         type: 3}
       propertyPath: m_LocalPosition.x

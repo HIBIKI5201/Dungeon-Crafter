@@ -176,15 +176,15 @@ public class StageManager : MonoBehaviour
             }
             else if(hit.collider != null)
             {
-                TalletSelect(hit.collider.gameObject);
+                TurretSelect(hit.collider.gameObject);
             }
         }
     }
-    void TalletSelect(GameObject turret)
+    void TurretSelect(GameObject turret)
     {
         if (turret.TryGetComponent<ITurret>(out ITurret t))
         {
-            Debug.Log("タレットがクリックされた");
+            //Debug.Log("タレットがクリックされた");
             OnActivateTurretSelectedUI?.Invoke(t);
         }
     }

@@ -34,6 +34,7 @@ public class StageManager : MonoBehaviour
     private Camera _mainCamera;
     private Vector3 _currentPosition = Vector3.zero;
     Vector3 _floorCenter;
+    private GameObject _selectedTurret;
     //private float _prefabHeight;
     bool _canSet = false;
     bool _isPutTogetherWithWall;
@@ -174,7 +175,7 @@ public class StageManager : MonoBehaviour
             {
                 SetObject(_currentPosition);
             }
-            else if(hit.collider != null)
+            else if (hit.collider != null)
             {
                 TurretSelect(hit.collider.gameObject);
             }
@@ -186,6 +187,7 @@ public class StageManager : MonoBehaviour
         {
             //Debug.Log("タレットがクリックされた");
             OnActivateTurretSelectedUI?.Invoke(t);
+            _selectedTurret = turret;
         }
     }
     private bool CheckConnected(Vector3 currentPosition)
@@ -297,12 +299,24 @@ public class StageManager : MonoBehaviour
         _map[currentX, currentZ] = 0;
         _noWall++;
     }
-    //設置するオブジェクトの変更
+    //設置するオブジェクトの変更。これは削除することになるだろうから変更はあまり気にしないでください。参照もないし
     public void ChangeObstaclePrefab(string name)
     {
         ObstaclePrefabs p = _obstaclePrefabList.Find(x => x.Name == name);
         _setPrefab = p.PutObstaclePrefab;
         _tentativePrefab = p.VisualGuide;
+        if (_tentativePrefab != null)
+        {
+            _tentativePrefab = _defaultVisualGuide;
+        }
+    }
+    /// <summary>
+    /// インベントリから選ばれたタレットのGameObjectを渡してください
+    /// </summary>
+    /// <param name="turret"></param>
+    public void SetTurret(GameObject turret)
+    {
+        _setPrefab = turret;
     }
     /// <summary>
     /// 引数にワールド座標を入れると、
@@ -334,8 +348,15 @@ public class StageManager : MonoBehaviour
     /// 指定座標のオブジェクト全部消す
     /// </summary>
     /// <param name="currentPosition"></param>
-    public void RemoveObject(Vector3 currentPosition)
+    public void RemoveObject()
     {
+        if(_selectedTurret == null)
+        {
+            //タレットが選択された状態でしかこのメソッドは呼ばれないはずなので
+            Debug.LogWarning("削除するタレットが選択されていません。不具合の可能性があります");
+            return;
+        }
+        Vector3 currentPosition = _selectedTurret.transform.position;
         int currentX;
         int currentZ;
         //オブジェクトを消そうとしている座標がグリッド座標のどこかを調べる

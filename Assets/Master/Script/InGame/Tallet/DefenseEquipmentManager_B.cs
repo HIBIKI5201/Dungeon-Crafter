@@ -30,6 +30,8 @@ namespace DCFrameWork.DefenseEquipment
 
         PlayerManager _playerManager;
 
+        public DefenseEquipmentData_B CurrentLevelStatus { get => _dataBase.DataLevelList[_level - 1]; }
+        public DefenseEquipmentData_B NextLevelStatus { get => _level == 5 ? null : _dataBase.DataLevelList[_level]; }
 
         private void Start()
         {
@@ -109,20 +111,6 @@ namespace DCFrameWork.DefenseEquipment
                 Debug.Log("お金が足りません。");
             }
         }
-
-        /// <summary>
-        /// 次のレベルのステータスが格納されたデータを返すメソッド
-        /// </summary>
-        /// <returns></returns>
-        public DefenseEquipmentData_B NextStatus()
-        {
-            if (_level != 5)
-            {
-                return _dataBase.DataLevelList[_level];
-            }
-            return null;
-        }
-
 
         #region ポーズ処理
         void IPausable.Pause() => Pause();

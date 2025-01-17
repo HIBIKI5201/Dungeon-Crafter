@@ -11,25 +11,29 @@ namespace DCFrameWork
     [UxmlElement]
     public partial class EquipmentSettingUI : VisualElement
     {
+        //初期化タスク
         public Task InitializeTask { get; private set; }
+        //UI要素
         VisualElement _equipmentSettingWindow;
         Button _powerUpButton;
         Button _removalButton;
         Label _equipmentName;
-        Label _powerUpGText;
         Label _levelText;
         Label _powerText;
         Label _fastText;
         Label _rangeText;
+        //プロパティ
         public bool EquipmentSettingWindowVisible 
         {
         set { 
                 if (value)
                 {
+                    //ウィンドウを閉じる
                     _equipmentSettingWindow.RemoveFromClassList("equipment-setting-window-open");
                     _equipmentSettingWindow.AddToClassList("equipment-setting-window-close");
                     return;
                 }
+                //ウィンドウを開く
                 _equipmentSettingWindow.RemoveFromClassList("equipment-setting-window-close");
                 _equipmentSettingWindow.AddToClassList("equipment-setting-window-open");
             } 
@@ -37,38 +41,42 @@ namespace DCFrameWork
         public Action PowerUpButton{ set => _powerUpButton.clicked += value; }
         public Action RemovalButton { set => _removalButton.clicked += value; }
         public string EquipmentName { set => _equipmentName.text = value; }
-        public string PowerUpGText { set => _powerUpGText.text = value; }
         public string LevelText { set => _levelText.text = value; }
         public string PowerText { set => _powerText.text = value; }
         public string FastText { set => _fastText.text = value; }
         public string RangeText { set => _rangeText.text = value; }
+        //  コンストラクタ
         public EquipmentSettingUI() => InitializeTask = Initialize();
+        //初期化
         private async Task Initialize()
         {
+            //UXMLファイルの読み込み
             AsyncOperationHandle<VisualTreeAsset> handle = Addressables.LoadAssetAsync<VisualTreeAsset>("UXML/DefenceEquipmentSetting.uxml");
             await handle.Task;
             if (handle.Status == AsyncOperationStatus.Succeeded && handle.Result != null)
             {
+                //UXMLファイルの読み込み
                 var treeAsset = handle.Result;
                 var container = treeAsset.Instantiate();
+                //スタイルの読み込み
                 container.style.width = Length.Percent(100);
                 container.style.height = Length.Percent(100);
+                //マウスイベントの無効化
                 this.RegisterCallback<KeyDownEvent>(e => e.StopImmediatePropagation());
                 pickingMode = PickingMode.Ignore;
                 container.RegisterCallback<KeyDownEvent>(e => e.StopImmediatePropagation());
                 container.pickingMode = PickingMode.Ignore;
                 hierarchy.Add(container);
+                //UI要素の取得
                 _powerUpButton = container.Q<Button>("PowerUpButton");
                 _removalButton = container.Q<Button>("RemovalButton");
                 _equipmentName = container.Q<Label>("EquipmentName");
-                _powerUpGText = container.Q<Label>("PowerUpGText");
                 _levelText = container.Q<Label>("LavelText");
                 _powerText = container.Q<Label>("PowerText");
                 _fastText = container.Q<Label>("FastText");
                 _rangeText = container.Q<Label>("RangeText");
                 _equipmentSettingWindow = container.Q<VisualElement>("EquipmentSettingWindow");
                 _equipmentSettingWindow.AddToClassList("equipment-setting-window-close");
-                Debug.Log("�E�B���h�E�͐���Ƀ��[�h����");
             }
             else
             {

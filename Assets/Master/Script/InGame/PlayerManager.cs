@@ -1,3 +1,4 @@
+using DCFrameWork.MainSystem;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,11 @@ namespace DCFrameWork
 {
     public class PlayerManager : MonoBehaviour
     {
-        [SerializeField] int _DefaltTreasureHp = 100;
+        [SerializeField] DropTableData _dropTable;
+        [SerializeField] int _levelUpGachaCount = 3;
+        [SerializeField] int _startGold;
+        [SerializeField] int _startTurretCount;
+        [SerializeField] int _startTreasureHp = 100;
         int _treasureHp = 100;
         float _gold;
         Dictionary<DefenseObjectsKind, int> _defenseObjectsValue = new();
@@ -17,31 +22,22 @@ namespace DCFrameWork
         public event Action _gameOverEvent;
         public event Action<IEnumerable<DefenseObjectsKind>> _levelUpAction;
         public event Action<float> _getGold;
+        public event Action<DefenseObjectsKind> OnGetDefenseObject;
+        public event Action<DefenseObjectsKind> OnUseDefenseObject;
 
-        static LevelManager _levelManager;
+        LevelManager _levelManager;
         public LevelManager LavelManager { get => _levelManager; }
-        [SerializeField] DropTableData _dropTable;
-        [SerializeField] int _levelUpGachaCount = 3;
-        [SerializeField] int _startGold;
-        [SerializeField] int _startTurretCount;
 
         public void Initialize()
         {
-            //staticの初期化
-            _gold = _startGold;
-            _treasureHp = _DefaltTreasureHp;
-            _gameOverEvent = null;
-            _getGold = null;
-            _levelUpAction = null;
-            _defenseObjectsValue = new();
-
-
+            _treasureHp = _startTreasureHp;
             _levelManager = GetComponentInChildren<LevelManager>();
             _levelManager.OnLevelChanged += x => GetRandomDefenseObj();
             for (int i = 0; i < _startTurretCount; i++)
             {
                 SetDefenseObject(DefenseObjectsKind.MiddleShootTurret);
             }
+            _gameOverEvent += () => SceneChanger.LoadScene(SceneKind.Home);
         }
 
         public void HPDown(int damage)
@@ -49,6 +45,7 @@ namespace DCFrameWork
             _treasureHp -= damage;
             if (TreasureHp <= 0)
             {
+                Debug.Log("GameOver");
                 _gameOverEvent?.Invoke();
             }
         }
@@ -71,11 +68,13 @@ namespace DCFrameWork
         {
             if (_defenseObjectsValue.ContainsKey(kind)) _defenseObjectsValue[kind]++;
             else _defenseObjectsValue.Add(kind, 1);
+            OnGetDefenseObject?.Invoke(kind);
         }
         public void UseDefenseObject(DefenseObjectsKind kind)
         {
             if (_defenseObjectsValue.ContainsKey(kind)) _defenseObjectsValue[kind]--;
             else Debug.LogWarning($"{nameof(kind)}が存在しません");
+            OnUseDefenseObject?.Invoke(kind);
         }
         public void ChangeDropTable(DropTableData dropTable) => _dropTable = dropTable;
 

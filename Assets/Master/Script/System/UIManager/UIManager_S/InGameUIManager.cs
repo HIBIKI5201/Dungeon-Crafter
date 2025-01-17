@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using DCFrameWork.DefenseEquipment;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -7,7 +8,7 @@ namespace DCFrameWork.UI
 {
     public class InGameUIManager : UIManager_B
     {
-        [SerializeField] int parsent;
+        [SerializeField] StageManager _stageManager;
         EquipmentCardInventory _equipmentList;
         BasicInformation _basicInformation;
         EquipmentSettingUI _equipmentSettingUI;
@@ -20,14 +21,9 @@ namespace DCFrameWork.UI
             await _basicInformation.InitializeTask;
             await _equipmentSettingUI.InitializeTask;
         }
-        void Update()
+        void EquipmentSettingUIUpdate(ITurret turret)
         {
-            _basicInformation.GuageMesh.UpdateGuage(parsent);
-        }
-
-        public void EquipmentSettingWindowVisible(bool visible)
-        {
-            _equipmentSettingUI.EquipmentSettingWindowVisible = visible;
+            
         }
     }
 }

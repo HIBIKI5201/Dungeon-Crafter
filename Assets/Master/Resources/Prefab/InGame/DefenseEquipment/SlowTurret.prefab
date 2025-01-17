@@ -82,7 +82,7 @@ PrefabInstance:
         type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 089edb2705c7386419573758f769c2fa, type: 2}
+      objectReference: {fileID: 2100000, guid: b4b3e2c6efcd0034a8e440aba061e2ae, type: 2}
     - target: {fileID: 919132149155446097, guid: c91f4bcef89cba4408d4bffae288fe96,
         type: 3}
       propertyPath: m_Name
@@ -177,6 +177,11 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 615de1aba3815c74ca1450ce7f35ccaf,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ba8983cd67536554d942dc904e3d3d7f, type: 2}
     - target: {fileID: 919132149155446097, guid: 615de1aba3815c74ca1450ce7f35ccaf,
         type: 3}
       propertyPath: m_Name

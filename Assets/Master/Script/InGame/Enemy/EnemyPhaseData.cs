@@ -6,13 +6,13 @@ namespace DCFrameWork.Enemy
     public class EnemyPhaseData : ScriptableObject
     {
         [SerializeField] RandomPhaseDataSelection[] _PhaseData;
-        public RandomPhaseDataSelection[] WaveData { get => _PhaseData; }
+        public RandomPhaseDataSelection[] PhaseData { get => _PhaseData; }
     }
     [System.Serializable]
     public class RandomPhaseDataSelection
     {
         [SerializeField] PhaseData[] _selectionPhaseData;
-        public PhaseData[] SelectintWaveData { get => _selectionPhaseData; }
+        public PhaseData[] SelectintPhaseData { get => _selectionPhaseData; }
     }
     [System.Serializable]
     public struct PhaseData

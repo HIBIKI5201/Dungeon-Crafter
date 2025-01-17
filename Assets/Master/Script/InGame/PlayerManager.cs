@@ -7,7 +7,11 @@ namespace DCFrameWork
 {
     public class PlayerManager : MonoBehaviour
     {
-        [SerializeField] int _DefaltTreasureHp = 100;
+        [SerializeField] DropTableData _dropTable;
+        [SerializeField] int _levelUpGachaCount = 3;
+        [SerializeField] int _startGold;
+        [SerializeField] int _startTurretCount;
+        [SerializeField] int _startTreasureHp = 100;
         int _treasureHp = 100;
         float _gold;
         Dictionary<DefenseObjectsKind, int> _defenseObjectsValue = new();
@@ -23,22 +27,10 @@ namespace DCFrameWork
 
         LevelManager _levelManager;
         public LevelManager LavelManager { get => _levelManager; }
-        [SerializeField] DropTableData _dropTable;
-        [SerializeField] int _levelUpGachaCount = 3;
-        [SerializeField] int _startGold;
-        [SerializeField] int _startTurretCount;
 
         public void Initialize()
         {
-            //staticの初期化
-            _gold = _startGold;
-            _treasureHp = _DefaltTreasureHp;
-            _gameOverEvent = null;
-            _getGold = null;
-            _levelUpAction = null;
-            _defenseObjectsValue = new();
-
-
+            _treasureHp = _startTreasureHp;
             _levelManager = GetComponentInChildren<LevelManager>();
             _levelManager.OnLevelChanged += x => GetRandomDefenseObj();
             for (int i = 0; i < _startTurretCount; i++)
@@ -53,6 +45,7 @@ namespace DCFrameWork
             _treasureHp -= damage;
             if (TreasureHp <= 0)
             {
+                Debug.Log("GameOver");
                 _gameOverEvent?.Invoke();
             }
         }

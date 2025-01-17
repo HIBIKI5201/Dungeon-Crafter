@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace DCFrameWork.Enemy
 {
-    public class LeadEnemyManager : EnemyManager_B<EnemyData_B, EnemyRiseData>
+    public class LeadEnemyManager : EnemyManager_B<EnemyStateData>
     {
 
         [SerializeField]
@@ -67,7 +67,7 @@ namespace DCFrameWork.Enemy
         }
 
 
-        protected override void LoadSpecificnData(EnemyData_B data)
+        protected override void LoadSpecificnData(EnemyStateData data)
         {
 
 

@@ -8,7 +8,7 @@ namespace DCFrameWork.Enemy
         }
 
 
-        protected override void LoadSpecificnData(EnemyData_B data)
+        protected override void LoadSpecificnData(EnemyStateData data)
         {
 
 

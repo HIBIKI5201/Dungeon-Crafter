@@ -5,14 +5,14 @@ using System.Collections;
 
 namespace DCFrameWork.Enemy
 {
-    public class NormalEnemyManager : EnemyManager_B<EnemyData_B,EnemyRiseData>
+    public class NormalEnemyManager : EnemyManager_B<EnemyStateData>
     {
         protected override void DeathBehaviour()
         {
             base.DeathBehaviour();
         }
 
-        protected override void LoadSpecificnData(EnemyData_B data)
+        protected override void LoadSpecificnData(EnemyStateData data)
         {
 
 

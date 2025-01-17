@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Pool;
+using static UnityEngine.InputManagerEntry;
 
 namespace DCFrameWork.Enemy
 {
@@ -19,8 +20,7 @@ namespace DCFrameWork.Enemy
         [SerializeField]
         private Transform[] _spawnPos;
 
-        public Transform[] SpawnPos { get { return _spawnPos; } }
-
+        public Transform[] SpawnPos { get => _spawnPos; } 
         [SerializeField]
         private Transform _targetPos;
 
@@ -47,18 +47,18 @@ namespace DCFrameWork.Enemy
 
         private void Start()
         {
-          
-           
+
+
         }
-        
-       
+
+
 
         public void Initialize()
         {
 
             foreach (var obj in _objects)
             {
-                _dict.Add(obj.kind, ObjectPooling((obj.obj), _spawnPos[0].position ,obj.kind));
+                _dict.Add(obj.kind, ObjectPooling((obj.obj), _spawnPos[0].position, obj.kind));
 
             }
         }
@@ -70,24 +70,25 @@ namespace DCFrameWork.Enemy
             StartCoroutine(Generate(waveData.SpawnData));
         }
 
-        private ObjectPool<IEnemy> ObjectPooling(GameObject obj ,Vector3 initPosition , EnemyKind kind)
+        private ObjectPool<IEnemy> ObjectPooling(GameObject obj, Vector3 initPosition, EnemyKind kind)
         {
             ObjectPool<IEnemy> objPool = null;
             return objPool = new ObjectPool<IEnemy>(
             () =>
             {
-                var spawnedEnemy = Instantiate(obj,initPosition, Quaternion.identity, transform);
+                var spawnedEnemy = Instantiate(obj, initPosition, Quaternion.identity, transform);
                 var healthBar = Instantiate(_healthBar, _canvas.transform);
                 healthBar.transform.SetParent(_canvas.transform);
                 var enemy = spawnedEnemy.GetComponent<IEnemy>();
                 enemy.StartByPool(healthBar.GetComponent<EnemyHealthBarManager>());
                 return enemy;
             },
-           target =>
+
+           actionOnGet: target =>
            {
-               target.Initialize( initPosition, _targetPos.position, () => objPool.Release(target));
+
            },
-           target =>
+           actionOnRelease: target =>
            {
                target.DeathBehaviour();
                if (target.CurrentHealth <= 0)
@@ -112,51 +113,30 @@ namespace DCFrameWork.Enemy
         {
             var spawnQueue = new Queue<EnemySpawnData>(data.OrderBy(x => x._spawnTime));
             float spawned = 0;
-            while(spawnQueue.Count > 0)
+            while (spawnQueue.Count > 0)
             {
                 var i = spawnQueue.Dequeue();
                 yield return FrameWork.PausableWaitForSecond(i._spawnTime - spawned);
                 var enemy = _dict[i._enemyType].Get();
-                enemy.SetLevel(i._enemyLevel);
+                enemy.Initialize(_spawnPos[0].position, _targetPos.position, i._enemyLevel, i._enemyType);
+                enemy.DeathAction = () => _dict[i._enemyType].Release(enemy);
+                enemy.ChooseStatus(i._enemyLevel, i._enemyType);
                 spawned = i._spawnTime;
             }
         }
 
-        Vector3 DecisionSpawnPoint(int i)
-        {
-            Transform trm;
 
-            if (i == 0)
-            {
-                trm = _spawnPos[UnityEngine.Random.Range(0, _spawnPos.Length)];
-            }
-            else 
-            {
-                trm = _spawnPos[i - 1];
-            }
-            
-            return trm.position;
+
+
+
+
+        [Serializable]
+        public struct EnemyElement
+        {
+            public GameObject obj;
+            public EnemyKind kind;
         }
 
-    }
 
-
-
-
-    [Serializable]
-    public struct EnemyElement
-    {
-        public GameObject obj;
-        public EnemyKind kind;
-    }
-
-    public enum EnemyKind
-    {
-        Normal,
-        Defense,
-        Lead,
-        Buff,
-        Boss,
-        Fly
     }
 }

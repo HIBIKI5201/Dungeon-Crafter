@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace DCFrameWork.Enemy
 {
-    public class BuffEnemyManager : EnemyManager_B<EnemyData_B, EnemyRiseData>
+    public class BuffEnemyManager : EnemyManager_B<EnemyStateData>
     {
         private void OnTriggerEnter(Collider other)
         {
@@ -25,7 +25,7 @@ namespace DCFrameWork.Enemy
         }
 
 
-        protected override void LoadSpecificnData(EnemyData_B data)
+        protected override void LoadSpecificnData(EnemyStateData data)
         {
 
 

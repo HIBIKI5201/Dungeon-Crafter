@@ -1,6 +1,6 @@
 namespace DCFrameWork.Enemy
 {
-    public class FlyEnemyManager : EnemyManager_B<EnemyData_B, EnemyRiseData>
+    public class FlyEnemyManager : EnemyManager_B<EnemyStateData>
     {
 
         protected override void DeathBehaviour()
@@ -9,7 +9,7 @@ namespace DCFrameWork.Enemy
         }
 
 
-        protected override void LoadSpecificnData(EnemyData_B data)
+        protected override void LoadSpecificnData(EnemyStateData data)
         {
 
 

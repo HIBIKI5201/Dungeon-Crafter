@@ -40,13 +40,27 @@ namespace DCFrameWork.SceneSystem {
             _backGround2 = images[1];
             _blackFade = images[2];
 
-            _creatoComponents = new CharacterComponents();
-            _creatoComponents.SpriteRenderers = _creato.GetComponentsInChildren<SpriteRenderer>();
-            _creatoComponents.AudioSource = _creato.GetComponent<AudioSource>();
+            SetCharacterComponent(ref _creatoComponents, _creato);
+            SetCharacterComponent(ref _labirisComponents, _labiris);
 
-            _labirisComponents = new CharacterComponents();
-            _labirisComponents.SpriteRenderers = _labiris.GetComponentsInChildren<SpriteRenderer>();
-            _labirisComponents.AudioSource = _labiris.GetComponent<AudioSource>();
+            void SetCharacterComponent(ref CharacterComponents character, GameObject target)
+            {
+                if (target is null) {
+                    Debug.LogError($"ターゲットが見つかりません");
+                    return;
+                }
+
+                character = new CharacterComponents();
+                character.SpriteRenderers = target.GetComponentsInChildren<SpriteRenderer>();
+                if (character.SpriteRenderers == null) {
+                    Debug.LogError($"{target.name}にSpriteRendererが見つかりません");
+                }
+
+                character.AudioSource = target.GetComponent<AudioSource>();
+                if (character.AudioSource == null) {
+                    Debug.LogError($"{target.name}にAudioSourceが見つかりません");
+                }
+            }
         }
 
         public void Initialize(StoryUIManager storyUIManager)
@@ -87,18 +101,34 @@ namespace DCFrameWork.SceneSystem {
                 Task[] tasks = animations.Select(s => AnimationAsync(s)).ToArray();
                 await Task.WhenAll(tasks);
 
-                //サウンドとUIを更新
-                _storyUIManager.TextBoxUpdate(storyText.Character, storyText.Text);
-                if (storyText.AudioClip != null) {
-                    _audioSource.PlayOneShot(storyText.AudioClip);
-                }
-
-                //もしクリエトかラビリスならハイライト
+                //キャラクターを判定
                 CharacterEnum character = storyText.Character switch {
                     "クリエト" => CharacterEnum.Creato,
                     "ラビリス" => CharacterEnum.Labiris,
                     _ => CharacterEnum.None,
                 };
+
+                //テキストボックスを更新
+                _storyUIManager.TextBoxUpdate(storyText.Character, storyText.Text);
+
+                //サウンドを再生
+                if (storyText.AudioClip != null) {
+                    switch (character) {
+                        case CharacterEnum.Creato:
+                            _creatoComponents.AudioSource?.PlayOneShot(storyText.AudioClip);
+                            break;
+
+                        case CharacterEnum.Labiris:
+                            _labirisComponents.AudioSource?.PlayOneShot(storyText.AudioClip);
+                            break;
+
+                        case CharacterEnum.None:
+                            _audioSource?.PlayOneShot(storyText.AudioClip);
+                            break;
+                    }
+                }
+
+                //もしクリエトかラビリスならハイライト
                 CharacterHighlight(character);
 
                 count++;

@@ -12,14 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2403b01b06438e940b2cc5f22abcbef9, type: 3}
   m_Name: EnemyCollection
   m_EditorClassIdentifier: 
-  _link: 
-  _sheetName: 
   _enemyCollection:
-  - _name: 
-    _tips: 
-    _sprite: {fileID: 0}
-    _killCount: 0
-  - _name: 
-    _tips: 
-    _sprite: {fileID: 0}
-    _killCount: 0
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

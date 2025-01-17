@@ -10,15 +10,13 @@ namespace DCFrameWork.Enemy
 {
     [RequireComponent(typeof(NavMeshAgent), typeof(Rigidbody))]
 
-    public abstract class EnemyManager_B<Data, Data2> : MonoBehaviour, IEnemy, IPausable where Data : EnemyData_B where Data2 : EnemyRiseData
+    public abstract class EnemyManager_B<Data> : MonoBehaviour, IEnemy, IPausable where Data : EnemyStateData
     {
         #region ƒf[ƒ^—Þ
         [SerializeField]
         private Data _enemyData;
 
         private float _enemyLevel = 1;
-        [SerializeField]
-        private Data2 _enemyRiseData;
         float IFightable.MaxHealth { get => ChangeStates(_enemyRiseData.MaxHealth, _enemyLevel, _enemyData.MaxHealth); set { ChangeStates(_enemyRiseData.MaxHealth, _enemyLevel, _enemyData.MaxHealth); } }
         private float _currentHealth;
         float IFightable.CurrentHealth { get => _currentHealth; set { _currentHealth = value; HealthBarUpdate(); } }
@@ -65,7 +63,7 @@ namespace DCFrameWork.Enemy
         private void Awake()
         {
             _agent = GetComponent<NavMeshAgent>();
-            _currentHealth = _enemyData.MaxHealth;
+            _currentHealth =_enemyData.EnemeyKind[0].State[0].MaxHealth;
           
         }
 

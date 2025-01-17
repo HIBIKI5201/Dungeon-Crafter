@@ -15,16 +15,22 @@ namespace DCFrameWork.SceneSystem {
         private Image _blackFade;
 
         private IAsyncEnumerator<int?> _enumerator;
+        private bool _isPlay;
         private StoryData _storyData;
 
         private StoryUIManager _storyUIManager;
 
         [SerializeField]
         private GameObject _creato;
-        private SpriteRenderer[] _creatoSprites;
+        private CharacterComponents _creatoComponents;
         [SerializeField]
         private GameObject _labiris;
-        private SpriteRenderer[] _labirisSprites;
+        private CharacterComponents _labirisComponents;
+
+        private struct CharacterComponents {
+            public SpriteRenderer[] SpriteRenderers;
+            public AudioSource AudioSource;
+        }
 
         private void Awake()
         {
@@ -34,9 +40,13 @@ namespace DCFrameWork.SceneSystem {
             _backGround2 = images[1];
             _blackFade = images[2];
 
+            _creatoComponents = new CharacterComponents();
+            _creatoComponents.SpriteRenderers = _creato.GetComponentsInChildren<SpriteRenderer>();
+            _creatoComponents.AudioSource = _creato.GetComponent<AudioSource>();
 
-            _creatoSprites = _creato.GetComponentsInChildren<SpriteRenderer>();
-            _labirisSprites = _labiris.GetComponentsInChildren<SpriteRenderer>();
+            _labirisComponents = new CharacterComponents();
+            _labirisComponents.SpriteRenderers = _labiris.GetComponentsInChildren<SpriteRenderer>();
+            _labirisComponents.AudioSource = _labiris.GetComponent<AudioSource>();
         }
 
         public void Initialize(StoryUIManager storyUIManager)
@@ -45,7 +55,7 @@ namespace DCFrameWork.SceneSystem {
             _storyUIManager = storyUIManager;
         }
 
-        public async void SetStoryData(StoryData storyData)
+        public void SetStoryData(StoryData storyData)
         {
             _storyData = storyData;
             if (storyData.BackGround[0] != null) {
@@ -53,7 +63,12 @@ namespace DCFrameWork.SceneSystem {
             }
         }
 
-        public void NextText() => _enumerator.MoveNextAsync();
+        public void NextText()
+        {
+            if (!_isPlay) {
+                _enumerator.MoveNextAsync();
+            }
+        }
 
         private async IAsyncEnumerator<int?> PlayStoryContext()
         {
@@ -65,6 +80,7 @@ namespace DCFrameWork.SceneSystem {
 #endif
 
             while (count < _storyData.StoryText.Count) {
+                _isPlay = true;
                 StoryText storyText = _storyData.StoryText[count];
 
                 string[] animations = storyText.Animation.Split();
@@ -88,6 +104,7 @@ namespace DCFrameWork.SceneSystem {
                 count++;
 
                 Debug.Log($"<b>{storyText.Character}</b> {storyText.Animation}\n{storyText.Text}");
+                _isPlay = false;
                 yield return null;
             }
             EndStory();
@@ -115,6 +132,7 @@ namespace DCFrameWork.SceneSystem {
                     await BlackFade(1);
                     break;
                 case "ブラックアウト":
+                    Debug.Log("ブラックアウト");
                     await BlackFade(3);
                     break;
 
@@ -204,20 +222,22 @@ namespace DCFrameWork.SceneSystem {
 
         private void CharacterHighlight(CharacterEnum character)
         {
+            var labirisSprites = _labirisComponents.SpriteRenderers;
+            var creatoSprites = _creatoComponents.SpriteRenderers;
             switch (character) {
                 case CharacterEnum.Labiris:
-                    ColorChange(_labirisSprites, Color.white);
-                    ColorChange(_creatoSprites, Color.gray);
+                    ColorChange(labirisSprites, Color.white);
+                    ColorChange(creatoSprites, Color.gray);
                     break;
 
                 case CharacterEnum.Creato:
-                    ColorChange(_creatoSprites, Color.white);
-                    ColorChange(_labirisSprites, Color.gray);
+                    ColorChange(creatoSprites, Color.white);
+                    ColorChange(labirisSprites, Color.gray);
                     break;
 
                 case CharacterEnum.None:
-                    ColorChange(_labirisSprites, Color.gray);
-                    ColorChange(_creatoSprites, Color.gray);
+                    ColorChange(labirisSprites, Color.gray);
+                    ColorChange(creatoSprites, Color.gray);
                     break;
             }
 

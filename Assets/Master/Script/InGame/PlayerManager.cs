@@ -1,43 +1,51 @@
+using DCFrameWork.DefenseEquipment;
 using DCFrameWork.MainSystem;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace DCFrameWork
 {
     public class PlayerManager : MonoBehaviour
     {
-        [SerializeField] DropTableData _dropTable;
         [SerializeField] int _levelUpGachaCount = 3;
         [SerializeField] int _startGold;
         [SerializeField] int _startTurretCount;
-        [SerializeField] int _startTreasureHp = 100;
-        int _treasureHp = 100;
+        [SerializeField] List<DefenseEquipmentDataBase> _defenseObjectData;
+        [SerializeField]int _treasureHp = 10;
         float _gold;
-        Dictionary<DefenseObjectsKind, int> _defenseObjectsValue = new();
-        public Dictionary<DefenseObjectsKind, int> TurretInventory { get => _defenseObjectsValue; }
+
+
+
+        List<InventoryData> _defenseObjectsValue = new();
+        public List<InventoryData> TurretInventory { get => _defenseObjectsValue; private set => _defenseObjectsValue = value; }
         public int TreasureHp { get => _treasureHp; }
         public float Gold { get => _gold; }
 
         public event Action _gameOverEvent;
-        public event Action<IEnumerable<DefenseObjectsKind>> _levelUpAction;
+        public event Action<IEnumerable<InventoryData>> _levelUpAction;
         public event Action<float> _getGold;
-        public event Action<DefenseObjectsKind> OnGetDefenseObject;
-        public event Action<DefenseObjectsKind> OnUseDefenseObject;
+        public event Action<InventoryData> OnGetDefenseObject;
+        public event Action<InventoryData> OnUseDefenseObject;
+        public event Action<List<InventoryData>> OnGachaRandomObjects;
 
         LevelManager _levelManager;
         public LevelManager LavelManager { get => _levelManager; }
 
-        public void Initialize()
+        private void Start()
         {
-            _treasureHp = _startTreasureHp;
             _levelManager = GetComponentInChildren<LevelManager>();
             _levelManager.OnLevelChanged += x => GetRandomDefenseObj();
+            _gameOverEvent += () => SceneChanger.LoadScene(SceneKind.Home);
+        }
+        public void Initialize()
+        {
             for (int i = 0; i < _startTurretCount; i++)
             {
-                SetDefenseObject(DefenseObjectsKind.MiddleShootTurret);
+                SetDefenseObject(DefenseObjectsKind.MiddleShootTurret, 1);
             }
-            _gameOverEvent += () => SceneChanger.LoadScene(SceneKind.Home);
         }
 
         public void HPDown(int damage)
@@ -64,50 +72,45 @@ namespace DCFrameWork
             return false;
         }
         public void AddEXP(float exp) => _levelManager.AddExperiancePoint(exp);
-        public void SetDefenseObject(DefenseObjectsKind kind)
+        public void SetDefenseObject(DefenseObjectsKind kind, int level)
         {
-            if (_defenseObjectsValue.ContainsKey(kind)) _defenseObjectsValue[kind]++;
-            else _defenseObjectsValue.Add(kind, 1);
-            OnGetDefenseObject?.Invoke(kind);
+            var inventory = new InventoryData(_defenseObjectData.FirstOrDefault(x => x.Kind == kind), level);
+            if (inventory.DefenseEquipmentData is null)
+            {
+                Debug.Log("DefenseData is null");
+            }
+            TurretInventory.Remove(inventory);
+            OnGetDefenseObject?.Invoke(inventory);
         }
-        public void UseDefenseObject(DefenseObjectsKind kind)
+        public void UseDefenseObject(DefenseObjectsKind kind, int level)
         {
-            if (_defenseObjectsValue.ContainsKey(kind)) _defenseObjectsValue[kind]--;
-            else Debug.LogWarning($"{nameof(kind)}が存在しません");
-            OnUseDefenseObject?.Invoke(kind);
+            var inventory = new InventoryData(_defenseObjectData.FirstOrDefault(x => x.Kind == kind), level);
+            TurretInventory.Remove(inventory);
+            OnUseDefenseObject?.Invoke(inventory);
         }
-        public void ChangeDropTable(DropTableData dropTable) => _dropTable = dropTable;
 
         private IEnumerable<DefenseObjectsKind> GetRandomDefenseObj()
         {
-            var collection = _dropTable.GetRandomDefenseObj(_levelUpGachaCount);
+            var sum = _defenseObjectData.Sum(x=>x.DropChance);
+            var randomCount =Random.Range(0, sum);
+            
             var list = new List<DefenseObjectsKind>();
-            foreach (var item in collection)
-            {
-                CollectionSystem.Instans.SetDefenseObj(item);
-                list.Add(item);
-            }
-            _levelUpAction?.Invoke(list);
+            //foreach (var item in collection)
+            //{
+            //    list.Add(item);
+            //}
+            //_levelUpAction?.Invoke(list);
             return list;
         }
-
-        [ContextMenu("GetRandomObj")]
-        public void TestRandomObj()
+    }
+    public class InventoryData
+    {
+        public DefenseEquipmentDataBase DefenseEquipmentData;
+        public int Level;
+        public InventoryData(DefenseEquipmentDataBase dataBase, int level)
         {
-            var collection = _dropTable.GetRandomDefenseObj(_levelUpGachaCount);
-            foreach (var item in collection)
-            {
-                Debug.Log(item);
-                CollectionSystem.Instans.SetDefenseObj(item);
-                SetDefenseObject(item);
-            }
-            var dObj = CollectionSystem.Instans.GetDefenseObjCollection();
-            foreach (var item in dObj)
-            {
-                if (item != null)
-                    Debug.Log(item.Name);
-                else Debug.Log("Null");
-            }
+            DefenseEquipmentData = dataBase;
+            Level = level;
         }
     }
     public enum DefenseObjectsKind

@@ -1,23 +1,13 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Master/UITK/USS/InGame/EquipmentCard.uss?fileID=7433441132597879392&amp;guid=e80394ff55ac7584aa48f6c389e13a9f&amp;type=3#EquipmentCard" />
     <Style src="project://database/Assets/Master/UITK/USS/Master/Font.uss?fileID=7433441132597879392&amp;guid=8c8dbfa7dccd14b4ebdfec63316899cc&amp;type=3#Font" />
-    <engine:VisualElement name="EquipmentCard" data-source="project://database/Assets/Dev/Dev_Branchs/interface/Test2.asset?fileID=11400000&amp;guid=f411c664c91e9f345a47a8e9ac30c38b&amp;type=2#Test2" class="equipment-card font-style">
-        <engine:VisualElement name="Icon" style="width: 60%; height: 53%; align-self: center; background-color: rgb(58, 58, 58); justify-content: space-around; align-items: center; align-content: center; position: relative; top: 0;">
-            <Bindings>
-                <engine:DataBinding property="style.backgroundImage" data-source-path="EquipmentIcon" binding-mode="ToTarget" />
-            </Bindings>
-        </engine:VisualElement>
-        <engine:Label text="Label" name="EquipmentName" enable-rich-text="false" tabindex="-3" style="-unity-text-align: middle-center; font-size: 30%; -unity-font-style: bold; width: auto; text-overflow: ellipsis;">
-            <Bindings>
-                <engine:DataBinding property="text" data-source-path="EquipmentName" binding-mode="ToTarget" />
-            </Bindings>
-        </engine:Label>
-        <engine:VisualElement name="LevelBackGround" style="position: absolute; width: 33%; height: 30%; left: 80%; top: -10%; background-color: rgb(255, 255, 255); border-top-left-radius: 30px; border-top-right-radius: 30px; border-bottom-right-radius: 30px; border-bottom-left-radius: 30px; align-items: center; flex-direction: column; justify-content: center; font-size: 31px; -unity-font-style: bold;">
-            <engine:Label text="0" name="Level">
-                <Bindings>
-                    <engine:DataBinding property="text" data-source-path="EquipmentLevel" binding-mode="ToTarget" />
-                </Bindings>
-            </engine:Label>
+    <engine:VisualElement name="EquipmentCard" class="wall-button" style="background-image: url(&quot;project://database/Assets/Master/UITK/Picture/UI_defense_panel.psd?fileID=-987285091170271473&amp;guid=3eda56afcb28850408f25ae27ce15c9d&amp;type=3#背景&quot;); -unity-background-scale-mode: scale-and-crop; background-color: rgba(94, 94, 94, 0); height: 100%; width: 100%;">
+        <engine:Label text="防衛設備" name="DefenceEquipment" style="-unity-font-style: bold; font-size: 17px; background-image: url(&quot;project://database/Assets/Master/UITK/Picture/UI_defense_panel.psd?fileID=1885728426687465468&amp;guid=3eda56afcb28850408f25ae27ce15c9d&amp;type=3#名前欄&quot;); background-size: cover; width: 97%; background-position-x: center 0; -unity-background-scale-mode: stretch-to-fill; -unity-text-align: upper-center; white-space: nowrap; color: rgb(255, 255, 255); -unity-text-outline-width: 0; -unity-text-outline-color: rgb(0, 0, 0); height: 16%; background-position-y: center 0; top: 0;" />
+        <engine:Label text="エネミーの進行を妨害&#10;する" name="WallText" style="font-size: 19px; -unity-font-style: bold; margin-bottom: 6px; top: 0; -unity-text-align: upper-center;" />
+        <engine:Label text="G" name="WallGold" />
+        <engine:VisualElement name="VisualElement" style="width: 100%; height: 100%; position: absolute; background-image: url(&quot;project://database/Assets/Master/UITK/Picture/UI_defense_panel.psd?fileID=-2356421919431520049&amp;guid=3eda56afcb28850408f25ae27ce15c9d&amp;type=3#枠&quot;); top: 0;" />
+        <engine:VisualElement style="flex-grow: 1; position: absolute; width: 25%; height: 25%; background-image: url(&quot;project://database/Assets/Master/UITK/Picture/UI_defense_panel.psd?fileID=-4557473990894822490&amp;guid=3eda56afcb28850408f25ae27ce15c9d&amp;type=3#レベル表示欄&quot;); -unity-background-scale-mode: scale-to-fit; top: -8%; left: -7%;">
+            <engine:Label text="1" name="EquipmentLebel" style="-unity-text-align: lower-center; font-size: 158%; top: 9%; color: rgb(255, 255, 255); -unity-font-style: bold;" />
         </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>

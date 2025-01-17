@@ -94,25 +94,48 @@ namespace DCFrameWork
             OnUseDefenseObject?.Invoke(inventory);
         }
 
-        private IEnumerable<DefenseObjectsKind> GetRandomDefenseObj()
+        private IEnumerable<InventoryData> GetRandomDefenseObj()
         {
-            var sum = _defenseObjectData.Sum(x=>x.DropChance);
-            var randomCount =Random.Range(0, sum);
-            
-            var list = new List<DefenseObjectsKind>();
-            //foreach (var item in collection)
-            //{
-            //    list.Add(item);
-            //}
-            //_levelUpAction?.Invoke(list);
-            return list;
+            var defenseCopy = new List<DefenseEquipmentDataBase>(_defenseObjectData);
+            var outList = new List<InventoryData>();
+            for (int i = 0; i < _levelUpGachaCount; i++)
+            {
+                var sum = defenseCopy.Sum(x => x.DropChance);
+                if (sum <= 0)
+                {
+                    Debug.Log("DropChance Sum = 0");
+                }
+                var randomCount = Random.Range(0, sum);
+                var currentWeight = 0;
+                for (var j = 0; j < defenseCopy.Count; j++)
+                {
+                    currentWeight += defenseCopy[j].DropChance;
+                    if (currentWeight > randomCount)
+                    {
+                        outList.Add(new InventoryData(defenseCopy[j]));
+                        defenseCopy.RemoveAt(j);
+                        break;
+                    }
+                }
+            }
+            OnGachaRandomObjects?.Invoke(outList);
+            return outList;
+        }
+        [ContextMenu("TestGacha")]
+        public void TestRandom()
+        {
+            var test = GetRandomDefenseObj();
+            foreach (var item in test)
+            {
+                Debug.Log(item.DefenseEquipmentData.name);
+            }
         }
     }
     public class InventoryData
     {
         public DefenseEquipmentDataBase DefenseEquipmentData;
         public int Level;
-        public InventoryData(DefenseEquipmentDataBase dataBase, int level)
+        public InventoryData(DefenseEquipmentDataBase dataBase, int level = 1)
         {
             DefenseEquipmentData = dataBase;
             Level = level;

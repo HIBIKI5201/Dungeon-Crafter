@@ -123,9 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdef7e4b33f44a041a2f9d4c5ac73696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyData: {fileID: 11400000, guid: ecc8cdad4deda5e46b7f9f19a05fd166, type: 2}
-  _enemyRiseData: {fileID: 11400000, guid: f9911ff5d8a277f499d7b84e6353fe3c, type: 2}
-  _levelRequirePoint: 0
+  _enemyData: {fileID: 11400000, guid: fa5b6fac4df6e794cbc9db45720539a1, type: 2}
 --- !u!1 &8106617686554925934
 GameObject:
   m_ObjectHideFlags: 0

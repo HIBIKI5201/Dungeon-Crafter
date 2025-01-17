@@ -20,7 +20,7 @@ namespace DCFrameWork
             _healthBarManager = GameObject.Find("HealthBarForTarget").GetComponent<TargetHealthBarManager>();
             _playerManager = FindAnyObjectByType<PlayerManager>();
             _maxValue = _playerManager.TreasureHp;
-           
+            
         }
 
         private void Update()

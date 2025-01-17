@@ -122,9 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 654f7d3bae88a7d46ab1c7d4b0d840cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyData: {fileID: 11400000, guid: fa1ed81f39b18d84eb03eec2deae987a, type: 2}
-  _enemyRiseData: {fileID: 11400000, guid: 6b896039922788d42b6fedf599219d6a, type: 2}
-  _levelRequirePoint: 0
+  _enemyData: {fileID: 11400000, guid: fa5b6fac4df6e794cbc9db45720539a1, type: 2}
 --- !u!1001 &3207008905949727169
 PrefabInstance:
   m_ObjectHideFlags: 0

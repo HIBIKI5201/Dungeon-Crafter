@@ -11,6 +11,7 @@ namespace DCFrameWork.DefenseEquipment
     {
         [SerializeField]
         private DefenseEquipmentDataBase _dataBase;
+        DefenseEquipmentDataBase ITurret.Data { get => _dataBase; set => _dataBase = value; }
         [SerializeField]
         private GameObject _cylinder;
 
@@ -135,5 +136,9 @@ namespace DCFrameWork.DefenseEquipment
     public interface ITurret : IPausable
     {
         void Reinforce(ReinforceStatus status);
+        DefenseEquipmentDataBase Data { get; protected set; }
+
+        GameObject gameObject { get; }
+        Transform transform { get; }
     }
 }

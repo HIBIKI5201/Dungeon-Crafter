@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40478fa587365244da4a99f9af7f1ac2, type: 3}
   m_Name: AreaTurretDataBase
   m_EditorClassIdentifier: 
-  Name: AreaTurret
+  Name: "\u30DD\u30A4\u30BA\u30F3\u30DE\u30C3\u30B7\u30E5"
   Kind: 0
-  Prefab: {fileID: 0}
+  Prefab: {fileID: 2653171089469192286, guid: d9af62275ed00be4aadc4443aee9165a, type: 3}
   Explanation: 
   DropChance: 1
   DataLevelList:

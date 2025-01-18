@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40478fa587365244da4a99f9af7f1ac2, type: 3}
   m_Name: MiddleRangeTurretDataBase
   m_EditorClassIdentifier: 
-  Name: M
+  Name: "\u30AF\u30ED\u30B9\u30C7\u30D3\u30EB"
   Kind: 2
-  Prefab: {fileID: 0}
+  Prefab: {fileID: 3164453551357321815, guid: 1ba4f539dbe1c8d4db0fa501a14cccfb, type: 3}
   Explanation: 
   DropChance: 1
   DataLevelList:
-  - {fileID: 11400000, guid: 9dac64c79e2548b43a20878ffd3629bf, type: 2}
-  - {fileID: 11400000, guid: 579fab6872cd07549b88003421e19c65, type: 2}
+  - {fileID: 11400000, guid: 63ad454d8f369ff48b8f886650a62ed3, type: 2}
+  - {fileID: 11400000, guid: 38c6fa9bc67b3824f98c32258e74cc21, type: 2}
+  - {fileID: 11400000, guid: b1c6ad9af1c5daa428391fa8d6eff5c3, type: 2}
+  - {fileID: 11400000, guid: 4be21da660e01b042bd45852dfea9e25, type: 2}
   PowerUpRequireItem: 

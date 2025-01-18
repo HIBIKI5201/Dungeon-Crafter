@@ -1,11 +1,10 @@
-using System.Threading;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class GuageMesh : VisualElement
 {
-    private float _percent = 100;
+    private float _percent = 0;
     private float _radius = 50f;
     private float _border = 5f;
 

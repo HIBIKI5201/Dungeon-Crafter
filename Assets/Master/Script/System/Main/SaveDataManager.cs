@@ -23,7 +23,6 @@ namespace DCFrameWork.MainSystem
             private set => _settingSaveData = value;
         }
         public static int StoryKey { get => SaveData.StoryKey; }
-
         public static void Save()
         {
             SaveData.SaveDate = DateTime.Now.ToString("O");
@@ -49,6 +48,14 @@ namespace DCFrameWork.MainSystem
             SettingSaveData = data_s;
             return (data_g, data_s);
         }
+        public static void SetRankingSaveData(IEnumerable<RankingSaveData> saveData)
+        {
+            if (saveData.Count() > 3)
+            {
+                saveData  = saveData.Take(3);
+            }
+            SaveData.RankingSaveDatas = saveData.ToArray();
+        }
 
         static string Encryption(string data) =>
             new string(data.Select(x => (char)(x ^ _key)).ToArray());
@@ -64,6 +71,13 @@ namespace DCFrameWork.MainSystem
         public List<int> PowerUpDatas = Enumerable.Repeat(0, Enum.GetValues(typeof(DefenseObjectsKind)).Length).ToList();
         public int EventFlag = 0;
         public int StoryKey = 0;
+        public RankingSaveData[] RankingSaveDatas = new RankingSaveData[3];
+    }
+    public class RankingSaveData
+    {
+        public string Name;
+        public int Rank;
+        public int Score;
     }
     [Serializable]
     public class SettingSaveData

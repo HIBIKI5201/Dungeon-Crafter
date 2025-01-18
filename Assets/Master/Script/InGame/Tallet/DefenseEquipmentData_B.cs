@@ -21,12 +21,8 @@ namespace DCFrameWork.DefenseEquipment
         [SerializeField]
         private float _range = 1;
 
-        public int LevelRequirePoint { get => _levelRequirePoint; }
+        public float LevelRequirePoint { get => _levelRequirePoint; }
         [SerializeField]
-        private int _levelRequirePoint = 1;
-
-        public float UseGold { get => _useGold; }
-        [SerializeField]
-        private float _useGold = 0;
+        private float _levelRequirePoint = 100;
     }
 }

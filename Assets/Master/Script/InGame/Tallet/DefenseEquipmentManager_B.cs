@@ -25,7 +25,7 @@ namespace DCFrameWork.DefenseEquipment
 
         private ReinforceStatus _reinforceStatus = ReinforceStatus.Default;
 
-        [Range(1, 5f)]
+        [Range(1, 4f)]
         protected int _level = 1;
 
         PlayerManager _playerManager;
@@ -101,12 +101,12 @@ namespace DCFrameWork.DefenseEquipment
                 Debug.Log("強化上限に達しました。");
                 return;
             }
-            if (_playerManager.ChangeGold(-DefenseEquipmentData.UseGold))
+            if (_playerManager.ChangeGold(-DefenseEquipmentData.LevelRequirePoint))
             {
                 _level = Mathf.Min(5, _level + 1);
                 LoadCommonData(_level);
             }
-            else if (!_playerManager.ChangeGold(-DefenseEquipmentData.UseGold))
+            else if (!_playerManager.ChangeGold(-DefenseEquipmentData.LevelRequirePoint))
             {
                 Debug.Log("お金が足りません。");
             }

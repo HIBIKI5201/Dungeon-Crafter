@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d3a339fa3592a94182a11c6b0dd3513, type: 3}
-  m_Name: LongRangeDataLevel1
+  m_Name: LongRangeDataLevel2
   m_EditorClassIdentifier: 
   _attack: 15
   _rate: 0.5

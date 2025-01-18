@@ -51,6 +51,7 @@ namespace DCFrameWork
                 //UI要素の取得
                 _equipment = container.Q<VisualElement>("EquipsInventory");
                 _equipmentButton = container.Q<VisualElement>("EquipmentTextBox");
+                _backGround = container.Q<VisualElement>("Background");
                 //UIがマウスカーソルが上に乗った時のイベント発火
                 _equipment.RegisterCallback<MouseEnterEvent>(x=>OnMouseCursor?.Invoke(true));
                 _equipment.RegisterCallback<MouseLeaveEvent>(x=>OnMouseCursor?.Invoke(false));                

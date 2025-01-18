@@ -34,6 +34,7 @@ namespace DCFrameWork.UI
             _levelManager.OnLevelChanged += x => _basicInformation.Level = x;
             //マウスカーソルがUIの上に乗ったときのイベントの登録
             _equipmentList.OnMouseCursor += x => OnMouseOnUI?.Invoke(x);
+            _equipmentList.OnMouseCursor += x => OnMouseOnUI?.Invoke(x);
             _basicInformation.OnMouseCursor += x => OnMouseOnUI?.Invoke(x);
             OnMouseOnUI += x =>Debug.Log("変更" + x);
         }

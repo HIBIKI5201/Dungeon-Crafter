@@ -377,11 +377,11 @@ public class StageManager : MonoBehaviour
         RaycastHit[] hits = Physics.RaycastAll(currentPosition, Vector3.down, 20, LayerMask.GetMask("Buildings"));
         foreach (RaycastHit hit in hits)
         {
-            Destroy(hit.collider.gameObject);
+            if (hit.collider.gameObject.TryGetComponent<ITurret>(out ITurret t))
+            {
+                Destroy(t.gameObject);
+                break;
+            }     
         }
-
-        //ステージ情報の更新
-        _map[currentX, currentZ] = 0;
-        _noWall++;
     }
 }

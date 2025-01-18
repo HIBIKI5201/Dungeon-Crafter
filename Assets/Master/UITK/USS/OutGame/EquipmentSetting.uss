@@ -6,7 +6,6 @@
     margin-bottom: 6px;
     transition-timing-function: ease-in-out-cubic;
     transition-duration: 0.1s;
-    scale: 1 1;
 }
 
 .power-up-button:hover {

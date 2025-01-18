@@ -32,6 +32,9 @@ namespace DCFrameWork.UI
             _levelManager.OnExperianceGained += _basicInformation.EXPGuageUpdate;
             _levelManager.OnExperianceGained += x => _basicInformation.Exp = x;
             _levelManager.OnLevelChanged += x => _basicInformation.Level = x;
+            //マウスカーソルがUIの上に乗ったときのイベントの登録
+            _equipmentList.OnMouseCursor += x => OnMouseOnUI?.Invoke(x);
+            _basicInformation.OnMouseCursor += x => OnMouseOnUI?.Invoke(x);
         }
         void EquipmentSettingUIUpdate(ITurret turret)
         {

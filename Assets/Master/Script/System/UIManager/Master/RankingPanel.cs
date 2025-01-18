@@ -1,7 +1,4 @@
-using System;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using DCFrameWork;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -20,12 +17,12 @@ namespace DCFrameWork
         Label _firstScoreText;
         Label _secondScoreText;
         Label _thirdScoreText;
-        public Label FirstRankingText{get=>_firstNameText;set=>_firstNameText=value;}
-        public Label SecondRankingText {get => _secondNameText;set=> _secondNameText = value;}
-        public Label ThirdRankingText {get=> _thirdNameText;set=> _thirdNameText = value;}
-        public Label FirstScoreText {get=> _firstScoreText;set=> _firstScoreText = value;}
-        public Label SecondScoreText {get=> _secondScoreText;set=> _secondScoreText = value;}
-        public Label ThirdScoreText {get=> _thirdScoreText;set=> _thirdScoreText = value;}
+        public string FirstRankingText{get=>_firstNameText.text;set=>_firstNameText.text=value;}
+        public string SecondRankingText {get => _secondNameText.text;set=> _secondNameText.text = value;}
+        public string ThirdRankingText {get=> _thirdNameText.text;set=> _thirdNameText.text = value;}
+        public string FirstScoreText {get=> _firstScoreText.text;set=> _firstScoreText.text = value;}
+        public string SecondScoreText {get=> _secondScoreText.text;set=> _secondScoreText.text = value;}
+        public string ThirdScoreText {get=> _thirdScoreText.text;set=> _thirdScoreText.text = value;}
         public RankingPanel() => InitializeTask = Initialize();
         private async Task Initialize()
         {

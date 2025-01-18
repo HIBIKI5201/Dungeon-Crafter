@@ -342,6 +342,22 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3081937718666856085, guid: 2d863a62b50014648bbb5f5529ef6476,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.904
+      objectReference: {fileID: 0}
+    - target: {fileID: 3081937718666856085, guid: 2d863a62b50014648bbb5f5529ef6476,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 5720939000327155022, guid: 2da6ab52d66bcaf41b3cabd48b06c91d,
+        type: 2}
+    - target: {fileID: 3267760919790970926, guid: 2d863a62b50014648bbb5f5529ef6476,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.226
+      objectReference: {fileID: 0}
     - target: {fileID: 3367922368658727071, guid: 2d863a62b50014648bbb5f5529ef6476,
         type: 3}
       propertyPath: m_Camera
@@ -407,6 +423,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7970821012391267590, guid: 2d863a62b50014648bbb5f5529ef6476,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 7970821012391267590, guid: 2d863a62b50014648bbb5f5529ef6476,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 5720939000327155022, guid: 2da6ab52d66bcaf41b3cabd48b06c91d,
+        type: 2}
     - target: {fileID: 8711808584467193297, guid: 2d863a62b50014648bbb5f5529ef6476,
         type: 3}
       propertyPath: m_Name

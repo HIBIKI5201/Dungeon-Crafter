@@ -31,7 +31,7 @@ namespace DCFrameWork.DefenseEquipment
         PlayerManager _playerManager;
 
         public DefenseEquipmentData_B CurrentLevelStatus { get => _dataBase.DataLevelList[_level - 1]; }
-        public DefenseEquipmentData_B NextLevelStatus { get => _level == 5 ? null : _dataBase.DataLevelList[_level]; }
+        public DefenseEquipmentData_B NextLevelStatus { get => _level == 4 ? null : _dataBase.DataLevelList[_level]; }
 
         private void Start()
         {
@@ -96,14 +96,14 @@ namespace DCFrameWork.DefenseEquipment
         /// </summary>
         public void LevelUp()
         {
-            if (_level == 5)
+            if (_level == 4)
             {
                 Debug.Log("強化上限に達しました。");
                 return;
             }
             if (_playerManager.ChangeGold(-DefenseEquipmentData.LevelRequirePoint))
             {
-                _level = Mathf.Min(5, _level + 1);
+                _level = Mathf.Min(4, _level + 1);
                 LoadCommonData(_level);
             }
             else if (!_playerManager.ChangeGold(-DefenseEquipmentData.LevelRequirePoint))

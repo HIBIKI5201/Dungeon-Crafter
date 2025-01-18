@@ -82,12 +82,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5852864083327553857}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2554377064845916721 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8235804675487181680, guid: 6491d1df532dbce4cb19dc115ad77b73,
-    type: 3}
-  m_PrefabInstance: {fileID: 5852864083327553857}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3201622288186106138 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9031967255871615067, guid: 6491d1df532dbce4cb19dc115ad77b73,
@@ -108,12 +102,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dataBase: {fileID: 11400000, guid: d20b5e1ca5d98b448bde8bece22c6a2f, type: 2}
   _cylinder: {fileID: 1230886657355454221}
-  _turret: {fileID: 2554377064845916721}
+  _turretModel: {fileID: 4192269368940946826}
+  _anim: {fileID: 8463630909829381252}
+  _bullet: {fileID: 0}
   _enemyLayer:
     serializedVersion: 2
     m_Bits: 64
   _raySize: 5
-  _anim: {fileID: 8463630909829381252}
+  _particle: {fileID: 0}
 --- !u!4 &5494967988994788402 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2124433048170454387, guid: 6491d1df532dbce4cb19dc115ad77b73,
@@ -208,6 +204,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca2a23c91145f0945910ddcafa936571, type: 3}
+--- !u!1 &4192269368940946826 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5205742874838037831, guid: ca2a23c91145f0945910ddcafa936571,
+    type: 3}
+  m_PrefabInstance: {fileID: 8220033968343617741}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8303253851050180638 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 83448763132776659, guid: ca2a23c91145f0945910ddcafa936571,

@@ -122,7 +122,6 @@ namespace DCFrameWork.Enemy
             Initialize_S();
             //_agent.updatePosition = false;
             _agent.updateRotation = false;
-            Debug.Log(Dexterity);
         }
 
         /// <summary>
@@ -188,7 +187,6 @@ namespace DCFrameWork.Enemy
         private EnemyState ChooseStatus(int level , EnemyKind kind)
         {
             EnemyState state = Array.Find(_enemyData.EnemyKindData, (i) => i.Kind == kind)?.LevelData[level - 1].State;
-            Debug.Log(state);
             return state;
         }
 

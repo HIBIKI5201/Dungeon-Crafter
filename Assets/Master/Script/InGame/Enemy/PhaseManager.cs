@@ -40,8 +40,8 @@ namespace DCFrameWork.Enemy
                 Debug.Log("PhaseData is null");
                 return;
             }
-            _phaseStartAction += () => NextPhase();
             await FrameWork.PausableWaitForSecondAsync(_startWaitingTimer);
+            NextPhase();
             _phaseStartAction?.Invoke();
             PhaseEndCheck();
         }
@@ -50,7 +50,6 @@ namespace DCFrameWork.Enemy
         {
             if (PhaseProgressNormalize >= 1)
             {
-                PhaseCount++;
                 if (CurrentPhaseIndex == 0 && PhaseCount != 0)
                 {
                     Debug.Log("pheseEnd " + $"WaveCount:{PhaseCount}");
@@ -58,12 +57,14 @@ namespace DCFrameWork.Enemy
                 }
                 _phaseEndAction?.Invoke();
                 await FrameWork.PausableWaitForSecondAsync(_phaseWaitingTime);
+                NextPhase();
                 _phaseStartAction?.Invoke();
             }
         }
 
         void NextPhase()
         {
+            PhaseCount++;
             _deathEemyCount = 0;
 
             //選択肢の中からランダムなデータを取得
@@ -74,6 +75,7 @@ namespace DCFrameWork.Enemy
             _phaseEnemySum = phaseData.SpawnData.Length;
 
             _enemyGenerators.Waving(phaseData);
+            PhaseProgressChanged?.Invoke(PhaseProgressNormalize);
         }
         public void EnemyDeathCount()　//エネミー死亡時に呼んでほしい
         {

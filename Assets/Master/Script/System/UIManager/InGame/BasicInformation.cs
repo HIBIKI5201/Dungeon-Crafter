@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using DCFrameWork;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -21,6 +22,8 @@ public partial class BasicInformation : VisualElement
     private Button _menuButton;
     private float _exp;
     private float _level;
+    //イベント
+    public event Action<bool> OnMouseCursor;
     //プロパティ
     public float Exp
     {
@@ -69,32 +72,42 @@ public partial class BasicInformation : VisualElement
 
         if (handle.Status == AsyncOperationStatus.Succeeded && handle.Result != null)
         {
-            //UXMLファイルの読み込み
+            // UXMLファイルの読み込み
             var treeAsset = handle.Result;
             var container = treeAsset.Instantiate();
-            //スタイルの読み込み
+            // スタイルの読み込み
             container.style.width = Length.Percent(100);
             container.style.height = Length.Percent(100);
-            //マウスイベントの無効化
+            // マウスイベントの無効化
             this.RegisterCallback<KeyDownEvent>(e => e.StopImmediatePropagation());
             pickingMode = PickingMode.Ignore;
             container.RegisterCallback<KeyDownEvent>(e => e.StopImmediatePropagation());
             container.pickingMode = PickingMode.Ignore;
+
+            // すべての子要素の pickingMode を Ignore に設定
+            foreach (var child in container.Children())
+            {
+                child.pickingMode = PickingMode.Ignore;
+            }
             hierarchy.Add(container);
-            //UI要素の取得
+
+            // UI要素の取得
             _guageMesh = container.Q<GuageMesh>("PhaseGuage");
             _eXPGuage = container.Q<VisualElement>("EXPGuage");
             _eXPText = container.Q<Label>("EXPText");
             _phaseText = container.Q<Label>("PhaseText");
             _menuButton = container.Q<Button>("MenuButton");
             _goldText = container.Q<Label>("MoneyText");
+            //UIの上にマウスが乗ったとき離れたときに発火する
+            _menuButton.RegisterCallback<MouseEnterEvent>(x => OnMouseCursor?.Invoke(true));
+            _menuButton.RegisterCallback<MouseLeaveEvent>(x=>OnMouseCursor?.Invoke(false));
         }
         else
         {
-            //エラーログ
+            // エラーログ
             Debug.LogError("Failed to load UXML file from Addressables: UXML/BasicInformation.uxml");
         }
-        //リソースの解放
+        // リソースの解放
         Addressables.Release(handle);
     }
 }

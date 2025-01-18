@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -14,34 +15,13 @@ namespace DCFrameWork
         //定数
         private const string _windowClose = "equipment-inventory_close";
         private const string _windowOpen = "equipment-inventory_open";
-        private const string _equipmentingButtonElementNotActive = "equipmenting-button-element-not-active";
-        private const string _equipmentingButtonElementActive = "equipmenting-button-element-active";
-        private const string _equipmentTextBoxNotActive = "equipment-text-box-not-active";
-        private const string _equipmentTextBoxActive = "equipment-text-box-active";
 
         //UI要素
         private VisualElement _equipment;
         private VisualElement _equipmentButton;
         private VisualElement _backGround;
-        private VisualElement _doorButton;
-        private VisualElement _wallButton;
-        private VisualElement _doorIcon;
-        private VisualElement _wallIcon;
-        private VisualElement _equipmentingButtonElement;
-        private VisualElement _cancel;
-        private VisualElement _anotherEquipment;
-        private Label _doorText;
-        private Label _doorGold;
-        private Label _wallGold;
-        private Label _wallText;
-        private ListView _listView;
-        //プロパティ
-        public ListView ListView { get => _listView; }
-        public VisualElement DoorButton { get => _doorButton; }
-        public VisualElement WallButton { get => _wallButton; }
-        public Label DoorGold { get => _doorGold; }
-        public Label WallGold { get => _wallGold; }
-        //コンストラクタ
+        //タレット設置担当用マウスカーソルが乗っているとき離れたときに発火するイベント
+        public event Action<bool> OnMouseCursor;
         public EquipmentCardInventory() => InitializeTask = Initialize();
         // 初期化
         private async Task Initialize()
@@ -59,19 +39,23 @@ namespace DCFrameWork
                 container.style.width = Length.Percent(100);
                 container.style.height = Length.Percent(100);
                 hierarchy.Add(container);
+                //スタイルの読み込み
+                container.style.width = Length.Percent(100);
+                container.style.height = Length.Percent(100);
+                //マウスイベントの無効化
+                this.RegisterCallback<KeyDownEvent>(e => e.StopImmediatePropagation());
+                pickingMode = PickingMode.Ignore;
+                container.RegisterCallback<KeyDownEvent>(e => e.StopImmediatePropagation());
+                container.pickingMode = PickingMode.Ignore;
+                hierarchy.Add(container);
                 //UI要素の取得
                 _equipment = container.Q<VisualElement>("EquipsInventory");
                 _equipmentButton = container.Q<VisualElement>("EquipmentTextBox");
-                _backGround = container.Q<VisualElement>("Background");
-                _doorButton = container.Q<VisualElement>("DoorButton");
-                _wallButton = container.Q<VisualElement>("WallButton");
-                _doorIcon = container.Q<VisualElement>("DoorIcon");
-                _wallIcon = container.Q<VisualElement>("WallIcon");
-                _doorText = container.Q<Label>("DoorText");
-                _doorGold = container.Q<Label>("DoorGold");
-                _wallText = container.Q<Label>("WallText");
-                _wallGold = container.Q<Label>("WallGold");
-                _listView = container.Q<ListView>("EquipmentCardList");
+                //UIがマウスカーソルが上に乗った時のイベント発火
+                _equipment.RegisterCallback<MouseEnterEvent>(x=>OnMouseCursor?.Invoke(true));
+                _equipment.RegisterCallback<MouseLeaveEvent>(x=>OnMouseCursor?.Invoke(false));                
+                _equipmentButton.RegisterCallback<MouseEnterEvent>(x=>OnMouseCursor?.Invoke(true));
+                _equipmentButton.RegisterCallback<MouseLeaveEvent>(x=>OnMouseCursor?.Invoke(false));
                 //スタイルの読み込み
                 _equipment.AddToClassList(_windowClose);
                 _equipmentButton.RegisterCallback<ClickEvent>(x =>

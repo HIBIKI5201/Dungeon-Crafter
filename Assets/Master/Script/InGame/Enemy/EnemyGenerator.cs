@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -43,16 +42,6 @@ namespace DCFrameWork.Enemy
 
         [SerializeField]
         PhaseManager _phaseData;
-
-
-        private void Start()
-        {
-
-
-        }
-
-
-
         public void Initialize()
         {
 
@@ -124,11 +113,6 @@ namespace DCFrameWork.Enemy
                 spawned = i._spawnTime;
             }
         }
-
-
-
-
-
 
         [Serializable]
         public struct EnemyElement

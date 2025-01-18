@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40478fa587365244da4a99f9af7f1ac2, type: 3}
   m_Name: ReinforceTurretDataBase
   m_EditorClassIdentifier: 
-  Name: R
+  Name: "\u9B54\u529B\u306E\u50CF"
   Kind: 4
-  Prefab: {fileID: 0}
+  Prefab: {fileID: 6500790624873805646, guid: e14ac60f978654e49b9716883fb334d0, type: 3}
   Explanation: 
   DropChance: 1
   DataLevelList:
-  - {fileID: 11400000, guid: 9dac64c79e2548b43a20878ffd3629bf, type: 2}
-  - {fileID: 11400000, guid: 579fab6872cd07549b88003421e19c65, type: 2}
+  - {fileID: 11400000, guid: 301df6cff6258cc4bbf3601352e4d99c, type: 2}
+  - {fileID: 11400000, guid: 9da804dc358a8ec4d95ad474bc9c8355, type: 2}
+  - {fileID: 11400000, guid: bc3e0ddd3fa0f594593ab3a2a50c15cf, type: 2}
+  - {fileID: 11400000, guid: 7f7ac54b85a150d44861ee15d7e36e6b, type: 2}
   PowerUpRequireItem: 

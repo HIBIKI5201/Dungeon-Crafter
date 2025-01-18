@@ -2,9 +2,10 @@ using DCFrameWork.DefenseEquipment;
 using DCFrameWork.Enemy;
 using System;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 namespace DCFrameWork
 {
     [CreateAssetMenu(fileName = "DefenseCollection", menuName = "CollectionData/DefenseCollection")]
@@ -44,7 +45,7 @@ namespace DCFrameWork
             GUILayout.Space(10);
             var collection = target as DefenseCollectionData;
 
-            if (GUILayout.Button("ƒeƒLƒXƒg“Ç‚İ‚İ"))
+            if (GUILayout.Button("ï¿½eï¿½Lï¿½Xï¿½gï¿½Ç‚İï¿½ï¿½ï¿½"))
             {
                 Debug.Log("load");
                 collection.LoadDefenseObj();

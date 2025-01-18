@@ -40,8 +40,8 @@ namespace DCFrameWork.Enemy
                 Debug.Log("PhaseData is null");
                 return;
             }
-            _phaseStartAction += () => NextPhase();
             await FrameWork.PausableWaitForSecondAsync(_startWaitingTimer);
+            NextPhase();
             _phaseStartAction?.Invoke();
             PhaseEndCheck();
         }
@@ -57,13 +57,14 @@ namespace DCFrameWork.Enemy
                 }
                 _phaseEndAction?.Invoke();
                 await FrameWork.PausableWaitForSecondAsync(_phaseWaitingTime);
-                PhaseCount++;
+                NextPhase();
                 _phaseStartAction?.Invoke();
             }
         }
 
         void NextPhase()
         {
+            PhaseCount++;
             _deathEemyCount = 0;
 
             //選択肢の中からランダムなデータを取得

@@ -135,6 +135,12 @@ namespace DCFrameWork
     {
         public DefenseEquipmentDataBase DefenseEquipmentData;
         public int Level;
+        public string Name { get=>DefenseEquipmentData?.Name;}
+        public string Explanation { get =>DefenseEquipmentData?.Explanation;}
+        public DefenseObjectsKind Kind { get => DefenseEquipmentData.Kind; }
+        public GameObject Prefab { get=>DefenseEquipmentData.Prefab;}
+        public List<DefenseEquipmentData_B> DataLevelList { get =>  DefenseEquipmentData.DataLevelList;}
+        public List<int> PowerUpRequireItem { get => DefenseEquipmentData.PowerUpRequireItem; }
         public InventoryData(DefenseEquipmentDataBase dataBase, int level = 1)
         {
             DefenseEquipmentData = dataBase;

@@ -519,7 +519,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dataBase: {fileID: 11400000, guid: 63c75a01a40b26a468400b078c0411a0, type: 2}
   _cylinder: {fileID: 4056981947634234410}
-  _conditionType: 0
+  _conditionType: 1
 --- !u!1 &4056981947634234410 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4624475791337522764, guid: 6491d1df532dbce4cb19dc115ad77b73,

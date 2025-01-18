@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 40478fa587365244da4a99f9af7f1ac2, type: 3}
-  m_Name: AreaTurret
+  m_Name: MiddleRangeTurretDataBase
   m_EditorClassIdentifier: 
-  Name: AreaTurret
-  Kind: 0
+  Name: M
+  Kind: 2
   Prefab: {fileID: 0}
   Explanation: 
   DropChance: 1

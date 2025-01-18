@@ -1,6 +1,7 @@
 ﻿using DCFrameWork;
 using DCFrameWork.DefenseEquipment;
 using DCFrameWork.Enemy;
+using DCFrameWork.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,6 +17,8 @@ public class StageManager : MonoBehaviour
     [SerializeField] List<ObstaclePrefabs> _obstaclePrefabList;
     [SerializeField] GameObject _defaultVisualGuide;
     [SerializeField] GameObject _obstacleWallPrefab;
+    [SerializeField] InGameUIManager _inGameUIManager;
+    [SerializeField] PlayerManager _playerManager;
     //[SerializeField] GameObject _clickPointPrefab;//Debug;
     [Serializable]
     public struct ObstaclePrefabs
@@ -44,9 +47,11 @@ public class StageManager : MonoBehaviour
     int _noWall;
     int _startX = 1;
     int _startZ = 1;
+    bool _isMouseOnUI = false;
     //計算に関するコメントアウトのメモが噓をついている可能性があります。鵜吞みにしないように。発見したら教えてください。
     void Start()
     {
+        _inGameUIManager.OnMouseOnUI += GetMouseOnUI;
         var enemyGenerator = GetComponentInChildren<EnemyGenerator>();
         _spawnPos = new Vector3[enemyGenerator.SpawnPos.Length];
         _targetPos = enemyGenerator.TargetPos.position;
@@ -171,7 +176,7 @@ public class StageManager : MonoBehaviour
         //オブジェクトを置く処理
         if (Input.GetMouseButtonDown(0))
         {
-            if (_canSet)
+            if (_canSet && !_isMouseOnUI)
             {
                 SetObject(_currentPosition);
             }
@@ -180,6 +185,10 @@ public class StageManager : MonoBehaviour
                 TurretSelect(hit.collider.gameObject);
             }
         }
+    }
+    void GetMouseOnUI(bool isMouseOnUI)
+    {
+        _isMouseOnUI = isMouseOnUI;
     }
     void TurretSelect(GameObject turret)
     {

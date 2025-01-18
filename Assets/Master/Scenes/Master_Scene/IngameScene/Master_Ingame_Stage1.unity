@@ -1987,6 +1987,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7212133291848024612, guid: 77fd2a5407b56e54d8e660f62bd21e54,
         type: 3}
+      propertyPath: _objects.Array.data[0].obj
+      value: 
+      objectReference: {fileID: 3810501069595707118, guid: 7ece60781cb659343a5cbf7710a2ebf8,
+        type: 3}
+    - target: {fileID: 7212133291848024612, guid: 77fd2a5407b56e54d8e660f62bd21e54,
+        type: 3}
+      propertyPath: _objects.Array.data[1].obj
+      value: 
+      objectReference: {fileID: 2297116565580402773, guid: 2cefd06ae988ece448f1740eb3e9fd3b,
+        type: 3}
+    - target: {fileID: 7212133291848024612, guid: 77fd2a5407b56e54d8e660f62bd21e54,
+        type: 3}
+      propertyPath: _objects.Array.data[2].obj
+      value: 
+      objectReference: {fileID: 4331598957784115268, guid: ae7106dec22a99f4cb70dec320e46ce6,
+        type: 3}
+    - target: {fileID: 7212133291848024612, guid: 77fd2a5407b56e54d8e660f62bd21e54,
+        type: 3}
+      propertyPath: _objects.Array.data[3].obj
+      value: 
+      objectReference: {fileID: 2352064498669783287, guid: 27ae65d99ae83bd44a91e9cb5736bd69,
+        type: 3}
+    - target: {fileID: 7212133291848024612, guid: 77fd2a5407b56e54d8e660f62bd21e54,
+        type: 3}
       propertyPath: _objects.Array.data[2].kind
       value: 2
       objectReference: {fileID: 0}

@@ -1,7 +1,5 @@
-using DCFrameWork.MainSystem;
 using System.IO;
 using System.Threading.Tasks;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -18,7 +16,7 @@ namespace DCFrameWork
         public async Task LoadAndRead() => ReadData(await LoadSpreadSheet(_link, _sheetName));
         async Task<StringReader> LoadSpreadSheet(string link, string sheetName)
         {
-            //ƒXƒvƒŒƒbƒhƒV[ƒg“Ç‚İ‚İ
+            //ï¿½Xï¿½vï¿½ï¿½ï¿½bï¿½hï¿½Vï¿½[ï¿½gï¿½Ç‚İï¿½ï¿½ï¿½
             UnityWebRequest request = UnityWebRequest.Get($"https://docs.google.com/spreadsheets/d/{link}/gviz/tq?tqx=out:csv&sheet={sheetName}");
             await request.SendWebRequest();
 
@@ -28,21 +26,6 @@ namespace DCFrameWork
                 return null;
             }
             return new StringReader(request.downloadHandler.text);
-        }
-        public static T LoadAsset<T>(string assetName) where T : Object
-        {
-            if (string.IsNullOrWhiteSpace(assetName)) return default;
-            string[] assetGUID = AssetDatabase.FindAssets(assetName);
-
-            if ((assetGUID.Length == 0).CheckLog($"{assetName}‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ")) return default;
-            string path = AssetDatabase.GUIDToAssetPath(assetGUID[0]);
-
-            T asset = AssetDatabase.LoadAssetAtPath<T>(path);
-            if (asset != null)
-            {
-                return asset;
-            }
-            return default;
         }
         public abstract void ReadData(StringReader reader);
     }

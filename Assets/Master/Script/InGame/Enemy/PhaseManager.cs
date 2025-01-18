@@ -50,7 +50,6 @@ namespace DCFrameWork.Enemy
         {
             if (PhaseProgressNormalize >= 1)
             {
-                PhaseCount++;
                 if (CurrentPhaseIndex == 0 && PhaseCount != 0)
                 {
                     Debug.Log("pheseEnd " + $"WaveCount:{PhaseCount}");
@@ -58,6 +57,7 @@ namespace DCFrameWork.Enemy
                 }
                 _phaseEndAction?.Invoke();
                 await FrameWork.PausableWaitForSecondAsync(_phaseWaitingTime);
+                PhaseCount++;
                 _phaseStartAction?.Invoke();
             }
         }
@@ -74,6 +74,7 @@ namespace DCFrameWork.Enemy
             _phaseEnemySum = phaseData.SpawnData.Length;
 
             _enemyGenerators.Waving(phaseData);
+            PhaseProgressChanged?.Invoke(PhaseProgressNormalize);
         }
         public void EnemyDeathCount()　//エネミー死亡時に呼んでほしい
         {

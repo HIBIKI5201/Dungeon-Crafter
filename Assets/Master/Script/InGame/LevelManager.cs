@@ -26,7 +26,7 @@ namespace DCFrameWork
         public void AddExperiancePoint(float point)
         {
             _experiancePoint += point;
-            if (_nextLevelRequireExperiancePoint < _experiancePoint)
+            if (_nextLevelRequireExperiancePoint <= _experiancePoint)
             {
                 _experiancePoint -= _nextLevelRequireExperiancePoint;
                 _level = _level + 1;

@@ -6,7 +6,6 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Pool;
-using static UnityEngine.InputManagerEntry;
 
 namespace DCFrameWork.Enemy
 {

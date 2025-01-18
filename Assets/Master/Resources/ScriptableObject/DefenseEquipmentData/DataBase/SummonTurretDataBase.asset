@@ -12,11 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40478fa587365244da4a99f9af7f1ac2, type: 3}
   m_Name: SummonTurretDataBase
   m_EditorClassIdentifier: 
-  Name: Summon
+  Name: "\u30BC\u30EA\u30FC\u30DE\u306E\u9B54\u6CD5\u9663"
   Kind: 5
   Prefab: {fileID: 5313860193403991363, guid: 0375fcc1214074540b01a65dbbc22570, type: 3}
   Explanation: 
   DropChance: 1
   DataLevelList:
   - {fileID: 11400000, guid: 742a2d8a56748774e9c5f9c00ecd0321, type: 2}
+  - {fileID: 11400000, guid: 17f9792e4e388a44eadf8d93bfb76467, type: 2}
+  - {fileID: 11400000, guid: b0852d35ec29dae43bf0ff4db9d77bfa, type: 2}
+  - {fileID: 11400000, guid: 597e2b69a365af84db71ddd559d58b22, type: 2}
   PowerUpRequireItem: 

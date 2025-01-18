@@ -1,5 +1,6 @@
 using DCFrameWork.DefenseEquipment;
 using System.Collections.Generic;
+using Unity.AppUI.UI;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -17,6 +18,9 @@ namespace DCFrameWork.DefenseEquipment
         protected GameObject _entityPrefab;
 
         protected List<GameObject> _entityList = new List<GameObject>();
+
+        protected StageManager _stageManager;
+        protected Vector3 _groundScale;
         protected virtual async void Summon(Vector3 pos, int count)
         {
             if (_entityList.Count < count)
@@ -30,10 +34,13 @@ namespace DCFrameWork.DefenseEquipment
         virtual protected bool Check(Vector3 pos)
         {
             Physics.BoxCast(pos + new Vector3(0, 8, 0), _boxCastSize / 2, Vector3.down, out RaycastHit hit, Quaternion.identity, 18f);
-
-            if (hit.collider != null)
+            if (hit.collider != null &&
+            -_groundScale.x <= pos.x &&   //Ground‚©‚ç‚Í‚Ýo‚³‚È‚¢À•W‚©‚Ç‚¤‚©
+                _groundScale.x >= pos.x &&
+                -_groundScale.z <= pos.z &&
+                _groundScale.z >= pos.z)
             {
-                return hit.collider.gameObject.layer == Mathf.Log(_groundLayer.value, 2);
+                return _stageManager.CheckObjectPlaced(pos) && hit.collider.gameObject.layer == Mathf.Log(_groundLayer.value, 2);
             }
             return false;
         }
@@ -50,6 +57,9 @@ namespace DCFrameWork.DefenseEquipment
         protected override void Start_SB()
         {
             Start_S();
+
+            _stageManager = FindAnyObjectByType<StageManager>();
+            _groundScale = _stageManager.GetGroundScale();
         }
         protected virtual void Start_S() { }
     }

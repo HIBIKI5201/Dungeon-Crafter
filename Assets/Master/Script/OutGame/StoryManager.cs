@@ -139,7 +139,11 @@ namespace DCFrameWork.SceneSystem {
 
             void PlayCharacterVoice(AudioSource source, AudioClip clip)
             {
-                source.Stop();
+                //前のボイスの再生を止める
+                _audioSource.Stop();
+                _creatoComponents.AudioSource.Stop();
+                _labirisComponents.AudioSource.Stop();
+                
                 source.clip = clip;
                 source.Play();
             }

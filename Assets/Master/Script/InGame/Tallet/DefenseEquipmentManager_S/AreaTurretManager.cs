@@ -51,7 +51,6 @@ namespace DCFrameWork.DefenseEquipment
             var result = _enemyList.Find(e => e.Obj == other.gameObject);
             _enemyList.Remove(result);
         }
-
         protected override void Pause()
         {
             _isPaused = true;

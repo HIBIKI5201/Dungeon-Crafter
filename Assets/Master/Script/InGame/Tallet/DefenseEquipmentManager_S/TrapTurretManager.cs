@@ -20,8 +20,6 @@ namespace DCFrameWork.DefenseEquipment
         bool _isSpawned;
         float _animationTimer = 0;
         float _animationDuration = 1;
-        StageManager _stageManager;
-        Vector3 _groundScale;
 
 
 #if UNITY_EDITOR
@@ -33,8 +31,6 @@ namespace DCFrameWork.DefenseEquipment
             _timer = Time.time;
             _animationCurveX.AddKey(0, _spawnPos.position.x);
             _animationCurveZ.AddKey(0, _spawnPos.position.z);
-            _stageManager = FindAnyObjectByType<StageManager>();
-            _groundScale = _stageManager.GetGroundScale();
         }
 
         protected override void Think() //UpDate と同義

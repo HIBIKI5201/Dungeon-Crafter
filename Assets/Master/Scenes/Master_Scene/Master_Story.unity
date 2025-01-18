@@ -332,6 +332,12 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 447873481925785306, guid: 2d863a62b50014648bbb5f5529ef6476,
+        type: 3}
+      propertyPath: _debugStoryData
+      value: 
+      objectReference: {fileID: 11400000, guid: 7b189e84faec91949ae1d9a958cb5ed8,
+        type: 2}
     - target: {fileID: 1075821746490127962, guid: 2d863a62b50014648bbb5f5529ef6476,
         type: 3}
       propertyPath: m_Camera
@@ -341,6 +347,27 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SortingOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3081937718666856085, guid: 2d863a62b50014648bbb5f5529ef6476,
+        type: 3}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3081937718666856085, guid: 2d863a62b50014648bbb5f5529ef6476,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3081937718666856085, guid: 2d863a62b50014648bbb5f5529ef6476,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 5720939000327155022, guid: 2da6ab52d66bcaf41b3cabd48b06c91d,
+        type: 2}
+    - target: {fileID: 3267760919790970926, guid: 2d863a62b50014648bbb5f5529ef6476,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.226
       objectReference: {fileID: 0}
     - target: {fileID: 3367922368658727071, guid: 2d863a62b50014648bbb5f5529ef6476,
         type: 3}
@@ -407,6 +434,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7970821012391267590, guid: 2d863a62b50014648bbb5f5529ef6476,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7970821012391267590, guid: 2d863a62b50014648bbb5f5529ef6476,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 5720939000327155022, guid: 2da6ab52d66bcaf41b3cabd48b06c91d,
+        type: 2}
     - target: {fileID: 8711808584467193297, guid: 2d863a62b50014648bbb5f5529ef6476,
         type: 3}
       propertyPath: m_Name

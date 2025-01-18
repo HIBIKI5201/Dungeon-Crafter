@@ -2,10 +2,8 @@ using DCFrameWork.MainSystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEngine.InputManagerEntry;
 
 namespace DCFrameWork.Enemy
 {

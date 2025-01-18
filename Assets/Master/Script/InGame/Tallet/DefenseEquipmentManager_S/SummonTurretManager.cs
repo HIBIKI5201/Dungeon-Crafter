@@ -18,7 +18,7 @@ namespace DCFrameWork.DefenseEquipment
         {
             _timer = Time.time;
         }
-        protected override void Think() //UpDate �Ɠ��`
+        protected override void Think() //UpDate
         {
             if (_isPaused)
                 _timer += Time.deltaTime;

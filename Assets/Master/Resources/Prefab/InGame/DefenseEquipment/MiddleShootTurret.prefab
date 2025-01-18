@@ -232,7 +232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f2d523c7082c9045a62a4a2da7d5981, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _dataBase: {fileID: 11400000, guid: c274824e63b70424d9afd001f6f40105, type: 2}
+  _dataBase: {fileID: 11400000, guid: 99ac42ede775dad45a64ac54422787cc, type: 2}
   _cylinder: {fileID: 1626058793573848128}
   _turretModel: {fileID: 1853212208749101522}
   _anim: {fileID: 2253484281186520901}

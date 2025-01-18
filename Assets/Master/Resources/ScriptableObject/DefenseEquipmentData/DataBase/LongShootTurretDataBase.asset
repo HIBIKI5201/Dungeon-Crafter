@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40478fa587365244da4a99f9af7f1ac2, type: 3}
   m_Name: LongShootTurretDataBase
   m_EditorClassIdentifier: 
-  Name: 
+  Name: L
   Kind: 1
   Prefab: {fileID: 3201622288186106138, guid: a278e15b8295c41429a44fa532116f44, type: 3}
   Explanation: 
-  DropChance: 0
+  DropChance: 1
   DataLevelList:
   - {fileID: 11400000, guid: 85ee0f33e2ce25d4eb932556c80e787d, type: 2}
   PowerUpRequireItem: 

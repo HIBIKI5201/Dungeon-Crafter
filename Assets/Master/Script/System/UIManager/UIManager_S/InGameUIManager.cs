@@ -2,7 +2,6 @@ using System;
 using System.Threading.Tasks;
 using DCFrameWork.DefenseEquipment;
 using DCFrameWork.Enemy;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -12,6 +11,8 @@ namespace DCFrameWork.UI
     {
         [SerializeField] StageManager _stageManager;
         [SerializeField] PhaseManager _phaseManager;
+        [SerializeField] PlayerManager _playerManager;
+        [SerializeField] LevelManager _levelManager;
         EquipmentCardInventory _equipmentList;
         BasicInformation _basicInformation;
         EquipmentSettingUI _equipmentSettingUI;
@@ -27,6 +28,10 @@ namespace DCFrameWork.UI
             _stageManager.OnActivateTurretSelectedUI += EquipmentSettingUIUpdate;
             _phaseManager.PhaseProgressChanged += PhaseUpdate;
             _phaseManager._phaseEndAction += PhaseCount;
+            _playerManager.OnGetGold += x => _basicInformation.Money = x;
+            _levelManager.OnExperianceGained += _basicInformation.EXPGuageUpdate;
+            _levelManager.OnExperianceGained += x => _basicInformation.Exp = x;
+            _levelManager.OnLevelChanged += x => _basicInformation.Level = x;
         }
         void EquipmentSettingUIUpdate(ITurret turret)
         {

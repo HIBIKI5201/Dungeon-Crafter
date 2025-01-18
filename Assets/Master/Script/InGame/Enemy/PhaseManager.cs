@@ -40,7 +40,6 @@ namespace DCFrameWork.Enemy
                 Debug.Log("PhaseData is null");
                 return;
             }
-            PhaseProgressChanged += x => PhaseEndCheck();
             _phaseStartAction += () => NextPhase();
             await FrameWork.PausableWaitForSecondAsync(_startWaitingTimer);
             _phaseStartAction?.Invoke();
@@ -79,6 +78,7 @@ namespace DCFrameWork.Enemy
         public void EnemyDeathCount()　//エネミー死亡時に呼んでほしい
         {
             ++_deathEemyCount;
+            PhaseEndCheck();
             PhaseProgressChanged?.Invoke(PhaseProgressNormalize);
         }
 

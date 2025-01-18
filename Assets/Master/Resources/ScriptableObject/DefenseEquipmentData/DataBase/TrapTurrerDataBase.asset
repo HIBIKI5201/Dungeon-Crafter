@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40478fa587365244da4a99f9af7f1ac2, type: 3}
   m_Name: TrapTurrerDataBase
   m_EditorClassIdentifier: 
-  Name: 
+  Name: T
   Kind: 6
   Prefab: {fileID: 2777772811596702075, guid: 3edd4d2074dd72e49a78027989313d79, type: 3}
   Explanation: 
-  DropChance: 0
+  DropChance: 1
   DataLevelList:
   - {fileID: 11400000, guid: 87d86e7b3e27ec744affa978386c51cf, type: 2}
   PowerUpRequireItem: 

@@ -12,6 +12,8 @@ namespace DCFrameWork.Enemy
     {
         private Image _thisImage;
         private Image _image;
+        [SerializeField]
+        private float _highDiff = 50; 
         public void Initialize()
         {
             _thisImage = GetComponent<Image>();
@@ -37,8 +39,9 @@ namespace DCFrameWork.Enemy
         public void FollowTarget(Transform target)
         {
             Vector3 cameraPos = Camera.main.transform.position;
-            Vector3 towards = target.position + new Vector3(target.position.x - cameraPos.x, 0, target.position.z - cameraPos.z).normalized;
+            Vector3 towards = target.position + new Vector3(target.position.x - cameraPos.x, 1, target.position.z - cameraPos.z).normalized;
             Vector2 screenPos = Camera.main.WorldToScreenPoint(towards);
+            screenPos.y += _highDiff;
             transform.position = screenPos;
         }
 

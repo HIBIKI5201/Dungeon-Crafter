@@ -104,6 +104,7 @@ namespace DCFrameWork.SceneSystem {
                 //キャラクターを判定
                 CharacterEnum character = storyText.Character switch {
                     "クリエト" => CharacterEnum.Creato,
+                    "？？？" => CharacterEnum.Creato,
                     "ラビリス" => CharacterEnum.Labiris,
                     _ => CharacterEnum.None,
                 };
@@ -113,18 +114,14 @@ namespace DCFrameWork.SceneSystem {
 
                 //サウンドを再生
                 if (storyText.AudioClip != null) {
-                    switch (character) {
-                        case CharacterEnum.Creato:
-                            _creatoComponents.AudioSource?.PlayOneShot(storyText.AudioClip);
-                            break;
+                    AudioSource source = character switch {
+                        CharacterEnum.Creato => _creatoComponents.AudioSource,
+                        CharacterEnum.Labiris => _labirisComponents.AudioSource,
+                        CharacterEnum.None => _audioSource
+                    };
 
-                        case CharacterEnum.Labiris:
-                            _labirisComponents.AudioSource?.PlayOneShot(storyText.AudioClip);
-                            break;
-
-                        case CharacterEnum.None:
-                            _audioSource?.PlayOneShot(storyText.AudioClip);
-                            break;
+                    if (source is not null) {
+                        PlayCharacterVoice(source, storyText.AudioClip);
                     }
                 }
 
@@ -138,6 +135,14 @@ namespace DCFrameWork.SceneSystem {
                 yield return null;
             }
             EndStory();
+
+
+            void PlayCharacterVoice(AudioSource source, AudioClip clip)
+            {
+                source.Stop();
+                source.clip = clip;
+                source.Play();
+            }
         }
 
         private async Task AnimationAsync(string animation)

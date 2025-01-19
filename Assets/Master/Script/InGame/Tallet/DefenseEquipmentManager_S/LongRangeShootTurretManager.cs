@@ -2,7 +2,6 @@ using DCFrameWork.Enemy;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
-using System.ComponentModel;
 
 namespace DCFrameWork.DefenseEquipment
 {

@@ -1,10 +1,7 @@
 using DCFrameWork.DefenseEquipment;
 using DCFrameWork.Enemy;
 using DCFrameWork.MainSystem;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.ProBuilder.Shapes;
 
 namespace DCFrameWork
 {

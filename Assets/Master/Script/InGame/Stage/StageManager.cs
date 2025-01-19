@@ -28,7 +28,7 @@ public class StageManager : MonoBehaviour
         [Tooltip("特注の視覚サポートオブジェクトがあればいれてください")] public GameObject VisualGuide;
         public bool IsPutTogetherWithWall;
     }
-    public event Action<ITurret> OnActivateTurretSelectedUI;//タレットがクリックされたときに呼ぶ処理
+    public event Action<ITurret, bool> OnActivateTurretSelectedUI;//タレットがクリックされたときに呼ぶ処理
     Vector3[] _spawnPos;
     Vector3 _targetPos;
     GameObject _setPrefab;
@@ -183,6 +183,7 @@ public class StageManager : MonoBehaviour
             else if (hit.collider != null)
             {
                 TurretSelect(hit.collider.gameObject);
+                //RemoveObject();
             }
         }
     }
@@ -195,8 +196,29 @@ public class StageManager : MonoBehaviour
         if (turret.TryGetComponent<ITurret>(out ITurret t))
         {
             //Debug.Log("タレットがクリックされた");
-            OnActivateTurretSelectedUI?.Invoke(t);
+            bool canRemove = true;
+            canRemove = CheckCanRemove();
+            OnActivateTurretSelectedUI?.Invoke(t, canRemove);
             _selectedTurret = turret;
+            bool CheckCanRemove()
+            {
+                int currentX;
+                int currentZ;
+                currentX = (int)((t.transform.position.x - _floorCenter.x + _floorPrefab.transform.localScale.x * _gridSize / 2 - _gridSize / 2) / _gridSize);
+                currentZ = (int)((t.transform.position.z - _floorCenter.z + _floorPrefab.transform.localScale.z * _gridSize / 2 - _gridSize / 2) / _gridSize);
+                //座標に1を足したり引いたりした時に、配列の範囲外に出た時と、計算した座標がの値が1(壁がある)のときtrue
+                if ((currentX <= 0 || _map[currentX - 1, currentZ] == 1) &&
+                    (currentZ <= 0 || _map[currentX, currentZ - 1] == 1) &&
+                    (currentX >= _sizeX - 1 || _map[currentX + 1, currentZ] == 1) &&
+                    (currentZ >= _sizeZ - 1 || _map[currentX, currentZ + 1] == 1))
+                {
+                    return false;
+                }//4方向に壁がある時、そのタレットは削除できないようにするためfalseを返す
+                else
+                {
+                    return true;
+                }//1つの方向でも壁がなかったら消せる
+            }
         }
     }
     private bool CheckConnected(Vector3 currentPosition)
@@ -277,7 +299,7 @@ public class StageManager : MonoBehaviour
         {
             _noWall--;
         }
-        _map[currentX, currentZ] = 2;
+        _map[currentX, currentZ] = 1;
         //生成
         if (currentPosition.y == 2.5f)
         {
@@ -359,7 +381,7 @@ public class StageManager : MonoBehaviour
     /// <param name="currentPosition"></param>
     public void RemoveObject()
     {
-        if(_selectedTurret == null)
+        if (_selectedTurret == null)
         {
             //タレットが選択された状態でしかこのメソッドは呼ばれないはずなので
             Debug.LogWarning("削除するタレットが選択されていません。不具合の可能性があります");
@@ -377,11 +399,13 @@ public class StageManager : MonoBehaviour
         RaycastHit[] hits = Physics.RaycastAll(currentPosition, Vector3.down, 20, LayerMask.GetMask("Buildings"));
         foreach (RaycastHit hit in hits)
         {
-            if (hit.collider.gameObject.TryGetComponent<ITurret>(out ITurret t))
+            if (!hit.collider.isTrigger)
             {
-                Destroy(t.gameObject);
-                break;
-            }     
+                Destroy(hit.collider.gameObject);
+            }
         }
+        //ステージ情報の更新
+        _map[currentX, currentZ] = 0;
+        _noWall++;
     }
 }

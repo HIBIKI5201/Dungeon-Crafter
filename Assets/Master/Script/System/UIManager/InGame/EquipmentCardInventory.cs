@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -15,12 +16,11 @@ namespace DCFrameWork
         //定数
         private const string _windowClose = "equipment-inventory_close";
         private const string _windowOpen = "equipment-inventory_open";
-
         //UI要素
+        private ScrollView _cardScroll;
         private VisualElement _equipment;
         private VisualElement _equipmentButton;
         private VisualElement _backGround;
-        private VisualElement _hitJudge;
         //タレット設置担当用マウスカーソルが乗っているとき離れたときに発火するイベント
         public event Action<bool> OnMouseCursor;
         public EquipmentCardInventory() => InitializeTask = Initialize();
@@ -53,9 +53,10 @@ namespace DCFrameWork
                 _equipment = container.Q<VisualElement>("EquipsInventory");
                 _equipmentButton = container.Q<VisualElement>("EquipmentTextBox");
                 _backGround = container.Q<VisualElement>("Background");
+                _cardScroll = container.Q<ScrollView>("CardScroll");
                 //UIがマウスカーソルが上に乗った時のイベント発火            
-                _equipmentButton.RegisterCallback<MouseEnterEvent>(x=>OnMouseCursor?.Invoke(true));
-                _equipmentButton.RegisterCallback<MouseLeaveEvent>(x=> {if(_equipment.ClassListContains(_windowClose))OnMouseCursor?.Invoke(false);});
+                _equipmentButton.RegisterCallback<MouseEnterEvent>(x => OnMouseCursor?.Invoke(true));
+                _equipmentButton.RegisterCallback<MouseLeaveEvent>(x => { if (_equipment.ClassListContains(_windowClose)) OnMouseCursor?.Invoke(false); });
                 //スタイルの読み込み
                 _equipment.AddToClassList(_windowClose);
                 _equipmentButton.RegisterCallback<ClickEvent>(x =>
@@ -78,8 +79,15 @@ namespace DCFrameWork
             {
                 Debug.LogError("Failed to load UXML file from Addressables: UXML/EquipmentInventory.uxml");
             }
-
             Addressables.Release(handle);
+        }
+        public void InventoryBake(List<InventoryData> inventory,VisualTreeAsset cardUI)
+        {
+            foreach (var turret in inventory)
+            {
+                var uiInstance = cardUI.Instantiate();
+                _cardScroll.Add(uiInstance);
+            }
         }
     }
 }

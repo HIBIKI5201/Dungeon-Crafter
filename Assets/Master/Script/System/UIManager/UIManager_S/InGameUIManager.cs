@@ -13,6 +13,7 @@ namespace DCFrameWork.UI
         [SerializeField] PhaseManager _phaseManager;
         [SerializeField] PlayerManager _playerManager;
         [SerializeField] LevelManager _levelManager;
+        [SerializeField] VisualTreeAsset _card;
         EquipmentCardInventory _equipmentList;
         BasicInformation _basicInformation;
         EquipmentSettingUI _equipmentSettingUI;
@@ -38,9 +39,10 @@ namespace DCFrameWork.UI
             _basicInformation.OnMouseCursor += x => OnMouseOnUI?.Invoke(x);
             OnMouseOnUI += x =>Debug.Log("変更" + x);
         }
-        void EquipmentSettingUIUpdate(ITurret turret)
+        void EquipmentSettingUIUpdate(ITurret turret,bool turretbool)
         {
             _equipmentSettingUI.EquipmentSettingWindowVisible = true;
+            
         }
         void PhaseUpdate(float parsent)
         {

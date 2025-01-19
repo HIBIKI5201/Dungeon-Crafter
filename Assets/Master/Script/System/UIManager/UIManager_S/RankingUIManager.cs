@@ -1,4 +1,3 @@
-using DCFrameWork.UI;
 using System;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -23,9 +22,7 @@ namespace DCFrameWork.UI
             {
                 Destroy(gameObject);
             }
-
             _uiDocument = GetComponent<UIDocument>();
-
             for(int i = 0; i < _labels.Length; i++)
             {
                 _labels[i] = _uiDocument.rootVisualElement.Q<Label>($"Ranktext{i + 1}");

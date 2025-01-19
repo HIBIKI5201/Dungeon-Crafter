@@ -20,6 +20,7 @@ namespace DCFrameWork
         private VisualElement _equipment;
         private VisualElement _equipmentButton;
         private VisualElement _backGround;
+        private VisualElement _hitJudge;
         //タレット設置担当用マウスカーソルが乗っているとき離れたときに発火するイベント
         public event Action<bool> OnMouseCursor;
         public EquipmentCardInventory() => InitializeTask = Initialize();
@@ -52,11 +53,9 @@ namespace DCFrameWork
                 _equipment = container.Q<VisualElement>("EquipsInventory");
                 _equipmentButton = container.Q<VisualElement>("EquipmentTextBox");
                 _backGround = container.Q<VisualElement>("Background");
-                //UIがマウスカーソルが上に乗った時のイベント発火
-                _equipment.RegisterCallback<MouseEnterEvent>(x=>OnMouseCursor?.Invoke(true));
-                _equipment.RegisterCallback<MouseLeaveEvent>(x=>OnMouseCursor?.Invoke(false));                
+                //UIがマウスカーソルが上に乗った時のイベント発火            
                 _equipmentButton.RegisterCallback<MouseEnterEvent>(x=>OnMouseCursor?.Invoke(true));
-                _equipmentButton.RegisterCallback<MouseLeaveEvent>(x=>OnMouseCursor?.Invoke(false));
+                _equipmentButton.RegisterCallback<MouseLeaveEvent>(x=> {if(_equipment.ClassListContains(_windowClose))OnMouseCursor?.Invoke(false);});
                 //スタイルの読み込み
                 _equipment.AddToClassList(_windowClose);
                 _equipmentButton.RegisterCallback<ClickEvent>(x =>
@@ -64,12 +63,14 @@ namespace DCFrameWork
                     if (!_equipment.ClassListContains(_windowClose)) return;
                     _equipment.RemoveFromClassList(_windowClose);
                     _equipment.AddToClassList(_windowOpen);
+                    OnMouseCursor?.Invoke(true);
                 });
                 _backGround.RegisterCallback<ClickEvent>(x =>
                 {
                     if (!_equipment.ClassListContains(_windowOpen)) return;
                     _equipment.RemoveFromClassList(_windowOpen);
                     _equipment.AddToClassList(_windowClose);
+                    OnMouseCursor?.Invoke(false);
                 });
                 Debug.Log("�E�B���h�E�͐���Ƀ��[�h����");
             }

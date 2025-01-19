@@ -1,7 +1,9 @@
 using DCFrameWork.Enemy;
 using System;
 using System.Collections.Generic;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 namespace DCFrameWork
@@ -16,6 +18,7 @@ namespace DCFrameWork
 
         public int Count => _enemyCollection.Count;
 
+#if UNITY_EDITOR
         public void LoadEnemy()
         {
             _enemyCollection.Clear();
@@ -24,7 +27,7 @@ namespace DCFrameWork
                 _enemyCollection.Add(CollectionData_B.LoadAsset<EnemyData_B>("EnemyData" + kind));
             }
         }
-
+#endif
         [Serializable]
         public struct EnemyCollection
         {

@@ -16,6 +16,7 @@ namespace DCFrameWork
 
         public int Count => _enemyCollection.Count;
 
+#if UNITY_EDITOR
         public void LoadEnemy()
         {
             _enemyCollection.Clear();
@@ -24,7 +25,7 @@ namespace DCFrameWork
                 _enemyCollection.Add(CollectionData_B.LoadAsset<EnemyData_B>("EnemyData" + kind));
             }
         }
-
+#endif
         [Serializable]
         public struct EnemyCollection
         {
@@ -44,7 +45,7 @@ namespace DCFrameWork
                 GUILayout.Space(10);
                 var collection = target as EnemyCollectionData;
 
-                if (GUILayout.Button("ÉeÉLÉXÉgì«Ç›çûÇ›"))
+                if (GUILayout.Button("ÔøΩeÔøΩLÔøΩXÔøΩgÔøΩ«Ç›çÔøΩÔøΩÔøΩ"))
                 {
                     Debug.Log("load");
                     collection.LoadEnemy();

@@ -17,6 +17,7 @@ namespace DCFrameWork
 
         public int Count => _defenseCollections.Count;
 
+#if UNITY_EDITOR
         public void LoadDefenseObj()
         {
             _defenseCollections.Clear();
@@ -25,6 +26,7 @@ namespace DCFrameWork
                 _defenseCollections.Add(CollectionData_B.LoadAsset<DefenseEquipmentDataBase>(kind + "DataBase"));
             }
         }
+#endif
     }
     [System.Serializable]
     public struct DefenseCollection

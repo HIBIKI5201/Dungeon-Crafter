@@ -1,7 +1,5 @@
 using DCFrameWork.Enemy;
-using Unity.AppUI.UI;
 using UnityEngine;
-using static UnityEngine.UI.Image;
 
 namespace DCFrameWork.DefenseEquipment
 {

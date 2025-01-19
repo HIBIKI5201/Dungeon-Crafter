@@ -1,8 +1,6 @@
 using DCFrameWork.DefenseEquipment;
 using System.Collections.Generic;
-using Unity.AppUI.UI;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace DCFrameWork.DefenseEquipment
 {

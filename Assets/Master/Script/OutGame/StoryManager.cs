@@ -40,6 +40,8 @@ namespace DCFrameWork.SceneSystem {
             _backGround2 = images[1];
             _blackFade = images[2];
 
+            _backGround2.color = new Color(1, 1, 1, 0);
+
             SetCharacterComponent(ref _creatoComponents, _creato);
             SetCharacterComponent(ref _labirisComponents, _labiris);
 
@@ -73,7 +75,7 @@ namespace DCFrameWork.SceneSystem {
         {
             _storyData = storyData;
             if (storyData.BackGround[0] != null) {
-                SetBackGround(storyData.BackGround[0]);
+                _backGround1.sprite = storyData.BackGround[0];
             }
         }
 
@@ -239,11 +241,6 @@ namespace DCFrameWork.SceneSystem {
             }
         }
 
-        private void SetBackGround(Sprite sprite)
-        {
-            _backGround1.sprite = sprite;
-        }
-
         private async Task FadeBackGround(Sprite sprite)
         {
             _backGround2.sprite = sprite;
@@ -255,6 +252,8 @@ namespace DCFrameWork.SceneSystem {
                 _backGround1.color = newColor;
                 await Awaitable.NextFrameAsync();
             }
+
+            //îwåi1ÇêVÇµÇ¢spriteÇ…ïœÇ¶Çƒîwåi2Ç∆ì¸ÇÍë÷Ç¶
             _backGround1.sprite = sprite;
             _backGround1.color = Color.white;
         }

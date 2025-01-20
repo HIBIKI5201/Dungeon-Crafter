@@ -9,8 +9,8 @@
             <engine:Label name="FastText" style="font-size: 30%; -unity-font-style: bold; -unity-text-align: upper-left;" />
             <engine:Label name="RangeText" style="font-size: 30%; -unity-font-style: bold; -unity-text-align: upper-left;" />
         </engine:VisualElement>
+        <engine:VisualElement style="flex-grow: 1; position: absolute; width: 100%; height: 100%; background-image: url(&quot;project://database/Assets/Master/UITK/Picture/UI_defense_panel.psd?fileID=-2356421919431520049&amp;guid=3eda56afcb28850408f25ae27ce15c9d&amp;type=3#枠&quot;);" />
         <engine:Button text="強化" name="PowerUpButton" enabled="true" selectable="false" focusable="true" class="power-up-button" style="font-size: 25%; background-image: url(&quot;project://database/Assets/Master/UITK/Picture/UI_defense_panel.psd?fileID=-8950999455679099068&amp;guid=3eda56afcb28850408f25ae27ce15c9d&amp;type=3#ボタン１&quot;); color: rgb(255, 255, 255); -unity-text-outline-width: 1px; -unity-text-outline-color: rgb(0, 0, 0);" />
         <engine:Button text="撤去" name="RemovalButton" class="removal-button" style="background-image: url(&quot;project://database/Assets/Master/UITK/Picture/UI_defense_panel.psd?fileID=2281074251507390601&amp;guid=3eda56afcb28850408f25ae27ce15c9d&amp;type=3#ボタン２&quot;); color: rgb(255, 255, 255); -unity-text-outline-width: 1px; -unity-text-outline-color: rgb(0, 0, 0);" />
-        <engine:VisualElement style="flex-grow: 1; position: absolute; width: 100%; height: 100%; background-image: url(&quot;project://database/Assets/Master/UITK/Picture/UI_defense_panel.psd?fileID=-2356421919431520049&amp;guid=3eda56afcb28850408f25ae27ce15c9d&amp;type=3#枠&quot;);" />
     </engine:VisualElement>
 </engine:UXML>

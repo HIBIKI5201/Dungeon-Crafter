@@ -17,7 +17,12 @@ namespace DCFrameWork.UI
         EquipmentCardInventory _equipmentList;
         BasicInformation _basicInformation;
         EquipmentSettingUI _equipmentSettingUI;
+        //マウスが上にのっているかのブールを返すEvent
         public event Action<bool> OnMouseOnUI;
+        //カードリストから削除するためのイベント
+        public event Action<InventoryData> OnCardClick;
+        //タレット削除のイベント
+        public event Action OnTurretDelete;
         protected override async Task LoadDocumentElement(VisualElement root)
         {
             _equipmentList = root.Q<EquipmentCardInventory>("EquipmentCardInventory");
@@ -26,6 +31,7 @@ namespace DCFrameWork.UI
             await _equipmentList.InitializeTask;
             await _basicInformation.InitializeTask;
             await _equipmentSettingUI.InitializeTask;
+            _equipmentList.CardSet = _card;
             _stageManager.OnActivateTurretSelectedUI += EquipmentSettingUIUpdate;
             _phaseManager.PhaseProgressChanged += PhaseUpdate;
             _phaseManager._phaseEndAction += PhaseCount;
@@ -35,14 +41,40 @@ namespace DCFrameWork.UI
             _levelManager.OnLevelChanged += x => _basicInformation.Level = x;
             //マウスカーソルがUIの上に乗ったときのイベントの登録
             _equipmentList.OnMouseCursor += x => OnMouseOnUI?.Invoke(x);
-            _equipmentList.OnMouseCursor += x => OnMouseOnUI?.Invoke(x);
             _basicInformation.OnMouseCursor += x => OnMouseOnUI?.Invoke(x);
-            OnMouseOnUI += x =>Debug.Log("変更" + x);
+            _equipmentSettingUI.OnMouseEvent += x => OnMouseOnUI?.Invoke(x);
+            //インベントリが選択された時のイベント
+            _equipmentList.OnInventory += () => _equipmentList.Inventoryset = _playerManager.TurretInventory;
+            //カードが押された時のイベント
+            _equipmentList.OnCardClick += x => _stageManager.SetTurret(x);
+            _equipmentList.OnCardDest += x => _playerManager.UseDefenseObject(x);
+            OnMouseOnUI += x => Debug.Log("変更" + x);
         }
-        void EquipmentSettingUIUpdate(ITurret turret,bool turretbool)
+        void EquipmentSettingUIUpdate(ITurret turret, bool turretbool)
         {
-            _equipmentSettingUI.EquipmentSettingWindowVisible = true;
-            
+            Debug.Log("タレットをクリックしました");
+            Debug.Log(turret.CurrentData.name);
+            _equipmentSettingUI.EquipmentSettingWindowVisible = false;
+            _equipmentSettingUI.EquipmentName = turret.CurrentData.name;
+            _equipmentSettingUI.LevelText = "Lv " + turret.Level.ToString() + " -> " + (turret.Level + 1).ToString();
+            _equipmentSettingUI.PowerText = "力 " + turret.CurrentData.Attack.ToString() + " -> " + turret.NextData.Attack.ToString();
+            _equipmentSettingUI.FastText = "速さ" + turret.CurrentData.Rate.ToString() + " -> " + turret.NextData.Rate.ToString();
+            _equipmentSettingUI.RangeText = "範囲" + turret.CurrentData.Range.ToString() + " -> " + turret.NextData.Rate.ToString();
+            _equipmentSettingUI.PowerUpButtonText = "強化" + turret.CurrentData.LevelRequirePoint;
+            _equipmentSettingUI.RemovalButtonName = turretbool ? "撤去" : "撤去できません";
+            _equipmentSettingUI.PowerUpButton = () =>
+            {
+                turret.LevelUp();
+                _equipmentSettingUI.EquipmentSettingWindowVisible = true;
+            };
+            _equipmentSettingUI.RemovalButton = () =>
+            {
+                if (turretbool)
+                {
+                    OnTurretDelete?.Invoke();
+                _equipmentSettingUI.EquipmentSettingWindowVisible = true;
+                }
+            };
         }
         void PhaseUpdate(float parsent)
         {

@@ -38,6 +38,7 @@ namespace DCFrameWork
                 _equipmentSettingWindow.AddToClassList("equipment-setting-window-open");
             } 
         }
+        //プロパティ
         public Action PowerUpButton{ set => _powerUpButton.clicked += value; }
         public Action RemovalButton { set => _removalButton.clicked += value; }
         public string EquipmentName { set => _equipmentName.text = value; }
@@ -45,6 +46,10 @@ namespace DCFrameWork
         public string PowerText { set => _powerText.text = value; }
         public string FastText { set => _fastText.text = value; }
         public string RangeText { set => _rangeText.text = value; }
+        public string PowerUpButtonText{set => _powerUpButton.text = value;}
+        public string RemovalButtonName{ set => _removalButton.text = value;}
+        //マウスがUiの上の乗った時に発火するイベント
+        public event Action<bool> OnMouseEvent;
         //  コンストラクタ
         public EquipmentSettingUI() => InitializeTask = Initialize();
         //初期化
@@ -71,11 +76,14 @@ namespace DCFrameWork
                 _powerUpButton = container.Q<Button>("PowerUpButton");
                 _removalButton = container.Q<Button>("RemovalButton");
                 _equipmentName = container.Q<Label>("EquipmentName");
-                _levelText = container.Q<Label>("LavelText");
+                _levelText = container.Q<Label>("LevelText");
                 _powerText = container.Q<Label>("PowerText");
                 _fastText = container.Q<Label>("FastText");
                 _rangeText = container.Q<Label>("RangeText");
                 _equipmentSettingWindow = container.Q<VisualElement>("EquipmentSettingWindow");
+                //UIの上にマウスが乗った時のイベント発火
+                _equipmentSettingWindow.RegisterCallback<MouseEnterEvent>(x => OnMouseEvent?.Invoke(true));
+                _equipmentSettingWindow.RegisterCallback<MouseLeaveEvent>(x => OnMouseEvent?.Invoke(false));
                 _equipmentSettingWindow.AddToClassList("equipment-setting-window-close");
             }
             else

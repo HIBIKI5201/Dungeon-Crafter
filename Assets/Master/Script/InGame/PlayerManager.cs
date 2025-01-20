@@ -82,9 +82,8 @@ namespace DCFrameWork
             _defenseObjectsValue.Add(inventory);
             OnGetDefenseObject?.Invoke(inventory);
         }
-        public void UseDefenseObject(DefenseObjectsKind kind, int level = 1)
+        public void UseDefenseObject(InventoryData inventory)
         {
-            var inventory = new InventoryData(_defenseObjectData.FirstOrDefault(x => x.Kind == kind), level);
             if (inventory.DefenseEquipmentData is null)
             {
                 Debug.Log("DefenseData is null");

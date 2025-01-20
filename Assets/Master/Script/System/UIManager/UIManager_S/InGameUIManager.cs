@@ -52,6 +52,7 @@ namespace DCFrameWork.UI
         }
         void EquipmentSettingUIUpdate(ITurret turret, bool turretbool)
         {
+            
             Debug.Log("タレットをクリックしました");
             Debug.Log(turret.CurrentData.name);
             _equipmentSettingUI.EquipmentSettingWindowVisible = false;
@@ -72,7 +73,7 @@ namespace DCFrameWork.UI
                 if (turretbool)
                 {
                     OnTurretDelete?.Invoke();
-                _equipmentSettingUI.EquipmentSettingWindowVisible = true;
+                    _equipmentSettingUI.EquipmentSettingWindowVisible = true;
                 }
             };
         }

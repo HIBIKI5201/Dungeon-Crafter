@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -17,6 +16,8 @@ namespace DCFrameWork
         VisualElement _equipmentSettingWindow;
         Button _powerUpButton;
         Button _removalButton;
+        Action _powerUpCallback;
+        Action _removalCallback;
         Label _equipmentName;
         Label _levelText;
         Label _powerText;
@@ -38,9 +39,24 @@ namespace DCFrameWork
                 _equipmentSettingWindow.AddToClassList("equipment-setting-window-open");
             } 
         }
-        //プロパティ
-        public Action PowerUpButton{ set => _powerUpButton.clicked += value; }
-        public Action RemovalButton { set => _removalButton.clicked += value; }
+        public Action PowerUpButton
+        { 
+            set
+            {
+                _powerUpButton.clicked -= _powerUpCallback;
+                _powerUpCallback = value;
+                _powerUpButton.clicked += _powerUpCallback;
+            }
+        }
+        public Action RemovalButton
+        { 
+            set
+            {
+                _removalButton.clicked -= _removalCallback;
+                _removalCallback = value;
+                _removalButton.clicked += _removalCallback;
+            }
+        }
         public string EquipmentName { set => _equipmentName.text = value; }
         public string LevelText { set => _levelText.text = value; }
         public string PowerText { set => _powerText.text = value; }

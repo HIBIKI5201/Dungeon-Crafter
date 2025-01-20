@@ -52,6 +52,7 @@ public class StageManager : MonoBehaviour
     void Start()
     {
         _inGameUIManager.OnMouseOnUI += GetMouseOnUI;
+        _inGameUIManager.OnTurretDelete += RemoveObject;
         var enemyGenerator = GetComponentInChildren<EnemyGenerator>();
         _spawnPos = new Vector3[enemyGenerator.SpawnPos.Length];
         _targetPos = enemyGenerator.TargetPos.position;

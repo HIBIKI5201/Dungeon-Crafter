@@ -28,8 +28,9 @@ namespace DCFrameWork.DefenseEquipment
 
         PlayerManager _playerManager;
 
-        public DefenseEquipmentData_B CurrentLevelStatus { get => _dataBase.DataLevelList[_level - 1]; }
-        public DefenseEquipmentData_B NextLevelStatus { get => _level == 4 ? null : _dataBase.DataLevelList[_level]; }
+        public DefenseEquipmentData_B CurrentData { get => _dataBase.DataLevelList[_level - 1]; }
+        public DefenseEquipmentData_B NextData { get => _level == 4 ? null : _dataBase.DataLevelList[_level]; }
+        public int Level{get => _level;}
 
         private void Start()
         {
@@ -122,8 +123,11 @@ namespace DCFrameWork.DefenseEquipment
     public interface ITurret : IPausable
     {
         void Reinforce(ReinforceStatus status);
+        void LevelUp();
         DefenseEquipmentDataBase Data { get; protected set; }
-
+        int Level{ get; }
+        DefenseEquipmentData_B CurrentData{get;}
+        DefenseEquipmentData_B NextData{get;}
         GameObject gameObject { get; }
         Transform transform { get; }
     }

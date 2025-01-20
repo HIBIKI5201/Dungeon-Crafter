@@ -53,8 +53,9 @@ namespace DCFrameWork.UI
         void EquipmentSettingUIUpdate(ITurret turret, bool turretbool)
         {
             Debug.Log("タレットをクリックしました");
+            Debug.Log(turret.CurrentData.name);
             _equipmentSettingUI.EquipmentSettingWindowVisible = false;
-            _equipmentSettingUI.name = turret.CurrentData.name;
+            _equipmentSettingUI.EquipmentName = turret.CurrentData.name;
             _equipmentSettingUI.LevelText = "Lv " + turret.Level.ToString() + " -> " + (turret.Level + 1).ToString();
             _equipmentSettingUI.PowerText = "力 " + turret.CurrentData.Attack.ToString() + " -> " + turret.NextData.Attack.ToString();
             _equipmentSettingUI.FastText = "速さ" + turret.CurrentData.Rate.ToString() + " -> " + turret.NextData.Rate.ToString();

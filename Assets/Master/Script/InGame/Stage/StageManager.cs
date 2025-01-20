@@ -347,6 +347,11 @@ public class StageManager : MonoBehaviour
     /// <param name="turret"></param>
     public void SetTurret(GameObject turret)
     {
+        if (_setPrefab != null)
+        {
+            _setPrefab.TryGetComponent<ITurret>(out ITurret t);
+            _playerManager.SetDefenseObject(t.Data.Kind);
+        }
         _setPrefab = turret;
     }
     /// <summary>

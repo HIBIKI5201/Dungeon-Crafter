@@ -320,6 +320,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7832112842789162358, guid: 0df4d64677fe9b44facaa32a2feee710,
         type: 3}
+      propertyPath: _card
+      value: 
+      objectReference: {fileID: 9197481963319205126, guid: fae9f9d848fda2845a81e9e4f13d071a,
+        type: 3}
+    - target: {fileID: 7832112842789162358, guid: 0df4d64677fe9b44facaa32a2feee710,
+        type: 3}
       propertyPath: _levelManager
       value: 
       objectReference: {fileID: 1047674329}

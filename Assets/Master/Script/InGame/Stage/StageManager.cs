@@ -77,8 +77,6 @@ public class StageManager : MonoBehaviour
         _map = new int[_sizeX, _sizeZ];
         _startX = (int)((_targetPos.x - _floorCenter.x + _floorPrefab.transform.localScale.x * _gridSize / 2 - _gridSize / 2) / _gridSize);
         _startZ = (int)((_targetPos.z - _floorCenter.z + _floorPrefab.transform.localScale.z * _gridSize / 2 - _gridSize / 2) / _gridSize);
-        //デフォルトで配置するオブジェクトをセットしてる。後から消すかも？
-        _setPrefab = _obstaclePrefabList[0].PutObstaclePrefab;
         if (_obstaclePrefabList[0].VisualGuide == null)
         {
             _tentativePrefab = _defaultVisualGuide;
@@ -148,7 +146,7 @@ public class StageManager : MonoBehaviour
             //Debug.Log(_currentPosition);
             //Debug.DrawRay(_currentPosition, Vector3.down, Color.green, 1f);
             //ステージの範囲外に出てたら見えなくする
-            if (_tentativePrefab.transform.position.y > 8f || !Physics.Raycast(_currentPosition, Vector3.down, 5f))
+            if (_setPrefab == null || _tentativePrefab.transform.position.y > 8f || !Physics.Raycast(_currentPosition, Vector3.down, 5f))
             {
                 _canSet = false;
                 _tentativePrefab.SetActive(false);
@@ -312,6 +310,7 @@ public class StageManager : MonoBehaviour
         var obj = Instantiate(_setPrefab, _currentPosition, Quaternion.identity);
         obj.transform.SetParent(_wallsParent.transform);
         obj.isStatic = true;
+        _setPrefab = null;
     }
     public void RemoveObstacleObject(GameObject gameObject)
     {

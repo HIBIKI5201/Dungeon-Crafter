@@ -42,6 +42,7 @@ namespace DCFrameWork.UI
             //マウスカーソルがUIの上に乗ったときのイベントの登録
             _equipmentList.OnMouseCursor += x => OnMouseOnUI?.Invoke(x);
             _basicInformation.OnMouseCursor += x => OnMouseOnUI?.Invoke(x);
+            _equipmentSettingUI.OnMouseEvent += x => OnMouseOnUI?.Invoke(x);
             //インベントリが選択された時のイベント
             _equipmentList.OnInventory += () => _equipmentList.Inventoryset = _playerManager.TurretInventory;
             //カードが押された時のイベント

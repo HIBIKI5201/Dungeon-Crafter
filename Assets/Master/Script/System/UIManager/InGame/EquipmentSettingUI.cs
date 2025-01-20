@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -47,6 +48,8 @@ namespace DCFrameWork
         public string RangeText { set => _rangeText.text = value; }
         public string PowerUpButtonText{set => _powerUpButton.text = value;}
         public string RemovalButtonName{ set => _removalButton.text = value;}
+        //マウスがUiの上の乗った時に発火するイベント
+        public event Action<bool> OnMouseEvent;
         //  コンストラクタ
         public EquipmentSettingUI() => InitializeTask = Initialize();
         //初期化
@@ -78,6 +81,9 @@ namespace DCFrameWork
                 _fastText = container.Q<Label>("FastText");
                 _rangeText = container.Q<Label>("RangeText");
                 _equipmentSettingWindow = container.Q<VisualElement>("EquipmentSettingWindow");
+                //UIの上にマウスが乗った時のイベント発火
+                _equipmentSettingWindow.RegisterCallback<MouseEnterEvent>(x => OnMouseEvent?.Invoke(true));
+                _equipmentSettingWindow.RegisterCallback<MouseLeaveEvent>(x => OnMouseEvent?.Invoke(false));
                 _equipmentSettingWindow.AddToClassList("equipment-setting-window-close");
             }
             else

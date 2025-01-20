@@ -45,6 +45,7 @@ namespace DCFrameWork
         public string PowerText { set => _powerText.text = value; }
         public string FastText { set => _fastText.text = value; }
         public string RangeText { set => _rangeText.text = value; }
+        public string PowerUpButtonText{set => _powerUpButton.text = value;}
         public string RemovalButtonName{ set => _removalButton.text = value;}
         //  コンストラクタ
         public EquipmentSettingUI() => InitializeTask = Initialize();
@@ -72,7 +73,7 @@ namespace DCFrameWork
                 _powerUpButton = container.Q<Button>("PowerUpButton");
                 _removalButton = container.Q<Button>("RemovalButton");
                 _equipmentName = container.Q<Label>("EquipmentName");
-                _levelText = container.Q<Label>("LavelText");
+                _levelText = container.Q<Label>("LevelText");
                 _powerText = container.Q<Label>("PowerText");
                 _fastText = container.Q<Label>("FastText");
                 _rangeText = container.Q<Label>("RangeText");

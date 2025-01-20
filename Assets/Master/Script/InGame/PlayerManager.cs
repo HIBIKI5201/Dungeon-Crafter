@@ -73,13 +73,13 @@ namespace DCFrameWork
         public void AddEXP(float exp) => _levelManager.AddExperiancePoint(exp);
         public void SetDefenseObject(DefenseObjectsKind kind, int level = 1)
         {
-            var inventory = new InventoryData(_defenseObjectData.FirstOrDefault(x => x.Kind == kind), level);
+            var inventory = new InventoryData(_defenseObjectData.Find(x=>x.Kind==kind), level);
             if (inventory.DefenseEquipmentData is null)
             {
                 Debug.Log("DefenseData is null");
                 return;
             }
-            TurretInventory.Add(inventory);
+            _defenseObjectsValue.Add(inventory);
             OnGetDefenseObject?.Invoke(inventory);
         }
         public void UseDefenseObject(DefenseObjectsKind kind, int level = 1)

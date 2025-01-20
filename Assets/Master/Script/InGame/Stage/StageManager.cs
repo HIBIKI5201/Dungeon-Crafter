@@ -388,6 +388,8 @@ public class StageManager : MonoBehaviour
             return;
         }
         Vector3 currentPosition = _selectedTurret.transform.position;
+        _selectedTurret.TryGetComponent<ITurret>(out ITurret t);
+        _playerManager.SetDefenseObject(t.Data.Kind);
         int currentX;
         int currentZ;
         //オブジェクトを消そうとしている座標がグリッド座標のどこかを調べる
@@ -407,5 +409,6 @@ public class StageManager : MonoBehaviour
         //ステージ情報の更新
         _map[currentX, currentZ] = 0;
         _noWall++;
+        _selectedTurret = null;
     }
 }

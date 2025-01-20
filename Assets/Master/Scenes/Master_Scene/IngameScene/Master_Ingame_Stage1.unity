@@ -343,6 +343,70 @@ PrefabInstance:
       propertyPath: _startGold
       value: 5000
       objectReference: {fileID: 0}
+    - target: {fileID: 8315951428447432683, guid: 0df4d64677fe9b44facaa32a2feee710,
+        type: 3}
+      propertyPath: _startTurretCount
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8315951428447432683, guid: 0df4d64677fe9b44facaa32a2feee710,
+        type: 3}
+      propertyPath: _defenseObjectData.Array.size
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8315951428447432683, guid: 0df4d64677fe9b44facaa32a2feee710,
+        type: 3}
+      propertyPath: '_defenseObjectData.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 96fa811861fecd648b5c8c5ca03514e1,
+        type: 2}
+    - target: {fileID: 8315951428447432683, guid: 0df4d64677fe9b44facaa32a2feee710,
+        type: 3}
+      propertyPath: '_defenseObjectData.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: d20b5e1ca5d98b448bde8bece22c6a2f,
+        type: 2}
+    - target: {fileID: 8315951428447432683, guid: 0df4d64677fe9b44facaa32a2feee710,
+        type: 3}
+      propertyPath: '_defenseObjectData.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 99ac42ede775dad45a64ac54422787cc,
+        type: 2}
+    - target: {fileID: 8315951428447432683, guid: 0df4d64677fe9b44facaa32a2feee710,
+        type: 3}
+      propertyPath: '_defenseObjectData.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 26dec7d8e4afb1e459187cd7039206ad,
+        type: 2}
+    - target: {fileID: 8315951428447432683, guid: 0df4d64677fe9b44facaa32a2feee710,
+        type: 3}
+      propertyPath: '_defenseObjectData.Array.data[4]'
+      value: 
+      objectReference: {fileID: 11400000, guid: c274824e63b70424d9afd001f6f40105,
+        type: 2}
+    - target: {fileID: 8315951428447432683, guid: 0df4d64677fe9b44facaa32a2feee710,
+        type: 3}
+      propertyPath: '_defenseObjectData.Array.data[5]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 269d3220043e6f64886ccf6bfe27e086,
+        type: 2}
+    - target: {fileID: 8315951428447432683, guid: 0df4d64677fe9b44facaa32a2feee710,
+        type: 3}
+      propertyPath: '_defenseObjectData.Array.data[6]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 700b99a83f0bf9a42b7483e281d90ff8,
+        type: 2}
+    - target: {fileID: 8315951428447432683, guid: 0df4d64677fe9b44facaa32a2feee710,
+        type: 3}
+      propertyPath: '_defenseObjectData.Array.data[7]'
+      value: 
+      objectReference: {fileID: 11400000, guid: eaee213ac5174054a9750404ad6f4ecd,
+        type: 2}
+    - target: {fileID: 8315951428447432683, guid: 0df4d64677fe9b44facaa32a2feee710,
+        type: 3}
+      propertyPath: '_defenseObjectData.Array.data[8]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 9c3b9aef06829894cabb20360803b668,
+        type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

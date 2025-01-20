@@ -1,9 +1,5 @@
 using DCFrameWork.UI;
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using UnityEditor.ShaderGraph;
-using UnityEngine;
 using UnityEngine.UIElements;
 
 public class MainUIManager : UIManager_B

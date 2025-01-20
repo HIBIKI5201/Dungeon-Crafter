@@ -1,6 +1,5 @@
 using System;
 using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -38,6 +37,7 @@ namespace DCFrameWork
                 _equipmentSettingWindow.AddToClassList("equipment-setting-window-open");
             } 
         }
+        //プロパティ
         public Action PowerUpButton{ set => _powerUpButton.clicked += value; }
         public Action RemovalButton { set => _removalButton.clicked += value; }
         public string EquipmentName { set => _equipmentName.text = value; }
@@ -45,6 +45,7 @@ namespace DCFrameWork
         public string PowerText { set => _powerText.text = value; }
         public string FastText { set => _fastText.text = value; }
         public string RangeText { set => _rangeText.text = value; }
+        public string RemovalButtonName{ set => _removalButton.text = value;}
         //  コンストラクタ
         public EquipmentSettingUI() => InitializeTask = Initialize();
         //初期化

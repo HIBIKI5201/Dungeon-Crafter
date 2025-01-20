@@ -1,5 +1,0 @@
-
-        //----------------------------------------------------------------------------------------------------------------------
-        // Custom Properties
-        //_CustomVariable ("Custom Variable", Float) = 0
-        _TileSize("Tile Size", Float) = 0

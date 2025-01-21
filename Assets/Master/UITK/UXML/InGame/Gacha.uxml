@@ -1,3 +1,7 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <engine:VisualElement style="align-self: center; justify-content: center; height: 75%; width: 76%; top: 13%; background-image: url(&quot;project://database/Assets/Master/UITK/Picture/UI_text_panel.psd?fileID=4877682425177123770&amp;guid=015c2c709a7d2f54c87a97edb8001d21&amp;type=3#テキスト背景&quot;); -unity-background-scale-mode: stretch-to-fill;" />
+    <Style src="project://database/Assets/Master/UITK/USS/InGame/Gacha.uss?fileID=7433441132597879392&amp;guid=78450a8b06ad84741add0b4e33c777dc&amp;type=3#Gacha" />
+    <Style src="project://database/Assets/Master/UITK/USS/Master/Font.uss?fileID=7433441132597879392&amp;guid=8c8dbfa7dccd14b4ebdfec63316899cc&amp;type=3#Font" />
+    <engine:VisualElement name="Gacha" class="font-style" style="background-image: url(&quot;project://database/Assets/Master/UITK/Picture/UI_up_grade%20(1).psd?fileID=2800000&amp;guid=b54e74f3478bc5248a87ff1a90398f51&amp;type=3#UI_up_grade (1)&quot;); -unity-background-scale-mode: stretch-to-fill; width: 58%; height: 100%; align-self: center; flex-direction: row; align-items: center; justify-content: space-around;">
+        <engine:Label text="ガチャ" name="Label" style="position: absolute; -unity-font-style: bold; font-size: 43px; color: rgb(255, 255, 255); -unity-text-align: middle-center; -unity-text-outline-color: rgb(0, 0, 0); -unity-text-outline-width: 2px; left: 16.5%; top: 14%;" />
+    </engine:VisualElement>
 </engine:UXML>

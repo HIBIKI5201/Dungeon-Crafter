@@ -17,6 +17,7 @@ namespace DCFrameWork.UI
         EquipmentCardInventory _equipmentList;
         BasicInformation _basicInformation;
         EquipmentSettingUI _equipmentSettingUI;
+        Gacha _gacha;
         //マウスが上にのっているかのブールを返すEvent
         public event Action<bool> OnMouseOnUI;
         //カードリストから削除するためのイベント
@@ -28,6 +29,7 @@ namespace DCFrameWork.UI
             _equipmentList = root.Q<EquipmentCardInventory>("EquipmentCardInventory");
             _basicInformation = root.Q<BasicInformation>("BasicInformation");
             _equipmentSettingUI = root.Q<EquipmentSettingUI>("EquipmentSettingUI");
+            _gacha = root.Q<Gacha>("Gacha");
             await _equipmentList.InitializeTask;
             await _basicInformation.InitializeTask;
             await _equipmentSettingUI.InitializeTask;
@@ -43,12 +45,17 @@ namespace DCFrameWork.UI
             _equipmentList.OnMouseCursor += x => OnMouseOnUI?.Invoke(x);
             _basicInformation.OnMouseCursor += x => OnMouseOnUI?.Invoke(x);
             _equipmentSettingUI.OnMouseEvent += x => OnMouseOnUI?.Invoke(x);
+            _gacha.OnMouseCursor += x => OnMouseOnUI?.Invoke(x);
             //インベントリが選択された時のイベント
             _equipmentList.OnInventory += () => _equipmentList.Inventoryset = _playerManager.TurretInventory;
             //カードが押された時のイベント
             _equipmentList.OnCardClick += x => _stageManager.SetTurret(x);
             _equipmentList.OnCardDest += x => _playerManager.UseDefenseObject(x);
             OnMouseOnUI += x => Debug.Log("変更" + x);
+            //ガチャのイベント
+            _gacha.Card = _card;
+            _playerManager.OnGachaRandomObjects += x => _gacha.GachaBake(x);
+            _gacha.OnGachaClose += (x, y) => _playerManager.SetDefenseObject(x, y);
         }
         void EquipmentSettingUIUpdate(ITurret turret, bool turretbool)
         {

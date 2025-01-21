@@ -2,4 +2,5 @@
     <DCFrameWork.EquipmentCardInventory name="EquipmentCardInventory" style="position: absolute; width: 100%; height: 100%; cursor: initial;" />
     <BasicInformation name="BasicInformation" enabled="true" style="position: absolute; width: 100%; height: 100%; overflow: visible; display: flex; visibility: visible;" />
     <DCFrameWork.EquipmentSettingUI name="EquipmentSettingUI" enabled="true" style="position: absolute; width: 100%; height: 100%; visibility: visible; display: flex; opacity: 1;" />
+    <DCFrameWork.Gacha name="Gacha" style="width: 100%; height: 100%;" />
 </engine:UXML>

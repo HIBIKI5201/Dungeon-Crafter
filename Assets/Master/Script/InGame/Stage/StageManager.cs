@@ -12,7 +12,7 @@ using UnityEngine;
 
 public class StageManager : MonoBehaviour
 {
-    [SerializeField] GameObject _floorPrefab;
+    [SerializeField] Vector2 _mapSize = new Vector2(10, 10);
     [SerializeField] float _gridSize = 5f;
     [SerializeField] List<ObstaclePrefabs> _obstaclePrefabList;
     [SerializeField] GameObject _defaultVisualGuide;
@@ -36,7 +36,6 @@ public class StageManager : MonoBehaviour
     GameObject _wallsParent;
     private Camera _mainCamera;
     private Vector3 _currentPosition = Vector3.zero;
-    Vector3 _floorCenter;
     private GameObject _selectedTurret;
     //private float _prefabHeight;
     bool _canSet = false;
@@ -68,15 +67,14 @@ public class StageManager : MonoBehaviour
         _wallsParent.name = "Obstacle Parent";
         _mainCamera = Camera.main;
         //_floorCenter = new Vector3(_floorPrefab.transform.position.x + _floorPrefab.transform.localScale.x / 2, _floorPrefab.transform.position.y, _floorPrefab.transform.position.z - _floorPrefab.transform.localScale.z / 2);
-        _floorCenter = _floorPrefab.transform.position;
         //何マスx何マスかを調べる
         //_sizeX = (int)(_floorPrefab.transform.localScale.x / _gridSize);
         //_sizeZ = (int)(_floorPrefab.transform.localScale.z / _gridSize);
-        _sizeX = (int)(_floorPrefab.transform.localScale.x);
-        _sizeZ = (int)(_floorPrefab.transform.localScale.z);
+        _sizeX = (int)(_mapSize.x);
+        _sizeZ = (int)(_mapSize.y);
         _map = new int[_sizeX, _sizeZ];
-        _startX = (int)((_targetPos.x - _floorCenter.x + _floorPrefab.transform.localScale.x * _gridSize / 2 - _gridSize / 2) / _gridSize);
-        _startZ = (int)((_targetPos.z - _floorCenter.z + _floorPrefab.transform.localScale.z * _gridSize / 2 - _gridSize / 2) / _gridSize);
+        _startX = (int)((_targetPos.x + _mapSize.x * _gridSize / 2 - _gridSize / 2) / _gridSize);
+        _startZ = (int)((_targetPos.z + _mapSize.y * _gridSize / 2 - _gridSize / 2) / _gridSize);
         if (_obstaclePrefabList[0].VisualGuide == null)
         {
             _tentativePrefab = _defaultVisualGuide;
@@ -96,9 +94,9 @@ public class StageManager : MonoBehaviour
                 //s += "/";
                 for (int j = 0; j < _sizeX; j++)
                 {
-                    Vector3 vector3 = new Vector3((_floorCenter.x - _floorPrefab.transform.localScale.x * _gridSize / 2 + _gridSize / 2) + _gridSize * j,
+                    Vector3 vector3 = new Vector3((_mapSize.x * _gridSize / 2 + _gridSize / 2) + _gridSize * j,
                                                   17.5f,
-                                                 (_floorCenter.z - _floorPrefab.transform.localScale.z * _gridSize / 2 + _gridSize / 2) + _gridSize * i);
+                                                 (_mapSize.y * _gridSize / 2 + _gridSize / 2) + _gridSize * i);
                     if (Physics.Raycast(vector3, Vector3.down, 20, LayerMask.GetMask("Buildings")))
                     {
                         _map[j, i] = 1;
@@ -132,11 +130,11 @@ public class StageManager : MonoBehaviour
             float halfGridSize = _gridSize / 2;
             //グリッドの計算式
             _currentPosition.y = (int)((_currentPosition.y + hit.normal.y) / _gridSize) * _gridSize + halfGridSize;
-            if (_floorPrefab.transform.localScale.x % 2 == 0)
+            if (_mapSize.x % 2 == 0)
                 _currentPosition.x = (int)(currentX / _gridSize) * _gridSize + halfGridSize * signX;
             else
                 _currentPosition.x = (int)(currentX / halfGridSize + signX) / 2 * _gridSize;
-            if (_floorPrefab.transform.localScale.z % 2 == 0)
+            if (_mapSize.y % 2 == 0)
                 _currentPosition.z = (int)(currentZ / _gridSize) * _gridSize + halfGridSize * signZ;
             else
                 _currentPosition.z = (int)(currentZ / halfGridSize + signZ) / 2 * _gridSize;
@@ -203,8 +201,8 @@ public class StageManager : MonoBehaviour
             {
                 int currentX;
                 int currentZ;
-                currentX = (int)((t.transform.position.x - _floorCenter.x + _floorPrefab.transform.localScale.x * _gridSize / 2 - _gridSize / 2) / _gridSize);
-                currentZ = (int)((t.transform.position.z - _floorCenter.z + _floorPrefab.transform.localScale.z * _gridSize / 2 - _gridSize / 2) / _gridSize);
+                currentX = (int)((t.transform.position.x + _mapSize.x * _gridSize / 2 - _gridSize / 2) / _gridSize);
+                currentZ = (int)((t.transform.position.z + _mapSize.y * _gridSize / 2 - _gridSize / 2) / _gridSize);
                 //座標に1を足したり引いたりした時に、配列の範囲外に出た時と、計算した座標がの値が1(壁がある)のときtrue
                 if ((currentX <= 0 || _map[currentX - 1, currentZ] == 1) &&
                     (currentZ <= 0 || _map[currentX, currentZ - 1] == 1) &&
@@ -225,8 +223,8 @@ public class StageManager : MonoBehaviour
         //i = (グリッドの各マスの中心座標のx,z -(_floorPrefab.transform.position.z - _floorPrefab.transform.localScale.z / 2 + _gridSize / 2))/_gridSize
         int currentX;
         int currentZ;
-        currentX = (int)((currentPosition.x - _floorCenter.x + _floorPrefab.transform.localScale.x * _gridSize / 2 - _gridSize / 2) / _gridSize);
-        currentZ = (int)((currentPosition.z - _floorCenter.z + _floorPrefab.transform.localScale.z * _gridSize / 2 - _gridSize / 2) / _gridSize);
+        currentX = (int)((currentPosition.x + _mapSize.x * _gridSize / 2 - _gridSize / 2) / _gridSize);
+        currentZ = (int)((currentPosition.z + _mapSize.y * _gridSize / 2 - _gridSize / 2) / _gridSize);
         //Debug.Log($"{currentX},{currentZ}");
         if (currentX < 0 || currentZ < 0 || currentX >= _sizeX || currentZ >= _sizeZ) { return false; }
         int[,] subMap = new int[_sizeX, _sizeZ];
@@ -291,8 +289,8 @@ public class StageManager : MonoBehaviour
         int currentZ;
         //(-42.5-2.5 + 47.5 - 2.5)/5
         //オブジェクトを置こうとしている座標がグリッド座標のどこかを調べる
-        currentX = (int)((currentPosition.x - _floorCenter.x + _floorPrefab.transform.localScale.x * _gridSize / 2 - _gridSize / 2) / _gridSize);
-        currentZ = (int)((currentPosition.z - _floorCenter.z + _floorPrefab.transform.localScale.z * _gridSize / 2 - _gridSize / 2) / _gridSize);
+        currentX = (int)((currentPosition.x + _mapSize.x * _gridSize / 2 - _gridSize / 2) / _gridSize);
+        currentZ = (int)((currentPosition.z + _mapSize.y * _gridSize / 2 - _gridSize / 2) / _gridSize);
         //マップ情報の更新
         if (_map[currentX, currentZ] == 0)
         {
@@ -318,8 +316,8 @@ public class StageManager : MonoBehaviour
         int currentX;
         int currentZ;
         //消そうとしているオブジェクトの座標がグリッド座標のどこかを調べて範囲外か何もないなら処理を終了
-        currentX = (int)((gameObject.transform.position.x - _floorCenter.x + _floorPrefab.transform.localScale.x * _gridSize / 2 - _gridSize / 2) / _gridSize);
-        currentZ = (int)((gameObject.transform.position.z - _floorCenter.z + _floorPrefab.transform.localScale.z * _gridSize / 2 - _gridSize / 2) / _gridSize);
+        currentX = (int)((gameObject.transform.position.x + _mapSize.x * _gridSize / 2 - _gridSize / 2) / _gridSize);
+        currentZ = (int)((gameObject.transform.position.z + _mapSize.y * _gridSize / 2 - _gridSize / 2) / _gridSize);
         if (currentX < 0 || currentZ < 0 || currentX >= _sizeX || currentZ >= _sizeZ || _map[currentX, currentZ] == 0) { return; }
         //障害物を置けない高さから消すオブジェクトを全取得
         foreach (var obj in Physics.RaycastAll(gameObject.transform.position + Vector3.up * 8, Vector3.down, 20, LayerMask.GetMask("Buildings")).Where(hit => !hit.collider.isTrigger))
@@ -365,8 +363,8 @@ public class StageManager : MonoBehaviour
     {
         int currentX;
         int currentZ;
-        currentX = (int)((currentPosition.x - _floorCenter.x + _floorPrefab.transform.localScale.x * _gridSize / 2 - _gridSize / 2) / _gridSize);
-        currentZ = (int)((currentPosition.z - _floorCenter.z + _floorPrefab.transform.localScale.z * _gridSize / 2 - _gridSize / 2) / _gridSize);
+        currentX = (int)((currentPosition.x + _mapSize.x * _gridSize / 2 - _gridSize / 2) / _gridSize);
+        currentZ = (int)((currentPosition.z + _mapSize.y * _gridSize / 2 - _gridSize / 2) / _gridSize);
         if (currentX < 0 || currentZ < 0 || currentX >= _sizeX || currentZ >= _sizeZ)
         {
             return false;
@@ -378,7 +376,7 @@ public class StageManager : MonoBehaviour
     }
     public Vector3 GetGroundScale()
     {
-        return _floorPrefab.transform.localScale * _gridSize / 2;
+        return new Vector3(_mapSize.x, 0, _mapSize.y) * _gridSize / 2;
     }
     /// <summary>
     /// 指定座標のオブジェクト全部消す
@@ -398,8 +396,8 @@ public class StageManager : MonoBehaviour
         int currentX;
         int currentZ;
         //オブジェクトを消そうとしている座標がグリッド座標のどこかを調べる
-        currentX = (int)((currentPosition.x - _floorCenter.x + _floorPrefab.transform.localScale.x * _gridSize / 2 - _gridSize / 2) / _gridSize);
-        currentZ = (int)((currentPosition.z - _floorCenter.z + _floorPrefab.transform.localScale.z * _gridSize / 2 - _gridSize / 2) / _gridSize);
+        currentX = (int)((currentPosition.x + _mapSize.x * _gridSize / 2 - _gridSize / 2) / _gridSize);
+        currentZ = (int)((currentPosition.z + _mapSize.y * _gridSize / 2 - _gridSize / 2) / _gridSize);
 
         //オブジェクト消す処理どうする？(一旦指定座標のオブジェクト全部消す方針)
         currentPosition.y = 20;

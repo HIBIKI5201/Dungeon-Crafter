@@ -113,6 +113,10 @@ public class StageManager : MonoBehaviour
     }
     void Update()
     {
+        if(Input.GetMouseButtonDown(1))
+        {
+            SetTurretCancel();
+        }
         var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit = new();
         var raycastHitList = Physics.RaycastAll(ray, float.PositiveInfinity).Where(x => !x.collider.isTrigger).ToList();
@@ -345,12 +349,17 @@ public class StageManager : MonoBehaviour
     /// <param name="turret"></param>
     public void SetTurret(GameObject turret)
     {
+        SetTurretCancel();
+        _setPrefab = turret;
+    }
+    void SetTurretCancel()
+    {
         if (_setPrefab != null)
         {
             _setPrefab.TryGetComponent<ITurret>(out ITurret t);
             _playerManager.SetDefenseObject(t.Data.Kind);
+            _setPrefab = null;
         }
-        _setPrefab = turret;
     }
     /// <summary>
     /// 引数にワールド座標を入れると、

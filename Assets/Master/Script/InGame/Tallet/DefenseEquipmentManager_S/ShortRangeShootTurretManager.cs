@@ -41,7 +41,7 @@ namespace DCFrameWork.DefenseEquipment
             }
             var targetSelect = TargetSelect();
             _enemyPos = targetSelect.Obj.transform.position;
-            TurretRotate(targetSelect.Obj.transform);
+            TurretRotate();
 
             var hits = Physics.OverlapSphere(_enemyPos, DefenseEquipmentData.ExplosionRadius * 5);
 

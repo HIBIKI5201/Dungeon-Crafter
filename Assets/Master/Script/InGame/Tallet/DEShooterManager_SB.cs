@@ -45,15 +45,15 @@ namespace DCFrameWork.DefenseEquipment
             var targetSelect = TargetSelect();
             _enemyPos = targetSelect.Obj.transform.position;
             TargetsAddDamage(targetSelect.Interface, criticalPoint <= Critical ? Attack * 3 : Attack);
-            TurretRotate(targetSelect.Obj.transform);
+            TurretRotate();
             _anim.SetTrigger("Attack");
 
             return true;
         }
 
-        protected virtual void TurretRotate(Transform enemy)
+        protected virtual void TurretRotate()
         {
-            var dir = -enemy.transform.position - _turretModel.transform.position;
+            var dir = _turretModel.transform.position - _enemyPos;
             dir.y = 0;
             dir.Normalize();
 

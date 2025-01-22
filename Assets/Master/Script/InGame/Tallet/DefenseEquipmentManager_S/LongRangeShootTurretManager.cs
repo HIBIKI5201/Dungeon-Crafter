@@ -67,7 +67,7 @@ namespace DCFrameWork.DefenseEquipment
                 TargetsAddDamage(enemy, criticalPoint <= Critical ? Attack * 3 : Attack);
             }
 
-            TurretRotate(targetSelect.Obj.transform);
+            TurretRotate();
             _anim.SetTrigger("Attack");
 
             return true;

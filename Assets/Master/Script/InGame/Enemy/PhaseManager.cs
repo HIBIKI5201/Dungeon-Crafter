@@ -49,7 +49,7 @@ namespace DCFrameWork.Enemy
             _phaseStartAction += () => GameBaseSystem.mainSystem.PlayBGM(_battleBGMID, BGMMode.CrossFade);
             _phaseEndAction += () => GameBaseSystem.mainSystem.PlayBGM(_breakBGMID, BGMMode.CrossFade);
 
-            await FrameWork.PausableWaitForSecondAsync(_startWaitingTimer);
+            await FrameWork.PausableWaitForSecondAsync(_startWaitingTimer, destroyCancellationToken);
             NextPhase();
             _phaseStartAction?.Invoke();
             PhaseEndCheck();
@@ -65,7 +65,7 @@ namespace DCFrameWork.Enemy
                     _loopCount++;
                 }
                 _phaseEndAction?.Invoke();
-                await FrameWork.PausableWaitForSecondAsync(_phaseWaitingTime);
+                await FrameWork.PausableWaitForSecondAsync(_phaseWaitingTime, destroyCancellationToken);
                 NextPhase();
                 _phaseStartAction?.Invoke();
             }

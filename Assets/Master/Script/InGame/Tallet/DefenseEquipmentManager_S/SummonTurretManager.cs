@@ -100,23 +100,26 @@ namespace DCFrameWork.DefenseEquipment
 #if UNITY_EDITOR
         void OnDrawGizmos()
         {
-            Gizmos.color = Check(_position) ? Color.red : Color.green;
+            if (Application.isPlaying)
+            {
+                Gizmos.color = Check(_position) ? Color.red : Color.green;
 
-            Vector3 boxCastOrigin = _position + new Vector3(0, 8, 0);
-            Vector3 boxCastDirection = Vector3.down;
-            float boxCastDistance = 18f;
-            Quaternion boxCastRotation = Quaternion.identity;
+                Vector3 boxCastOrigin = _position + new Vector3(0, 8, 0);
+                Vector3 boxCastDirection = Vector3.down;
+                float boxCastDistance = 18f;
+                Quaternion boxCastRotation = Quaternion.identity;
 
-            Gizmos.matrix = Matrix4x4.TRS(boxCastOrigin, boxCastRotation, _boxCastSize * 2);
-            Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
+                Gizmos.matrix = Matrix4x4.TRS(boxCastOrigin, boxCastRotation, _boxCastSize * 2);
+                Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
 
-            Vector3 boxCastEnd = boxCastOrigin + boxCastDirection.normalized * boxCastDistance;
+                Vector3 boxCastEnd = boxCastOrigin + boxCastDirection.normalized * boxCastDistance;
 
-            Gizmos.matrix = Matrix4x4.identity;
-            Gizmos.DrawLine(boxCastOrigin, boxCastEnd);
+                Gizmos.matrix = Matrix4x4.identity;
+                Gizmos.DrawLine(boxCastOrigin, boxCastEnd);
 
-            Gizmos.matrix = Matrix4x4.TRS(boxCastEnd, boxCastRotation, _boxCastSize * 2);
-            Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
+                Gizmos.matrix = Matrix4x4.TRS(boxCastEnd, boxCastRotation, _boxCastSize * 2);
+                Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
+            }
         }
 #endif
     }

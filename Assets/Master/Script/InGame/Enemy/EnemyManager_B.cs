@@ -223,6 +223,23 @@ namespace DCFrameWork.Enemy
             _agent.speed = speed;
         }
 
+        private void OnDrawGizmos()
+        {
+            if (_agent is null)
+                return;
+
+            Gizmos.color = Color.red;
+
+            NavMeshPath path = _agent.path;
+
+            if (path.corners.Length < 2)
+                return;
+
+            for (int i = 0; i < path.corners.Length - 1; i++)
+            {
+                Gizmos.DrawLine(path.corners[i], path.corners[i + 1]);
+            }
+        }
 
         #region ƒ|[ƒYˆ—
         void IPausable.Pause() => Pause();

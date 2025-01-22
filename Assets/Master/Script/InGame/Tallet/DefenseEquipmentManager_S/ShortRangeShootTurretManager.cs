@@ -7,6 +7,7 @@ namespace DCFrameWork.DefenseEquipment
     {
         float _timer = 0;
         bool _isPaused = false;
+        [SerializeField] Transform _muzzlePos;
 
         protected override void Start_S()
         {
@@ -35,7 +36,7 @@ namespace DCFrameWork.DefenseEquipment
             var targetSelect = TargetSelect();
             _enemyPos = targetSelect.Obj.transform.position;
             TurretRotate(targetSelect.Obj.transform);
-            var originPos = new Vector3(transform.position.x, targetSelect.Obj.transform.position.y, transform.position.z);
+            var originPos = new Vector3(_muzzlePos.position.x, targetSelect.Obj.transform.position.y, _muzzlePos.position.z);
             var direction = targetSelect.Obj.transform.position - originPos;
 
             var hits = Physics.SphereCastAll(originPos, Range, direction, Range * 5);

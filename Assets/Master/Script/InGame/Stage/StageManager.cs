@@ -113,7 +113,7 @@ public class StageManager : MonoBehaviour
     }
     void Update()
     {
-        if(Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1))
         {
             SetTurretCancel();
         }
@@ -157,7 +157,7 @@ public class StageManager : MonoBehaviour
             {
                 _tentativePrefab.SetActive(true);
                 //置けるかどうかの判定
-                if (CheckConnected(_currentPosition) && !_spawnPos.Contains(_currentPosition) && _currentPosition != _targetPos)
+                if (CheckConnected(_currentPosition) && !_spawnPos.Contains(_currentPosition) && _currentPosition != _targetPos && _currentPosition != _targetPos + new Vector3(0, _gridSize, 0))
                 {
                     _tentativePrefab.GetComponent<MeshRenderer>().material.color = Color.white;
                     _canSet = true;

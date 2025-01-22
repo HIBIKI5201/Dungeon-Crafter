@@ -1,11 +1,4 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <engine:Template name="Home" src="project://database/Assets/Master/UITK/UXML/Home/Menu.uxml?fileID=9197481963319205126&amp;guid=f1c7ac8df5d9d1e4692af5975034ee18&amp;type=3#Menu" />
-    <engine:Template name="StageSelect" src="project://database/Assets/Master/UITK/UXML/Home/StageSelect.uxml?fileID=9197481963319205126&amp;guid=6cc24a0d5985e3b48860f7d915cfdce6&amp;type=3#StageSelect" />
-    <engine:Template name="DefenceEquipment" src="project://database/Assets/Master/UITK/UXML/Home/DefenceEquipment.uxml?fileID=9197481963319205126&amp;guid=5a75963e3c36f6345917d3ccb2efd17d&amp;type=3#DefenceEquipment" />
     <engine:Template name="TitleWindow" src="project://database/Assets/Master/UITK/UXML/Home/TitleWindow.uxml?fileID=9197481963319205126&amp;guid=90db83c2fb9a45f4ebf1cae127fafa00&amp;type=3#TitleWindow" />
-    <engine:Instance template="Home" name="menu-window" style="position: absolute; width: 100%; height: 100%;" />
-    <engine:Instance template="StageSelect" name="stage-select" style="position: absolute; width: 100%; height: 100%;" />
-    <engine:Instance template="DefenceEquipment" name="defence-equipment" style="position: absolute; width: 100%; height: 100%;" />
-    <engine:Instance template="TitleWindow" name="title-window" style="position: absolute; width: 100%; height: 100%;" />
-    <BlackOut name="BlackOut" style="width: 100%; height: 100%;" />
+    <engine:Instance template="TitleWindow" name="TitleWindow" style="position: absolute; width: 100%; height: 100%;" />
 </engine:UXML>

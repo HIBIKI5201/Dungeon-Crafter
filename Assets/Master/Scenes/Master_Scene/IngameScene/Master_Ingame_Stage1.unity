@@ -499,7 +499,7 @@ PrefabInstance:
     - target: {fileID: 8315951428447432683, guid: 0df4d64677fe9b44facaa32a2feee710,
         type: 3}
       propertyPath: _startDefenseObjectsKind
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8315951428447432683, guid: 0df4d64677fe9b44facaa32a2feee710,
         type: 3}

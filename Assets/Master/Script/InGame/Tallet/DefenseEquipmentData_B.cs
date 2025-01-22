@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 namespace DCFrameWork.DefenseEquipment
 {
@@ -24,5 +24,19 @@ namespace DCFrameWork.DefenseEquipment
         public float LevelRequirePoint { get => _levelRequirePoint; }
         [SerializeField]
         private float _levelRequirePoint = 100;
+        /// <summary>
+        /// タレットの名前
+        /// </summary>
+        public string Name { get => _data.Name; }
+        /// <summary>
+        /// タレットの説明文
+        /// </summary>
+        public string Explanation { get => _data.Explanation; }
+        /// <summary>
+        /// ガチャの出現確率
+        /// </summary>
+        public int DropChance { get => _data.DropChance; }
+        [SerializeField]
+        private DefenseEquipmentDataBase _data;
     }
 }

@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a163b46be696d0e4d947735ce8d4f6b9, type: 3}
-  m_Name: TrapDataLevel2
+  m_Name: TrapDataLevel4
   m_EditorClassIdentifier: 
   _attack: 10
   _rate: 1
   _critical: 5
   _range: 3
   _levelRequirePoint: 1
+  _data: {fileID: 11400000, guid: eaee213ac5174054a9750404ad6f4ecd, type: 2}
   _maxCount: 744
   _bombRng: 1

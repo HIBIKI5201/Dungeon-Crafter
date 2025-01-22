@@ -17,3 +17,4 @@ MonoBehaviour:
   _critical: 1
   _range: 1
   _levelRequirePoint: 100
+  _data: {fileID: 11400000, guid: 96fa811861fecd648b5c8c5ca03514e1, type: 2}

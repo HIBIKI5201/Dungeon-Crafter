@@ -17,4 +17,5 @@ MonoBehaviour:
   _critical: 1
   _range: 4
   _levelRequirePoint: 0
+  _data: {fileID: 11400000, guid: d20b5e1ca5d98b448bde8bece22c6a2f, type: 2}
   _pierceCount: 3

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using UnityEngine;
 
 namespace DCFrameWork
@@ -8,7 +8,7 @@ namespace DCFrameWork
     public class TrapData : SummonData
     {
         public int BombRng { get => _bombRng; }
-        [SerializeField]
+        [SerializeField, Header("爆弾の大きさ")]
         private int _bombRng = 1;
     }
 }

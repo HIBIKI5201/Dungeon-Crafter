@@ -22,6 +22,7 @@ namespace DCFrameWork.DefenseEquipment
 
             if (Time.time > 1 / Rate + _timer && _enemyList.Count > 0)
             {
+                Debug.Log("UŒ‚’†");
                 _timer = Time.time;
                 TargetsAddDamage(_enemyList, Attack);
             }

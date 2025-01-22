@@ -6,23 +6,23 @@ namespace DCFrameWork.DefenseEquipment
     public class DefenseEquipmentData_B : ScriptableObject
     {
         public float Attack { get => _attack; }
-        [SerializeField]
+        [SerializeField,Header("攻撃力")]
         private float _attack = 1;
 
         public float Rate { get => _rate; }
-        [SerializeField]
+        [SerializeField, Header("攻撃のレート")]
         private float _rate = 1;
 
         public float Critical { get => _critical; }
-        [SerializeField]
+        [SerializeField, Header("クリティカルの確率％")]
         private float _critical = 1;
 
         public float Range { get => _range; }
-        [SerializeField]
+        [SerializeField, Header("射程距離")]
         private float _range = 1;
 
         public float LevelRequirePoint { get => _levelRequirePoint; }
-        [SerializeField]
+        [SerializeField, Header("レベルアップに必要なゴールド")]
         private float _levelRequirePoint = 100;
         /// <summary>
         /// タレットの名前
@@ -36,7 +36,7 @@ namespace DCFrameWork.DefenseEquipment
         /// ガチャの出現確率
         /// </summary>
         public int DropChance { get => _data.DropChance; }
-        [SerializeField]
+        [SerializeField, Header("タレットのデータベース")]
         private DefenseEquipmentDataBase _data;
     }
 }

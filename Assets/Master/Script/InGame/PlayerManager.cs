@@ -11,10 +11,11 @@ namespace DCFrameWork
     public class PlayerManager : MonoBehaviour
     {
         [SerializeField] int _levelUpGachaCount = 3;
-        [SerializeField] int _startTurretCount;
         [SerializeField] List<DefenseEquipmentDataBase> _defenseObjectData;
         [SerializeField] int _treasureHp = 10;
         [SerializeField] float _gold;
+        [SerializeField] DefenseObjectsKind _startDefenseObjectsKind;
+        [SerializeField] int _startTurretCount;
 
 
 
@@ -44,7 +45,7 @@ namespace DCFrameWork
         {
             for (int i = 0; i < _startTurretCount; i++)
             {
-                SetDefenseObject(DefenseObjectsKind.MiddleShootTurret, 1);
+                SetDefenseObject(_startDefenseObjectsKind, 1);
             }
         }
 
@@ -123,11 +124,7 @@ namespace DCFrameWork
         [ContextMenu("TestGacha")]
         public void TestRandom()
         {
-            var test = GetRandomDefenseObj();
-            foreach (var item in test)
-            {
-                Debug.Log(item.DefenseEquipmentData.name);
-            }
+            GetRandomDefenseObj();
         }
     }
     public class InventoryData

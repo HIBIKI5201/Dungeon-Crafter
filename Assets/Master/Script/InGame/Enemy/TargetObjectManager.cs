@@ -39,6 +39,10 @@ namespace DCFrameWork
         IEnumerator AttackTime(IEnemy enemy)
         {
             yield return FrameWork.PausableWaitForSecond(0.5f);
+            if(enemy == null)
+            {
+               Å@yield break;
+            }
             _playerManager.HPDown((int)enemy.Plunder);
             _healthBarManager.BarFillUpdate(_playerManager.TreasureHp / _maxValue);
             enemy.DeathAction?.Invoke();

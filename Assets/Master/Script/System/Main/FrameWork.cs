@@ -40,7 +40,14 @@ namespace DCFrameWork.MainSystem
                 {
                     timer += Time.deltaTime;
                 }
-                await Awaitable.NextFrameAsync(token);
+                try
+                {
+                    await Awaitable.NextFrameAsync(token);
+                }
+                catch (TaskCanceledException)
+                {
+                    return;
+                }
             }
         }
     }

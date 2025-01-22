@@ -27,19 +27,31 @@ MonoBehaviour:
   - _selectionPhaseData:
     - _spawnData:
       - _enemyType: 0
-        _enemyLevel: 1
+        _enemyLevel: 25
         _spawnTime: 0
         _spawnPoint: 0
       - _enemyType: 0
-        _enemyLevel: 1
+        _enemyLevel: 25
         _spawnTime: 0
         _spawnPoint: 0
     - _spawnData:
       - _enemyType: 1
-        _enemyLevel: 1
-        _spawnTime: 1
+        _enemyLevel: 25
+        _spawnTime: 5
         _spawnPoint: 0
       - _enemyType: 3
+        _enemyLevel: 1
+        _spawnTime: 4
+        _spawnPoint: 0
+      - _enemyType: 1
+        _enemyLevel: 1
+        _spawnTime: 3
+        _spawnPoint: 0
+      - _enemyType: 1
+        _enemyLevel: 1
+        _spawnTime: 2
+        _spawnPoint: 0
+      - _enemyType: 1
         _enemyLevel: 1
         _spawnTime: 1
         _spawnPoint: 0

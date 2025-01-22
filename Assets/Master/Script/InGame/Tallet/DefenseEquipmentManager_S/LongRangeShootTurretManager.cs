@@ -1,4 +1,4 @@
-using DCFrameWork.Enemy;
+ï»¿using DCFrameWork.Enemy;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,24 +18,39 @@ namespace DCFrameWork.DefenseEquipment
         {
             _timer = Time.time;
         }
-        protected override void Think() //UpDate ‚Æ“¯‹`
+        protected override void Think() //UpDate ã¨åŒç¾©
         {
             if (_isPaused)
                 _timer += Time.deltaTime;
 
-            if (Time.time > (1 / Rate) + _timer && _enemyList.Count > 0)
+            if (Time.time > (1 / Rate) + _timer)
             {
-                EnemyAttack();
-                _timer = Time.time;
+                if (EnemyAttack())
+                {
+                    _timer = Time.time;
+                }
             }
         }
+
         protected override (GameObject Obj, IFightable Interface) TargetSelect()
         {
-            return _enemyList.OrderByDescending(x => Vector3.Distance(transform.position, x.Obj.transform.position)).ToList().FirstOrDefault();
+            var pos = new Vector3(transform.position.x, 0, transform.position.z);
+            var hit = Physics.OverlapSphere(pos, Range * 5);
+            IFightable component = null;
+            var enemy = hit.OrderByDescending(x => Vector3.Distance(pos, x.gameObject.transform.position)).Where(x => x.TryGetComponent(out component)).FirstOrDefault();
+            if (enemy != null)
+            {
+                return (enemy.gameObject, component);
+            }
+            return (null, null);
         }
-        protected override void EnemyAttack()
+        protected override bool EnemyAttack()
         {
             var criticalPoint = Random.Range(0, 100);
+            if (TargetSelect() == (null, null))
+            {
+                return false;
+            }
             var targetSelect = TargetSelect();
             _enemyPos = targetSelect.Obj.transform.position;
             var originPos = new Vector3(transform.position.x, targetSelect.Obj.transform.position.y, transform.position.z);
@@ -54,6 +69,8 @@ namespace DCFrameWork.DefenseEquipment
 
             TurretRotate(targetSelect.Obj.transform);
             _anim.SetTrigger("Attack");
+
+            return true;
         }
 
         void BulletShoot()
@@ -65,7 +82,7 @@ namespace DCFrameWork.DefenseEquipment
                 _particle.Play();
             }
             else
-                Debug.Log("ƒp[ƒeƒBƒNƒ‹‚ªƒAƒTƒCƒ“‚³‚ê‚Ä‚¨‚è‚Ü‚¹‚ñ");
+                Debug.Log("ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ãŒã‚¢ã‚µã‚¤ãƒ³ã•ã‚Œã¦ãŠã‚Šã¾ã›ã‚“");
         }
         protected override void Pause()
         {

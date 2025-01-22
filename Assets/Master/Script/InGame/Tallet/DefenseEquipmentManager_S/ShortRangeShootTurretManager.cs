@@ -1,4 +1,4 @@
-using DCFrameWork.Enemy;
+ï»¿using DCFrameWork.Enemy;
 using UnityEngine;
 
 namespace DCFrameWork.DefenseEquipment
@@ -14,31 +14,36 @@ namespace DCFrameWork.DefenseEquipment
             _timer = Time.time;
             _bulletPos = _bullet.transform.position;
         }
-        protected override void Think() //UpDate ‚Æ“¯‹`
+        protected override void Think() //UpDate ã¨åŒç¾©
         {
             if (_isPaused)
                 _timer += Time.deltaTime;
 
-            if (Time.time > 1 / Rate + _timer && _enemyList.Count > 0)
+            if (Time.time > 1 / Rate + _timer)
             {
-                EnemyAttack();
-                _timer = Time.time;
-                _isShoot = true;
+                if (EnemyAttack())
+                {
+                    _timer = Time.time;
+                    _isShoot = true;
+                }
             }
             if (!_isPaused && _isShoot)
             {
                 BulletShoot();
             }
         }
-        protected override void EnemyAttack()
+        protected override bool EnemyAttack()
         {
             var criticalPoint = Random.Range(0, 100);
+            if (TargetSelect() == (null, null))
+            {
+                return false;
+            }
             var targetSelect = TargetSelect();
             _enemyPos = targetSelect.Obj.transform.position;
             TurretRotate(targetSelect.Obj.transform);
 
             var hits = Physics.OverlapSphere(_enemyPos, DefenseEquipmentData.ExplosionRadius * 5);
-
 
             foreach (var hit in hits)
             {
@@ -46,6 +51,7 @@ namespace DCFrameWork.DefenseEquipment
                     TargetsAddDamage(component, criticalPoint <= Critical ? Attack * 3 : Attack);
             }
             _anim.SetTrigger("Attack");
+            return true;
         }
 
         void BulletShoot()

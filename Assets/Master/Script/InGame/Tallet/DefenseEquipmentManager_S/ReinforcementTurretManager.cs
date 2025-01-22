@@ -1,4 +1,4 @@
-using System;
+Ôªøusing System;
 using UnityEngine;
 
 namespace DCFrameWork.DefenseEquipment
@@ -7,7 +7,7 @@ namespace DCFrameWork.DefenseEquipment
     {
         bool _isPaused = false;
         private event Action<ReinforceStatus> _reinforceEvent;
-        protected override void Think() // UpDate Ç∆ìØã`
+        protected override void Think() // UpDate „Å®ÂêåÁæ©
         {
 
         }
@@ -31,9 +31,8 @@ namespace DCFrameWork.DefenseEquipment
 
         private void OnDisable()
         {
-            _reinforceEvent.Invoke(ReinforceStatus.Default);
+            _reinforceEvent?.Invoke(ReinforceStatus.Default);
         }
-
 
         protected override void Pause()
         {

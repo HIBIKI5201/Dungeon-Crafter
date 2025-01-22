@@ -1,4 +1,4 @@
-﻿using DCFrameWork.Enemy;
+﻿
 using UnityEngine;
 
 namespace DCFrameWork.DefenseEquipment
@@ -19,11 +19,13 @@ namespace DCFrameWork.DefenseEquipment
             if (_isPaused)
                 _timer += Time.deltaTime;
 
-            if (Time.time > 1 / Rate + _timer && _enemyList.Count > 0)
+            if (Time.time > 1 / Rate + _timer)
             {
-                EnemyAttack();
-                _timer = Time.time;
-                _isShoot = true;
+                if (EnemyAttack())
+                {
+                    _timer = Time.time;
+                    _isShoot = true;
+                }
             }
             if (!_isPaused && _isShoot)
             {

@@ -13,6 +13,10 @@ namespace DCFrameWork.Enemy
         [SerializeField] float _startWaitingTimer = 10;
         [SerializeField] float _phaseWaitingTime = 5;
 
+        [Space(10)]
+        [SerializeField] int _battleBGMID = 5;
+        [SerializeField] int _breakBGMID = 6;
+
         int _phaseCount;
         int _loopCount = 1;
         int _phaseEnemySum;
@@ -40,6 +44,11 @@ namespace DCFrameWork.Enemy
                 Debug.Log("PhaseData is null");
                 return;
             }
+
+            //ƒCƒxƒ“ƒg’Ç‰Á
+            _phaseStartAction += () => GameBaseSystem.mainSystem.PlayBGM(_battleBGMID, BGMMode.CrossFade);
+            _phaseEndAction += () => GameBaseSystem.mainSystem.PlayBGM(_breakBGMID, BGMMode.CrossFade);
+
             await FrameWork.PausableWaitForSecondAsync(_startWaitingTimer);
             NextPhase();
             _phaseStartAction?.Invoke();
@@ -83,6 +92,5 @@ namespace DCFrameWork.Enemy
             PhaseEndCheck();
             PhaseProgressChanged?.Invoke(PhaseProgressNormalize);
         }
-
     }
 }

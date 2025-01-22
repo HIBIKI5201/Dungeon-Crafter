@@ -59,30 +59,56 @@ namespace DCFrameWork.UI
         }
         void EquipmentSettingUIUpdate(ITurret turret, bool turretbool)
         {
-            
-            Debug.Log("タレットをクリックしました");
-            Debug.Log(turret.CurrentData.name);
-            _equipmentSettingUI.EquipmentSettingWindowVisible = false;
-            _equipmentSettingUI.EquipmentName = turret.CurrentData.Name;
-            _equipmentSettingUI.LevelText = "Lv " + turret.Level.ToString() + " -> " + (turret.Level + 1).ToString();
-            _equipmentSettingUI.PowerText = "力 " + turret.CurrentData.Attack.ToString() + " -> " + turret.NextData.Attack.ToString();
-            _equipmentSettingUI.FastText = "速さ" + turret.CurrentData.Rate.ToString() + " -> " + turret.NextData.Rate.ToString();
-            _equipmentSettingUI.RangeText = "範囲" + turret.CurrentData.Range.ToString() + " -> " + turret.NextData.Rate.ToString();
-            _equipmentSettingUI.PowerUpButtonText = "強化" + turret.CurrentData.LevelRequirePoint;
-            _equipmentSettingUI.RemovalButtonName = turretbool ? "撤去" : "撤去できません";
-            _equipmentSettingUI.PowerUpButton = () =>
+            if (turret.Level != 4)
             {
-                turret.LevelUp();
-                _equipmentSettingUI.EquipmentSettingWindowVisible = true;
-            };
-            _equipmentSettingUI.RemovalButton = () =>
-            {
-                if (turretbool)
+                Debug.Log("タレットをクリックしました");
+                Debug.Log(turret.CurrentData.name);
+                _equipmentSettingUI.EquipmentSettingWindowVisible = false;
+                _equipmentSettingUI.EquipmentName = turret.CurrentData.Name;
+                _equipmentSettingUI.LevelText = "Lv " + turret.Level.ToString() + " -> " + (turret.Level + 1).ToString();
+                _equipmentSettingUI.PowerText = "力 " + turret.CurrentData.Attack.ToString() + " -> " + turret.NextData.Attack.ToString();
+                _equipmentSettingUI.FastText = "速さ" + turret.CurrentData.Rate.ToString() + " -> " + turret.NextData.Rate.ToString();
+                _equipmentSettingUI.RangeText = "範囲" + turret.CurrentData.Range.ToString() + " -> " + turret.NextData.Rate.ToString();
+                _equipmentSettingUI.PowerUpButtonText = "強化" + turret.CurrentData.LevelRequirePoint;
+                _equipmentSettingUI.RemovalButtonName = turretbool ? "撤去" : "撤去できません";
+                _equipmentSettingUI.PowerUpButton = () =>
                 {
-                    OnTurretDelete?.Invoke();
+                    turret.LevelUp();
                     _equipmentSettingUI.EquipmentSettingWindowVisible = true;
-                }
-            };
+                };
+                _equipmentSettingUI.RemovalButton = () =>
+                {
+                    if (turretbool)
+                    {
+                        OnTurretDelete?.Invoke();
+                        _equipmentSettingUI.EquipmentSettingWindowVisible = true;
+                    }
+                };
+            }
+            else
+            {
+                
+                _equipmentSettingUI.EquipmentSettingWindowVisible = false;
+                _equipmentSettingUI.name = turret.CurrentData.Name;
+                _equipmentSettingUI.LevelText = string.Empty;
+                _equipmentSettingUI.PowerText = string.Empty;
+                _equipmentSettingUI.FastText = string.Empty;
+                _equipmentSettingUI.RangeText = string.Empty;
+                _equipmentSettingUI.PowerUpButtonText = "強化できません";
+                _equipmentSettingUI.RemovalButtonName = turretbool ? "撤去" : "撤去できません";
+                _equipmentSettingUI.PowerUpButton = () =>
+                {
+                    _equipmentSettingUI.EquipmentSettingWindowVisible = true;
+                };
+                _equipmentSettingUI.RemovalButton = () =>
+                {
+                    if (turretbool)
+                    {
+                        OnTurretDelete?.Invoke();
+                        _equipmentSettingUI.EquipmentSettingWindowVisible = true;
+                    }
+                };
+            }
         }
         void PhaseUpdate(float parsent)
         {

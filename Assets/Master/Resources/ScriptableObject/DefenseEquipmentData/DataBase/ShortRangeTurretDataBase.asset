@@ -18,8 +18,8 @@ MonoBehaviour:
   Explanation: 
   DropChance: 1
   DataLevelList:
-  - {fileID: 11400000, guid: 7c55d7ad3f2b8cb4991eca9be16b6a4e, type: 2}
-  - {fileID: 11400000, guid: a1cf67fc4df01214da91ae739a854344, type: 2}
-  - {fileID: 11400000, guid: 8134a3394637665498e0f00d03c32d35, type: 2}
-  - {fileID: 11400000, guid: 87faba73580eaf64aad9eac36469771d, type: 2}
+  - {fileID: 11400000, guid: eda506553dc6d0840964741d533df059, type: 2}
+  - {fileID: 11400000, guid: dad12f41c0f2e9343bbdf3f096408af1, type: 2}
+  - {fileID: 11400000, guid: 91ccb47ee5d004c42bf6beccf22efc89, type: 2}
+  - {fileID: 11400000, guid: d92f29cd4d233e54cab1864a5b36526d, type: 2}
   PowerUpRequireItem: 

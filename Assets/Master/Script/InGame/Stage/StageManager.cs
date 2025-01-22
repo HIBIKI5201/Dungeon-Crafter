@@ -309,7 +309,7 @@ public class StageManager : MonoBehaviour
             wallObj.isStatic = true;
             _currentPosition.y = 7.5f;
         }
-        var obj = Instantiate(_setPrefab, _currentPosition, Quaternion.identity);
+        var obj = Instantiate(_setPrefab, _currentPosition, Quaternion.Euler(new Vector3(0,180,0)));
         obj.transform.SetParent(_wallsParent.transform);
         obj.isStatic = true;
         _setPrefab = null;

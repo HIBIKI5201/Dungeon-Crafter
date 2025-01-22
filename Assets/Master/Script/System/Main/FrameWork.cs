@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Threading;
 using System.Threading.Tasks;
@@ -40,11 +41,12 @@ namespace DCFrameWork.MainSystem
                 {
                     timer += Time.deltaTime;
                 }
+                //正常なエラーのためトライキャッチ
                 try
                 {
                     await Awaitable.NextFrameAsync(token);
                 }
-                catch (TaskCanceledException)
+                catch (OperationCanceledException)
                 {
                     return;
                 }

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DCFrameWork.DefenseEquipment
 {
-    public class ShortRangeShootTurretManager : DEShooterManager_SB<DefenseEquipmentData_B>
+    public class ShortRangeShootTurretManager : DEShooterManager_SB<ShortRangeData>
     {
         float _timer = 0;
         bool _isPaused = false;
@@ -36,14 +36,13 @@ namespace DCFrameWork.DefenseEquipment
             var targetSelect = TargetSelect();
             _enemyPos = targetSelect.Obj.transform.position;
             TurretRotate(targetSelect.Obj.transform);
-            var originPos = new Vector3(_muzzlePos.position.x, targetSelect.Obj.transform.position.y, _muzzlePos.position.z);
-            var direction = targetSelect.Obj.transform.position - originPos;
 
-            var hits = Physics.SphereCastAll(originPos, Range, direction, Range * 5);
+            var hits = Physics.OverlapSphere(_enemyPos, DefenseEquipmentData.ExplosionRadius * 5);
+
 
             foreach (var hit in hits)
             {
-                if (hit.collider.gameObject.TryGetComponent(out IEnemy component))
+                if (hit.gameObject.TryGetComponent(out IEnemy component))
                     TargetsAddDamage(component, criticalPoint <= Critical ? Attack * 3 : Attack);
             }
             _anim.SetTrigger("Attack");

@@ -1,4 +1,4 @@
-using DCFrameWork.DefenseEquipment;
+﻿using DCFrameWork.DefenseEquipment;
 using System;
 using UnityEngine;
 
@@ -8,7 +8,7 @@ namespace DCFrameWork
     public class SummonData : DefenseEquipmentData_B
     {
         public int MaxCount { get => _maxCount; }
-        [SerializeField]
+        [SerializeField, Header("召喚可能数")]
         private int _maxCount = 1;
     }
 }

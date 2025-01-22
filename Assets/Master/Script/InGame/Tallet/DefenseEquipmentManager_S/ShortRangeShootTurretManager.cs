@@ -36,9 +36,8 @@ namespace DCFrameWork.DefenseEquipment
             var targetSelect = TargetSelect();
             _enemyPos = targetSelect.Obj.transform.position;
             TurretRotate(targetSelect.Obj.transform);
-            var originPos = new Vector3(_muzzlePos.position.x, targetSelect.Obj.transform.position.y, _muzzlePos.position.z);
 
-            var hits = Physics.OverlapSphere(originPos, DefenseEquipmentData.ExplosionRadius * 5);
+            var hits = Physics.OverlapSphere(_enemyPos, DefenseEquipmentData.ExplosionRadius * 5);
 
 
             foreach (var hit in hits)

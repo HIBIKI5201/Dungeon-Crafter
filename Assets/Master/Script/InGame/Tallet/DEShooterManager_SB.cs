@@ -1,12 +1,10 @@
 ﻿using DCFrameWork.Enemy;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 namespace DCFrameWork.DefenseEquipment
 {
     public abstract class DEShooterManager_SB<Data> : DefenseEquipmentManager_B<Data> where Data : DefenseEquipmentData_B
     {
-        protected List<(GameObject Obj, IFightable Interface)> _enemyList = new();
         [SerializeField] protected GameObject _turretModel;
         [SerializeField] protected Animator _anim;
         protected Vector3 _enemyPos;
@@ -18,7 +16,6 @@ namespace DCFrameWork.DefenseEquipment
 
         protected override void Start_SB()
         {
-            _enemyList = new();
             Start_S();
         }
 
@@ -26,23 +23,37 @@ namespace DCFrameWork.DefenseEquipment
 
         protected virtual (GameObject Obj, IFightable Interface) TargetSelect()
         {
-            return _enemyList.OrderBy(x => Vector3.Distance(transform.position, x.Obj.transform.position)).ToList().FirstOrDefault();
+            var pos = new Vector3(transform.position.x, 0, transform.position.z);
+            var hit = Physics.OverlapSphere(pos, Range * 5);
+            IFightable component = null;
+            var enemy = hit.OrderBy(x => Vector3.Distance(pos, x.gameObject.transform.position)).Where(x => x.TryGetComponent(out component)).FirstOrDefault();
+            if (enemy != null)
+            {
+                return (enemy.gameObject, component);
+            }
+            return (null, null);
         }
 
 
-        protected virtual void EnemyAttack()
+        protected virtual bool EnemyAttack()
         {
             var criticalPoint = Random.Range(0, 100);
+            if (TargetSelect() == (null, null))
+            {
+                return false;
+            }
             var targetSelect = TargetSelect();
             _enemyPos = targetSelect.Obj.transform.position;
             TargetsAddDamage(targetSelect.Interface, criticalPoint <= Critical ? Attack * 3 : Attack);
-            TurretRotate(targetSelect.Obj.transform);
+            TurretRotate();
             _anim.SetTrigger("Attack");
+
+            return true;
         }
 
-        protected virtual void TurretRotate(Transform enemy)
+        protected virtual void TurretRotate()
         {
-            var dir = enemy.transform.position - _turretModel.transform.position;
+            var dir = _turretModel.transform.position - _enemyPos;
             dir.y = 0;
             dir.Normalize();
 
@@ -53,24 +64,7 @@ namespace DCFrameWork.DefenseEquipment
 
         protected void TargetsAddDamage(IFightable enemy, float damage)
         {
-            if (!enemy.HitDamage(damage))
-            {
-                _enemyList.Remove(_enemyList.Where(e => e.Interface == enemy).FirstOrDefault());
-            }
-        }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.TryGetComponent<IFightable>(out var component))
-            {
-                _enemyList.Add((other.gameObject, component));
-            }
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-            var result = _enemyList.Find(e => e.Obj == other.gameObject);
-            _enemyList.Remove(result);
+            enemy.HitDamage(damage);
         }
     }
 }

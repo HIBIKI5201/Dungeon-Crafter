@@ -8,17 +8,15 @@ namespace DCFrameWork.DefenseEquipment
     {
         [Header("タレットの名前")]
         public string Name;
-        [Header("タレットの種類")] 
+        [Header("タレットの種類")]
         public DefenseObjectsKind Kind;
-        [Header("タレットのプレハブ")] 
+        [Header("タレットのプレハブ")]
         public GameObject Prefab;
-        [Header("タレットの説明文")] 
+        [Header("タレットの説明文")]
         public string Explanation;
-        [Header("ガチャでのタレットの出現確率")] 
+        [Header("ガチャでのタレットの出現確率")]
         public int DropChance;
-        [Header("タレットのステータスリスト")] 
-        public List<DefenseEquipmentData_B> DataLevelList;
         [Header("タレットのステータスリスト")]
-        public List<int> PowerUpRequireItem;
+        public List<DefenseEquipmentData_B> DataLevelList;
     }
 }

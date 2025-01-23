@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -30,7 +32,7 @@ namespace DCFrameWork.MainSystem
                 yield return null;
             }
         }
-        public static async Task PausableWaitForSecondAsync(float time)
+        public static async Task PausableWaitForSecondAsync(float time, CancellationToken token = default)
         {
             float timer = 0;
             while (timer < time)
@@ -39,7 +41,15 @@ namespace DCFrameWork.MainSystem
                 {
                     timer += Time.deltaTime;
                 }
-                await Awaitable.NextFrameAsync();
+                //正常なエラーのためトライキャッチ
+                try
+                {
+                    await Awaitable.NextFrameAsync(token);
+                }
+                catch (OperationCanceledException)
+                {
+                    return;
+                }
             }
         }
     }

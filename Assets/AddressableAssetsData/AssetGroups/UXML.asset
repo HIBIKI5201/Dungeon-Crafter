@@ -41,7 +41,8 @@ MonoBehaviour:
   - m_GUID: 8298fda806d2132408af7cf6acbe995e
     m_Address: UXML/Gacha.uxml
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - UXML
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b015c437802aecf4497de2ff24ef128e
     m_Address: UXML/BasicInformation.uxml

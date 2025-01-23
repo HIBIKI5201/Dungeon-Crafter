@@ -94,9 +94,9 @@ public class StageManager : MonoBehaviour
                 //s += "/";
                 for (int j = 0; j < _sizeX; j++)
                 {
-                    Vector3 vector3 = new Vector3((_mapSize.x * _gridSize / 2 + _gridSize / 2) + _gridSize * j,
+                    Vector3 vector3 = new Vector3((-_mapSize.x * _gridSize / 2 + _gridSize / 2) + _gridSize * j,
                                                   17.5f,
-                                                 (_mapSize.y * _gridSize / 2 + _gridSize / 2) + _gridSize * i);
+                                                 (-_mapSize.y * _gridSize / 2 + _gridSize / 2) + _gridSize * i);
                     if (Physics.Raycast(vector3, Vector3.down, 20, LayerMask.GetMask("Buildings")))
                     {
                         _map[j, i] = 1;

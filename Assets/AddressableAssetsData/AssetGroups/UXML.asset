@@ -24,7 +24,8 @@ MonoBehaviour:
   - m_GUID: 1691820eb2a4da74c9220c2a0afa9638
     m_Address: UXML/StoryText.uxml
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - UXML
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 21db3fa15e6bfad4281ae5e3440045ac
     m_Address: UXML/EquipmentInventory.uxml
@@ -32,8 +33,26 @@ MonoBehaviour:
     m_SerializedLabels:
     - UXML
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2e42fdb582fc71049b90bdde8538cae1
+    m_Address: Assets/Master/UITK/UXML/Master/MasterElement.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UXML
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3f683a95e716fb24bb5da6b5695e6b7e
     m_Address: UXML/DefenceEquipmentSetting.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UXML
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5a75963e3c36f6345917d3ccb2efd17d
+    m_Address: Assets/Master/UITK/UXML/Home/DefenceEquipment.uxml
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UXML
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 80a7dfdb03710aa4ca44d099826ce602
+    m_Address: Assets/Master/UITK/UXML/Master/InGameMasterWindow.uxml
     m_ReadOnly: 0
     m_SerializedLabels:
     - UXML
@@ -59,7 +78,8 @@ MonoBehaviour:
   - m_GUID: fee3ef8d9da3d8048bc2e2c23a8f3e84
     m_Address: UXML/RankingPanel.uxml
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - UXML
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 78caf16212ce2204c91a95cf38907ede, type: 2}

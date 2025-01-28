@@ -624,7 +624,7 @@ MonoBehaviour:
     - _level: 1
       _state:
         _maxHealth: 5
-        _plunder: 5
+        _plunder: 100
         _dexterity: 5
         _defense: 5
         _dropEXP: 5

@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4240597087944dc42bfdf5339d77a5d5, type: 3}
+  m_Name: 4_Stage1-End
+  m_EditorClassIdentifier: 
+  _sheetName: "\u30B9\u30C6\u30FC\u30B8\uFF11\u304A\u308F\u308A"
+  _backGround: []
+  _list:
+  - _character: "\u30AF\u30EA\u30A8\u30C8"
+    _text: "\u3055\u3059\u304C\u306F\u30E9\u30D3\u30EA\u30B9\u3055\u3093\u3002/\u4ECA\u56DE\u3082\u3046\u307E\u304F\u3044\u304D\u307E\u3057\u305F\u306D\u3002"
+    _animation: 
+    _audioClip: {fileID: 8300000, guid: eab0a7fb794baa04fb64b7d048f8a023, type: 3}
+  - _character: "\u30E9\u30D3\u30EA\u30B9"
+    _text: "\u306A\u3042\u30AF\u30EA\u30A8\u30C8\u3001\u63D0\u6848\u304C\u3042\u308B\u3093\u3060\u304C\u3002"
+    _animation: 
+    _audioClip: {fileID: 8300000, guid: ed248822586bab547bb190d18943232b, type: 3}
+  - _character: "\u30AF\u30EA\u30A8\u30C8"
+    _text: "\u306F\u3044\u3001\u306A\u3093\u306A\u308A\u3068\u304A\u7533\u3057\u4ED8\u3051\u304F\u3060\u3055\u3044\u3002"
+    _animation: 
+    _audioClip: {fileID: 8300000, guid: eac285b02645d9748b49f9f54bc9b259, type: 3}
+  - _character: "\u30E9\u30D3\u30EA\u30B9"
+    _text: "\u4ECA\u5EA6\u306F\u3082\u3063\u3068\u5927\u304D\u306A\u56FD\u3092\u76F8\u624B\u306B\u3057\u306A\u3044\u304B\uFF1F/\u6211\u3089\u304C\u3001\u4E92\u89D2\u306B\u6226\u3048\u308B\u76F8\u624B\u3092\u3002"
+    _animation: 
+    _audioClip: {fileID: 8300000, guid: 408622eda8bf964499dec8a2faafc41f, type: 3}
+  - _character: "\u30AF\u30EA\u30A8\u30C8"
+    _text: "\u540D\u6848\u3067\u3059\u306D\u3001\u30E9\u30D3\u30EA\u30B9\u3055\u3093\uFF01/\u9B54\u738B\u69D8\u3082\u304A\u559C\u3073\u306B\u306A\u308B\u3067\u3057\u3087\u3046\u3002"
+    _animation: 
+    _audioClip: {fileID: 8300000, guid: 20656f8c2da1fcf4b9d38a65856e2bd9, type: 3}
+  - _character: "\u30AF\u30EA\u30A8\u30C8"
+    _text: "\u4EBA\u5BC4\u305B\u306F\u79C1\u304C\u884C\u3044\u307E\u3059\u3002/\u4EBA\u3092\u64CD\u308B\u306E\u306F\u5F97\u610F\u3067\u3059\u306E\u3067\u3002"
+    _animation: 
+    _audioClip: {fileID: 8300000, guid: d51bd2fa323da0149a48e60de0e7ce6d, type: 3}
+  - _character: "\u30E9\u30D3\u30EA\u30B9"
+    _text: "\u2026\u2026\u6C17\u3092\u4ED8\u3051\u3066\u3044\u3051\u3088\u3002"
+    _animation: 
+    _audioClip: {fileID: 8300000, guid: cbc065abfb967d04d8d1f47ce3efc6e1, type: 3}

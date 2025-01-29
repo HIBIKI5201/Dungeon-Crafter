@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdbe119408761bc40bf6316b9dacba57, type: 3}
+  m_Name: BGM_DataBase
+  m_EditorClassIdentifier: Assembly-CSharp:DCFrameWork.MainSystem:AudioDataBase
+  audioDatas:
+  - AudioClip: {fileID: 8300000, guid: 07ad2fce9d4c46f44b6d53371db7ee7d, type: 3}
+    AudioVolume: 0.22
+  - AudioClip: {fileID: 8300000, guid: d615383fa8380ab4b93743f8391a60b8, type: 3}
+    AudioVolume: 0.5
+  - AudioClip: {fileID: 8300000, guid: e435f54566ae00c489262166eab33649, type: 3}
+    AudioVolume: 0.5
+  - AudioClip: {fileID: 8300000, guid: 59d3fb2eace0e7d408159525c89a2077, type: 3}
+    AudioVolume: 0.5
+  - AudioClip: {fileID: 8300000, guid: 5bcbaf14de1f7454fb53758eed0512a4, type: 3}
+    AudioVolume: 0.5
+  - AudioClip: {fileID: 8300000, guid: d7b54251461c9cb4ab4cc5acc9ae46b4, type: 3}
+    AudioVolume: 0.42
+  - AudioClip: {fileID: 8300000, guid: dc03ad545675b3347a3541a3dfb88877, type: 3}
+    AudioVolume: 0.5

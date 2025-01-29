@@ -22,16 +22,22 @@ namespace DCFrameWork.MainSystem
         private event Action OnPaused;
         private event Action OnResumed;
         #endregion
-        private void Awake()
+        private async void Awake()
         {
             if (!_instance)
             {
                 _instance = this;
 
                 string sceneName = SceneChanger.SetCurrentSceneName();
+
+                while (!SceneManager.GetSceneByName(sceneName).isLoaded)
+                {
+                    await Awaitable.NextFrameAsync(); // éüÇÃÉtÉåÅ[ÉÄÇ‹Ç≈ë“ã@
+                }
+
+                SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
                 Scene systemScene = SceneManager.CreateScene("SystemScene");
                 SceneManager.MoveGameObjectToScene(gameObject, systemScene);
-                SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
             }
             else
             {

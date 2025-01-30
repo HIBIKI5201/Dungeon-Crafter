@@ -9,38 +9,16 @@ using UnityEngine.UIElements;
 namespace DCFrameWork
 {
     [UxmlElement]
-    public partial class Gacha : VisualElement
+    public partial class Gacha : VisualElement_B
     {
-        public Task InitializeTask { get; private set; }
         VisualTreeAsset _card;
         VisualElement _gachaWindow;
         public event Action<TemplateContainer> OnGacha;
         public VisualTreeAsset Card { set => _card = value; }
         public event Action<DefenseObjectsKind,int> OnGachaClose;
         public event Action<bool> OnMouseCursor;
-        public Gacha() => InitializeTask = Initialize();
-        private async Task Initialize()
-        {
-            AsyncOperationHandle<VisualTreeAsset> handle = Addressables.LoadAssetAsync<VisualTreeAsset>("UXML/Gacha.uxml");
-            await handle.Task;
-            var treeAsset = handle.Result;
-            var container = treeAsset.Instantiate();
-            container.style.width = Length.Percent(100);
-            container.style.height = Length.Percent(100);
-            this.RegisterCallback<KeyDownEvent>(e => e.StopImmediatePropagation());
-            pickingMode = PickingMode.Ignore;
-            container.RegisterCallback<KeyDownEvent>(e => e.StopImmediatePropagation());
-            container.pickingMode = PickingMode.Ignore;
-            hierarchy.Add(container);
-            //UXMLの取得
-            _gachaWindow = container.Q<VisualElement>("Gacha");
-            //UIにマウスが乗った時離れたときのイベント
-            _gachaWindow.RegisterCallback<MouseEnterEvent>(x => OnMouseCursor?.Invoke(true));
-            _gachaWindow.RegisterCallback<MouseLeaveEvent>(x => OnMouseCursor?.Invoke(false));
-            //ガチャのスタイルを初期でクローズにする
-            _gachaWindow.AddToClassList("gacha-close");
-            Addressables.Release(handle);
-        }
+        public Gacha() : base("UXML/InGame/Gacha") { }
+
         //ガチャの内容の生成
         public void GachaBake(List<InventoryData> list)
         {
@@ -61,6 +39,19 @@ namespace DCFrameWork
                 Debug.Log("GachaClose");
                 });
             }
+        }
+
+        protected override Task Initialize_S(TemplateContainer container)
+        {
+            //UXMLの取得
+            _gachaWindow = container.Q<VisualElement>("Gacha");
+            //UIにマウスが乗った時離れたときのイベント
+            _gachaWindow.RegisterCallback<MouseEnterEvent>(x => OnMouseCursor?.Invoke(true));
+            _gachaWindow.RegisterCallback<MouseLeaveEvent>(x => OnMouseCursor?.Invoke(false));
+            //ガチャのスタイルを初期でクローズにする
+            _gachaWindow.AddToClassList("gacha-close");
+
+            return Task.CompletedTask;
         }
     }
 }

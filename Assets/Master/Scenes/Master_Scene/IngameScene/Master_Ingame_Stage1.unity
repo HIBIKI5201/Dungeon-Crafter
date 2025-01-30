@@ -395,6 +395,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1790089724242237034, guid: 0df4d64677fe9b44facaa32a2feee710,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1790089724242237034, guid: 0df4d64677fe9b44facaa32a2feee710,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2299666661034462887, guid: 0df4d64677fe9b44facaa32a2feee710,
         type: 3}
       propertyPath: _instantiate.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -455,6 +465,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4000336799687380652, guid: 0df4d64677fe9b44facaa32a2feee710,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4506796306538443436, guid: 0df4d64677fe9b44facaa32a2feee710,
         type: 3}
       propertyPath: m_Name
@@ -462,15 +477,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7832112842789162358, guid: 0df4d64677fe9b44facaa32a2feee710,
         type: 3}
-      propertyPath: _card
-      value: 
-      objectReference: {fileID: 9197481963319205126, guid: fae9f9d848fda2845a81e9e4f13d071a,
-        type: 3}
-    - target: {fileID: 7832112842789162358, guid: 0df4d64677fe9b44facaa32a2feee710,
-        type: 3}
-      propertyPath: _levelManager
-      value: 
-      objectReference: {fileID: 1047674329}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7832112842789162358, guid: 0df4d64677fe9b44facaa32a2feee710,
         type: 3}
       propertyPath: _phaseManager
@@ -481,85 +490,6 @@ PrefabInstance:
       propertyPath: _stageManager
       value: 
       objectReference: {fileID: 1622257949}
-    - target: {fileID: 7832112842789162358, guid: 0df4d64677fe9b44facaa32a2feee710,
-        type: 3}
-      propertyPath: _playerManager
-      value: 
-      objectReference: {fileID: 1047674327}
-    - target: {fileID: 8315951428447432683, guid: 0df4d64677fe9b44facaa32a2feee710,
-        type: 3}
-      propertyPath: _startGold
-      value: 5000
-      objectReference: {fileID: 0}
-    - target: {fileID: 8315951428447432683, guid: 0df4d64677fe9b44facaa32a2feee710,
-        type: 3}
-      propertyPath: _startTurretCount
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8315951428447432683, guid: 0df4d64677fe9b44facaa32a2feee710,
-        type: 3}
-      propertyPath: _startDefenseObjectsKind
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8315951428447432683, guid: 0df4d64677fe9b44facaa32a2feee710,
-        type: 3}
-      propertyPath: _defenseObjectData.Array.size
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8315951428447432683, guid: 0df4d64677fe9b44facaa32a2feee710,
-        type: 3}
-      propertyPath: '_defenseObjectData.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 96fa811861fecd648b5c8c5ca03514e1,
-        type: 2}
-    - target: {fileID: 8315951428447432683, guid: 0df4d64677fe9b44facaa32a2feee710,
-        type: 3}
-      propertyPath: '_defenseObjectData.Array.data[1]'
-      value: 
-      objectReference: {fileID: 11400000, guid: d20b5e1ca5d98b448bde8bece22c6a2f,
-        type: 2}
-    - target: {fileID: 8315951428447432683, guid: 0df4d64677fe9b44facaa32a2feee710,
-        type: 3}
-      propertyPath: '_defenseObjectData.Array.data[2]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 99ac42ede775dad45a64ac54422787cc,
-        type: 2}
-    - target: {fileID: 8315951428447432683, guid: 0df4d64677fe9b44facaa32a2feee710,
-        type: 3}
-      propertyPath: '_defenseObjectData.Array.data[3]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 26dec7d8e4afb1e459187cd7039206ad,
-        type: 2}
-    - target: {fileID: 8315951428447432683, guid: 0df4d64677fe9b44facaa32a2feee710,
-        type: 3}
-      propertyPath: '_defenseObjectData.Array.data[4]'
-      value: 
-      objectReference: {fileID: 11400000, guid: c274824e63b70424d9afd001f6f40105,
-        type: 2}
-    - target: {fileID: 8315951428447432683, guid: 0df4d64677fe9b44facaa32a2feee710,
-        type: 3}
-      propertyPath: '_defenseObjectData.Array.data[5]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 269d3220043e6f64886ccf6bfe27e086,
-        type: 2}
-    - target: {fileID: 8315951428447432683, guid: 0df4d64677fe9b44facaa32a2feee710,
-        type: 3}
-      propertyPath: '_defenseObjectData.Array.data[6]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 700b99a83f0bf9a42b7483e281d90ff8,
-        type: 2}
-    - target: {fileID: 8315951428447432683, guid: 0df4d64677fe9b44facaa32a2feee710,
-        type: 3}
-      propertyPath: '_defenseObjectData.Array.data[7]'
-      value: 
-      objectReference: {fileID: 11400000, guid: eaee213ac5174054a9750404ad6f4ecd,
-        type: 2}
-    - target: {fileID: 8315951428447432683, guid: 0df4d64677fe9b44facaa32a2feee710,
-        type: 3}
-      propertyPath: '_defenseObjectData.Array.data[8]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 9c3b9aef06829894cabb20360803b668,
-        type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -800,18 +730,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a386f33aeaeaaa44e921ba53be46ddad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1047674329 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2205681775963540633, guid: 0df4d64677fe9b44facaa32a2feee710,
-    type: 3}
-  m_PrefabInstance: {fileID: 336622896}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 841919d9ea7a9ee42a10a54ab962acf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1058254285 stripped

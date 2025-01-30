@@ -56,7 +56,14 @@ namespace DCFrameWork.Enemy
         public void Waving(PhaseData waveData)
         {
             var kinds = _objects.Select(e => e.kind);
-            StartCoroutine(Generate(waveData.SpawnData));
+            try
+            {
+                StartCoroutine(Generate(waveData.SpawnData));
+            }
+            catch
+            {
+                return;
+            }
         }
 
         private ObjectPool<IEnemy> ObjectPooling(GameObject obj, Vector3 initPosition, EnemyKind kind)

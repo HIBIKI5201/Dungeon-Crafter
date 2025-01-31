@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEditor.Rendering.FilterWindow;
 
 namespace DCFrameWork
 {
@@ -36,10 +37,12 @@ namespace DCFrameWork
                 var container = treeAsset.Instantiate();
                 container.style.width = Length.Percent(100);
                 container.style.height = Length.Percent(100);
-                this.RegisterCallback<KeyDownEvent>(e => e.StopImmediatePropagation());
+
+                this.RegisterCallback<KeyDownEvent>(e => e.StopPropagation());
                 pickingMode = PickingMode.Ignore;
-                container.RegisterCallback<KeyDownEvent>(e => e.StopImmediatePropagation());
+                container.RegisterCallback<KeyDownEvent>(e => e.StopPropagation());
                 container.pickingMode = PickingMode.Ignore;
+
                 hierarchy.Add(container);
 
                 #endregion

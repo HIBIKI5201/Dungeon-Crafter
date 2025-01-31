@@ -80,8 +80,8 @@
     <type fullname="Unity.Behavior.NavigateToLocationAction" preserve="all"/>
   </assembly>
   <assembly fullname="Assembly-CSharp">
-    <type fullname="Unity.Behavior.Example.SetRandomTargetAction" preserve="all"/>
     <type fullname="Unity.Behavior.Example.TalkAction" preserve="all"/>
+    <type fullname="Unity.Behavior.Example.SetRandomTargetAction" preserve="all"/>
   </assembly>
 </linker>
 

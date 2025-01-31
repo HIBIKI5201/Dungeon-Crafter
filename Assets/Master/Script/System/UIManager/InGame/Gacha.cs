@@ -21,6 +21,7 @@ namespace DCFrameWork
         public void GachaBake(List<InventoryData> list)
         {
             _gachaWindow.RemoveFromClassList("gacha-close");
+            _gachaWindow.AddToClassList("gacha-open");
             _gachaWindow.Clear();
             foreach (var turret in list)
             {
@@ -35,6 +36,7 @@ namespace DCFrameWork
                 {
                     OnGachaClose?.Invoke(turret.Kind, turret.Level);
                     _gachaWindow.AddToClassList("gacha-close");
+                    _gachaWindow.RemoveFromClassList("gacha-open");
                     Debug.Log("GachaClose");
                 });
             }
@@ -49,6 +51,7 @@ namespace DCFrameWork
             _gachaWindow.RegisterCallback<MouseLeaveEvent>(x => OnMouseCursor?.Invoke(false));
             //ガチャのスタイルを初期でクローズにする
             _gachaWindow.AddToClassList("gacha-close");
+            _gachaWindow.RemoveFromClassList("gacha-open");
 
             return Task.CompletedTask;
         }

@@ -1,5 +1,11 @@
 .gacha-close {
-    bottom: -100%;
     transition-duration: 0.2s;
     transition-timing-function: ease-in-out-cubic;
+    translate: 0 100%;
+}
+
+.gacha-open {
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out-cubic;
+    translate: 0 0;
 }

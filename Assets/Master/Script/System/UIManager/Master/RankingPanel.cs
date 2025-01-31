@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 namespace DCFrameWork
 {
     [UxmlElement]
-    public partial class RankingPanel : VisualElement
+    public partial class RankingPanel : VisualElement_B
     {
         public Task InitializeTask { get; private set; }
         
@@ -23,35 +23,15 @@ namespace DCFrameWork
         public string FirstScoreText {get=> _firstScoreText.text;set=> _firstScoreText.text = value;}
         public string SecondScoreText {get=> _secondScoreText.text;set=> _secondScoreText.text = value;}
         public string ThirdScoreText {get=> _thirdScoreText.text;set=> _thirdScoreText.text = value;}
-        public RankingPanel() => InitializeTask = Initialize();
-        private async Task Initialize()
-        {
-            AsyncOperationHandle<VisualTreeAsset> handle = Addressables.LoadAssetAsync<VisualTreeAsset>("UXML/RankingPanel.uxml");
-            await handle.Task;
+        public RankingPanel() : base("UXML/RankingPanel.uxml") { }
 
-            if (handle.Status == AsyncOperationStatus.Succeeded && handle.Result != null)
-            {
-                var treeAsset = handle.Result;
-                var container = treeAsset.Instantiate();
-                container.style.width = Length.Percent(100);
-                container.style.height = Length.Percent(100);
-                this.RegisterCallback<KeyDownEvent>(e => e.StopImmediatePropagation());
-                pickingMode = PickingMode.Ignore;
-                container.RegisterCallback<KeyDownEvent>(e => e.StopImmediatePropagation());
-                container.pickingMode = PickingMode.Ignore;
-                hierarchy.Add(container);
-                _firstNameText = container.Q<Label>("FirstNameText");
-                _secondNameText = container.Q<Label>("SecondNameText");
-                _thirdNameText = container.Q<Label>("ThirdNameText");
-                _firstScoreText = container.Q<Label>("FirstScoreText");
-                _secondScoreText = container.Q<Label>("SecondScoreText");
-                _thirdScoreText = container.Q<Label>("ThirdScoreText");
-            }
-            else
-            {
-                Debug.LogError("Failed to load UXML file from Addressables: UXML/RankingPanel.uxml");
-            }
-            Addressables.Release(handle);
+        protected override async Task Initialize_S(TemplateContainer container){
+            _firstNameText = container.Q<Label>("FirstNameText");
+            _secondNameText = container.Q<Label>("SecondNameText");
+            _thirdNameText = container.Q<Label>("ThirdNameText");
+            _firstScoreText = container.Q<Label>("FirstScoreText");
+            _secondScoreText = container.Q<Label>("SecondScoreText");
+            _thirdScoreText = container.Q<Label>("ThirdScoreText");
         }
     }
 }

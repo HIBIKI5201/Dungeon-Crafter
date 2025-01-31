@@ -1,17 +1,11 @@
+using DCFrameWork;
 using System;
 using System.Threading.Tasks;
-using DCFrameWork;
-using Unity.VisualScripting;
-using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UIElements;
 
 [UxmlElement]
-public partial class BasicInformation : VisualElement
+public partial class BasicInformation : VisualElement_B
 {
-    //初期化タスク
-    public Task InitializeTask { get; private set; }
     //UI要素
     private GuageMesh _guageMesh;
     private VisualElement _eXPGuage;
@@ -53,7 +47,7 @@ public partial class BasicInformation : VisualElement
     public string EXPText { get => _eXPText.text; set => _eXPText.text = value; }
     public string PhaseText { get => _phaseText.text; set => _phaseText.text = value; }
     public Button MenuButton { get => _menuButton; set => _menuButton = value; }
-    public BasicInformation() => InitializeTask = Initialize();
+    public BasicInformation() : base("UXML/InGame/BasicInformation") { } 
     public void EXPTextUpdate()
     {
         string expText = "EXP:" + _exp.ToString() + Environment.NewLine + "Level:" + _level.ToString();
@@ -64,50 +58,21 @@ public partial class BasicInformation : VisualElement
         float persent = persentNormal / 100f * 87;
         _eXPGuage.style.width = Length.Percent(persent);
     }
-    //初期化
-    private async Task Initialize()
+
+    protected override Task Initialize_S(TemplateContainer container)
     {
-        AsyncOperationHandle<VisualTreeAsset> handle = Addressables.LoadAssetAsync<VisualTreeAsset>("UXML/BasicInformation.uxml");
-        await handle.Task;
+        // UI要素の取得
+        _guageMesh = container.Q<GuageMesh>("PhaseGuage");
+        _eXPGuage = container.Q<VisualElement>("EXPGuage");
+        _eXPText = container.Q<Label>("EXPText");
+        _phaseText = container.Q<Label>("PhaseText");
+        _menuButton = container.Q<Button>("MenuButton");
+        _goldText = container.Q<Label>("MoneyText");
 
-        if (handle.Status == AsyncOperationStatus.Succeeded && handle.Result != null)
-        {
-            // UXMLファイルの読み込み
-            var treeAsset = handle.Result;
-            var container = treeAsset.Instantiate();
-            // スタイルの読み込み
-            container.style.width = Length.Percent(100);
-            container.style.height = Length.Percent(100);
-            // マウスイベントの無効化
-            this.RegisterCallback<KeyDownEvent>(e => e.StopImmediatePropagation());
-            pickingMode = PickingMode.Ignore;
-            container.RegisterCallback<KeyDownEvent>(e => e.StopImmediatePropagation());
-            container.pickingMode = PickingMode.Ignore;
+        //UIの上にマウスが乗ったとき離れたときに発火する
+        _menuButton.RegisterCallback<MouseEnterEvent>(x => OnMouseCursor?.Invoke(true));
+        _menuButton.RegisterCallback<MouseLeaveEvent>(x => OnMouseCursor?.Invoke(false));
 
-            // すべての子要素の pickingMode を Ignore に設定
-            foreach (var child in container.Children())
-            {
-                child.pickingMode = PickingMode.Ignore;
-            }
-            hierarchy.Add(container);
-
-            // UI要素の取得
-            _guageMesh = container.Q<GuageMesh>("PhaseGuage");
-            _eXPGuage = container.Q<VisualElement>("EXPGuage");
-            _eXPText = container.Q<Label>("EXPText");
-            _phaseText = container.Q<Label>("PhaseText");
-            _menuButton = container.Q<Button>("MenuButton");
-            _goldText = container.Q<Label>("MoneyText");
-            //UIの上にマウスが乗ったとき離れたときに発火する
-            _menuButton.RegisterCallback<MouseEnterEvent>(x => OnMouseCursor?.Invoke(true));
-            _menuButton.RegisterCallback<MouseLeaveEvent>(x=>OnMouseCursor?.Invoke(false));
-        }
-        else
-        {
-            // エラーログ
-            Debug.LogError("Failed to load UXML file from Addressables: UXML/BasicInformation.uxml");
-        }
-        // リソースの解放
-        Addressables.Release(handle);
+        return Task.CompletedTask;
     }
 }

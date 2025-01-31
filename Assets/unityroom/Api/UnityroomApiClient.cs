@@ -27,7 +27,7 @@ namespace unityroom.Api
             get
             {
                 if (_instance != null) return _instance;
-                _instance = FindObjectOfType<UnityroomApiClient>();
+                _instance = FindFirstObjectByType<UnityroomApiClient>();
                 if (_instance == null) { Debug.LogError($"[unityroom] シーンにUnityroomApiClientのPrefabを配置してください。"); }
 
                 return _instance;
@@ -42,10 +42,10 @@ namespace unityroom.Api
                 Debug.LogWarning($"[unityroom] 複数のUnityroomApiClientが見つかりました。重複したインスタンスを破棄します。", gameObject);
                 Destroy(gameObject);
             }
-            
+
             // シーンを切り替えても破棄されないようにする
             DontDestroyOnLoad(gameObject);
-            
+
             if (string.IsNullOrEmpty(HmacKey))
             {
                 Debug.LogError($"[unityroom] インスペクターにてHMAC認証用キーをセットしてください。", gameObject);

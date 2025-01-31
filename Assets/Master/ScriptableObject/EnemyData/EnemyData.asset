@@ -1,0 +1,823 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 116b83fbca41ef94c87f3e4bc52ed1db, type: 3}
+  m_Name: EnemyData
+  m_EditorClassIdentifier: 
+  _enemyKindData:
+  - _enemyKind: 0
+    _levelData:
+    - _level: 1
+      _state:
+        _maxHealth: 1
+        _plunder: 1
+        _dexterity: 10
+        _defense: 1
+        _dropEXP: 50
+        _dropGold: 100
+    - _level: 2
+      _state:
+        _maxHealth: 1
+        _plunder: 1
+        _dexterity: 1
+        _defense: 1
+        _dropEXP: 1
+        _dropGold: 1
+    - _level: 3
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 4
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 5
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 6
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 7
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 8
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 9
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 10
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 11
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 12
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 13
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 14
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 15
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 16
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 17
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 18
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 19
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 20
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 21
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 22
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 23
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 24
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 25
+      _state:
+        _maxHealth: 1
+        _plunder: 1
+        _dexterity: 1
+        _defense: 1
+        _dropEXP: 1
+        _dropGold: 1
+  - _enemyKind: 1
+    _levelData:
+    - _level: 1
+      _state:
+        _maxHealth: 1
+        _plunder: 1
+        _dexterity: 50
+        _defense: 1
+        _dropEXP: 50
+        _dropGold: 100
+    - _level: 2
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 3
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 4
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 5
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 6
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 7
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 8
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 9
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 10
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 11
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 12
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 13
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 14
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 15
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 16
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 17
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 18
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 19
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 20
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 21
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 22
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 23
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 24
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 25
+      _state:
+        _maxHealth: 1
+        _plunder: 1
+        _dexterity: 1
+        _defense: 1
+        _dropEXP: 1
+        _dropGold: 1
+  - _enemyKind: 2
+    _levelData:
+    - _level: 1
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 2
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 3
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 4
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 5
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 6
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 7
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 8
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 9
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 10
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 11
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 12
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 13
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 14
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 15
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 16
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 17
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 18
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 19
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 20
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 21
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 22
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 23
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 24
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 25
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+  - _enemyKind: 3
+    _levelData:
+    - _level: 1
+      _state:
+        _maxHealth: 5
+        _plunder: 100
+        _dexterity: 5
+        _defense: 5
+        _dropEXP: 5
+        _dropGold: 5
+    - _level: 2
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 3
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 4
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 5
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 6
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 7
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 8
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 9
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 10
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 11
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 12
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 13
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 14
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 15
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 16
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 17
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 18
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 19
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 20
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 21
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 22
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 23
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 24
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0
+    - _level: 25
+      _state:
+        _maxHealth: 0
+        _plunder: 0
+        _dexterity: 0
+        _defense: 0
+        _dropEXP: 0
+        _dropGold: 0

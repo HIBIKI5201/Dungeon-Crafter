@@ -8,10 +8,8 @@ using UnityEngine.UIElements;
 namespace DCFrameWork
 {
     [UxmlElement]
-    public partial class EquipmentSettingUI : VisualElement
+    public partial class EquipmentSettingUI : VisualElement_B
     {
-        //初期化タスク
-        public Task InitializeTask { get; private set; }
         //UI要素
         VisualElement _equipmentSettingWindow;
         Button _powerUpButton;
@@ -67,46 +65,26 @@ namespace DCFrameWork
         //マウスがUiの上の乗った時に発火するイベント
         public event Action<bool> OnMouseEvent;
         //  コンストラクタ
-        public EquipmentSettingUI() => InitializeTask = Initialize();
+        public EquipmentSettingUI() : base("UXML/InGame/DefenceEquipmentSetting") { }
         //初期化
-        private async Task Initialize()
+
+        protected override Task Initialize_S(TemplateContainer container)
         {
-            //UXMLファイルの読み込み
-            AsyncOperationHandle<VisualTreeAsset> handle = Addressables.LoadAssetAsync<VisualTreeAsset>("UXML/DefenceEquipmentSetting.uxml");
-            await handle.Task;
-            if (handle.Status == AsyncOperationStatus.Succeeded && handle.Result != null)
-            {
-                //UXMLファイルの読み込み
-                var treeAsset = handle.Result;
-                var container = treeAsset.Instantiate();
-                //スタイルの読み込み
-                container.style.width = Length.Percent(100);
-                container.style.height = Length.Percent(100);
-                //マウスイベントの無効化
-                this.RegisterCallback<KeyDownEvent>(e => e.StopImmediatePropagation());
-                pickingMode = PickingMode.Ignore;
-                container.RegisterCallback<KeyDownEvent>(e => e.StopImmediatePropagation());
-                container.pickingMode = PickingMode.Ignore;
-                hierarchy.Add(container);
-                //UI要素の取得
-                _powerUpButton = container.Q<Button>("PowerUpButton");
-                _removalButton = container.Q<Button>("RemovalButton");
-                _equipmentName = container.Q<Label>("EquipmentName");
-                _levelText = container.Q<Label>("LevelText");
-                _powerText = container.Q<Label>("PowerText");
-                _fastText = container.Q<Label>("FastText");
-                _rangeText = container.Q<Label>("RangeText");
-                _equipmentSettingWindow = container.Q<VisualElement>("EquipmentSettingWindow");
-                //UIの上にマウスが乗った時のイベント発火
-                _equipmentSettingWindow.RegisterCallback<MouseEnterEvent>(x => OnMouseEvent?.Invoke(true));
-                _equipmentSettingWindow.RegisterCallback<MouseLeaveEvent>(x => OnMouseEvent?.Invoke(false));
-                _equipmentSettingWindow.AddToClassList("equipment-setting-window-close");
-            }
-            else
-            {
-                Debug.LogError("Failed to load UXML file from Addressables: UXML / DefenceEquipmentSetting.uxml");
-            }
-            Addressables.Release(handle);
+            //UI要素の取得
+            _powerUpButton = container.Q<Button>("PowerUpButton");
+            _removalButton = container.Q<Button>("RemovalButton");
+            _equipmentName = container.Q<Label>("EquipmentName");
+            _levelText = container.Q<Label>("LevelText");
+            _powerText = container.Q<Label>("PowerText");
+            _fastText = container.Q<Label>("FastText");
+            _rangeText = container.Q<Label>("RangeText");
+            _equipmentSettingWindow = container.Q<VisualElement>("EquipmentSettingWindow");
+            //UIの上にマウスが乗った時のイベント発火
+            _equipmentSettingWindow.RegisterCallback<MouseEnterEvent>(x => OnMouseEvent?.Invoke(true));
+            _equipmentSettingWindow.RegisterCallback<MouseLeaveEvent>(x => OnMouseEvent?.Invoke(false));
+            _equipmentSettingWindow.AddToClassList("equipment-setting-window-close");
+
+            return Task.CompletedTask;
         }
     }
 

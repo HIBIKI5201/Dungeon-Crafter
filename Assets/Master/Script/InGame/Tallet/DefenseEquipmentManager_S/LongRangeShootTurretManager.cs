@@ -11,7 +11,7 @@ namespace DCFrameWork.DefenseEquipment
         bool _isPaused = false;
         [SerializeField] LayerMask _enemyLayer;
         [SerializeField] float _raySize = 5;
-        [SerializeField] ParticleSystem _particle;
+        [SerializeField] GameObject _chargeObj;
 
 
         protected override void Start_S()
@@ -28,6 +28,7 @@ namespace DCFrameWork.DefenseEquipment
                 if (EnemyAttack())
                 {
                     _timer = Time.time;
+                    BulletShoot(true);
                 }
             }
         }
@@ -72,17 +73,16 @@ namespace DCFrameWork.DefenseEquipment
 
             return true;
         }
-
-        void BulletShoot()
+        public void BulletShoot(bool @bool)
         {
-            if (_particle)
-            {
-                var dir = _enemyPos - _bulletPos;
-                _particle.transform.forward = dir;
-                _particle.Play();
-            }
-            else
-                Debug.Log("パーティクルがアサインされておりません");
+            _bullet.SetActive(@bool);
+            _chargeObj.SetActive(!@bool);
+        }
+        protected override void LoadSpecificData(LongRangeShooterData data)
+        {
+            var bullet = _bullet.transform.localScale;
+            bullet.y = data.Range * 0.2f * 2;
+            _bullet.transform.localScale = bullet;
         }
         protected override void Pause()
         {

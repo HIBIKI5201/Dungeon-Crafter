@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UIElements;
 
 namespace DCFrameWork
@@ -15,7 +13,7 @@ namespace DCFrameWork
         VisualElement _gachaWindow;
         public event Action<TemplateContainer> OnGacha;
         public VisualTreeAsset Card { set => _card = value; }
-        public event Action<DefenseObjectsKind,int> OnGachaClose;
+        public event Action<DefenseObjectsKind, int> OnGachaClose;
         public event Action<bool> OnMouseCursor;
         public Gacha() : base("UXML/InGame/Gacha") { }
 
@@ -33,10 +31,11 @@ namespace DCFrameWork
                 uiInstance.Q<Label>("EquipmentLebel").text = turret.Level.ToString();
                 uiInstance.Q<Label>("DefenceEquipment").text = turret.Name;
                 uiInstance.Q<Label>("DefenceEquipmentText").text = turret.Explanation;
-                uiInstance.Q<VisualElement>("EquipmentCard").RegisterCallback<ClickEvent>(x=>{
-                OnGachaClose?.Invoke(turret.Kind,turret.Level);
-                _gachaWindow.AddToClassList("gacha-close");
-                Debug.Log("GachaClose");
+                uiInstance.Q<VisualElement>("EquipmentCard").RegisterCallback<ClickEvent>(x =>
+                {
+                    OnGachaClose?.Invoke(turret.Kind, turret.Level);
+                    _gachaWindow.AddToClassList("gacha-close");
+                    Debug.Log("GachaClose");
                 });
             }
         }

@@ -1,5 +1,5 @@
 .font-style {
-    -unity-font-definition: resource('Fonts/LiberationSans');
+    -unity-font-definition: resource('Fonts/GenEiLateMinN_v2');
     -unity-font-style: bold;
     font-size: 32px;
     -unity-text-align: upper-center;

@@ -30,7 +30,9 @@ namespace DCFrameWork.DefenseEquipment
 
         public DefenseEquipmentData_B CurrentData { get => _dataBase.DataLevelList[_level - 1]; }
         public DefenseEquipmentData_B NextData { get => _level == 4 ? null : _dataBase.DataLevelList[_level]; }
-        public int Level{get => _level;}
+        public int Level { get => _level; }
+
+        protected bool _isActive;
 
         private void Start()
         {
@@ -75,7 +77,8 @@ namespace DCFrameWork.DefenseEquipment
 
         private void Update()
         {
-            Think();
+            if (_isActive)
+                Think();
         }
 
         /// <summary>
@@ -111,6 +114,12 @@ namespace DCFrameWork.DefenseEquipment
             }
         }
 
+        public void Active()
+        {
+            _cylinder.gameObject.SetActive(false);
+            _isActive = true;
+        }
+
         #region ポーズ処理
         void IPausable.Pause() => Pause();
         void IPausable.Resume() => Resume();
@@ -124,10 +133,11 @@ namespace DCFrameWork.DefenseEquipment
     {
         void Reinforce(ReinforceStatus status);
         void LevelUp();
+        void Active();
         DefenseEquipmentDataBase Data { get; protected set; }
-        int Level{ get; }
-        DefenseEquipmentData_B CurrentData{get;}
-        DefenseEquipmentData_B NextData{get;}
+        int Level { get; }
+        DefenseEquipmentData_B CurrentData { get; }
+        DefenseEquipmentData_B NextData { get; }
         GameObject gameObject { get; }
         Transform transform { get; }
     }

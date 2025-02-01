@@ -20,7 +20,7 @@ namespace DCFrameWork.DefenseEquipment
         }
         private void OnTriggerEnter(Collider other)
         {
-            if (!_isPaused)
+            if (!_isPaused && _isActive)
             {
                 if (other.TryGetComponent(out IConditionable component))
                 {
@@ -31,7 +31,7 @@ namespace DCFrameWork.DefenseEquipment
 
         private void OnTriggerExit(Collider other)
         {
-            if (!_isPaused)
+            if (!_isPaused && _isActive)
             {
                 if (other.TryGetComponent(out IConditionable component))
                 {

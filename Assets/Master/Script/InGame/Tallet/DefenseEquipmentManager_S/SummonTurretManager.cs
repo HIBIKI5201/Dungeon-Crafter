@@ -55,7 +55,7 @@ namespace DCFrameWork.DefenseEquipment
         }
         private void OnTriggerEnter(Collider other)
         {
-            if (!_isPaused)
+            if (!_isPaused && _isActive)
             {
                 if (other.TryGetComponent<IFightable>(out _) && !other.TryGetComponent<FlyEnemyManager>(out _))
                 {
@@ -71,7 +71,7 @@ namespace DCFrameWork.DefenseEquipment
         }
         private void OnTriggerExit(Collider other)
         {
-            if (!_isPaused)
+            if (!_isPaused && _isActive)
             {
                 if (other.TryGetComponent<IFightable>(out _))
                 {

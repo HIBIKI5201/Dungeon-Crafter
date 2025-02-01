@@ -38,7 +38,7 @@ namespace DCFrameWork
         {
             _levelManager = GetComponentInChildren<LevelManager>();
             _levelManager.OnLevelChanged += x => GetRandomDefenseObj();
-            OnGameOver += () => GameBaseSystem.mainSystem.LoadScene(SceneKind.Home);
+            OnGameOver += () => GameBaseSystem.mainSystem.LoadScene(SceneKind.Result);
             OnGameOver += () => Debug.Log("GameOver");
         }
         public void Initialize()

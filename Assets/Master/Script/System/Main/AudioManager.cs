@@ -65,7 +65,8 @@ namespace DCFrameWork.MainSystem
 
         public void PlayBGM(int index, BGMMode mode)
         {
-            if(_fadeCoroutine != null)
+            if (!_defaultBGMSource || !_fadeBGMSource) return;
+            if (_fadeCoroutine != null)
             {
                 StopCoroutine( _fadeCoroutine );
                 _fadeBGMSource.Stop();
@@ -86,10 +87,13 @@ namespace DCFrameWork.MainSystem
                     _defaultBGMSource.Stop();
                     break;
                 case BGMMode.Default:
-                    _defaultBGMSource.Stop();
-                    _defaultBGMSource.volume = data.Value.AudioVolume;
-                    _defaultBGMSource.clip = data.Value.AudioClip;
-                    _defaultBGMSource.Play();
+                    if (_defaultBGMSource.clip != data.Value.AudioClip)
+                    {
+                        _defaultBGMSource.Stop();
+                        _defaultBGMSource.volume = data.Value.AudioVolume;
+                        _defaultBGMSource.clip = data.Value.AudioClip;
+                        _defaultBGMSource.Play();
+                    }
                     break;
             }
         }

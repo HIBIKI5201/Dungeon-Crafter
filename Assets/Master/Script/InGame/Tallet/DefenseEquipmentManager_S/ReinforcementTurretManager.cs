@@ -18,7 +18,7 @@ namespace DCFrameWork.DefenseEquipment
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!_isPaused)
+            if (!_isPaused && _isActive)
             {
                 if (other.TryGetComponent(out ITurret component) && !other.TryGetComponent(out ReinforcementTurretManager _))
                 {

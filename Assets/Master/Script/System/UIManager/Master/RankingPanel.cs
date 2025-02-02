@@ -23,7 +23,7 @@ namespace DCFrameWork
         public string FirstScoreText {get=> _firstScoreText.text;set=> _firstScoreText.text = value;}
         public string SecondScoreText {get=> _secondScoreText.text;set=> _secondScoreText.text = value;}
         public string ThirdScoreText {get=> _thirdScoreText.text;set=> _thirdScoreText.text = value;}
-        public RankingPanel() : base("UXML/RankingPanel.uxml") { }
+        public RankingPanel() : base("UXML/Result/RankingPanel") { }
 
         protected override async Task Initialize_S(TemplateContainer container){
             _firstNameText = container.Q<Label>("FirstNameText");

@@ -11,10 +11,12 @@ namespace DCFrameWork.SceneSystem {
         private StoryData _debugStoryData;
 #endif
 
-        protected override void Initialize_S()
+        protected override async void Initialize_S()
         {
             _storyManager = GetComponent<StoryManager>();
             _storyManager?.Initialize(_UIManager as StoryUIManager);
+            await Awaitable.WaitForSecondsAsync(1);
+            NextStory();
         }
 
         protected override void Think(InputContext input)
@@ -25,12 +27,10 @@ namespace DCFrameWork.SceneSystem {
         [ContextMenu("NextText")]
         public void NextStory() => _storyManager?.NextText();
 
-        public async void SetStorySceneData(StoryLoadData data)
+        public void SetStorySceneData(StoryLoadData data)
         {
             _storyManager?.SetStoryData(data.StoryData);
             _sceneKind = data.sceneKind;
-            await Awaitable.WaitForSecondsAsync(1);
-            NextStory();
         }
 
         public void EndStory()

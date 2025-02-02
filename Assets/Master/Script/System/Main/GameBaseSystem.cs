@@ -1,6 +1,7 @@
 using DCFrameWork.SceneSystem;
 using System;
 using System.Collections;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 namespace DCFrameWork.MainSystem
@@ -22,9 +23,26 @@ namespace DCFrameWork.MainSystem
         private event Action OnPaused;
         private event Action OnResumed;
         #endregion
-        private async void Awake()
+        private void Awake()
         {
             if (!_instance)
+            {
+                ToSingleton();
+            }
+            else
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            _audioManager = GetComponentInChildren<AudioManager>();
+            if (_audioManager is null)
+                Debug.LogWarning("AudioManager‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
+            _mainUIManager = FindAnyObjectByType<MainUIManager>();
+            if (_mainUIManager is null)
+                Debug.LogWarning("MainUIManager‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
+
+            async void ToSingleton()
             {
                 _instance = this;
 
@@ -39,19 +57,9 @@ namespace DCFrameWork.MainSystem
                 Scene systemScene = SceneManager.CreateScene("SystemScene");
                 SceneManager.MoveGameObjectToScene(gameObject, systemScene);
             }
-            else
-            {
-                Destroy(gameObject);
-                return;
-            }
-
-            _audioManager = GetComponentInChildren<AudioManager>();
-            if (_audioManager is null)
-                Debug.LogWarning("AudioManager‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
-            _mainUIManager = FindAnyObjectByType<MainUIManager>();
-            if (_mainUIManager is null)
-                Debug.LogWarning("MainUIManager‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½");
         }
+
+
 
         private void Start()
         {

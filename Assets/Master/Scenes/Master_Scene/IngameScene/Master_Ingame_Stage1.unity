@@ -10024,6 +10024,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: eeffa1d98d8b8aa42a76b4fe4c3d11de,
         type: 2}
+    - target: {fileID: 2068504501253040231, guid: 77fd2a5407b56e54d8e660f62bd21e54,
+        type: 3}
+      propertyPath: _breakBGMID
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2068504501253040231, guid: 77fd2a5407b56e54d8e660f62bd21e54,
+        type: 3}
+      propertyPath: _battleBGMID
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 2573529375639613917, guid: 77fd2a5407b56e54d8e660f62bd21e54,
         type: 3}
       propertyPath: m_LocalScale.x

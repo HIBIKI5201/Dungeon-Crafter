@@ -1,0 +1,12 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <engine:Template name="Ranking" src="project://database/Assets/Master/Resources/UXML/Result/Ranking.uxml?fileID=9197481963319205126&amp;guid=47aa71b91c2214a4a8485e8591af868e&amp;type=3#Ranking" />
+    <engine:VisualElement style="flex-grow: 1; position: absolute; width: 100%; height: 100%;" />
+    <engine:VisualElement name="ResultPanel" style="flex-grow: 1; position: absolute; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.25); visibility: visible; display: flex; background-image: none;">
+        <engine:VisualElement style="flex-grow: 0; background-image: resource(&apos;Sprite/Picture/UI_option_button&apos;); top: 5%; width: 50%; background-size: 100% 420%; height: 21%; flex-shrink: 0; left: 0; align-content: auto; justify-content: center; align-self: center;">
+            <engine:Label text="Game Over" name="Label" style="align-self: center; color: rgb(255, 255, 255); font-size: 100%; -unity-font-style: bold; -unity-font-definition: resource(&apos;Fonts/LiberationSans&apos;);" />
+        </engine:VisualElement>
+        <engine:Button text="タイトル" name="TitleButton" style="width: 20%; align-self: center; position: absolute; background-image: resource(&apos;Sprite/Picture/UI_light_button&apos;); background-color: rgb(156, 156, 156); font-size: 35%; top: auto; bottom: 2%; left: 20%; -unity-font-style: bold;" />
+        <engine:Button text="ランキング" name="RankingButton" style="width: 20%; align-self: center; position: absolute; background-image: resource(&apos;Sprite/Picture/UI_light_button&apos;); background-color: rgb(156, 156, 156); font-size: 35%; top: auto; bottom: 2%; left: auto; -unity-font-style: bold; right: 20%;" />
+    </engine:VisualElement>
+    <engine:Instance template="Ranking" name="Ranking" style="width: 100%; height: 100%; visibility: visible; display: flex;" />
+</engine:UXML>

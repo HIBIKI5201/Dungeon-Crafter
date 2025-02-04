@@ -11,6 +11,7 @@ namespace DCFrameWork.MainSystem
             { SceneKind.Story, "Master_Story"},
             {SceneKind.Ingame_0, "Master_Ingame_Stage0"},
             {SceneKind.Ingame_1, "Master_Ingame_Stage1"},
+            {SceneKind.Result, "Master_Result" }
         };
         public static string SetCurrentSceneName() => _currentSceneName = SceneManager.GetActiveScene().name;
         private static string _currentSceneName = SceneManager.GetActiveScene().name;
@@ -44,5 +45,6 @@ namespace DCFrameWork.MainSystem
         Story,
         Ingame_0,
         Ingame_1,
+        Result
     }
 }

@@ -14,20 +14,11 @@ public class StageManager : MonoBehaviour
 {
     [SerializeField] Vector2 _mapSize = new Vector2(10, 10);
     [SerializeField] float _gridSize = 5f;
-    [SerializeField] List<ObstaclePrefabs> _obstaclePrefabList;
     [SerializeField] GameObject _defaultVisualGuide;
     [SerializeField] GameObject _obstacleWallPrefab;
     [SerializeField] InGameUIManager _inGameUIManager;
     [SerializeField] PlayerManager _playerManager;
     //[SerializeField] GameObject _clickPointPrefab;//Debug;
-    [Serializable]
-    public struct ObstaclePrefabs
-    {
-        public string Name;
-        public GameObject PutObstaclePrefab;
-        [Tooltip("特注の視覚サポートオブジェクトがあればいれてください")] public GameObject VisualGuide;
-        public bool IsPutTogetherWithWall;
-    }
     public event Action<ITurret, bool> OnActivateTurretSelectedUI;//タレットがクリックされたときに呼ぶ処理
     Vector3[] _spawnPos;
     Vector3 _targetPos;
@@ -75,14 +66,7 @@ public class StageManager : MonoBehaviour
         _map = new int[_sizeX, _sizeZ];
         _startX = (int)((_targetPos.x + _mapSize.x * _gridSize / 2 - _gridSize / 2) / _gridSize);
         _startZ = (int)((_targetPos.z + _mapSize.y * _gridSize / 2 - _gridSize / 2) / _gridSize);
-        if (_obstaclePrefabList[0].VisualGuide == null)
-        {
-            _tentativePrefab = _defaultVisualGuide;
-        }
-        else
-        {
-            _tentativePrefab = _obstaclePrefabList[0].VisualGuide;
-        }
+        _tentativePrefab = _defaultVisualGuide;
         LoadStage();
         //ステージのグリッド座標に壁があるかしらべて2次元配列に格納
         void LoadStage()
@@ -120,7 +104,7 @@ public class StageManager : MonoBehaviour
         var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit = new();
         var raycastHitList = Physics.RaycastAll(ray, float.PositiveInfinity).Where(x => !x.collider.isTrigger).ToList();
-        if (raycastHitList.Any())
+        if (_tentativePrefab != null && raycastHitList.Any())
         {
             //置く場所を視覚的にサポートするオブジェクトとはレイキャストが当たってないことにする
             raycastHitList.Remove(raycastHitList.Where(x => x.collider.gameObject == _tentativePrefab).FirstOrDefault());
@@ -144,11 +128,10 @@ public class StageManager : MonoBehaviour
                 _currentPosition.z = (int)(currentZ / halfGridSize + signZ) / 2 * _gridSize;
             //マウスと重なっているグリッドの中心座標に視覚的にサポートするオブジェクトをセット
             _tentativePrefab.transform.position = _currentPosition;
-
             //Debug.Log(_currentPosition);
             //Debug.DrawRay(_currentPosition, Vector3.down, Color.green, 1f);
             //ステージの範囲外に出てたら見えなくする
-            if (_setPrefab == null || _tentativePrefab.transform.position.y > 8f || !Physics.Raycast(_currentPosition, Vector3.down, 5f))
+            if (hit.collider == null || _setPrefab == null || _tentativePrefab.transform.position.y > 8f || !Physics.Raycast(_currentPosition, Vector3.down, 5f))
             {
                 _canSet = false;
                 _tentativePrefab.SetActive(false);
@@ -159,12 +142,12 @@ public class StageManager : MonoBehaviour
                 //置けるかどうかの判定
                 if (CheckConnected(_currentPosition) && !_spawnPos.Contains(_currentPosition) && _currentPosition != _targetPos && _currentPosition != _targetPos + new Vector3(0, _gridSize, 0))
                 {
-                    _tentativePrefab.GetComponent<MeshRenderer>().material.color = Color.white;
+                    _tentativePrefab.SetActive(true);
                     _canSet = true;
                 }
                 else
                 {
-                    _tentativePrefab.GetComponent<MeshRenderer>().material.color = Color.red;
+                    _tentativePrefab.SetActive(false);
                     _canSet = false;
                 }
             }
@@ -172,7 +155,10 @@ public class StageManager : MonoBehaviour
         else
         {
             _canSet = false;
-            _tentativePrefab.SetActive(false);
+            if(_tentativePrefab != null)
+            {
+                _tentativePrefab.SetActive(false);
+            }
         }
         //オブジェクトを置く処理
         if (Input.GetMouseButtonDown(0))
@@ -309,10 +295,13 @@ public class StageManager : MonoBehaviour
             wallObj.isStatic = true;
             _currentPosition.y = 7.5f;
         }
-        var obj = Instantiate(_setPrefab, _currentPosition, Quaternion.Euler(new Vector3(0,180,0)));
+        var obj = Instantiate(_setPrefab, _currentPosition, Quaternion.Euler(new Vector3(0, 180, 0)));
         obj.transform.SetParent(_wallsParent.transform);
         obj.isStatic = true;
+        obj.TryGetComponent<ITurret>(out var t);
+        t.Active();
         _setPrefab = null;
+        Destroy(_tentativePrefab);
     }
     public void RemoveObstacleObject(GameObject gameObject)
     {
@@ -332,17 +321,6 @@ public class StageManager : MonoBehaviour
         _map[currentX, currentZ] = 0;
         _noWall++;
     }
-    //設置するオブジェクトの変更。これは削除することになるだろうから変更はあまり気にしないでください。参照もないし
-    public void ChangeObstaclePrefab(string name)
-    {
-        ObstaclePrefabs p = _obstaclePrefabList.Find(x => x.Name == name);
-        _setPrefab = p.PutObstaclePrefab;
-        _tentativePrefab = p.VisualGuide;
-        if (_tentativePrefab != null)
-        {
-            _tentativePrefab = _defaultVisualGuide;
-        }
-    }
     /// <summary>
     /// インベントリから選ばれたタレットのGameObjectを渡してください
     /// </summary>
@@ -351,6 +329,7 @@ public class StageManager : MonoBehaviour
     {
         SetTurretCancel();
         _setPrefab = turret;
+        _tentativePrefab = Instantiate(turret,_currentPosition,Quaternion.Euler(new Vector3(0, 180, 0)));
     }
     void SetTurretCancel()
     {
@@ -359,6 +338,7 @@ public class StageManager : MonoBehaviour
             _setPrefab.TryGetComponent<ITurret>(out ITurret t);
             _playerManager.SetDefenseObject(t.Data.Kind);
             _setPrefab = null;
+            Destroy(_tentativePrefab);
         }
     }
     /// <summary>

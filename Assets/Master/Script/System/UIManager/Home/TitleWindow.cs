@@ -1,21 +1,24 @@
-using UnityEngine;
-using UnityEngine.UIElements;
-using System.Threading.Tasks;
-using UnityEngine.PlayerLoop;
 using System;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
+using System.Threading.Tasks;
+using UnityEngine.UIElements;
 
 namespace DCFrameWork
 {
-    public partial class TitleWindow : VisualElement
+    [UxmlElement]
+    public partial class TitleWindow : VisualElement_B
     {
-        public Task InitializeTask { get; private set; }
-        TitleWindow() => InitializeTask = Initialize();
-        private async Task Initialize()
+        //UI—v‘f
+        private Button _gameStartButton;
+        private Button _creditButton;
+        public Button GameStartButton { get => _gameStartButton; }
+        public TitleWindow() : base("UXML/Home/TitleWindow") { }
+        protected override Task Initialize_S(TemplateContainer container)
         {
-            AsyncOperationHandle<VisualTreeAsset> handle = Addressables.LoadAssetAsync<VisualTreeAsset>("UXML/TitleWindow.uxml");
-            await handle.Task;
+            //UI—v‘fŽæ“¾
+            _gameStartButton = container.Q<Button>("GameStartButton");
+            _creditButton = container.Q<Button>("CreditButton");
+
+            return Task.CompletedTask;
         }
     }
 }

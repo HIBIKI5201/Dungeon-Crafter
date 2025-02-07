@@ -8,6 +8,8 @@ namespace DCFrameWork.MainSystem
 {
     public class GameBaseSystem : MonoBehaviour
     {
+        [SerializeField]
+        private Texture2D _cursor;
         #region サービスロケーター
         public static GameBaseSystem mainSystem { get => _instance; }
         public static SceneSystem_B sceneSystem { get; private set; }
@@ -57,6 +59,7 @@ namespace DCFrameWork.MainSystem
                 Scene systemScene = SceneManager.CreateScene("SystemScene");
                 SceneManager.MoveGameObjectToScene(gameObject, systemScene);
             }
+            Cursor.SetCursor(_cursor, Vector2.zero, CursorMode.Auto);
         }
 
 

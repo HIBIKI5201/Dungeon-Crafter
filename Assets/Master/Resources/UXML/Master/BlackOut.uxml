@@ -1,4 +1,4 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/Master/UITK/USS/Master/BlackOut.uss?fileID=7433441132597879392&amp;guid=47e174a9f4b22b84f90d046b2a1a4666&amp;type=3#BlackOut" />
-    <engine:VisualElement name="BlackOut" class="black-out-false" />
+    <engine:VisualElement name="BlackOut" class="black-out-false" style="cursor: resource(&apos;Sprite/Picture/UI_money_icon&apos;); background-color: rgb(0, 0, 0);" />
 </engine:UXML>

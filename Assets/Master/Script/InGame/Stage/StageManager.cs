@@ -104,51 +104,62 @@ public class StageManager : MonoBehaviour
         var ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit = new();
         var raycastHitList = Physics.RaycastAll(ray, float.PositiveInfinity).Where(x => !x.collider.isTrigger).ToList();
-        if (_tentativePrefab != null && raycastHitList.Any())
+        if (raycastHitList.Any())
         {
             //置く場所を視覚的にサポートするオブジェクトとはレイキャストが当たってないことにする
             raycastHitList.Remove(raycastHitList.Where(x => x.collider.gameObject == _tentativePrefab).FirstOrDefault());
             hit = raycastHitList.OrderBy(x => Vector3.Distance(x.point, Camera.main.transform.position)).FirstOrDefault();
-            _currentPosition = hit.point;
-            //Debug.Log($"{hit.point}:{hit.collider.gameObject.name}:{hit.collider.gameObject.layer}:{LayerMask.NameToLayer("Ground")}");
-            float currentX = _currentPosition.x + hit.normal.x;
-            float currentZ = _currentPosition.z + hit.normal.z;
-            int signX = Math.Sign(currentX);
-            int signZ = Math.Sign(currentZ);
-            float halfGridSize = _gridSize / 2;
-            //グリッドの計算式
-            _currentPosition.y = (int)((_currentPosition.y + hit.normal.y) / _gridSize) * _gridSize + halfGridSize;
-            if (_mapSize.x % 2 == 0)
-                _currentPosition.x = (int)(currentX / _gridSize) * _gridSize + halfGridSize * signX;
-            else
-                _currentPosition.x = (int)(currentX / halfGridSize + signX) / 2 * _gridSize;
-            if (_mapSize.y % 2 == 0)
-                _currentPosition.z = (int)(currentZ / _gridSize) * _gridSize + halfGridSize * signZ;
-            else
-                _currentPosition.z = (int)(currentZ / halfGridSize + signZ) / 2 * _gridSize;
-            //マウスと重なっているグリッドの中心座標に視覚的にサポートするオブジェクトをセット
-            _tentativePrefab.transform.position = _currentPosition;
-            //Debug.Log(_currentPosition);
-            //Debug.DrawRay(_currentPosition, Vector3.down, Color.green, 1f);
-            //ステージの範囲外に出てたら見えなくする
-            if (hit.collider == null || _setPrefab == null || _tentativePrefab.transform.position.y > 8f || !Physics.Raycast(_currentPosition, Vector3.down, 5f))
+            if(_tentativePrefab != null)
             {
-                _canSet = false;
-                _tentativePrefab.SetActive(false);
-            }
-            else
-            {
-                _tentativePrefab.SetActive(true);
-                //置けるかどうかの判定
-                if (CheckConnected(_currentPosition) && !_spawnPos.Contains(_currentPosition) && _currentPosition != _targetPos && _currentPosition != _targetPos + new Vector3(0, _gridSize, 0))
+                _currentPosition = hit.point;
+                //Debug.Log($"{hit.point}:{hit.collider.gameObject.name}:{hit.collider.gameObject.layer}:{LayerMask.NameToLayer("Ground")}");
+                float currentX = _currentPosition.x + hit.normal.x;
+                float currentZ = _currentPosition.z + hit.normal.z;
+                int signX = Math.Sign(currentX);
+                int signZ = Math.Sign(currentZ);
+                float halfGridSize = _gridSize / 2;
+                //グリッドの計算式
+                _currentPosition.y = (int)((_currentPosition.y + hit.normal.y) / _gridSize) * _gridSize + halfGridSize;
+                if (_mapSize.x % 2 == 0)
+                    _currentPosition.x = (int)(currentX / _gridSize) * _gridSize + halfGridSize * signX;
+                else
+                    _currentPosition.x = (int)(currentX / halfGridSize + signX) / 2 * _gridSize;
+                if (_mapSize.y % 2 == 0)
+                    _currentPosition.z = (int)(currentZ / _gridSize) * _gridSize + halfGridSize * signZ;
+                else
+                    _currentPosition.z = (int)(currentZ / halfGridSize + signZ) / 2 * _gridSize;
+                //マウスと重なっているグリッドの中心座標に視覚的にサポートするオブジェクトをセット
+                _tentativePrefab.transform.position = _currentPosition;
+                //Debug.Log(_currentPosition);
+                //Debug.DrawRay(_currentPosition, Vector3.down, Color.green, 1f);
+                //ステージの範囲外に出てたら見えなくする
+                if (hit.collider == null || _setPrefab == null || _tentativePrefab.transform.position.y > 8f || !Physics.Raycast(_currentPosition, Vector3.down, 5f))
                 {
-                    _tentativePrefab.SetActive(true);
-                    _canSet = true;
+                    _canSet = false;
+                    _tentativePrefab.SetActive(false);
                 }
                 else
                 {
+                    _tentativePrefab.SetActive(true);
+                    //置けるかどうかの判定
+                    if (CheckConnected(_currentPosition) && !_spawnPos.Contains(_currentPosition) && _currentPosition != _targetPos && _currentPosition != _targetPos + new Vector3(0, _gridSize, 0))
+                    {
+                        _tentativePrefab.SetActive(true);
+                        _canSet = true;
+                    }
+                    else
+                    {
+                        _tentativePrefab.SetActive(false);
+                        _canSet = false;
+                    }
+                }
+            }
+            else
+            {
+                _canSet = false;
+                if (_tentativePrefab != null)
+                {
                     _tentativePrefab.SetActive(false);
-                    _canSet = false;
                 }
             }
         }
@@ -163,6 +174,7 @@ public class StageManager : MonoBehaviour
         //オブジェクトを置く処理
         if (Input.GetMouseButtonDown(0))
         {
+            Debug.Log(hit.collider);
             if (_canSet && !_isMouseOnUI)
             {
                 SetObject(_currentPosition);
@@ -182,7 +194,7 @@ public class StageManager : MonoBehaviour
     {
         if (turret.TryGetComponent<ITurret>(out ITurret t))
         {
-            //Debug.Log("タレットがクリックされた");
+            Debug.Log("タレットがクリックされた");
             bool canRemove = true;
             canRemove = CheckCanRemove();
             OnActivateTurretSelectedUI?.Invoke(t, canRemove);

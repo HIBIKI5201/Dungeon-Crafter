@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37d0b8bd3101a9944935a3c121904ad6, type: 3}
   m_Name: MiddleRangeDataLebel2
   m_EditorClassIdentifier: 
-  _attack: 1
-  _rate: 1
-  _critical: 1
-  _range: 1
-  _levelRequirePoint: 100
+  _attack: 60
+  _rate: 0.43
+  _critical: 0
+  _range: 1.6
+  _levelRequirePoint: 3400
   _data: {fileID: 11400000, guid: 99ac42ede775dad45a64ac54422787cc, type: 2}

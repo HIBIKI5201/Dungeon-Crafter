@@ -73,18 +73,18 @@ namespace DCFrameWork.Enemy
 
         void NextPhase()
         {
-            PhaseCount++;
             _deathEemyCount = 0;
 
             //選択肢の中からランダムなデータを取得
             var phaseData = _phaseData.PhaseData[CurrentPhaseIndex].
-                SelectintPhaseData[Random.Range(0, _phaseData.PhaseData.Length)];
+                SelectintPhaseData[0];//ランダムではなく1択になったため固定化、めちゃめちゃよくない実装
 
             phaseData.SpawnData.Select(x => x._enemyLevel += _loopCount - 1);//周回ごとのレベル上昇
             _phaseEnemySum = phaseData.SpawnData.Length;
 
             _enemyGenerators.Waving(phaseData);
             PhaseProgressChanged?.Invoke(PhaseProgressNormalize);
+            PhaseCount++;
         }
         public void EnemyDeathCount()　//エネミー死亡時に呼んでほしい
         {

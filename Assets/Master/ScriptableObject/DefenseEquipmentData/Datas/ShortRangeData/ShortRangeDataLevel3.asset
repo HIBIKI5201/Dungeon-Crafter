@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba3089a6193c6ab4a9817d97886c8f0d, type: 3}
   m_Name: ShortRangeDataLevel3
   m_EditorClassIdentifier: 
-  _attack: 1
-  _rate: 1
-  _critical: 1
-  _range: 1
-  _levelRequirePoint: 100
+  _attack: 64
+  _rate: 0.47
+  _critical: 0
+  _range: 1.4
+  _levelRequirePoint: 32000
   _data: {fileID: 11400000, guid: c274824e63b70424d9afd001f6f40105, type: 2}
   _explosionRadius: 1

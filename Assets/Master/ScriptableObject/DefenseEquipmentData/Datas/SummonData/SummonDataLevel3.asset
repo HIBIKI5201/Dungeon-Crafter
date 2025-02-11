@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61a09d7151dbb2546b5de764e33ce8f9, type: 3}
   m_Name: SummonDataLevel3
   m_EditorClassIdentifier: 
-  _attack: 10
-  _rate: 1
-  _critical: 5
-  _range: 3
-  _levelRequirePoint: 1
+  _attack: 63
+  _rate: 0.54
+  _critical: 0
+  _range: 2.4
+  _levelRequirePoint: 33000
   _data: {fileID: 11400000, guid: 700b99a83f0bf9a42b7483e281d90ff8, type: 2}
-  _maxCount: 5
+  _maxCount: 4

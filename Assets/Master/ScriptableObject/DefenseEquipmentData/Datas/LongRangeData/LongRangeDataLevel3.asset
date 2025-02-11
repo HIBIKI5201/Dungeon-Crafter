@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d3a339fa3592a94182a11c6b0dd3513, type: 3}
   m_Name: LongRangeDataLevel3
   m_EditorClassIdentifier: 
-  _attack: 15
-  _rate: 0.5
-  _critical: 1
-  _range: 4
-  _levelRequirePoint: 0
+  _attack: 58
+  _rate: 0.55
+  _critical: 0
+  _range: 1.9
+  _levelRequirePoint: 34000
   _data: {fileID: 11400000, guid: d20b5e1ca5d98b448bde8bece22c6a2f, type: 2}
-  _pierceCount: 3
+  _pierceCount: 5

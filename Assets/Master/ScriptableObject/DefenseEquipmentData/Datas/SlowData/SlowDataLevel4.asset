@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: SlowDataLevel4
   m_EditorClassIdentifier: 
   _attack: 1
-  _rate: 1
-  _critical: 1
-  _range: 1
-  _levelRequirePoint: 100
+  _rate: 0.3
+  _critical: 0
+  _range: 2.1
+  _levelRequirePoint: 0
   _data: {fileID: 11400000, guid: 269d3220043e6f64886ccf6bfe27e086, type: 2}

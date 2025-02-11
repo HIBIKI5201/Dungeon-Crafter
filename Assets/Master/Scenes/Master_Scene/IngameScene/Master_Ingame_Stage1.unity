@@ -1922,6 +1922,16 @@ PrefabInstance:
       propertyPath: _stageManager
       value: 
       objectReference: {fileID: 1622257949}
+    - target: {fileID: 8315951428447432683, guid: 0df4d64677fe9b44facaa32a2feee710,
+        type: 3}
+      propertyPath: _treasureHp
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 8315951428447432683, guid: 0df4d64677fe9b44facaa32a2feee710,
+        type: 3}
+      propertyPath: _startDefenseObjectsKind
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

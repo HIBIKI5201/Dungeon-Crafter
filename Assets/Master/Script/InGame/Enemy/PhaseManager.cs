@@ -84,7 +84,7 @@ namespace DCFrameWork.Enemy
 
             _enemyGenerators.Waving(phaseData);
             PhaseProgressChanged?.Invoke(PhaseProgressNormalize);
-            PhaseCount++;
+            PhaseCount++;//フェーズカウントを進める処理が先にあるとelement0が呼ばれないため移動
         }
         public void EnemyDeathCount()　//エネミー死亡時に呼んでほしい
         {
